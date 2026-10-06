@@ -1,0 +1,3 @@
+# Ultima 8 Decompile
+
+This is a decompiled source of the Ultima 8 latest retail version, including the english usecode. This build contained some debug symbols which allowed most of the file and function names to be recovered as well. The compiler was Borland C++ 3.0 with a mix of flags. In this decompile the helper libraries (dos extender, etc) were left as binary because they aren't very high value and mostly just assembly anyway. It rebuilds byte-exact minus some debug data at the end of the file.

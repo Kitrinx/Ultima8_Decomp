@@ -70,7 +70,7 @@ out/U8.EXE vs original  --compare-------------------------------------->  out/co
 
 ## How it compares with the original
 
-`compare.txt` splits both files into the same parts as `.agents/tools/u8_exe_split` (extender,
+`compare.txt` splits both files into multiple parts (extender,
 NE tables, each segment, each segment's relocations, debug data). 290 of 291 parts are
 identical: the extender, NE tables, all 147 code segments, all relocation tables, DGROUP and the
 stack segment. The one that differs:
