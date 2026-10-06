@@ -1,0 +1,782 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x058A
+// FLEX slot: 1420
+// Original offset: 0x00054F09
+// Naming evidence: E, exact object-1 linker name `DAEMSCEN`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/DAEMSCEN.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process daemscen_play_npc_animation_sequence(arg_00:U8Word, arg_02:U8List)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m02:Npc;
+	local_m02_w01:U8Bytes1;
+	local_m04:U8List;
+	local_m06:U8Word;
+	[[PT_ANIM, arg_00]];
+	local_m02 = arg_00;
+	local_m04 = arg_02;
+	if local_m02.isNpc()
+	{
+		foreach local_m06 in local_m04 {
+			class_057C_realDoAnim(u8_local_address(local_m02_w01), local_m06, local_m02.getDir());
+		}
+	}
+}
+
+// Derived: routine 0x00D1, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views; overlapping names alias bytes.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process daemscen_play_assassination_victim_screams(arg_00:U8Word, arg_00_w01:U8Bytes1)
+{
+	[[PT_DEFAULT, arg_00]];
+	class_057C_timedBark(u8_local_address(arg_00_w01), 50, u8_string_address("AAAAAAAAUUUUUUUUGH! "));
+	wait(30);
+	class_057C_timedBark(u8_local_address(arg_00_w01), 50, u8_string_address("Aaaaauuuuuuugh! "));
+}
+
+// Derived: routine 0x014B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] daemscen_play_rival_acolyte_assassination()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:Item;
+	local_m09:U8Bytes2; // X: untouched.
+	local_m0B:Item;
+	local_m0D:U8Word;
+	local_m0F:Item;
+	local_m0F_w01:U8Bytes1;
+	local_m11:String;
+	local_m13:String;
+	local_m15:String;
+	local_m17:U8Word;
+	local_m19:U8Word;
+	local_m1A:U8Byte;
+	playMusic(122);
+	if acolyteKilled = 1
+	{
+		local_m11 = "How may I serve you, master? ";
+		local_m15 = "Find the one called Sabriane. Put an end to her life and then return from whence you came.*I command that you do this in Pyros' name. ";
+		local_m13 = "Yes, master. ";
+	}
+	else
+	{
+		local_m11 = "How may I serve you, mistress? ";
+		local_m15 = "Find the one called Morduin. Put an end to his life and then return from whence you came.*I command that you do this in Pyros' name. ";
+		local_m13 = "Yes, mistress. ";
+	}
+	foreach local_m07 where ((type = 124) and (frame = 4)) within 64 cells of referent {
+		local_m0B = local_m07;
+	}
+	if local_m0B
+	{
+		foreach local_m07 where ((type = TypePathMarker) and (frame = 0)) within 64 cells of referent {
+			local_m0D = local_m07;
+		}
+		if local_m0D
+		{
+			pathfind(local_m0D, 40);
+		}
+		Item_create(0, 769, u8_local_address(local_m07_w01));
+		local_m07.pop(local_m0B.getX() - 112, local_m0B.getY() - 112, local_m0B.getZ());
+		class_057C_turnToFace(this, getDirToItem(local_m07), 0, 8);
+		class_057C_realDoAnim(this, 27, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(this, getDir(), 31) -> return;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(1, 7, 0, Avatar.getDirToItem(local_m07)) -> return;
+		local_m07.destroy();
+		class_057C_timedBark(this, 40, u8_string_address("In Flam!"));
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m07 where (type = 454) on surface below local_m0B {
+			class_0583_ignite(this, local_m07);
+		}
+		class_057C_realDoAnim(this, 31, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_timedBark(this, u8_string_address("Kal Flam Bal Zen!"), 40) -> return;
+		wait(25);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(this, getDir(), 29) -> return;
+		u8_search_begin(local_m07, 2, 15 * 32, referent, <<66, u8_search_word(634), u8_search_word(313), 36>>);
+		while u8_search_condition()
+		{
+			local_m07.destroy();
+			u8_search_advance();
+		}
+		u8_search_end();
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m07 where (type = 398) on surface below local_m0B {
+			local_m17 = local_m07.getX();
+			local_m19 = local_m07.getY();
+			local_m1A = local_m07.getZ();
+			if (local_m17 <= local_m0B.getX()) and (local_m19 <= local_m0B.getY()) and (local_m1A <= (local_m0B.getZ() + 8))
+			{
+				class_007C_pent_burn_consumed_component(0x00000000, local_m07);
+			}
+		}
+		local_m05_w02 = local_m0B.getX() - 64;
+		local_m03 = local_m0B.getY() - 64;
+		local_m01 = local_m0B.getZ() + 2;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m05) -> return;
+		wait(25);
+		foreach local_m07 where (type = 400) within 224 cells of local_m0B {
+			if (local_m07.getX() <= (local_m0B.getX() + 64)) and (local_m07.getY() <= (local_m0B.getY() + 64))
+			{
+				local_m07.destroy();
+			}
+		}
+		local_m05_w02 -= 64;
+		local_m03 -= 64;
+		Npc_create(0, 96, u8_local_address(local_m0F_w01));
+		local_m0F.pop(local_m05_w02, local_m03, local_m01);
+		class_057C_toggleStatus(16, u8_local_address(local_m0F_w01));
+		class_057C_realDoAnim(u8_local_address(local_m0F_w01), 2, local_m0F.getDirToItem(referent));
+		class_057C_toggleStatus(16, u8_local_address(local_m0F_w01));
+		local_m0F.touch();
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(this, getDir(), 28) -> return;
+		wait(45);
+		class_057C_realDoAnim(u8_local_address(local_m0F_w01), 47, local_m0F.getDir());
+		class_057C_realDoAnim(u8_local_address(local_m0F_w01), 12, local_m0F.getDir());
+		wait(25);
+		class_057C_realDoAnim(this, 2, getDir());
+		local_m0F.bark(u8_string_local_address(local_m11));
+		bark(u8_string_local_address(local_m15));
+		local_m0F.bark(u8_string_local_address(local_m13));
+		local_m05_w02 += 64;
+		local_m03 += 64;
+		wait(25);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m05) -> return;
+		class_057C_toggleStatus(16, u8_local_address(local_m0F_w01));
+		wait(60);
+		local_m0F.destroy();
+		wait(60);
+		class_057C_realDoAnim(this, 27, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(this, getDir(), 31) -> return;
+		class_057C_timedBark(this, 40, u8_string_address("An Flam!"));
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m07 where (type = 454) on surface below local_m0B {
+			wait(3);
+			class_0583_extinguish(this, local_m07);
+		}
+		class_057C_realDoAnim(this, 31, getDir());
+		class_057C_realDoAnim(this, 28, getDir());
+		if acolyteKilled = 1
+		{
+			class_057C_turnToFace(this, 1, 0, 15);
+		}
+		else
+		{
+			class_057C_turnToFace(this, 5, 0, 15);
+		}
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(1, 15, 0, Avatar.getDirToItem(referent)) -> return;
+		wait(60);
+		playSFX(55, 100);
+		if not isSFXPlaying(55)
+		{
+			u8_search_begin(local_m07, 2, 20 * 32, referent, <<66, u8_search_word(635), u8_search_word(177), 36>>);
+			while u8_search_condition()
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_058A_daemscen_play_assassination_victim_screams(0x00000000, local_m07) -> return;
+				u8_search_advance();
+			}
+			u8_search_end();
+		}
+		wait(10);
+		if acolyteKilled = 1
+		{
+			Item_setFrame(129, u8_stack_ref(29));
+			Npc_setDead(u8_stack_ref(29));
+			playSFX(162, 100);
+			wait(35);
+			playSFX(55, 100);
+			wait(40);
+			playSFX(177, 100);
+			playSFX(55, 100);
+			wait(115);
+			playSFX(55, 100);
+			wait(25);
+			playSFX(187, 100);
+			wait(75);
+			playSFX(66, 100);
+		}
+		else
+		{
+			Item_setFrame(129, u8_stack_ref(28));
+			Npc_setDead(u8_stack_ref(28));
+			playSFX(99, 100);
+			wait(35);
+			playSFX(55, 100);
+			wait(20);
+			playSFX(55, 100);
+			wait(75);
+			playSFX(66, 100);
+		}
+		wait(100);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_guardianBark(5, u8_stack_ref(1)) -> return;
+		wait(60);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("There... it is done. ") -> return;
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 15);
+	}
+}
+
+// Derived: routine 0x0B96, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process daemscen_play_avatar_disciple_induction()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:Item;
+	local_m09:U8Word;
+	local_m0B:String;
+	local_m0D:String;
+	local_m0F:String;
+	local_m11:String;
+	local_m13:U8Word;
+	[[PT_FX, referent]];
+	local_m11 = "";
+	if acolyteKilled = 1
+	{
+		local_m0D = "Vardion";
+		local_m0F = "Bane";
+		if vardionAvaName
+		{
+			local_m11 = getName();
+		}
+	}
+	else
+	{
+		local_m0D = "Bane";
+		local_m0F = "Vardion";
+		if baneAvaName
+		{
+			local_m11 = getName();
+		}
+	}
+	wait(30);
+	foreach local_m09 where ((type = 124) and (frame = 4)) within 20 cells of referent {
+		local_m07 = local_m09;
+	}
+	if local_m07
+	{
+		local_m05_w02 = local_m07.getX() - 48;
+		local_m03 = local_m07.getY() - 48;
+		local_m01 = local_m07.getZ() + 8;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m05) -> return;
+		wait(25);
+		local_m05_w02 -= 96;
+		local_m03 -= 96;
+		local_m01 -= 8;
+		class_057C_toggleStatus(27, 16, u8_stack_address(-2));
+		Malchir.teleport(local_m05_w02, local_m03, local_m01, 12);
+		Malchir.realDoAnim(AS_STAND, Malchir.getDirToItem(referent));
+		Malchir.realDoAnim(AS_STAND, Malchir.getDirToItem(referent));
+		class_057C_toggleStatus(27, 16, u8_stack_address(-2));
+		wait(25);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(this, 7, 0, getDirToItem(Malchir:Referent)) -> return;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(1, 7, 0, Avatar.getDirToItem(Malchir:Referent)) -> return;
+		Malchir.realDoAnim(AS_EXIT_CAST, Malchir.getDir());
+		Malchir.setHp(Malchir.getHp() + 200);
+		local_m0B = "I have sensed a daemonic presence within the confines of the Enclave.*" + local_m0D + ", what is the meaning of this?";
+		Item_bark(u8_string_local_address(local_m0B), u8_stack_ref(27));
+		class_057C_realDoAnim(this, 35, getDir());
+		local_m0B = "Forgive me, Master. " + local_m0F + " was planning to assassinate you.*With the aid of this stranger, I summoned a daemon to rid us of the threat. Surely you understand that I had to do something.";
+		bark(u8_string_local_address(local_m0B));
+		Item_bark(u8_string_address("I understand no such thing*Get up! "), u8_stack_ref(27));
+		class_057C_realDoAnim(this, 20, getDir());
+		Item_bark(u8_string_address("You should have brought this to my attention before acting on your baseless suspicions. "), u8_stack_ref(27));
+		bark("Yes, Master. I only sought to protect you. ");
+		local_m13 = class_057C_turnToFace(27, (Malchir.getDir() + 4) modulo 8, 0, 5);
+		Malchir.realDoAnim(AS_WALK, Malchir.getDir());
+		Malchir.realDoAnim(AS_STAND, Malchir.getDir());
+		Malchir.turnToFace((Malchir.getDir() + 4) modulo 8, local_m13, 5);
+		Item_bark(u8_string_address("Well, in your feeble attempt at guarding my person, you have destroyed a valuable Acolyte at a time when I need to call upon the Lord of Flame. "), u8_stack_ref(27));
+		local_m0B = "How exactly do you propose to solve this dilemma, " + local_m0D + "?";
+		Item_bark(u8_string_local_address(local_m0B), u8_stack_ref(27));
+		if acolyteKilled = 1
+		{
+			local_m0B = "If you will permit me to remain your First Acolyte, ";
+		}
+		else
+		{
+			local_m0B = "If you will allow me to become your First Acolyte, ";
+		}
+		local_m0B += "I believe that I can give you a fine Disciple to assist in the Ritual of Fire. That one there. ";
+		bark(u8_string_local_address(local_m0B));
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 10);
+		local_m13 = class_057C_turnToFace(27, Malchir.getDirToItem(Avatar:Referent), 0, 10);
+		Avatar.turnToFace(Avatar.getDirToItem(Malchir:Referent), 0, 10);
+		if local_m11 != ""
+		{
+			local_m0B = "He calls himself, " + local_m11 + ".";
+			bark(u8_string_local_address(local_m0B));
+			malchirAvaName = 1;
+		}
+		bark("His Sorcerous potential is truly great. Can you not feel it? ");
+		if local_m13 = 1
+		{
+			Malchir.turnToFace(Malchir.getDirToItem(referent), 2, 5);
+		}
+		else
+		{
+			Malchir.turnToFace(Malchir.getDirToItem(referent), 1, 5);
+		}
+		Malchir.realDoAnim(AS_WALK, Malchir.getDirToItem(referent));
+		Malchir.realDoAnim(AS_STAND, Malchir.getDirToItem(referent));
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(this, 5, 0, getDirToItem(Malchir:Referent)) -> return;
+		Item_bark(u8_string_address("Of course I can! Do not presume to tell me my craft.* Teach him our ways, and keep in mind that while he is your Disciple, all his actions reflect upon you, First Acolyte. "), u8_stack_ref(27));
+		bark("Yes! I understand, my Master.*I will provide you with an excellent Acolyte. We will begin training immediately. ");
+		Item_bark(u8_string_address("See that you do. And when he is ready, send him to me.* If he can survive the Obsidian Fortress, he will be ready for the Ritual of Flame. "), u8_stack_ref(27));
+		class_057C_realDoAnim(this, 49, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Yes, Master. ") -> return;
+		local_m05_w02 += 96;
+		local_m03 += 96;
+		local_m01 += 8;
+		Malchir.realDoAnim(AS_ENTER_CAST, Malchir.getDirToItem(referent));
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m05) -> return;
+		wait(20);
+		class_057C_toggleStatus(27, 16, u8_stack_address(-2));
+		wait(25);
+		Malchir.teleport(0, 0, 0, 12);
+		class_057C_toggleStatus(27, 16, u8_stack_address(-2));
+		wait(65);
+		class_057C_realDoAnim(this, 50, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(1, 8, 0, Avatar.getDirToItem(referent)) -> return;
+		pathfind(1, 20);
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 8);
+		bark("Well, Disciple. It's time to make an Acolyte out of you. Go and read the books of our library. They will show you how to become a Sorcerer. Come to me only if you have questions about Sorcery in general. ");
+		local_m05_w02 = getX();
+		local_m03 = getY();
+		local_m01 = getZ();
+		if class_0581_give(1, 82, 0, 69, 1)
+		{
+			bark("Here's the key to the library.*Run along now. ");
+		}
+		else if class_0581_createNear(local_m05, 82, 0, 69, 1)
+		{
+			bark("Come fetch the key to the library.*Then run along. ");
+		}
+		playMusic(97);
+	}
+}
+
+// Derived: routine 0x19C9, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] daemscen_run_sorcery_training_conversation()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m01:U8Byte;
+	local_m03:Item;
+	local_m05:Item;
+	local_m07:U8Word;
+	local_m09:Number;
+	local_m0B:String;
+	local_m0D:String;
+	local_m0F:String List;
+	local_m11:String List;
+	if not betrayedDisciple
+	{
+		local_m0F = <<"You lied to me! ", "You are quite devious. ", "I would learn more about Sorcery. ">>;
+	}
+	else
+	{
+		local_m0F = <<"I would learn more about Sorcery. ">>;
+	}
+	u8goto label_1C87 if not (sponsorTest);
+	bark("I cannot assist you during your test. Do you wish to forfeit? ");
+	local_m09 = askYesNo(2);
+	if local_m09 = 1
+	{
+		bark("You disappoint me, my Disciple. But, how may I assist you? ");
+		sponsorTest = 0;
+		u8goto label_1C84;
+	}
+	if local_m09 = 0
+	{
+		local_m0D = "Very well. But you must hurry. ";
+		if not spellsCast
+		{
+			local_m0D += "You have not even started and ";
+		}
+		else if spellsCast = 1
+		{
+			local_m0D += "You have made a good start but ";
+		}
+		else if spellsCast = 2
+		{
+			local_m0D += "You are almost done but ";
+		}
+		local_m0D += "Master Malchir will not wait forever. ";
+		bark(u8_string_local_address(local_m0D));
+		return;
+	}
+	else if acolyteKilled = 1
+	{
+		class_056F_vardion2_bark_interrupted_dialogue_response(this);
+		return;
+	}
+	else
+	{
+		class_0595_bane2_handle_silent_avatar(this);
+		return;
+	}
+	u8label label_1C84:
+	u8goto label_1CAE;
+	u8label label_1C87:
+	local_m0F += <<"I am ready to be tested. ">>;
+	u8label label_1CAE:
+	foreach local_m03 where ((type = 124) and (frame = 4)) within 20 cells of referent {
+		local_m05 = local_m03;
+	}
+	while local_m0B != "Farewell. "
+	{
+		local_m0F -= <<"Farewell. ">>;
+		local_m0F += <<"Farewell. ">>;
+		if class_0581_countStrList(local_m0F) <= 1
+		{
+			bark("I must return to my work, Disciple. ");
+			if acolyteKilled = 1
+			{
+				class_056F_vardion2_bark_state_based_farewell(this);
+			}
+			else
+			{
+				class_0595_bane2_say_farewell(this);
+			}
+			local_m0B = "Farewell. ";
+		}
+		else
+		{
+			local_m0B = ask(local_m0F);
+		}
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m0B
+		{
+			case "You lied to me! "
+			{
+				bark("And what of it? Are you here to bother me with your petty conscience? ");
+				local_m0F -= <<"You lied to me! ">>;
+				local_m0F += <<"Obviously, you have none. ", "No, of course not. Forgive me. ">>;
+				betrayedDisciple = 1;
+			}
+			case "You are quite devious. "
+			{
+				bark("I thought you would see it that way. A job needed doing, and I was the one to do it. Very simple. Now, about your training. ");
+				local_m0F = <<"I would learn more about Sorcery. ", "I am ready to be tested. ">>;
+				betrayedDisciple = 1;
+			}
+			case "Obviously, you have none. "
+			{
+				bark("That's right, Disciple. And if you know what's good for you, you'll lose yours. It gets in the way of Sorcery. If you can't handle this, you're no good to us, and if you're no good to us, then you must leave. ");
+				baneMad = 1;
+			}
+			case "No, of course not. Forgive me. "
+			{
+				bark("Forgive you? You are the Disciple, I am your Sponsor. I give the orders. I will forgive you when you earn my forgiveness. You do that by becoming a competent Sorcerer. ");
+				local_m0F = <<"I would learn more about Sorcery. ", "I am ready to be tested. ">>;
+			}
+			case "I would learn more about Sorcery. "
+			{
+				local_m09 = random(3);
+				if not local_m09
+				{
+					local_m0D = "Would you? Well then, learn. ";
+				}
+				else if local_m09 = 1
+				{
+					local_m0D = "Excellent. Knowledge is the path to power. ";
+				}
+				else
+				{
+					local_m0D = "Very well. I am here to teach. ";
+				}
+				local_m0D += "What would you know? ";
+				bark(u8_string_local_address(local_m0D));
+				local_m0F = <<"How will I be tested? ", "Tell me about spellcasting. ", "I wish to know about a spell. ">>;
+			}
+			case "I am ready to be tested. "
+			{
+				u8goto label_2698 if not (local_m05);
+				bark("Are you? We shall see.*Your test will consist of enchanting a focus or foci, your choice, with the spells of Flash, Flame Bolt, and Endure Heat. If you find that you are not ready once the test begins, you may still leave, but the test will be forfeit. ");
+				bark("Do you wish to begin the test? ");
+				local_m09 = askYesNo(2);
+				if local_m09 = 1
+				{
+					foreach local_m03 where ((type = TypePathMarker) and (frame = 0)) within 30 cells of referent {
+						local_m07 = local_m03;
+					}
+					if local_m07
+					{
+						pathfind(local_m07, 40);
+						class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 7);
+					}
+					bark("Your test begins now. Do not fail. I will not tolerate failure in one of my Disciples. ");
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_058A_daemscen_monitor_sorcery_sponsor_test(this, local_m05) -> return;
+					wait(1);
+					return;
+				}
+				else
+				{
+					u8goto label_2662 if not (local_m09 = 0);
+					bark("Very well. But learn quickly. The Master does not like to be kept waiting. ");
+					u8goto label_2695;
+					u8label label_2662:
+					if acolyteKilled = 1
+					{
+						class_056F_vardion2_bark_interrupted_dialogue_response(this);
+						return;
+					}
+					else
+					{
+						class_0595_bane2_handle_silent_avatar(this);
+						return;
+					}
+				}
+				u8label label_2695:
+				u8goto label_26F7;
+				u8label label_2698:
+				bark("I am busy right now, Disciple. I will test you when I am at my pentacle. ");
+				u8label label_26F7:
+				local_m0F -= <<"I am ready to be tested. ">>;
+			}
+			case "What is the Ritual of Fire? "
+			{
+				bark("That is the ceremony we use to call upon our patron Titan, Pyros, Lord of Flame. Your final test hinges upon how well you perform in that ritual. ");
+				bark("You will need to bring a red candle, that you will ignite by use of Sorcery. You will then kneel and begin the chant,~ 'In Sanct An Por'. Very simple, is it not? When it is over, you may do as you wish. ");
+				local_m0F -= <<"What is the Ritual of Fire? ">>;
+			}
+			case "How will I be tested? "
+			{
+				bark("First, I will test your ability to create and bind sorcerous energies to physical paraphernalia, when you can do this, I will pronounce you fit to become an Acolyte. ");
+				bark("For your next test, I will give you the key of the Acolyte. It is not a physical key, as such, but the ability to enter into the Obsidian Fortress. Your test lies within. If you survive to find Master Malchir, you have passed. ");
+				bark("Your third test will be given by the Master himself. He will choose a spell for you to cast. Cast it successfully and you will be accepted as an Acolyte. ");
+				bark("Your final test will be to assist in the Ritual of Fire. Do this competently, and your position as Acolyte, as well as my position as First Acolyte, will be confirmed. ");
+				local_m0F -= <<"How will I be tested. ">>;
+				local_m0F += <<"What is the Ritual of Fire? ">>;
+			}
+			case "Tell me about spellcasting. "
+			{
+				bark("Sorcerous spellcasting is a craft. It involves binding the power of Fire into a physical focus. The foci we use are: the pentacle symbol, a metal wand, rod, or staff, and a talisman in the form of a daemon's head. ");
+				bark("A pentagram is required to contain the power channeled into the focus, candles are used to indicate the nature of the spell, and certain reagents, placed strategically near certain candles, unleash and shape the energies to be channeled. ");
+				local_m0F = <<"Where do I place the candles? ", "Explain the foci. ", "What are reagents? ">>;
+			}
+			case "I wish to know about a spell. "
+			{
+				bark("You must find the spellbook with that knowledge and research its properties. Other than that, I cannot reveal to you. ");
+				local_m0F -= <<"I wish to know about a spell. ">>;
+			}
+			case "Where do I place the candles? "
+			{
+				if local_m05
+				{
+					bark("Each point of the pentacle has a small spike upon which a candle can be placed. These points have names associated with them. ");
+					bark("The point farthest from the core of the volcano is called the Aphelion, and it lies... ");
+					local_m01 = class_057C_turnToFace(this, getDirToItem(local_m05), 0, 10);
+					class_057C_realDoAnim(this, 27, getDir());
+					Item_create(0, 174, u8_local_address(local_m03_w01));
+					local_m03.pop(local_m05.getX() - 32, local_m05.getY() - 32, local_m05.getZ() + 16);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_realDoAnim(this, getDir(), 29) -> return;
+					bark("...here. ");
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_007C_pent_burn_consumed_component(0x00000000, local_m03) -> return;
+					bark("The next two candles are called Mesostelae. Mesostel Pa rests... ");
+					class_057C_realDoAnim(this, 31, getDir());
+					Item_create(0, 174, u8_local_address(local_m03_w01));
+					local_m03.pop(local_m05.getX(), local_m05.getY() - 160, local_m05.getZ() + 16);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_realDoAnim(this, getDir(), 29) -> return;
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_007C_pent_burn_consumed_component(0x00000000, local_m03) -> return;
+					bark("...here. ");
+					bark("And its companion, Mesostel Ze sits across from it. ");
+					Item_create(0, 174, u8_local_address(local_m03_w01));
+					local_m03.pop(local_m05.getX() - 160, local_m05.getY(), local_m05.getZ() + 16);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_realDoAnim(this, getDir(), 29) -> return;
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_007C_pent_burn_consumed_component(0x00000000, local_m03) -> return;
+					bark("The final candles, closest to the volcano are appropriately named Perivolcanae. Perivolcan Pa lies... ");
+					class_057C_realDoAnim(this, 31, getDir());
+					Item_create(0, 174, u8_local_address(local_m03_w01));
+					local_m03.pop(local_m05.getX() - 128, local_m05.getY() - 224, local_m05.getZ() + 16);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_realDoAnim(this, getDir(), 29) -> return;
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_007C_pent_burn_consumed_component(0x00000000, local_m03) -> return;
+					bark("...here. ");
+					bark("And its mate... ");
+					Item_create(0, 174, u8_local_address(local_m03_w01));
+					local_m03.pop(local_m05.getX() - 224, local_m05.getY() - 128, local_m05.getZ() + 16);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_realDoAnim(this, getDir(), 29) -> return;
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_007C_pent_burn_consumed_component(0x00000000, local_m03) -> return;
+					bark("...is placed here. ");
+					class_057C_realDoAnim(this, 28, getDir());
+					class_057C_realDoAnim(this, 2, getDir());
+					if local_m01 = 1
+					{
+						class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 2, 10);
+					}
+					else
+					{
+						class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 1, 10);
+					}
+				}
+				else
+				{
+					bark("This lesson will have to wait, Disciple. I am not prepared to teach it at the moment. Ask again when I am at my pentacle. ");
+				}
+				local_m0F -= <<"Where do I place the candles? ">>;
+			}
+			case "Explain the foci. "
+			{
+				bark("A focus is designed to hold the energy of a spell. Each focus has different limitations as to the choice and power of the spell focused. ");
+				bark("The pentacle symbol is the least powerful, but quite possibly the most useful focus. It is designed to contain the energies of the Ignite and Extinguish spells, however, any other spell may be worked into its pattern for one use. ");
+				bark("The wand can hold the Ignite, Extinguish, Flash, and Flame Bolt spells. The Rod holds all wand spells in addition to the protective spells of Endure Heat, Fire Shield, and Armor of Flames. The staff holds all of the wand and rod spells along with the Create Fire and Explosion spells. ");
+				bark("The daemon talisman holds only the Summon Daemon, Banish Daemon, and Conflagration spells. ");
+				bark("When you wish to enchant a focus, you merely place it at the center of a prepared pentacle, then concentrate your will upon the pentacle itself. ");
+				local_m0F -= <<"Explain the foci. ">>;
+			}
+			case "What are reagents? "
+			{
+				bark("They are all things which the Lord of Flame provides for us, and they each are imbued with different capabilities. ");
+				bark("The simplest reagent is volcanic ash. Its purpose in Sorcery is to represent the spark that brings flame. ");
+				bark("Pumice is thrown far from the maw of the volcano, and has the property of giving distance to a spell. ");
+				bark("Obsidian is a very enduring substance. It can be worn down, to fine grains of sand, but if melted it resumes its former properties. It grants duration to a spell. ");
+				bark("Raw iron, or pig iron, is strong yet flexible to work with. It lends this protective nature to sorcerous endeavors. ");
+				bark("Brimstone is a volatile substance, and confers this to Sorcerous enchantment in the form of raw power. Be careful in your use of this reagent. ");
+				bark("Daemon bone, hard to aquire, and harder still to use. This, of course, is the reagent required to make spells dealing with the daemonic servants of Pyros. If you are not wary with its use, it will be your undoing. ");
+				bark("Reagents are placed about the candles to lend their particular properties to the spell. Other than proximity to the correct candle, their placement matters not. ");
+				local_m0F -= <<"What are reagents? ">>;
+			}
+			case "Farewell. "
+			{
+				if acolyteKilled = 1
+				{
+					class_056F_vardion2_bark_state_based_farewell(this);
+				}
+				else
+				{
+					class_0595_bane2_say_farewell(this);
+				}
+			}
+			case ""
+			{
+				if acolyteKilled = 1
+				{
+					class_056F_vardion2_bark_interrupted_dialogue_response(this);
+				}
+				else
+				{
+					class_0595_bane2_handle_silent_avatar(this);
+				}
+				local_m0B = "Farewell. ";
+			}
+			default
+			{
+				bark("I believe something you said was incorrectly spelled. I don't know why I know this. It was as if giant, blue letters had appeared, blazing across the sky. ");
+			}
+		}
+		if baneMad
+		{
+			local_m0B = "Farewell. ";
+		}
+	}
+}
+
+// Derived: routine 0x4172, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] daemscen_monitor_sorcery_sponsor_test(arg_04:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		sponsorTest = 1;
+	}
+	process
+	{
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 10);
+		if not sponsorTest
+		{
+			spellsCast = 0;
+			enterFastArea();
+			return;
+		}
+		if getDistance(arg_04, Avatar:Referent) >= 672
+		{
+			sponsorTest = 0;
+			spellsCast = 0;
+			enterFastArea();
+			return;
+		}
+		if spellsCast = 3
+		{
+			setAvatarInStasis(1);
+			wait(120);
+			class_057C_enterConvo(this);
+			bark("Well done, Disciple! You are now ready to seek out the Master. Go to the Obsidian Fortress. The gates will no longer bar you. In my eyes you are now an Acolyte, only Master Malchir has the right to revoke this should you fail his tests. ");
+			sponsorTest = 0;
+			keyOfTheAcolyte = 1;
+			class_057C_exitConvo(this);
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x4355, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] daemscen_refuse_first_acolyte_conversation()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	bark("I am sorry, Acolyte. I have no time for conversation. My duties as First Acolyte preclude idle discussion. ");
+	if not doChannel
+	{
+		bark("Besides, I believe the Master still wishes to see you. Do not tarry overlong. Malchir is not known to be forgiving. ");
+	}
+}
+

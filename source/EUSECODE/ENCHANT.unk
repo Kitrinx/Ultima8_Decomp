@@ -1,0 +1,287 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0587
+// FLEX slot: 1417
+// Original offset: 0x000699FC
+// Naming evidence: E, exact object-1 linker name `ENCHANT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ENCHANT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process enchant_apply_spellbook_enchantment(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0D:U8Byte;
+	local_m0F:U8Word;
+	local_m11:U8Word;
+	local_m11_w01:U8Bytes1;
+	local_m13:U8Word;
+	local_m15:Item;
+	local_m17:Item;
+	local_m19:U8Word;
+	local_m1B:U8Word;
+	local_m1D:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ANIM, arg_00]];
+	}
+	process
+	{
+		local_m02 = arg_00;
+		local_m04 = Item_getQ(u8_local_address(local_m02_w01));
+		if (local_m04 < 81) or (local_m04 > 86)
+		{
+			return;
+		}
+		local_m04 -= 80;
+		local_m06 = 0;
+		local_m08 = 0;
+		local_m0A = 5;
+		local_m0C = 3;
+		if local_m04 = 1
+		{
+			local_m0C = 2;
+		}
+		else if local_m04 = 3
+		{
+			local_m0A = 4;
+		}
+		else if local_m04 = 4
+		{
+			local_m0C = 4;
+		}
+		else if local_m04 = 5
+		{
+			local_m0A = 7;
+			local_m0C = 5;
+		}
+		local_m11 = Avatar.getX() - 16;
+		local_m0F = Avatar.getY() + 32;
+		local_m0D = Avatar.getZ();
+		local_m13 = Avatar.getEquip(6);
+		if local_m13 = 0
+		{
+			return;
+		}
+		u8_search_begin(local_m15, 5, local_m13, 65535, <<68, u8_search_word(442), u8_search_word(395), u8_search_word(398), u8_search_word(399), 36>>);
+		while u8_search_condition()
+		{
+			local_m19 = 0;
+			local_m1B = local_m15.getType();
+			local_m1D = local_m15.getFrame();
+			if local_m1B = 399
+			{
+				if (local_m1D <= 1) or (local_m1D = 17) or (local_m1D = 18)
+				{
+					local_m19 = 1;
+				}
+				else if (local_m1D = 2) or (local_m1D = 3)
+				{
+					local_m19 = 2;
+				}
+				else if (local_m1D >= 4) and (local_m1D <= 9)
+				{
+					local_m19 = 4;
+				}
+				else
+				{
+					if (local_m1D >= 10) and (local_m1D <= 16)
+					{
+						local_m19 = 8;
+						u8goto label_01E0;
+					}
+				}
+				u8label label_01E0:
+			}
+			else if local_m1B = 398
+			{
+				if class_007C_pent_is_reagent_category(0, local_m15)
+				{
+					local_m19 = 16;
+				}
+				else if class_007C_pent_is_reagent_category(1, local_m15)
+				{
+					local_m19 = 32;
+				}
+				else if class_007C_pent_is_reagent_category(2, local_m15)
+				{
+					local_m19 = 64;
+				}
+				else if class_007C_pent_is_reagent_category(3, local_m15)
+				{
+					local_m19 = 128;
+				}
+				else if class_007C_pent_is_reagent_category(4, local_m15)
+				{
+					local_m19 = 256;
+				}
+				else
+				{
+					if class_007C_pent_is_reagent_category(5, local_m15)
+					{
+						local_m19 = 512;
+						u8goto label_0273;
+					}
+				}
+				u8label label_0273:
+			}
+			else if local_m1B = 395
+			{
+				if (local_m1D = 6) or (local_m1D = 7)
+				{
+					local_m19 = 512;
+				}
+				else if local_m1D = 9
+				{
+					local_m19 = 1024;
+				}
+				else if (local_m1D >= 10) and (local_m1D <= 13)
+				{
+					local_m19 = 2048;
+				}
+				else
+				{
+					if (local_m1D = 14) or (local_m1D = 15)
+					{
+						local_m19 = 4096;
+						u8goto label_02D1;
+					}
+				}
+				u8label label_02D1:
+			}
+			else
+			{
+				if local_m1B = 442
+				{
+					local_m19 = 8192;
+					u8goto label_02E5;
+				}
+			}
+			u8label label_02E5:
+			if local_m19 > 0
+			{
+				if (local_m06 & local_m19) != 0
+				{
+					local_m19 = 0;
+				}
+				if local_m04 = 1
+				{
+					if (local_m19 != 1) and (local_m19 != 2) and (local_m19 != 4) and (local_m19 != 64) and (local_m19 != 256)
+					{
+						local_m19 = 0;
+					}
+				}
+				else if local_m04 = 2
+				{
+					if (local_m19 != 4) and (local_m19 != 16) and (local_m19 != 256) and (local_m19 != 1024) and (local_m19 != 4096)
+					{
+						local_m19 = 0;
+					}
+				}
+				else if local_m04 = 3
+				{
+					if (local_m19 != 2) and (local_m19 != 32) and (local_m19 != 64) and (local_m19 != 512)
+					{
+						local_m19 = 0;
+					}
+				}
+				else if local_m04 = 4
+				{
+					if (local_m19 != 4) and (local_m19 != 8) and (local_m19 != 16) and (local_m19 != 128) and (local_m19 != 2048)
+					{
+						local_m19 = 0;
+					}
+				}
+				else if local_m04 = 5
+				{
+					if (local_m19 != 2) and (local_m19 != 4) and (local_m19 != 8) and (local_m19 != 128) and (local_m19 != 256) and (local_m19 != 2048) and (local_m19 != 4096)
+					{
+						local_m19 = 0;
+					}
+				}
+				else
+				{
+					if local_m04 = 6
+					{
+						if local_m19 != 8192
+						{
+							local_m19 = 0;
+						}
+						u8goto label_0410;
+					}
+				}
+			}
+			u8label label_0410:
+			if local_m19 > 0
+			{
+				if local_m08 = 0
+				{
+					Avatar.turnToFace(4, 0, 8);
+					Avatar.realDoAnim(49, 4);
+				}
+				local_m08++;
+				if local_m19 != 8192
+				{
+					local_m06 += local_m19;
+					if local_m15.getQuantity() > 1
+					{
+						local_m15.setQuantity(local_m15.getQuantity() - 1);
+						Item_create(local_m15.getFrame(), local_m15.getType(), u8_local_address(local_m15_w01));
+						local_m15.pop(local_m11, local_m0F, local_m0D);
+					}
+					else
+					{
+						local_m15.legal_move(u8_local_address(local_m11_w01), 0, 0);
+					}
+					Item_create(0, 587, u8_local_address(local_m17_w01));
+					local_m17.pop(local_m15.getX(), local_m15.getY(), local_m15.getZ() + 8);
+					wait(20);
+					local_m15.destroy();
+					playSFX(132, 200);
+					wait(20);
+					local_m17.destroy();
+					wait(20);
+				}
+			}
+			u8_search_advance();
+		}
+		u8_search_end();
+		if local_m08 = local_m0A
+		{
+			if Avatar.getMana() < local_m0C
+			{
+				Avatar.realDoAnim(AS_ENTER_CAST, Avatar.getDir());
+				safePlaySFX(124, 100);
+				Avatar.realDoAnim(AS_EXIT_CAST, Avatar.getDir());
+				return;
+			}
+			Avatar.setMana(Avatar.getMana() - 3);
+			AccumulateIntelligence(class_0581_randRange(5, 10));
+			Avatar.realDoAnim(50, 4);
+			Avatar.realDoAnim(AS_ENTER_CAST, 4);
+			local_m02.setFrame(11);
+			playSFX(193, 100);
+			Avatar.realDoAnim(AS_EXIT_CAST, 4);
+		}
+		else if local_m08 > 0
+		{
+			Avatar.realDoAnim(50, 4);
+			Avatar.realDoAnim(AS_STAND, 4);
+		}
+		return;
+	}
+}
+

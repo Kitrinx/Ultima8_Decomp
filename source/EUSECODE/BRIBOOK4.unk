@@ -1,0 +1,20 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x058E
+// FLEX slot: 1424
+// Original offset: 0x00042EAF
+// Naming evidence: E, exact object-1 linker name `BRIBOOK4`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BRIBOOK4.unk`.
+// u8label/u8goto remain invented where emitted.
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bribook4_read_slayer_location_clue()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("Feel good for having found me yet more trouble does lie ahead. Now ye do truly enter the resting place of the Slayer. Soon will ye be within reach of the Slayer. The Slayer, whose cruel head does strike fear within the hearts of those who oppose it. Be ye not be there yet. Quick and nimble must be the person commands the force of the Slayer. Look again for one of my line. Should ye find my cousin, then ye should learn where the Slayer awaits."), this);
+}
+

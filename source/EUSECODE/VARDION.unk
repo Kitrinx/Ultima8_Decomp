@@ -1,0 +1,1039 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x041C
+// FLEX slot: 1054
+// Original offset: 0x00110BAC
+// Naming evidence: E, exact object-1 linker name `VARDION`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/VARDION.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+globalflag vardionWarned:2;
+
+npcclass VARDION inherits Npc
+{
+	process vardion_cast_forward_to_spell_combat(arg_04:U8Word);
+	process vardion_avatar_stole_something_warn_then_target_thief(arg_04:U8Word);
+	process vardion_look_bark_living_or_dead_identity();
+	process vardion_schedule_update_period_schedule_and_safe_teleport();
+	process vardion_enter_fast_area_restore_enclave_items_and_target_avatar();
+	process vardion_leave_fast_area_stop_active_process();
+	process vardion_use_toggle_gump_and_run_sorcerer_dialogue();
+	process [[PT_DEFAULT, referent]] vardion_recruit_disciple();
+	process vardion_request_first_acolyte_role();
+}
+
+// Derived: routine 0x0080, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process VARDION::vardion_cast_forward_to_spell_combat(arg_04:U8Word)
+{
+	vardionMad = 3;
+	class_0574_spelcmbt_run_spell_combat(this, arg_04);
+}
+
+// Derived: routine 0x00A7, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process VARDION::vardion_avatar_stole_something_warn_then_target_thief(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	if not arg_04
+	{
+		return;
+	}
+	if (vardionJoined = 1) or (sponsorTest = 1) or (keyOfTheAcolyte = 1)
+	{
+		return;
+	}
+	killProcess(referent, PT_ACTIVITY);
+	turnToFace(getDirToItem(Avatar:Referent), 0, 5);
+	foreach recursive local_m02 within container 1 {
+		if local_m02 = arg_04
+		{
+			setAvatarInStasis(1);
+			bark("You are unworthy to remain here. Die, fool! ");
+			setTarget(1);
+			setAvatarInStasis(0);
+			return;
+		}
+	}
+	if not vardionWarned
+	{
+		vardionWarned = 1 + vardionWarned;
+		bark("Don't touch that. ");
+	}
+	else if vardionWarned = 1
+	{
+		vardionWarned = 1 + vardionWarned;
+		bark("While you are here, you will leave my things be. ");
+	}
+	else if vardionWarned = 2
+	{
+		vardionWarned = 1 + vardionWarned;
+		bark("I warn you. I will kill you for this behavior. ");
+	}
+	else
+	{
+		setAvatarInStasis(1);
+		bark("You will die... now! ");
+		setTarget(1);
+		setAvatarInStasis(0);
+		return;
+	}
+	vardion_enter_fast_area_restore_enclave_items_and_target_avatar();
+}
+
+// Derived: routine 0x02D6, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process VARDION::vardion_look_bark_living_or_dead_identity()
+{
+	if vardionName and vardionJob
+	{
+		if isDead()
+		{
+			bark("Vardion the dead Sorcerer ");
+		}
+		else
+		{
+			bark("Vardion the Sorcerer ");
+		}
+	}
+	else if vardionName
+	{
+		if isDead()
+		{
+			bark("the deceased Vardion ");
+		}
+		else
+		{
+			bark("Vardion");
+		}
+	}
+	else if vardionJob
+	{
+		if isDead()
+		{
+			bark("dead Sorcerer ");
+		}
+		else
+		{
+			bark("Sorcerer ");
+		}
+	}
+	else if isDead()
+	{
+		bark("dead mage ");
+	}
+	else
+	{
+		bark("mage ");
+	}
+}
+
+// Derived: routine 0x0463, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process VARDION::vardion_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	if isDead()
+	{
+		return;
+	}
+	else if not inDaemonScene
+	{
+		local_m05_w02 = 16415;
+		local_m03 = 16031;
+		local_m01 = 40;
+		if class_057C_canSafeTeleport(this, local_m05, 12)
+		{
+			class_057C_safeTeleport(this, local_m05, 12);
+		}
+	}
+}
+
+// Derived: routine 0x04CE, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process VARDION::vardion_enter_fast_area_restore_enclave_items_and_target_avatar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Item;
+	foreach local_m02 where ((type = 124) and (frame = 4)) within 20 cells of referent {
+		local_m04 = local_m02;
+	}
+	if acolyteKilled = 2
+	{
+		setFrame(129);
+		if local_m04
+		{
+			u8_search_begin(local_m02, 2, 10 * 32, local_m04, <<66, u8_search_word(634), u8_search_word(313), 36>>);
+			while u8_search_condition()
+			{
+				local_m02.destroy();
+				u8_search_advance();
+			}
+			u8_search_end();
+			foreach local_m02 where (type = 400) within 7 cells of local_m04 {
+				if (local_m02.getX() <= local_m04.getX()) and (local_m02.getX() <= local_m04.getX())
+				{
+					local_m02.destroy();
+				}
+			}
+		}
+		if goToInnerSanctum = 1
+		{
+			teleport(0, 0, 0, 0);
+			return;
+		}
+		return;
+	}
+	else if isDead()
+	{
+		return;
+	}
+	else if avatarMasterSorcerer
+	{
+		setTarget(1);
+	}
+	else
+	{
+		if ((sponsorTest = 0) or (keyOfTheAcolyte = 1)) and (inDaemonScene = 0)
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_057B_move_return_to_idle_marker(this) -> return;
+		}
+	}
+}
+
+// Derived: routine 0x0608, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process VARDION::vardion_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x0623, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process VARDION::vardion_use_toggle_gump_and_run_sorcerer_dialogue()
+{
+	if isDead()
+	{
+		if getStatus() & 256
+		{
+			closeGump();
+		}
+		else
+		{
+			Item_openGump(12, this);
+		}
+	}
+	else
+	{
+		enterConvo();
+		if not Malchir.isDead()
+		{
+			class_056F_vardion2_run_enclave_gatekeeping_dialogue(this);
+		}
+		if vardionMad
+		{
+			class_056F_vardion2_run_anger_reconciliation_dialogue(this);
+		}
+		else if Malchir.isDead()
+		{
+			vardion_request_first_acolyte_role();
+		}
+		else if keyOfTheAcolyte
+		{
+			class_058A_daemscen_refuse_first_acolyte_conversation(this);
+		}
+		else if acolyteKilled
+		{
+			class_058A_daemscen_run_sorcery_training_conversation(this);
+		}
+		else if vardionJoined
+		{
+			class_056F_vardion2_ask_for_bane_truename(this);
+		}
+		else
+		{
+			vardion_recruit_disciple();
+		}
+		exitConvo();
+	}
+}
+
+// Derived: routine 0x073C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] VARDION::vardion_recruit_disciple()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String List;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0B:U8Byte;
+	local_m0C:U8Byte;
+	local_m0D:U8Byte;
+	local_m0E:U8Byte;
+	local_m0F:U8Byte;
+	local_m10:U8Byte;
+	local_m11:U8Byte;
+	local_m12:U8Byte;
+	local_m13:U8Byte;
+	local_m14:U8Byte;
+	local_m15:U8Byte;
+	local_m16:U8Byte;
+	local_m18:String;
+	local_m0B = 0;
+	local_m0C = 0;
+	local_m0D = 0;
+	local_m0E = 0;
+	local_m0F = 0;
+	local_m10 = 0;
+	local_m11 = 0;
+	local_m12 = 0;
+	local_m13 = 0;
+	local_m14 = 0;
+	local_m15 = 0;
+	local_m16 = 0;
+	if (vardionOffer = 0) or (vardionOffer = 5)
+	{
+		local_m06 = <<"Tell me of this place. ">>;
+		if not vardionName
+		{
+			local_m06 ^= <<"Who are you? ">>;
+		}
+		if not vardionJob
+		{
+			local_m06 ^= <<"What do you do? ">>;
+		}
+		local_m06 = class_0581_free_append_list_line("Farewell. ", local_m06);
+	}
+	else
+	{
+		local_m06 = <<"Yes, I am prepared. ", "Let me think on it more. ", "I won't do your dirty work! ">>;
+	}
+	while local_m04 != "Farewell. "
+	{
+		if class_0581_countStrList(local_m06) <= 1
+		{
+			bark("Are you finished? ");
+			local_m06 = <<"Tell me of this place. ">>;
+			if not vardionName
+			{
+				local_m06 ^= <<"Who are you? ">>;
+			}
+			if not vardionJob
+			{
+				local_m06 ^= <<"What do you do? ">>;
+			}
+			local_m06 = class_0581_free_append_list_line("Farewell. ", local_m06);
+		}
+		else
+		{
+			local_m06 = class_0581_free_append_list_line("Farewell. ", local_m06);
+		}
+		local_m04 = ask(local_m06);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "Tell me of this place. "
+			{
+				if not vardionEnclave
+				{
+					vardionEnclave = 1;
+					bark("How can it be that you do not know of the Sorcerer's Enclave? ");
+					local_m06 = <<"I am a stranger here. ", "I know. I'm just asking you. ", "Just answer my question. ">>;
+					local_m04 = ask(local_m06);
+					// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+					switch local_m04
+					{
+						case "Just answer my question. "
+						{
+							bark("What?! How dare you! ");
+							vardionMad = 2;
+						}
+						case "I know. I'm just asking you. "
+						{
+							bark("Fine then, you've no need to ask me your tiresome questions. ");
+							vardionMad = 1;
+						}
+						case "I am a stranger here. "
+						{
+							bark("You are a stranger indeed, but regardless, I will tell you because you need to be aware of the danger you are in while here. ");
+							local_m0B = 1;
+							local_m04 = "Tell me of this place. ";
+						}
+						default
+						{
+							class_056F_vardion2_bark_interrupted_dialogue_response(this);
+							local_m04 = "Farewell. ";
+						}
+					}
+				}
+				else
+				{
+					local_m0B = 1;
+				}
+				if local_m0B
+				{
+					local_m02 = "This is the Sorcerer's Enclave. ";
+					local_m06 = <<"Farewell. ">>;
+					if vardionJob
+					{
+						local_m02 += "As First Acolyte, it is my duty to make sure that the Sorcerers learn about the Fire and keep the old ways alive. ";
+						if not local_m10
+						{
+							local_m06 ^= <<"First Acolyte. What is that? ">>;
+						}
+					}
+					else
+					{
+						local_m02 += "We Sorcerers gather here to learn about the Fire and keep the old ways alive. ";
+					}
+					bark(u8_string_local_address(local_m02));
+					if not local_m0C
+					{
+						local_m06 ^= <<"Tell me about Sorcerers. ">>;
+					}
+					if not local_m0E
+					{
+						local_m06 ^= <<"Tell me of the Fire. ">>;
+					}
+					if not local_m0D
+					{
+						local_m06 ^= <<"Old ways? ">>;
+					}
+				}
+			}
+			case "Who are you? ", "What do you do? "
+			{
+				bark("I am Vardion, First Acolyte of Sorcerer's Enclave. Keep this in mind, and we'll have no strife. ");
+				local_m06 = <<"What is an Acolyte? ", "Farewell. ">>;
+				if not local_m10
+				{
+					local_m06 ^= <<"First Acolyte. What is that? ">>;
+				}
+				if not local_m0C
+				{
+					local_m06 ^= <<"Tell me about Sorcerers. ">>;
+				}
+				if not local_m0B
+				{
+					local_m06 ^= <<"Tell me of this place. ">>;
+				}
+				vardionName = 1;
+				vardionJob = 1;
+			}
+			case "Tell me about Sorcerers. "
+			{
+				bark("Sorcerers are practitioners of the element of Fire. We are not to be trifled with. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m0F
+				{
+					local_m06 ^= <<"What is an element? ">>;
+				}
+				if not local_m0E
+				{
+					local_m06 ^= <<"Tell me of the Fire. ">>;
+				}
+				local_m06 ^= <<"Must you treat me like a child? ">>;
+				local_m0C = 1;
+			}
+			case "Tell me of the Fire. "
+			{
+				bark("Fire is all consuming. It lives within the mountain, and burns within your own body. It is the element I give my life to study. ");
+				local_m06 -= <<"Tell me of the Fire. ">>;
+				if not local_m0F
+				{
+					local_m06 ^= <<"What is an element? ">>;
+				}
+				local_m0E = 1;
+			}
+			case "Old ways? "
+			{
+				bark("The old ways are the rituals and ceremonies that we use to bind the Lord of Flame to our wills. ");
+				local_m06 = <<"What rituals and ceremonies? ", "Farewell. ">>;
+				if not local_m12
+				{
+					local_m06 ^= <<"Who is the Lord of Flame? ">>;
+				}
+				local_m0D = 1;
+			}
+			case "What is an Acolyte? "
+			{
+				bark("Acolytes are chosen from amongst the Disciples to assist the Master in the old ways. ");
+				local_m06 = <<"What is a Disciple? ", "Farewell. ">>;
+				if not local_m11
+				{
+					local_m06 ^= <<"Who or what is the Master? ">>;
+				}
+				if not local_m10
+				{
+					bark("One is chosen from their number to become the First Acolyte. I have that honor and duty. ");
+					local_m06 ^= <<"First Acolyte. What is that? ">>;
+				}
+			}
+			case "First Acolyte. What is that? "
+			{
+				bark("It is a position of respect amonst my kind. I handle the affairs of the Enclave, and our dealings with Tenebrae. This gives the Master more time to commit to his research and spellcraft. ");
+				local_m06 = <<"You have dealings with Tenebrae? ", "Farewell. ">>;
+				if not local_m11
+				{
+					local_m06 ^= <<"Who or what is the Master? ">>;
+				}
+				local_m06 ^= <<"What does the Master research? ", "Spellcraft? Tell me more of this. ">>;
+				local_m10 = 1;
+			}
+			case "What is an element? "
+			{
+				if vardionHome = 0
+				{
+					bark("What do you mean 'What is an element?' Where do you come from that you could possibly be so ignorant? ");
+					local_m06 = <<"You don't want to know. ", "Far away. ", "The other side of the island. ", "I sailed from another island. ", "I come from another world. ">>;
+					local_m0A = 0;
+					while local_m04 != ""
+					{
+						local_m04 = ask(local_m06);
+						// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+						switch local_m04
+						{
+							case "You don't want to know. "
+							{
+								bark("Yes, actually I do. ");
+								local_m06 -= <<"You don't want to know. ">>;
+								local_m06 ^= <<"I cannot tell you. ">>;
+							}
+							case "I cannot tell you. "
+							{
+								bark("I will respect your privacy, however, I might also ask you to respect mine when you question me. ");
+								local_m06 -= <<"I cannot tell you. ">>;
+								local_m06 ^= <<"I still cannot tell you. ">>;
+							}
+							case "I still cannot tell you. "
+							{
+								bark("Fine then, but I will remember this. ");
+								vardionHome = 1;
+								local_m04 = "";
+							}
+							case "Far away. "
+							{
+								bark("That I can believe. Go on. ");
+								local_m06 -= <<"Far away. ">>;
+							}
+							case "The other side of the island. "
+							{
+								bark("The other side of the island is inhospitable, stranger. ");
+								if not local_m0A
+								{
+									bark("Do not lie to me again. ");
+								}
+								else
+								{
+									bark("How am I to trust you if you keep attempting to deceive me. ");
+								}
+								local_m0A++;
+								local_m06 -= <<"The other side of the island. ">>;
+							}
+							case "I sailed from another island. "
+							{
+								bark("That is quite unlikely. No one has sailed here for several generations. ");
+								if not local_m0A
+								{
+									bark("Do not lie to me again. ");
+								}
+								else
+								{
+									bark("How am I to trust you if you keep attempting to deceive me. ");
+								}
+								local_m0A++;
+								local_m06 -= <<"I sailed from another island. ">>;
+							}
+							case "I come from another world. "
+							{
+								if not local_m0A
+								{
+									local_m02 = "By the Guardian! ";
+								}
+								if local_m0A = 1
+								{
+									local_m02 = "Although you are not completely honest, I do believe you. It would appear that ";
+								}
+								else if local_m0A = 2
+								{
+									local_m02 = "I really don't know whether or not to believe you. But if what you say is true, it would seem that ";
+								}
+								local_m02 += "I've found a world traveler. ";
+								bark(u8_string_local_address(local_m02));
+								bark("My grandmother always said that there were other worlds out there. It's a shame she couldn't be here to see proof. ");
+								local_m06 = <<"Did she die? ", "What happened to her? ", "Where is she now? ", "Who was your grandmother? ">>;
+								local_m02 = "";
+							}
+						}
+						if local_m04 = "Did she die? "
+						{
+							local_m02 += "No. ";
+							local_m04 = "What happened to her? ";
+						}
+						if local_m04 = "What happened to her? "
+						{
+							local_m02 += " She just vanished one day. ";
+							local_m04 = "Where is she now? ";
+						}
+						if local_m04 = "Where is she now? "
+						{
+							local_m02 += " No one knows where she is. ";
+							local_m04 = "Who was your grandmother? ";
+						}
+						if local_m04 = "Who was your grandmother? "
+						{
+							local_m18 = "Her name was Mordra. She was a powerful mage, maybe she found the way to leave this world, perhaps she went to yours, ";
+							local_m02 += " " + local_m18;
+							if vardionAvaName
+							{
+								local_m02 += " " + getName() + ".";
+							}
+							else
+							{
+								local_m18 = "traveler. ";
+								local_m02 += " " + local_m18;
+							}
+							bark(u8_string_local_address(local_m02));
+							local_m06 = <<"I don't think so. ", "Perhaps. ">>;
+						}
+						if (local_m04 = "I don't think so. ") or (local_m04 = "Perhaps. ")
+						{
+							bark("What is your world called, my friend? ");
+							local_m06 = <<"Earth. ", "Britannia. ", "I cannot say. ">>;
+						}
+						if local_m04 = "Earth. "
+						{
+							bark("How curious. Your world is named after one of the elements. This Earth must be a dark place indeed, filled with death. ");
+							vardionHome = 3;
+							local_m04 = "";
+						}
+						if local_m04 = "Britannia. "
+						{
+							bark("What an odd sounding name. But strangely enough, it sounds familiar. ");
+							vardionHome = 4;
+							local_m04 = "";
+						}
+						if local_m04 = "I cannot say. "
+						{
+							bark("Of course. I understand, it's a trade secret. You wouldn't want just anyone travelling there. ");
+							vardionHome = 2;
+							local_m04 = "";
+						}
+					}
+					bark("Now I believe you asked me, of all things, what an element is. ");
+				}
+				bark("The elements number four: Earth, Water, Air, and Fire. And each has a power intrinsic to it. ");
+				local_m06 = <<"Tell me more of Earth. ", "What can you say of Water? ", "I wish to know about Air. ", "Farewell. ">>;
+				if not local_m0E
+				{
+					local_m06 ^= <<"Tell me of the Fire. ">>;
+				}
+				local_m0F = 1;
+			}
+			case "Must you treat me like a child? "
+			{
+				bark("While you are in my Enclave, I will treat you however I please. But in truth I seek only to give warning to those uninitiated in our ways. ");
+				local_m06 -= <<"Must you treat me like a child? ">>;
+			}
+			case "What rituals and ceremonies? "
+			{
+				bark("These rituals are shown to Sorcerers only. I will not reveal them to an outsider. To do so is punishable by death. ");
+				local_m06 -= <<"What rituals and ceremonies? ">>;
+				if not local_m0C
+				{
+					local_m06 ^= <<"Tell me about Sorcerers. ">>;
+				}
+			}
+			case "Who is the Lord of Flame? "
+			{
+				bark("The Lord of Flame is the Father of the Daemons. He is the charnel pit from which all Fire comes. ");
+				if not local_m0E
+				{
+					local_m06 = <<"Father of Daemons? ", "Tell me of the Fire. ", "Farewell. ">>;
+				}
+				else
+				{
+					local_m06 -= <<"Who is the Lord of Flame? ">>;
+					local_m06 ^= <<"Father of Daemons? ">>;
+				}
+				local_m12 = 1;
+			}
+			case "What is a Disciple? "
+			{
+				bark("A Disciple is a Sorcerer who has not been made an Acolyte. ");
+				local_m06 -= <<"What is a Disciple? ">>;
+				if not local_m0C
+				{
+					local_m06 ^= <<"Tell me about Sorcerers. ">>;
+				}
+			}
+			case "Who or what is the Master? "
+			{
+				bark("Master Malchir is the leader of our Enclave, but do not bother him with idle questions. He is a busy man and does not take kindly to interruptions of his work. ");
+				local_m06 -= <<"Who or what is the Master? ">>;
+				local_m11 = 1;
+			}
+			case "You have dealings with Tenebrae? "
+			{
+				bark("Of course, dullard. Do you think we have the time to grow our own food? Make our own clothing? Craft our own buildings? We give Tenebrae the sure knowledge that the Lord of Flame will remain bound and that the volcano will remain dormant. In return they free us from the necessity of handling our more basic needs. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m12
+				{
+					local_m06 ^= <<"Who is the Lord of Flame? ">>;
+				}
+				local_m06 ^= <<"You extort from the Tenebraens. ", "Shrewd bargaining on both sides. ">>;
+			}
+			case "What does the Master research? "
+			{
+				bark("That is not your business. And don't bother to ask him. He won't tell you and will most likely be angered by your interruption. And if he is angry, I will be angry. Do you take my meaning? ");
+				local_m08 = askYesNo(2);
+				if local_m08 = 1
+				{
+					bark("Good. I'm glad that you do. ");
+				}
+				else
+				{
+					bark("Well, then. Let me be more explicit. If you anger Malchir, it is my duty to see that the source of his irritation is removed. Forcibly if necessary. ");
+				}
+				local_m06 -= <<"What does the Master research? ">>;
+			}
+			case "Spellcraft? Tell me more of this. "
+			{
+				bark("Spells are our means of releasing and controlling the power of Fire. ");
+				local_m06 -= <<"Spellcraft? Tell me more of this. ">>;
+				if not local_m0E
+				{
+					local_m06 ^= <<"Tell me of the Fire. ">>;
+				}
+			}
+			case "Tell me more of Earth. "
+			{
+				bark("Earth is useful to Fire. It forms the channels through which Fire flows and provides the fuel by which it burns. The Mountain King and Lord of Flame have almost no conflict of wills. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m0E
+				{
+					local_m06 ^= <<"Tell me of the Fire. ">>;
+				}
+				if not local_m16
+				{
+					local_m06 ^= <<"Tell me of the Mountain King? ">>;
+				}
+				if not local_m12
+				{
+					local_m06 ^= <<"Who is the Lord of Flame? ">>;
+				}
+			}
+			case "What can you say of Water? "
+			{
+				bark("That element is anathema to Fire as the Lurker is the nemesis of the Lord of Flame. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m0E
+				{
+					local_m06 ^= <<"Tell me of the Fire. ">>;
+				}
+				if not local_m15
+				{
+					local_m06 ^= <<"Tell me of the Lurker? ">>;
+				}
+				if not local_m12
+				{
+					local_m06 ^= <<"Who is the Lord of Flame? ">>;
+				}
+			}
+			case "I wish to know about Air. "
+			{
+				bark("What is there to know? Air is at the beck and call of both Pyros and despised Hydros, and all but ignored by Lithos. Stratos is as weak as the those who follow her. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m13
+				{
+					local_m06 ^= <<"Who is Pyros? ">>;
+				}
+				local_m06 ^= <<"Hydros, who is that? ", "Who would Lithos be? ", "Tell me more of Stratos. ">>;
+			}
+			case "Father of Daemons? "
+			{
+				bark("Yes. All Daemons owe allegiance to Pyros for they are born when a life is ended in flames. ");
+				local_m06 -= <<"Father of Daemons? ">>;
+				if not local_m13
+				{
+					local_m06 ^= <<"Who is Pyros? ">>;
+				}
+			}
+			case "You extort from the Tenebraens. "
+			{
+				bark("With that single statement you have proven your total lack of understanding of our position. Perhaps I should introduce you to our patron Titan personally. I am quite sure that the Lord of Flame could teach you our value. ");
+				vardionMad = 1;
+			}
+			case "Shrewd bargaining on both sides. "
+			{
+				if not vardionRefused
+				{
+					bark("Your perceptions are both insightful and correct. Perhaps you have what it takes to become a Sorcerer. Does this prospect intrigue you? ");
+					local_m08 = askYesNo(2);
+					if local_m08 = 1
+					{
+						bark("Excellent! I will personally see to your tutoring... that is after you perform one small service for me. ");
+						local_m06 = <<"And what might that be? ", "I see. You need a lackey. ", "Wait. I only said I was intrigued. ", "Whatever you want, I'll do. ">>;
+					}
+					else
+					{
+						if local_m08 = 0
+						{
+							bark("I see. You are one who is willing to be a kith brought to slaughter. The Fire does not burn in your heart as it does in mine. ");
+						}
+						else
+						{
+							bark("Your lack of interest is echoed by mine. I don't really think you have what it takes to be one of us, anyway. ");
+						}
+						vardionMad = 1;
+					}
+				}
+				else
+				{
+					bark("So you have said before. Have you reconsidered your decision not to assist me? Will you seek the knowledge I wish? ");
+					local_m06 = <<"Yes, I am prepared. ", "I am sorry, but I must decline. ", "I won't do your dirty work! ">>;
+				}
+			}
+			case "Tell me of the Mountain King? "
+			{
+				bark("Of course, how could one be born in Pagan and not know of the Earth Titan. His Necromancers attend to the dead and put them beneath the ground to become his servants. His dominion is over the land and death. ");
+				local_m06 -= <<"Tell me of the Mountain King? ">>;
+				local_m06 ^= <<"What do you know of Necromancers? ">>;
+				local_m16 = 1;
+			}
+			case "Tell me of the Lurker? "
+			{
+				bark("That foul entity long ago attempted to claim all the lands beneath her dark waters. She was thwarted by a Necromancer who became the first Tempest. Were it not for the Tempests, we Sorcerers would have no other choice than to release the Lord of Flame to do battle with her. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m14
+				{
+					local_m06 ^= <<"What do you know of Necromancers? ">>;
+				}
+				local_m06 ^= <<"What can you say about Tempests? ">>;
+				if not local_m0C
+				{
+					local_m06 ^= <<"Tell me about Sorcerers. ">>;
+				}
+				if not local_m12
+				{
+					local_m06 ^= <<"Who is the Lord of Flame? ">>;
+				}
+				local_m15 = 1;
+			}
+			case "Who is Pyros? "
+			{
+				bark("Pyros is the name of the Lord of Flame, Titan of Fire. ");
+				local_m06 -= <<"Who is Pyros? ">>;
+				if not local_m12
+				{
+					local_m06 ^= <<"Who is the Lord of Flame? ">>;
+				}
+				local_m13 = 1;
+			}
+			case "Hydros, who is that? "
+			{
+				bark("That accursed name belongs to the Lurker, Titan of Water. ");
+				local_m06 -= <<"Hydros, who is that? ">>;
+				if not local_m15
+				{
+					local_m06 ^= <<"Tell me of the Lurker? ">>;
+				}
+			}
+			case "Who would Lithos be? "
+			{
+				bark("He is called the Mountain King and is the Titan of Earth. ");
+				local_m06 -= <<"Who would Lithos be? ">>;
+				if not local_m16
+				{
+					local_m06 ^= <<"Tell me of the Mountain King? ">>;
+				}
+			}
+			case "Tell me more of Stratos. "
+			{
+				bark("She is the Titan of Air and is followed by the Order of Enlightment. A group of misguided mages, called Theurgists, led by a blind, old man. ");
+				local_m06 = <<"Order of Enlightment? ", "What do you know of Theurgists? ", "Tell me of this 'blind, old man.' ", "Farewell. ">>;
+			}
+			case "And what might that be? "
+			{
+				bark("I will tell you only once a deal has been struck. Fear not. I won't make you do something you will regret. Are you prepared to undertake my task? ");
+				local_m06 = <<"Yes, I am prepared. ", "Let me think on it more. ", "I won't do your dirty work! ">>;
+				vardionOffer = 1 + vardionOffer;
+			}
+			case "I see. You need a lackey. "
+			{
+				bark("I have no need of a lackey. The task I require to be fulfilled will take skill and guile. And if you think of yourself as a lackey, I have no need of you. ");
+				vardionMad = 1;
+			}
+			case "Wait. I only said I was intrigued. "
+			{
+				bark("Then stop wasting my time! When you wish to deal in earnest, you may return. Until that time, you are dismissed. ");
+				vardionMad = 1;
+			}
+			case "Whatever you want, I'll do. "
+			{
+				bark("Your enthusiasm is encouraging, however, your blind acceptance does not give me much faith in your ability to accomplish the task I've set for you. Ah, well. Only one way to find out. Are you prepared to undertake my task? ");
+				local_m06 = <<"Yes, I am prepared. ", "Let me think on it more. ", "I won't do your dirty work! ">>;
+				vardionOffer = 1 + vardionOffer;
+			}
+			case "What do you know of Necromancers? "
+			{
+				bark("They are the practitioners of the magic of death. ");
+				local_m06 -= <<"What do you know of Necromancers? ">>;
+				local_m14 = 1;
+			}
+			case "What can you say about Tempests? "
+			{
+				bark("Naught but that they provide a service to the people by keeping the storms that plague Pagan away from this island. ");
+				local_m06 -= <<"What can you say about Tempests? ">>;
+			}
+			case "Order of Enlightment? "
+			{
+				bark("They style themselves as a religious order, following their Mystic Voice. ");
+				local_m06 -= <<"Order of Enlightment? ">>;
+				local_m06 ^= <<"What is this Mystic Voice? ">>;
+			}
+			case "What do you know of Theurgists? "
+			{
+				bark("They practice healing arts and it is said that their leader can even bring the dead back to life. All in all, they are a coven of weak fools afraid to die for a cause. ");
+				local_m06 -= <<"What do you know of Theurgists? ">>;
+			}
+			case "Tell me of this 'blind, old man.' "
+			{
+				bark("Stellos is his name and some say he's lived forever. I must give credit to this rumor, for he was an old man when I was a boy, and he hasn't changed a bit as I've become a man. ");
+				local_m06 -= <<"Tell me of this 'blind, old man.' ">>;
+			}
+			case "Yes, I am prepared. "
+			{
+				bark("Excellent. The pact has been made. You will now be my Disciple. I sense that you are one of the rare individuals who the Fire has chosen. The Fire gives you the Truename: Daemion. ");
+				bark("Hold tightly to that name. It is your strength and also your weakness. My Truename is Morduin. I give it to you so that you may learn Sorcery from me. Reveal it upon pain of death. ");
+				bark("The task you must perform is to gain the Truename of Bane. She is a deceptive and conniving wench. Do not be fooled by her apparent friendliness. It's a ruse. She is power hungry and ambitious. ");
+				bark("It is my belief that she seeks the death of the Master and myself in order to become the most powerful Sorcerer of Pagan. This is not a problem in and of itself. It is how she intends to go about it that causes the problem. ");
+				bark("Were she to issue the Calling and challenge by the proper methods, I would surely defeat her, but knowing this, she intends to strike clandestinely. The factions that exist in the Enclave will war if this happens. ");
+				bark("The possibility of losing control of the Lord of Flame will vastly increase and should this catastrophe come to pass, Pagan will be doomed.*You must hurry. I know not when she will attack. ");
+				vardionJoined = 1;
+				local_m04 = "Farewell. ";
+			}
+			case "Let me think on it more. "
+			{
+				if vardionOffer >= 4
+				{
+					bark("You will not! I will have my answer now. ");
+					local_m06 -= <<"Let me think on it more. ", "I won't do your dirty work! ">>;
+					local_m06 += <<"I cannot accept an unknown task. ", "I won't do your dirty work! ">>;
+				}
+				else
+				{
+					if vardionOffer = 1
+					{
+						bark("Very well, but remember, I am not a patient man. Do not delay over long, or I may retract my offer. ");
+					}
+					else if vardionOffer = 2
+					{
+						bark("Be swift. I grow weary of waiting upon your answer. ");
+					}
+					else if vardionOffer = 3
+					{
+						bark("This capricious behavior begins to anger me. I will not endure it any further. ");
+					}
+					vardionOffer = 1 + vardionOffer;
+					return;
+				}
+			}
+			case "I won't do your dirty work! "
+			{
+				bark("Dolt! You will regret ever having come to our Enclave! Prepare yourself for death! ");
+				vardionMad = 3;
+				setTarget(1);
+			}
+			case "What is this Mystic Voice? "
+			{
+				bark("It is the alias of Stratos. ");
+				local_m06 -= <<"What is this Mystic Voice? ">>;
+			}
+			case "I cannot accept an unknown task. "
+			{
+				bark("I can understand your qualms, but put them to rest. I only seek a specific piece of information. Will you aid me? ");
+				local_m06 -= <<"I cannot accept an unknown task. ", "I won't do your dirty work! ">>;
+				local_m06 += <<"I am sorry, but I must decline. ", "I won't do your dirty work! ">>;
+			}
+			case "I am sorry, but I must decline. "
+			{
+				bark("Very well. Perhaps you will reconsider with time. ");
+				local_m04 = "Farewell. ";
+				vardionOffer = 1 + vardionOffer;
+			}
+			case "Farewell. "
+			{
+				class_056F_vardion2_bark_state_based_farewell(this);
+			}
+			case ""
+			{
+				class_056F_vardion2_bark_interrupted_dialogue_response(this);
+				local_m04 = "Farewell. ";
+			}
+			default
+			{
+				bark("I can't understand you. What did you say? ");
+			}
+		}
+		if vardionMad
+		{
+			local_m04 = "Farewell. ";
+		}
+	}
+}
+
+// Derived: routine 0x54C4, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process VARDION::vardion_request_first_acolyte_role()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, referent]];
+	realDoAnim(49, getDir());
+	if not vardionGroveled
+	{
+		bark("If it would not be too much to ask, Master, I would like to become your First Acolyte. I have experience in dealing with the duties involved, and I promise you will not find my abilities wanting. Will you accept me? ");
+		local_m02 = class_0581_askYesNo(0x00000000);
+		if local_m02 = 1
+		{
+			bark("Thank you, Master! You won't regret this decision. ");
+		}
+		else
+		{
+			bark("I understand, Master. I won't take any more of your time. Whatever I have is, of course, yours to take. ");
+		}
+		vardionGroveled = 1;
+	}
+	else
+	{
+		bark("I hope I am performing my duties to your satisfaction. But I will attempt to improve them further. I must go now to return to my studies. ");
+	}
+	wait(100);
+	realDoAnim(50, getDir());
+}
+

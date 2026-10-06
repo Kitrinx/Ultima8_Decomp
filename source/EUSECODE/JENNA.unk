@@ -1,0 +1,943 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0418
+// FLEX slot: 1050
+// Original offset: 0x00094CFE
+// Naming evidence: E, exact object-1 linker name `JENNA`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/JENNA.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "flags";
+uses "free";
+uses "npc";
+
+npcclass Jenna inherits Npc
+{
+	process look();
+	process enterFastArea();
+	process leaveFastArea();
+	process cast(ref:Referent);
+	process tendBar();
+	process randomBarkAtBar();
+	process closeEWDoor();
+	process closeNSDoor();
+	process buyDrink();
+	process buyFood();
+	process use();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::look()
+{
+	if isDead()
+	{
+		if jennaName
+		{
+			bark("the corpse of Jenna ");
+		}
+		else
+		{
+			bark("dead woman ");
+		}
+		return;
+	}
+	if jennaName and jennaJob
+	{
+		bark("Jenna the barmaid ");
+		return;
+	}
+	if jennaName
+	{
+		bark("Jenna");
+		return;
+	}
+	if jennaJob
+	{
+		bark("barmaid ");
+		return;
+	}
+	else
+	{
+		bark("woman ");
+	}
+}
+
+// Derived: routine 0x0194, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::enterFastArea()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0418_tendBar(this) -> return;
+}
+
+// Derived: routine 0x01D3, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::leaveFastArea()
+{
+	killProcess(referent, PT_ACTIVITY);
+	killProcess(referent, PT_PATHFIND);
+	killProcess(referent, PT_ANIM);
+	killProcess(referent, PT_BARK);
+	if sendJennaToLunch
+	{
+		setDead();
+	}
+	if isDead()
+	{
+		teleport(urandom(10000), urandom(10000), 0, 0);
+	}
+}
+
+// Derived: routine 0x0253, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::cast(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	count:Number;
+	count = 10;
+	while (not Npc_getTarget(this)) and count
+	{
+		wait(1);
+		count--;
+	}
+	ref = Npc_getTarget(this);
+	if ref = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn callTheGuards(NULL_REF) -> return;
+		if not isDead()
+		{
+			if urandom(100) > 50
+			{
+				bark("Help me, Beren! ");
+			}
+			else
+			{
+				bark("Town Sorcerer! ");
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0321, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::tendBar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+	}
+	process
+	{
+		for counter = 10 to 17
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter)) within 30 cells of Jenna {
+				if pathfind(pathEgg, 30)
+				{
+					if (counter = 11) or (counter = 15)
+					{
+						if counter = 11
+						{
+							closeEWDoor();
+						}
+						else
+						{
+							closeNSDoor();
+						}
+					}
+					else
+					{
+						wait(100);
+						randomBarkAtBar();
+					}
+				}
+				else
+				{
+					wait(500);
+				}
+			}
+			foreach pathEgg where (type = TypeBarCounter) within 5 cells of Jenna {
+				pathfind(pathEgg, 5);
+				break;
+			}
+			foreach pathEgg where (type = TypeBarCounter) within 2 cells of Jenna {
+				turnToFace(getDirToItem(pathEgg), 0, 10);
+				realDoAnim(AS_WALK, getDir());
+				realDoAnim(AS_CLIMB_4, getDir());
+				break;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x04B8, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::randomBarkAtBar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	avaP:WorldPoint;
+	torP:WorldPoint;
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	if somebodyTalking
+	{
+		wait(100);
+		realDoAnim(AS_FIDGET, getDir());
+		return;
+	}
+	ran = getDistance(Avatar:Referent, Jenna:Referent);
+	u8goto label_0837 if not (ran < 200);
+	ran = urandom(8);
+	if ran = 1
+	{
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		bark("Excuse me, I'm trying to work. ");
+		realDoAnim(AS_FIDGET, getDir());
+		wait(120);
+	}
+	if ran = 2
+	{
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		if not orlokMet
+		{
+			bark("Need something? ");
+			return;
+		}
+		else
+		{
+			bark("Need something?");
+			return;
+		}
+		realDoAnim(AS_FIDGET, getDir());
+	}
+	if ran = 3
+	{
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		if not orlokMet
+		{
+			bark("If you want something, take a seat! ");
+			realDoAnim(AS_FIDGET, getDir());
+			bark("I said, take a seat! ");
+			return;
+		}
+		else
+		{
+			bark("The Torax ribs look great today. ");
+			return;
+		}
+		realDoAnim(AS_FIDGET, getDir());
+		wait(60);
+	}
+	if ran = 4
+	{
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		bark("I think the ribs are ready. ");
+		realDoAnim(AS_FIDGET, getDir());
+		wait(120);
+		bark("I'd better check. ");
+	}
+	return;
+	u8label label_0837:
+	ran = urandom(12);
+	turnToFace(urandom(7), 0, 10);
+	if ran = 1
+	{
+		realDoAnim(AS_FIDGET, getDir());
+		bark("That table needs another round of ale. ");
+		return;
+		realDoAnim(AS_FIDGET, getDir());
+	}
+	if ran = 2
+	{
+		bark("Hmmmm... ");
+		return;
+		realDoAnim(AS_FIDGET, getDir());
+		wait(60);
+	}
+	if ran = 3
+	{
+		bark("I'd rather be out, adventuring. ");
+	}
+	else
+	{
+		if ran = 4
+		{
+			bark("This sword can sure get in the way. ");
+			wait(60);
+		}
+		if ran = 5
+		{
+			bark("Oh no, Orlok's telling that tale again! ");
+			realDoAnim(AS_FIDGET, getDir());
+			bark("I've heard that one a hundred times. ");
+		}
+		if ran = 6
+		{
+			realDoAnim(AS_FIDGET, getDir());
+			bark("By the Titans! What a mess they left! ");
+		}
+		else
+		{
+			if ran = 7
+			{
+				bark("I really need a day off. ");
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0B16, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::closeEWDoor()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m04_w01:U8Bytes1;
+	[[PT_ACTIVITY, referent]];
+	foreach local_m02 where (type = 69) within 5 cells of Jenna {
+		local_m04 = local_m02;
+		break;
+	}
+	if local_m04
+	{
+		turnToFace(getDirToItem(local_m04), 0, 10);
+		bark("Why is this open? ");
+		class_0044_door_ns_toggle_open_closed(u8_local_address(local_m04_w01), 24);
+	}
+}
+
+// Derived: routine 0x0BA9, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::closeNSDoor()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m04_w01:U8Bytes1;
+	[[PT_ACTIVITY, referent]];
+	foreach local_m02 where (type = 68) within 5 cells of Jenna {
+		local_m04 = local_m02;
+		break;
+	}
+	if local_m04
+	{
+		turnToFace(getDirToItem(local_m04), 0, 10);
+		bark("Who left this open? ");
+		class_0044_door_ns_toggle_open_closed(u8_local_address(local_m04_w01), 24);
+	}
+}
+
+// Derived: routine 0x0C3E, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::buyDrink()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	askList:String List;
+	answer:String;
+	cost:Number;
+	fram:Number;
+	drin:Number;
+	[[PT_DEFAULT, referent]];
+	bark("We have Tenebraean Ale, Blackwine, Hurricanes, Breath O'Spirit and Cloven Hoof. ");
+	askList = <<"Tenebraean Ale ", "Black Wine ", "Hurricane ", "Breath O'Spirit ", "Cloven Hoof ", "Nothing, thank you. ">>;
+	answer = ask(askList);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch answer
+	{
+		case "Tenebraean Ale "
+		{
+			bark("Our Tenebraean ale is the finest. It'll costs one glassy black. ");
+			cost = 1;
+			drin = 9;
+		}
+		case "Black Wine "
+		{
+			bark("The Blackwine is my favorite. It costs three obsidians. ");
+			cost = 3;
+			drin = 5;
+		}
+		case "Hurricane "
+		{
+			bark("Don't drink too many of these, they're quite potent. One costs two ladies. ");
+			cost = 2;
+			drin = 6;
+		}
+		case "Breath O'Spirit "
+		{
+			bark("Oh, I think Breath O'Spirit is really an aquired taste. But if you insist, it'll be two ladies. ");
+			cost = 2;
+			drin = 7;
+		}
+		case "Cloven Hoof "
+		{
+			bark("Ah, the finest in the house. I see you have good taste. Our Cloven Hoof is five smooth black chips. ");
+			cost = 5;
+			drin = 8;
+		}
+		case "Nothing, thank you. "
+		{
+			bark("Well, call if you change your mind. ");
+			return;
+		}
+		default
+		{
+			bark("Can't make up your mind? Oh well. ");
+			return;
+		}
+	}
+	askList = <<"Here is the amount. ", "Never mind, thank you. ">>;
+	answer = ask(askList);
+	u8goto label_1230 if not (answer = "Here is the amount. ");
+	if class_0581_give(1, 180, drin, 0, 1)
+	{
+		if class_0581_take(1, 143, 5, 0, cost)
+		{
+			bark("Thanks. Enjoy. ");
+			return;
+		}
+		else
+		{
+			bark("Why, you haven't enough stone! Sorry, come back when you've more money. ");
+			class_0581_take(1, 180, drin, 0, 1);
+			return;
+		}
+	}
+	else
+	{
+		bark("Hmmm, you can't take this. Your hands are full. I'll just hold it until you are ready. ");
+		class_0581_give(1, 143, 5, 0, cost);
+	}
+	u8goto label_126E;
+	u8label label_1230:
+	bark("Let me know if you change your mind. ");
+	return;
+	u8label label_126E:
+	if answer = ""
+	{
+		bark("Well, I don't have time to stand here all day. If you want something, let me know. ");
+		return;
+	}
+}
+
+// Derived: routine 0x12EA, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::buyFood()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	askList:String List;
+	answer:String;
+	thetype:Type;
+	cost:Number;
+	fram:Number;
+	food:Number;
+	[[PT_DEFAULT, referent]];
+	bark("Well, we have a good kitchen here. We serve fish, Toraxen Jerky, Kith filet, bread, mushrooms, tubers and Toraxen cheese. ");
+	askList = <<"fish ", "Toraxen jerky ", "Kith filet ", "bread ", "mushrooms ", "tubers ", "Toraxen cheese ">>;
+	answer = ask(askList);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch answer
+	{
+		case "fish "
+		{
+			bark("It's very fresh. Kilandra just brought it in today. It will cost you only one obsidian. ");
+			cost = 1;
+			fram = 0;
+			thetype = 537;
+		}
+		case "Toraxen jerky "
+		{
+			bark("Hmmm, planning a long trip? It's a bit tough, but travels well. It is 3 stones a pound. ");
+			cost = 3;
+			fram = 11;
+			thetype = 538;
+		}
+		case "Kith filet "
+		{
+			bark("Ah, you do have good taste. Our filet of Kith is the finest in the land. It only costs 8 blacks. ");
+			cost = 8;
+			fram = 0;
+			thetype = 538;
+		}
+		case "mushrooms "
+		{
+			bark("The Blue Mushrooms are my favorite. We can only serve them at this time because this is the only time they are in season. They will cost you only a single coin. ");
+			cost = 1;
+			fram = 7;
+			thetype = 538;
+		}
+		case "bread "
+		{
+			bark("It was baked fresh just today. You can have a serving for 1 stone. ");
+			cost = 1;
+			fram = 13;
+			thetype = 538;
+		}
+		case "tubers "
+		{
+			bark("I don't know if I would eat them alone. They are very good with the filet. But if you wish, you may have them for one glassie. ");
+			cost = 1;
+			fram = 8;
+			thetype = 538;
+		}
+		case "Toraxen cheese "
+		{
+			bark("Not everyone likes Toraxen cheese. It has a bit of a pungent flavor. It costs 1 black stone. ");
+			cost = 1;
+			fram = 2;
+			thetype = 538;
+		}
+		case "Nothing, thank you. "
+		{
+			bark("If you change your mind, let me know. ");
+			return;
+		}
+		default
+		{
+			bark("Can't make up your mind? Oh well. ");
+			return;
+		}
+	}
+	askList = <<"Here is the amount. ", "Never mind, thank you. ">>;
+	answer = ask(askList);
+	u8goto label_1AB3 if not (answer = "Here is the amount. ");
+	if class_0581_take(1, 143, 5, 0, cost)
+	{
+		if class_0581_give(1, thetype, fram, 0, 1)
+		{
+			bark("Thanks. Enjoy. ");
+			return;
+		}
+		else
+		{
+			bark("Hmmm, you can't take this. Your hands are full. I'll just hold it until you are ready. ");
+			class_0581_give(1, 143, 5, 0, cost);
+			return;
+		}
+	}
+	else
+	{
+		bark("Why, you haven't enough stone! Sorry, come back when you've more money. ");
+		return;
+	}
+	u8goto label_1AF1;
+	u8label label_1AB3:
+	bark("Let me know if you change your mind. ");
+	return;
+	u8label label_1AF1:
+	u8_free_local_string_list(askList);
+	u8_free_local_string(answer);
+}
+
+// Derived: routine 0x1AF7, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Jenna::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	askList:String List;
+	answer:String;
+	myName:String;
+	ran:Number;
+	enterConvo();
+	myName = "My name is " + getName() + ".";
+	if hasHeart
+	{
+		bark("What do you want? ");
+		askList = <<"Good day to you, Jenna. ">>;
+	}
+	else if not jennaMet
+	{
+		bark("Hello. ");
+		jennaMet = 1;
+		askList = <<"What is your name? ">>;
+	}
+	else if jennaPissed
+	{
+		bark("You're lucky I don't skewer you where you stand. ");
+		askList = <<"I am sorry if I upset you. ", "Just try it! ">>;
+	}
+	else
+	{
+		ran = random(10);
+		if ran < 5
+		{
+			if havAvaName
+			{
+				bark("Well, hello again, ");
+			}
+			else
+			{
+				bark("Good to see, friend. ");
+			}
+		}
+		else if havAvaName
+		{
+			bark("Good to see you, " + getName() + ".");
+		}
+		else
+		{
+			bark("Good to see you, friend. ");
+		}
+		askList += <<"Hello, Jenna. ">>;
+	}
+	if hydrosFree
+	{
+		askList += <<"What strange weather this is. ">>;
+	}
+	while answer != "bye "
+	{
+		askList -= <<"bye ">>;
+		askList += <<"bye ">>;
+		answer = ask(askList);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch answer
+		{
+			case "Hello, Jenna. "
+			{
+				bark("How can I help you? ");
+				askList -= <<"Hello, Jenna. ">>;
+				askList ^= <<"Why do you carry a sword? ", "What do you do? ", "I'd like something to drink, please. ", "I'd like something to eat. ">>;
+				if toldGhostStory
+				{
+					askList += <<"Orlok sure likes his tales. ">>;
+				}
+			}
+			case "Orlok sure likes his tales. "
+			{
+				bark("You don't have to tell me. I've heard every one of them at least a thousand times. And let me tell you, they get bigger with each telling. Did he tell you the ghost story yet? ");
+				askList = <<"Yes, he has. ", "No, he hasn't. ">>;
+			}
+			case "Yes, he has. "
+			{
+				bark("You know, of all his tales, that one is the only one that never changes when he tells it. I always wondered if there wasn't a grain of truth in it. Why, just the other night I heard my father, Darion, asking Orlok about that story. I don't know why, though. Anyway, what can I get you? ");
+				askList -= <<"Yes, he has. ", "No, he hasn't. ">>;
+				askList ^= <<"I'd like something to drink, please. ", "I'd like something to eat. ", "Nothing, thank you. ">>;
+				jennaGhostStory = 1;
+			}
+			case "No, he hasn't. "
+			{
+				bark("Well, don't you worry, he will. He always does. It's one of his favorites. Now, what can I get for you? ");
+				askList = <<"I'd like something to drink, please. ", "I'd like something to eat. ", "Nothing, thank you. ">>;
+			}
+			case "What strange weather this is. "
+			{
+				bark("I can't believe it. I've heard some fool somehow released Hydros and now our Tempest has no power to control the weather. It's even been said that Hydros is going to try to wash away the town! ");
+				askList = <<"Do they know who did it? ", "I released Hydros. ", "I'd like something to drink, please. ", "I'd like something to eat. ", "Nothing, thank you. ">>;
+			}
+			case "Do they know who did it? "
+			{
+				bark("They are not sure. But when they do find out, it's going to be ugly. They probably will design some hideous torture for that person! Anyway, what can I get you? ");
+				askList = <<"I'd like something to drink, please. ", "I'd like something to eat. ", "Nothing, thank you. ">>;
+			}
+			case "I released Hydros. "
+			{
+				bark("Ha, ha, ha! I'm sorry, but I don't think -you- are the type to release a -Titan-! The thought is rather funny. Ha, ha, ha! Now, what can I get for you? ");
+				askList = <<"I'd like something to drink, please. ", "I'd like something to eat. ", "Nothing, thank you. ">>;
+			}
+			case "May I have something to drink? ", "I'd like something to drink, please. "
+			{
+				askList -= <<"May I have something to drink? ", "I'd like something to drink, please. ">>;
+				buyDrink();
+			}
+			case "What is your name? "
+			{
+				jennaName = 1;
+				bark("My name is Jenna, and yours? ");
+				askList ^= <<"That's a pretty name. ", "What do you do? ", "Why do you carry a sword? ", myName>>;
+				askList -= <<"What is your name? ">>;
+				if toldGhostStory
+				{
+					askList += <<"Orlok sure likes his tales. ">>;
+				}
+			}
+			case myName
+			{
+				havAvaName = 1;
+				bark("Well met, " + getName() + ".");
+				askList -= <<myName>>;
+			}
+			case "Why do you carry a sword? "
+			{
+				bark("Because it is mine, and I'll have you know I'm not afraid to use it. ");
+				askList = <<"You know how to use a sword? ", "May I have something to drink? ", "I'd like something to eat. ">>;
+			}
+			case "You know how to use a sword? "
+			{
+				bark("Yes, this blade has sent more than one man running for his life! ");
+				askList += <<"You have killed men? ", "It is a nice blade. ">>;
+				askList -= <<"You know how to use a sword? ">>;
+			}
+			case "You have killed men? "
+			{
+				bark("Only one or two. Most know to stay clear of me. ");
+				askList += <<"Why do they stay clear? ">>;
+				askList -= <<"You have killed men? ">>;
+			}
+			case "Why do they stay clear? "
+			{
+				bark("They stay clear because I do not want them around. My father calls them 'suitors', I call them a nuisance. ");
+				askList -= <<"Why do they stay clear? ">>;
+				askList += <<"Suitors? ">>;
+				if darionMet
+				{
+					askList += <<"I met your father. ">>;
+				}
+				else
+				{
+					askList += <<"Who is your father? ">>;
+				}
+			}
+			case "Suitors? "
+			{
+				bark("You know, male callers. They show up here and hang around like mooncalves. One in particular was bad. His name was Cyrrus. ");
+				askList -= <<"Suitors? ">>;
+				if cyrrusMet
+				{
+					askList += <<"I met Cyrrus. ">>;
+				}
+				else
+				{
+					askList += <<"Tell me of Cyrrus. ">>;
+				}
+			}
+			case "I met Cyrrus. "
+			{
+				bark("Oh, he is a dull thing, isn't he? All he ever used to talk about were those darn torax. He wanted me to marry him and live in the hills and be a herdsman's wife. I was certainly glad when he went to Argentrock. ");
+				askList -= <<"I met Cyrrus. ">>;
+				askList += <<"Why did he go to Argentrock? ">>;
+			}
+			case "Where is Argentrock? "
+			{
+				bark("It is quite a way from here. I'm not exactly sure, but I know you must travel through the cemetary to get there. ");
+				askList -= <<"Where is Argentrock? ">>;
+			}
+			case "Tell me of Cyrrus. "
+			{
+				bark("He was a herdsman's son. He wanted to marry me and live in the hills tending torax. Now torax may be wonderful to him, but I think they are stupid and they smell. I was so glad when he went to Argentrock. ");
+				askList -= <<"Tell me of Cyrrus. ">>;
+				askList += <<"Why did he go to Argentrock? ", "Where is Argentrock? ">>;
+			}
+			case "Why did he go to Argentrock? "
+			{
+				bark("They say he has some talent for healing. He always did feel closer to Stratos than he did to Hydros, though he didn't tell his family that. They would have been very angry. Well, I don't know if he ever became a healer, I'm just glad he is gone. ");
+				askList -= <<"Why did he go to Argentrock? ">>;
+			}
+			case "I met your father. "
+			{
+				bark("Yes, he is quite a man. He tries to marry me off to everyone who comes through town. He's afraid I'm going to be an old maid. ");
+				askList -= <<"I met your father. ">>;
+				askList += <<"An old maid? ">>;
+			}
+			case "Who is your father? "
+			{
+				bark("Darion, the Arms Master and Captain of the Palace Guard, is my father. He thinks I am going to be an old maid and tries to marry me off to everyone who comes around. ");
+				askList -= <<"Who is your father? ">>;
+				askList += <<"An old maid? ">>;
+			}
+			case "An old maid? "
+			{
+				bark("I am NOT an old maid! How dare you say that?! You are just like my father! I can't kill him, but I can you and I just might. Now, get out while I still feel civil! ");
+				jennaPissed = 1;
+				exitConvo();
+				return;
+			}
+			case "It is a nice blade. "
+			{
+				bark("Yes, it is a fine blade, a wondrous blade. Have you ever seen finer? ");
+				askList -= <<"It is a nice blade. ">>;
+				askList = <<"yes ", "no ">>;
+			}
+			case "no "
+			{
+				bark("It's all I have left from my grandfather. Before he died, he gave me this sword and told me to wear it with pride. And I always have. ");
+				askList -= <<"yes ", "no ">>;
+				askList ^= <<"Where did you learn to wield it? ">>;
+			}
+			case "Where did you learn to wield it? "
+			{
+				bark("My father taught me. He always wanted a son, but all he got was me. So he taught me. He is determined to marry me off, though. ");
+				askList -= <<"Where did you learn to wield it? ">>;
+			}
+			case "yes "
+			{
+				bark("You wretch! How dare you insult my grandfather's memory? You will pay for your disrespect! Now get out of my sight, before I decide to show you just how fine this blade is! ");
+				askList -= <<"yes ", "no ">>;
+				jennaPissed = 1;
+				exitConvo();
+				return;
+			}
+			case "What do you do? "
+			{
+				jennaJob = 1;
+				bark("Well, for now I'm a barmaid. Can I get you a drink or something to eat? ");
+				askList = <<"I'd like something to drink, please. ", "I'd like something to eat. ", "Nothing, thank you. ">>;
+				if not barmaidForNow
+				{
+					askList += <<"A barmaid for now? ">>;
+				}
+			}
+			case "A barmaid for now? "
+			{
+				barmaidForNow = 1;
+				bark("Yes. It was the only job I could find at short notice. What I really want to do is go adventuring, like you. Oh, how I would like to see something of the world beyond this smelly village. ");
+				askList = <<"Smelly village? ", "Job at short notice? ", "See the world? ">>;
+			}
+			case "Smelly village? "
+			{
+				bark("Yes, ugh. Can you not smell it? The rancid odor of fish combined with the nasty smell of those stupid torax. Sometimes I think that even if I left the smell would still be in my blood. It's terrible. ");
+				askList -= <<"Smelly village? ">>;
+			}
+			case "Job at short notice? "
+			{
+				bark("Well, see, my father wanted me married. He seems to think that a woman can't support herself. She must have a husband to make her a complete person. Well, just to prove to him I could do it, I got this job. It's not much, but it got me out of the house. ");
+				askList -= <<"Job at short notice? ">>;
+			}
+			case "See the world? "
+			{
+				bark("Ah, what I wouldn't give to see it all, but I can't. ");
+				askList -= <<"See the world? ">>;
+				askList += <<"What is there to see? ", "Why can't you see it? ">>;
+			}
+			case "What is there to see? "
+			{
+				bark("Why, just the whole world. I've heard there are sorcerers who can call up the forces of fire and ancient ruins where hordes of treasure await anyone brave enough to fight the evil creature guarding it. ");
+				askList -= <<"What is there to see? ">>;
+			}
+			case "Why can't you see it? "
+			{
+				bark("Because I am a woman, so they say. ");
+				askList -= <<"Why can't you see it? ">>;
+				askList += <<"Why can't a woman adventure? ">>;
+			}
+			case "Why can't a woman adventure? "
+			{
+				bark("There are those who say only young men are interested in adventuring, and women are only interested in cooking and shopping. Well, I say they are wrong! There mayn't be many of us, but we are here. Maybe someday they will realize it. Until then, how about that drink? ");
+				askList = <<"I'd like something to drink, please. ", "I'd like something to eat. ", "Nothing, thank you. ">>;
+			}
+			case "Yes, what do you have to drink? "
+			{
+				buyDrink();
+			}
+			case "Nothing, thank you. ", "No, thank you. "
+			{
+				bark("Well, If you change your mind, just let me know. ");
+				askList = <<"Why do you carry a sword? ", "Do you live here? ">>;
+			}
+			case "I'd like something to eat. "
+			{
+				askList -= <<"I'd like something to eat. ">>;
+				buyFood();
+			}
+			case "Do you live here? "
+			{
+				bark("Yes, all my life. I was born not far from the cemetery. ");
+				askList = <<"Tell me about the cemetery. ", "How old are you? ", "I'd like something to drink, please. ", "I'd like something to eat. ", "Nothing, thank you. ">>;
+			}
+			case "How old are you? "
+			{
+				bark("What a question! Why, I'm old enough to know how to use this sword! And I might be tempted to use it on you if you don't learn better manners! ");
+				jennaPissed = 1;
+				exitConvo();
+				return;
+			}
+			case "Tell me about the cemetery. "
+			{
+				bark("I do not like the place. 'Tis haunted. ");
+				askList ^= <<"Where is it? ", "Haunted? ">>;
+				askList -= <<"Tell me about the cemetery. ">>;
+			}
+			case "Where is it? "
+			{
+				bark("It is on the other side of Tenebrae. You will have to head east from here, going right past the Tempest's keep, through the east side of town, then down a long, dangerous road. ");
+				bark("I wouldn't go there if I were you. ");
+				askList -= <<"Where is it? ">>;
+				askList ^= <<"Why not go there? ">>;
+			}
+			case "Haunted? "
+			{
+				bark("Yes, with the ghosts of those horrid Necromancers. ");
+				askList -= <<"Haunted? ">>;
+			}
+			case "Why not go there? "
+			{
+				bark("It's a terrible place, a frightening place. The Necromancers used to be there. Terrible people they are, study dead bodies. Some say they even eat them! Only one person I know of travels there willingly and that is Mythran. ");
+				askList = <<"Tell me about the Necromancers. ", "They study dead bodies? ", "Tell me of Mythran. ", "I'd like something to drink, please. ", "I'd like something to eat. ">>;
+			}
+			case "Tell me of Mythran. "
+			{
+				bark("Mythran is an old hermit that lives on the Plateau. Some call him a sage, but I think he wields magic. Occasionally he comes into town. I guess he buys things for all those scrolls he makes. ");
+				askList -= <<"Tell me of Mythran. ">>;
+				askList += <<"Scrolls? ">>;
+			}
+			case "Scrolls? "
+			{
+				bark("Magical scrolls, I think. Why, once I saw him read from one and unlock the door to the palace when I KNEW it was locked. I don't know what he was doing in there, and I didn't ask. Best to just keep quiet, if you ask me. ");
+				askList -= <<"Scrolls? ">>;
+				mythranScrolls = 1;
+			}
+			case "Tell me about the Necromancers. "
+			{
+				bark("Great power they have, power over life and death. I shiver to think about it. ");
+				askList -= <<"Tell me about the Necromancers. ">>;
+			}
+			case "They study dead bodies? "
+			{
+				bark("That's why they live in the cemetery, so they always have a fresh supply. I think the ghosts of their victims are there, looking for their bodies. ");
+				askList -= <<"They study dead bodies? ">>;
+			}
+			case "That's a pretty name. "
+			{
+				bark("If it is a lady's company you are after, then I am afraid you have come to the wrong establishment. ");
+				askList -= <<"That's a pretty name. ">>;
+			}
+			case "I am sorry if I upset you. "
+			{
+				bark("I have a long memory for slights. It is only out of respect for Orlok that I will hold my temper. ");
+				askList -= <<"I am sorry if I upset you. ">>;
+				askList ^= <<"I'd like something to drink, please. ", "I'd like something to eat. ">>;
+			}
+			case "Just try it! "
+			{
+				bark("You animal! I will not disgrace Orlok's trust in me by fighting in his tavern. Now get out! ");
+				exitConvo();
+				return;
+			}
+			case "Good day to you, Jenna. "
+			{
+				bark("What do you mean, 'good day'?! Can you not see what is happening? The dead have left their graves and are walking the streets of Tenebrae! Darion needs my sword, I have no time to chat now! ");
+				exitConvo();
+				sendJennaToLunch = 1;
+				return;
+			}
+			case "bye "
+			{
+				bark("Good day to you. ");
+				exitConvo();
+				return;
+			}
+		}
+	}
+	exitConvo();
+}
+

@@ -1,0 +1,179 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02EE
+// FLEX slot: 752
+// Original offset: 0x00061BA3
+// Naming evidence: E, exact object-1 linker name `DEATHDIS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/DEATHDIS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass DEATHDIS inherits Item
+{
+	process deathdis_look_describe_death_disk();
+	process deathdis_use_throw_death_disk_at_target();
+	process deathdis_animate_avatar_throw();
+	process deathdis_got_hit_arm_and_explode_on_live_contact(arg_04:U8Word);
+	process deathdis_hit_arm_and_explode_on_live_contact(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DEATHDIS::deathdis_look_describe_death_disk()
+{
+	bark("death disk ");
+}
+
+// Derived: routine 0x00AE, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DEATHDIS::deathdis_use_throw_death_disk_at_target()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m06:U8Bytes4; // X: untouched.
+	local_m07:U8Byte;
+	local_m09:U8Word;
+	local_m0B:U8Word;
+	local_m0B_w01:U8Bytes1;
+	local_m0C:U8Byte;
+	local_m0D:U8Byte;
+	local_m0F:U8Word;
+	local_m11:U8Word;
+	local_m02 = target();
+	if local_m02
+	{
+		local_m0B = local_m02.getX();
+		local_m09 = local_m02.getY();
+		local_m07 = local_m02.getZ() + 8;
+		local_m0C = Avatar.getDirToCoords(local_m0B, local_m09);
+		local_m11 = Avatar.getX();
+		local_m0F = Avatar.getY();
+		local_m0D = Avatar.getZ() + 16;
+		if local_m0C = 0
+		{
+			local_m0F -= 100;
+		}
+		else if local_m0C = 1
+		{
+			local_m0F -= 100;
+			local_m11 += 100;
+		}
+		else if local_m0C = 2
+		{
+			local_m11 += 100;
+		}
+		else if local_m0C = 3
+		{
+			local_m0F += 100;
+			local_m11 += 100;
+		}
+		else if local_m0C = 4
+		{
+			local_m0F += 100;
+		}
+		else if local_m0C = 5
+		{
+			local_m11 -= 100;
+			local_m0F += 100;
+		}
+		else if local_m0C = 6
+		{
+			local_m11 -= 100;
+		}
+		else if local_m0C = 7
+		{
+			local_m0F -= 100;
+			local_m0F -= 100;
+		}
+		if canExistAt(750, local_m11, local_m0F, local_m0D, 4, referent, 0)
+		{
+			Avatar.turnToFace(local_m0C, 0, 5);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_02EE_deathdis_animate_avatar_throw(this) -> return;
+			push();
+			wait(4);
+			pop(local_m11, local_m0F, local_m0D);
+			orStatus(2);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0581_safePlaySFX(0x00000000, referent, 100, 9) -> return;
+			Item_shoot(1, 64, u8_local_address(local_m0B_w01), this);
+			Item_setQ(0, this);
+		}
+	}
+}
+
+// Derived: routine 0x0281, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process DEATHDIS::deathdis_animate_avatar_throw()
+{
+	[[PT_ACTIVITY, referent]];
+	Avatar.realDoAnim(AS_SWING_WEAPON, Avatar.getDir());
+	Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+}
+
+// Derived: routine 0x02CF, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process DEATHDIS::deathdis_got_hit_arm_and_explode_on_live_contact(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Npc;
+	if Item_getQ(this)
+	{
+		return;
+	}
+	Item_setQ(1, this);
+	if arg_04
+	{
+		local_m02 = arg_04;
+		if local_m02.isNpc()
+		{
+			local_m04 = arg_04;
+			if local_m04.isDead()
+			{
+				return;
+			}
+		}
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_boom(this, 1) -> return;
+	}
+}
+
+// Derived: routine 0x032C, event mask 0x00000020.
+// R: `hit` identifies event 05; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process DEATHDIS::deathdis_hit_arm_and_explode_on_live_contact(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Npc;
+	if Item_getQ(this)
+	{
+		return;
+	}
+	Item_setQ(1, this);
+	if arg_04
+	{
+		local_m02 = arg_04;
+		if local_m02.isNpc()
+		{
+			local_m04 = arg_04;
+			if local_m04.isDead()
+			{
+				return;
+			}
+		}
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_boom(this, 1) -> return;
+	}
+}
+

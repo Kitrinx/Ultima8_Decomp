@@ -1,0 +1,492 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0483
+// FLEX slot: 1157
+// Original offset: 0x0006ED97
+// Naming evidence: E, exact object-1 linker name `EXCUTION`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/EXCUTION.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass EXCUTION inherits Egg
+{
+	process excution_hatch_run_execution_sequence();
+	process [[PT_DEFAULT, referent]] excution_dismiss_mordea();
+	process [[PT_DEFAULT, referent]] excution_dismiss_salkind();
+	process [[PT_DEFAULT, referent]] excution_dismiss_darion();
+	process [[PT_DEFAULT, referent]] excution_dismiss_shaana();
+	process [[PT_DEFAULT, referent]] excution_animate_toran_fall(arg_04:U8Word);
+	process [[PT_DEFAULT, referent]] excution_animate_toran_remains(arg_04:Item);
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process EXCUTION::excution_hatch_run_execution_sequence()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0D:U8Byte;
+	local_m0F:U8Word;
+	local_m11:U8Word;
+	local_m11_w01:U8Bytes1;
+	local_m13:U8Word;
+	local_m15:Item;
+	local_m17:U8Word;
+	local_m19:Item;
+	if Avatar.getZ() < getZ()
+	{
+		return;
+	}
+	if Egg_getEggXRange(this) = 1
+	{
+		return;
+	}
+	playMusic(53);
+	class_0581_unkCloseAllGumps();
+	Egg_setEggXRange(1, this);
+	orStatus(2);
+	setAvatarInStasis(1);
+	if Avatar.getZ() > getZ()
+	{
+		if Avatar.getX() < getX()
+		{
+			Avatar.turnToFace(2, 0, 15);
+			Avatar.realDoAnim(AS_WALK, 2);
+		}
+		else
+		{
+			Avatar.turnToFace(6, 0, 15);
+			Avatar.realDoAnim(AS_WALK, 6);
+		}
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Npc_pathfind(5, referent, u8_stack_ref(1)) ->
+	spawn class_057C_realDoAnim(1, 4, 2) -> return;
+	class_057C_realDoAnim(19, 2, 2);
+	Darion.turnToFace(3, 0, 15);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(8, 10, 0, 0) ->
+	spawn class_057C_realDoAnim(8, 0, 5) -> return;
+	local_m04 = referent;
+	foreach local_m02 where (type = 97) within 32 cells of referent {
+		local_m04 = local_m02;
+	}
+	local_m04.orStatus(2);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(3, 15, 0, 6) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(7, 15, 0, 4) -> return;
+	scrollTo(Mordea.getCX(), Mordea.getCY(), Mordea.getCZ(), 20);
+	Item_bark(u8_string_address("Toran, you have been accused of blasphemy against our Lady Mordea and sentenced to death by beheading... Do you have any final words? "), u8_stack_ref(3));
+	local_m04.bark("I shall die as I have lived... with honor.  When I face Lithos, he will not find -me- wanting. ");
+	Item_bark(u8_string_address("A man of honor would not have insulted his Lady with seditious rumors, knave! "), u8_stack_ref(3));
+	Mordea.turnToFace(3, 1, 8);
+	Mordea.realDoAnim(AS_WALK, 3);
+	Mordea.turnToFace(4, 2, 8);
+	Item_bark(u8_string_address("I fear that Lithos will not find you at all... for your grave shall be a watery one.  The Lurker is not kind to the ones she... acquires. "), u8_stack_ref(7));
+	class_057C_realDoAnim(8, 6, 0);
+	class_057C_turnToFace(8, 4, 0, 10);
+	class_057C_realDoAnim(8, 0, 4);
+	class_057C_realDoAnim(8, 2, 4);
+	Item_bark(u8_string_address("This is forbidden, Lady.  The Ritual of Interment is sacred. "), u8_stack_ref(8));
+	Mordea.turnToFace(7, 0, 10);
+	Item_bark(u8_string_address("Do not question my decisions, Tarna.  I am sure that Lithos would not want this one's worthless spirit in his domain. "), u8_stack_ref(7));
+	foreach local_m02 where (type = TypePathMarker) within 128 cells of local_m04 {
+		if local_m02.getFrame() = 1
+		{
+			local_m06 = local_m02;
+		}
+		else if local_m02.getFrame() = 2
+		{
+			local_m08 = local_m02;
+		}
+		else if local_m02.getFrame() = 5
+		{
+			local_m0A = local_m02;
+		}
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_timedBark(18, u8_string_address("No!!!!  "), 60) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(8, Npc_getDir(u8_stack_ref(8)), 47) -> return;
+	Darion.turnToFace(0, 0, 8);
+	Npc_doAnim(0, 10000, 4, 0, u8_stack_ref(18));
+	Npc_doAnim(0, 10000, 4, 0, u8_stack_ref(18));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(5, 0, 5) -> return;
+	Npc_doAnim(0, 10000, 4, 0, u8_stack_ref(18));
+	Npc_doAnim(0, 10000, 4, 2, u8_stack_ref(18));
+	class_057C_timedBark(5, 60, u8_string_address("Back, woman! "));
+	class_057C_turnToFace(18, 3, 0, 8);
+	playMusic(54);
+	wait(100);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(7, 8, 1, 4) ->
+	spawn class_057C_turnToFace(3, 11, 0, 6) ->
+	spawn class_057C_realDoAnim(7, 4, 27) -> return;
+	wait(60);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Perform your task, Executioner! "), u8_stack_ref(7)) -> return;
+	scrollTo(local_m04.getCX(), local_m04.getCY(), local_m04.getCZ(), 20);
+	Camera::setCenterOn(local_m04);
+	for local_m0C = 1 to 4
+	{
+		wait(20);
+		local_m04.setFrame(local_m0C);
+	}
+	wait(25);
+	class_057C_realDoAnim(19, 2, 2);
+	class_057C_realDoAnim(19, 5, 2);
+	wait(15);
+	Salkind.turnToFace(5, 0, 10);
+	wait(50);
+	playMusic(55);
+	class_057C_realDoAnim(19, 7, 2);
+	local_m04.setFrame(5);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0483_excution_animate_toran_fall(this, local_m04) -> return;
+	local_m0D = 48;
+	local_m11 = 11754;
+	local_m0F = 6582;
+	local_m13.legal_create(484, 3, u8_local_address(local_m11_w01));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(3, Salkind.getDir(), 47) -> return;
+	local_m11 = 11824;
+	local_m0F = 6584;
+	local_m13.legal_create(484, 3, u8_local_address(local_m11_w01));
+	local_m11 = 11842;
+	local_m0F = 6550;
+	local_m13.legal_create(484, 3, u8_local_address(local_m11_w01));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(8, Npc_getDir(u8_stack_ref(8)), 47) -> return;
+	temp = u8_process_dependency(u8_process_dependency(u8_spawn_inline(class_0483_excution_play_rhian_grief_inline_0A6E, 2, 0), u8_spawn(class_057C_realDoAnim(18, 4, 49)), 1, 1), u8_spawn(class_0581_wait(0x00000000, 40)), 1, 1);
+	u8goto label_0AD8;
+	u8label label_0A6E:
+	u8_inline_frame(0);
+	[[PT_DEFAULT, 18]];
+	suspend;
+	class_057C_timedBark(18, 70, u8_string_address("No... "));
+	Item_bark(u8_string_address("My husband... "), u8_stack_ref(18));
+	class_057C_realDoAnim(18, 35, 4);
+	return;
+	u8label label_0AD8:
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_wait(0x00000000, 40) ->
+	spawn class_0483_excution_animate_toran_remains(this, local_m04) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(19, 2, 6) ->
+	spawn class_057C_realDoAnim(19, 2, 2) -> return;
+	Mordea.realDoAnim(AS_EXIT_CAST, 4);
+	Mordea.realDoAnim(AS_STAND, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(5, 0, 6) ->
+	spawn class_057C_turnToFace(5, 6, 0, 3) -> return;
+	wait(30);
+	playSFX(91, 200);
+	LightningBolt();
+	LightningBolt();
+	wait(100);
+	Item_create(0, 81, u8_local_address(local_m15_w01));
+	local_m15.pop(11871, 6815, 0);
+	for local_m17 = 1 to 14
+	{
+		if local_m17 = 4
+		{
+			playSFX(63, 200);
+		}
+		local_m15.setFrame(local_m17);
+		wait(15);
+	}
+	local_m15.destroy();
+	wait(100);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(3, 5, 2) ->
+	spawn class_057C_turnToFace(3, 15, 0, 0) -> return;
+	class_057C_realDoAnim(8, 47, Npc_getDir(u8_stack_ref(8)));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_scrollTo(0x00000000, 25, Item_getZ(u8_stack_ref(8)) + 20, Item_getY(u8_stack_ref(8)), Item_getX(u8_stack_ref(8))) -> return;
+	class_057C_turnToFace(8, 0, 0, 15);
+	class_057C_realDoAnim(8, 0, 0);
+	class_057C_realDoAnim(8, 0, 0);
+	class_057C_realDoAnim(8, 0, 0);
+	class_057C_turnToFace(8, 7, 0, 10);
+	class_057C_realDoAnim(8, 5, 7);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_wait(0x00000000, 35) ->
+	spawn Item_bark(u8_string_address("Stand aside! Let Lady Mordea pass! "), u8_stack_ref(8)) -> return;
+	foreach local_m19 where (type = 633) within 200 cells of Avatar {
+		local_m19.destroy();
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0483_excution_dismiss_mordea(this, local_m08) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(19, Npc_getDir(u8_stack_ref(19)), 47) -> return;
+	Salkind.turnToFace(0, 1, 10);
+	Salkind.realDoAnim(AS_FIDGET, Salkind.getDir());
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0483_excution_dismiss_salkind(this, local_m08) -> return;
+	wait(100);
+	Darion.turnToFace(2, 0, 10);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0483_excution_dismiss_darion(this, local_m08) -> return;
+	wait(100);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0483_excution_dismiss_shaana(this, local_m08) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(8, 7, 6) ->
+	spawn class_057C_realDoAnim(8, 7, 47) -> return;
+	wait(470);
+	toranDead = 1;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_use(u8_stack_ref(8)) -> return;
+	class_057C_realDoAnim(18, 50, 4);
+	class_057C_realDoAnim(18, 0, 4);
+	class_057C_realDoAnim(18, 0, 4);
+	class_057C_realDoAnim(18, 0, 4);
+	class_057C_realDoAnim(18, 0, 4);
+	class_057C_realDoAnim(18, 0, 4);
+	class_057C_realDoAnim(18, 0, 4);
+	class_057C_realDoAnim(18, 0, 4);
+	class_057C_turnToFace(18, 2, 1, 15);
+	class_057C_realDoAnim(18, 0, 2);
+	class_057C_realDoAnim(18, 0, 2);
+	class_057C_realDoAnim(18, 49, 2);
+	playMusic(52);
+	class_057C_realDoAnim(18, 35, 2);
+	class_057C_realDoAnim(18, 35, 2);
+	class_057C_realDoAnim(18, 35, 2);
+	class_057C_realDoAnim(18, 35, 2);
+	class_057C_realDoAnim(18, 35, 2);
+	class_057C_realDoAnim(18, 35, 2);
+	wait(100);
+}
+
+// Derived: routine 0x10D8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] EXCUTION::excution_dismiss_mordea()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, NULL_REF]];
+	Mordea.turnToFace(0, 1, 10);
+	while local_m02 < 20
+	{
+		Mordea.realDoAnim(AS_WALK, 0);
+		local_m02 = local_m02 + 1;
+	}
+	Mordea.teleport(2431, 3839, 0, 40);
+}
+
+// Derived: routine 0x1141, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] EXCUTION::excution_dismiss_salkind()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, NULL_REF]];
+	Salkind.turnToFace(0, 1, 10);
+	while local_m02 < 20
+	{
+		if (Mordea.getY() < (Salkind.getY() + 96)) or (Salkind.getMap() != Mordea.getMap())
+		{
+			Salkind.realDoAnim(AS_WALK, 0);
+			local_m02 = local_m02 + 1;
+		}
+		else
+		{
+			wait(30);
+		}
+	}
+	Salkind.teleport(100, 100, 0, 41);
+}
+
+// Derived: routine 0x11F7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] EXCUTION::excution_dismiss_darion()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, NULL_REF]];
+	Darion.turnToFace(2, 0, 10);
+	Darion.realDoAnim(AS_WALK, 2);
+	Darion.realDoAnim(AS_WALK, 1);
+	Darion.realDoAnim(AS_WALK, 1);
+	Darion.turnToFace(0, 0, 10);
+	while local_m02 < 20
+	{
+		if (Salkind.getY() < (Darion.getY() + 96)) or (Salkind.getMap() != Darion.getMap())
+		{
+			wait(10);
+			Darion.realDoAnim(AS_WALK, 0);
+			local_m02 = local_m02 + 1;
+		}
+		else
+		{
+			wait(30);
+		}
+	}
+	Darion.teleport(100, 100, 0, 39);
+}
+
+// Derived: routine 0x1326, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] EXCUTION::excution_dismiss_shaana()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, NULL_REF]];
+	class_057C_turnToFace(19, 0, 0, 10);
+	class_057C_realDoAnim(19, 0, 0);
+	class_057C_realDoAnim(19, 0, 0);
+	class_057C_realDoAnim(19, 0, 1);
+	class_057C_realDoAnim(19, 0, 1);
+	class_057C_realDoAnim(19, 0, 2);
+	class_057C_realDoAnim(19, 0, 2);
+	class_057C_realDoAnim(19, 0, 1);
+	class_057C_realDoAnim(19, 0, 1);
+	class_057C_turnToFace(19, 0, 0, 10);
+	while local_m02 < 25
+	{
+		if (Darion.getY() < (Item_getY(u8_stack_ref(19)) + 96)) or (Darion.getMap() != Npc_getMap(u8_stack_ref(19)))
+		{
+			class_057C_realDoAnim(19, 0, 0);
+			local_m02 = local_m02 + 1;
+		}
+		else
+		{
+			wait(30);
+		}
+	}
+	Npc_teleport(39, 0, 100, 100, u8_stack_ref(19));
+}
+
+// Derived: routine 0x14B6, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] EXCUTION::excution_animate_toran_fall(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m03:U8Byte;
+	local_m05:U8Word;
+	local_m07:U8Word;
+	local_m07_w01:U8Bytes1;
+	local_m0B:U8Bytes4; // X: untouched.
+	local_m0D:U8List2;
+	local_m0F:U8List2;
+	local_m11:U8List2;
+	local_m13:U8Word;
+	local_m15:U8Word;
+	local_m16:U8Byte;
+	local_m18:U8Word;
+	local_m1A:U8Word;
+	local_m1A_w01:U8Bytes1;
+	local_m07 = arg_04.getX() + 36;
+	local_m05 = arg_04.getY() + 92;
+	local_m03 = arg_04.getZ() + 24;
+	local_m02.legal_create(331, 6, u8_local_address(local_m07_w01));
+	if local_m02 != 0
+	{
+		local_m0D = <<4, 8, 12, 16, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, 16, 16>>;
+		local_m0F = <<0, 0, -2, -6, 0, -4, -2, -2, -2, -2, -2, -2, -4, -8, -12, -16>>;
+		local_m11 = <<7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 7, 8, 9, 10>>;
+		local_m16 = 48;
+		for local_m13 = 1 to 16
+		{
+			wait(10);
+			local_m05 += local_m0D[local_m13];
+			local_m03 += local_m0F[local_m13];
+			local_m02.setFrame(local_m11[local_m13]);
+			local_m02.move(local_m07, local_m05, local_m03);
+			if local_m13 = 4
+			{
+				playSFX(157, 200);
+				local_m1A = 11806;
+				local_m18 = 6586;
+				local_m15.legal_create(484, 0, u8_local_address(local_m1A_w01));
+			}
+			else if local_m13 = 6
+			{
+				playSFX(157, 200);
+				local_m1A = 11792;
+				local_m18 = 6608;
+				local_m15.legal_create(484, 2, u8_local_address(local_m1A_w01));
+			}
+			else if local_m13 = 8
+			{
+				playSFX(157, 200);
+				local_m1A = 11812;
+				local_m18 = 6644;
+				local_m15.legal_create(484, 4, u8_local_address(local_m1A_w01));
+			}
+		}
+		local_m02.hurl(0, 16, -16, 4);
+	}
+}
+
+// Derived: routine 0x168B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] EXCUTION::excution_animate_toran_remains(arg_04:Item)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m03:U8Byte;
+	local_m05:U8Word;
+	local_m07:U8Word;
+	local_m07_w01:U8Bytes1;
+	local_m09:U8Word;
+	local_m0B:U8Word;
+	u8label label_1695:
+	suspend;
+	local_m09 = arg_04.getFrame();
+	u8goto label_16B6 if not (local_m09 = 5);
+	arg_04.setFrame(9);
+	u8goto label_1785;
+	u8label label_16B6:
+	u8goto label_16EB if not (local_m09 < 13);
+	arg_04.setFrame(local_m09 + 1);
+	wait(4 * local_m09);
+	u8goto label_1695;
+	u8goto label_1785;
+	u8label label_16EB:
+	u8goto label_1748 if not (local_m09 = 13);
+	arg_04.setFrame(local_m09 + 1);
+	local_m07 = 11786;
+	local_m05 = 6566;
+	local_m03 = 48;
+	local_m02.legal_create(484, 5, u8_local_address(local_m07_w01));
+	if local_m02 = 0
+	{
+		return;
+	}
+	wait(4 * local_m09);
+	u8goto label_1695;
+	u8goto label_1785;
+	u8label label_1748:
+	local_m0B = local_m02.getFrame();
+	u8goto label_1782 if not (local_m0B < 9);
+	local_m02.setFrame(local_m0B + 1);
+	wait(50);
+	u8goto label_1695;
+	u8label label_1782:
+	return;
+	u8label label_1785:
+	u8goto label_1695;
+}
+

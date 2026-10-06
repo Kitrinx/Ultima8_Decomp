@@ -1,0 +1,24 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0283
+// FLEX slot: 645
+// Original offset: 0x000C618E
+// Naming evidence: E, exact object-1 linker name `OAR`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/OAR.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass OAR inherits Item
+{
+	process oar_look_no_op();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process OAR::oar_look_no_op()
+{
+}
+

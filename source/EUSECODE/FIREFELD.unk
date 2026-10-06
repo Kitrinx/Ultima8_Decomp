@@ -1,0 +1,138 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0190
+// FLEX slot: 402
+// Original offset: 0x00071D41
+// Naming evidence: E, exact object-1 linker name `FIREFELD`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FIREFELD.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass FIREFELD inherits Item
+{
+	process firefeld_look_bark_fire_field();
+	process firefeld_got_hit_damage_overlapping_npcs(arg_04:U8Word);
+	process firefeld_anim_animate_fire_field_and_damage_npcs();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREFELD::firefeld_look_bark_fire_field()
+{
+	bark("fire field ");
+}
+
+// Derived: routine 0x00AE, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process FIREFELD::firefeld_got_hit_damage_overlapping_npcs(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m05:U8Byte;
+	if arg_04 = 0
+	{
+		return;
+	}
+	local_m02 = arg_04;
+	local_m05 = 1;
+	if Item_overlaps(referent, u8_local_address(local_m02_w01)) and local_m02.isNpc()
+	{
+		if local_m02.getType() = 96
+		{
+			local_m05 = 0;
+			playSFX(124, 100);
+		}
+		foreach local_m04 where (type = 703) within 2 cells of local_m02 {
+			local_m05 = 0;
+		}
+		if local_m05
+		{
+			if getFrame() <= 9
+			{
+				playSFX(124, 100);
+				local_m02.receiveHit(referent, local_m02.getDirToCoords(getX(), getY()), class_0581_randRange(5, 15), 8);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x017B, event mask 0x00000004.
+// R: `anim` identifies event 02; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREFELD::firefeld_anim_animate_fire_field_and_damage_npcs()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:Item List;
+	local_m08:U8Word;
+	local_m08_w01:U8Bytes1;
+	local_m09:U8Byte;
+	local_m09 = 1;
+	if getFrame() <= 9
+	{
+		if (getFrame() = 2) or (getFrame() = 4) or (getFrame() = 7) or (getFrame() = 9)
+		{
+			if not Kernel_getNumProcesses(514, referent)
+			{
+				local_m08 = referent;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_007C_pent_play_flame_ambient_sfx(u8_local_address(local_m08_w01)) -> return;
+			}
+			if getFrame() = 9
+			{
+				setFrame(0);
+			}
+			else
+			{
+				setFrame(getFrame() + 1);
+			}
+			foreach local_m02 within 2 cells of referent {
+				if Item_overlaps(referent, u8_local_address(local_m02_w01)) and local_m02.isNpc()
+				{
+					local_m06 += <<local_m02>>;
+				}
+			}
+			foreach local_m02 in local_m06 {
+				if local_m02.getType() = 96
+				{
+					local_m09 = 0;
+					playSFX(124, 100);
+				}
+				foreach local_m04 where (type = 703) within 2 cells of local_m02 {
+					local_m09 = 0;
+				}
+				if local_m09
+				{
+					playSFX(124, 100);
+					local_m02.receiveHit(referent, local_m02.getDirToItem(referent), class_0581_randRange(1, 5), 8);
+				}
+			}
+		}
+		else
+		{
+			setFrame(getFrame() + 1);
+		}
+	}
+	else
+	{
+		if getFrame() <= 19
+		{
+			if getFrame() != 19
+			{
+				setFrame(getFrame() + 1);
+			}
+			else
+			{
+				setFrame(10);
+			}
+		}
+	}
+}
+

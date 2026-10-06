@@ -1,0 +1,44 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0074
+// FLEX slot: 118
+// Original offset: 0x00094C0D
+// Naming evidence: E, exact object-1 linker name `JBOX`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/JBOX.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass JBOX inherits Item
+{
+	process jbox_look_bark_jewelry_box();
+	process jbox_use_toggle_container_gump();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process JBOX::jbox_look_bark_jewelry_box()
+{
+	bark("jewelry box ");
+}
+
+// Derived: routine 0x00AF, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process JBOX::jbox_use_toggle_container_gump()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getStatus();
+	if local_m02 & 256
+	{
+		closeGump();
+	}
+	else
+	{
+		Item_openGump(10, this);
+	}
+}
+

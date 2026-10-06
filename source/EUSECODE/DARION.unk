@@ -1,0 +1,1264 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0405
+// FLEX slot: 1031
+// Original offset: 0x0005B01E
+// Naming evidence: E, exact object-1 linker name `DARION`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/DARION.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+uses "npc";
+uses "flags";
+
+npcclass Darion inherits Npc
+{
+	process schedule(currentTime:Long);
+	process enterFastArea();
+	process leaveFastArea();
+	process atHome();
+	process randomBarkAtHome();
+	process onPatrol();
+	process randomBarkOnPatrol();
+	process spar();
+	process buyWeapon();
+	process training();
+	process hit();
+	process gotHit(r:Referent, vel:Word);
+	process look();
+	process use();
+	process moan();
+}
+
+// Derived: routine 0x0080, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::schedule(currentTime:Long)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	point:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	map:Number;
+	sched:Number;
+	map = 40;
+	if (isDead() = 1) or (secondexecution = 1) or (toranDead = 0)
+	{
+		return;
+	}
+	if (class_0581_getPeriod() = 0) or (class_0581_getPeriod() = 3)
+	{
+		local_m05_w02 = 11167;
+		local_m03 = 10495;
+		local_m01 = 48;
+		sched = 4;
+		map = 39;
+	}
+	if (class_0581_getPeriod() = 1) or (class_0581_getPeriod() = 4)
+	{
+		local_m05_w02 = 15583;
+		local_m03 = 13760;
+		local_m01 = 48;
+		sched = 1;
+		map = 41;
+	}
+	if (class_0581_getPeriod() = 5) or (class_0581_getPeriod() = 2)
+	{
+		local_m05_w02 = 17791;
+		local_m03 = 6879;
+		local_m01 = 48;
+		sched = 3;
+		map = 41;
+	}
+	if class_057C_canSafeTeleport(this, point, map)
+	{
+		darionSchedule = sched;
+		class_057C_safeTeleport(this, point, map);
+	}
+}
+
+// Derived: routine 0x0170, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::enterFastArea()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	if (isDead() = 1) or (secondexecution = 1) or (toranDead = 0)
+	{
+		return;
+	}
+	if (getMap() = 3) and (devonInRule = 1)
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0405_moan(this) -> return;
+	}
+	else if getMap() = 3
+	{
+		cSetActivity(0);
+	}
+	else if darionSchedule = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0405_atHome(this) -> return;
+	}
+	else if darionSchedule = 3
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0405_onPatrol(this) -> return;
+	}
+	else if darionSchedule = 4
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0405_onPatrol(this) -> return;
+	}
+}
+
+// Derived: routine 0x0263, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::leaveFastArea()
+{
+	killProcess(referent, PT_ACTIVITY);
+	killProcess(referent, PT_PATHFIND);
+	killProcess(referent, PT_ANIM);
+	killProcess(referent, PT_BARK);
+}
+
+// Derived: routine 0x02A8, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::atHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	bool:Boolean;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach pathEgg where (type = TypePathMarker) within 10 cells of Darion {
+			counter2 = pathEgg.getFrame();
+			bool = 1;
+		}
+		if not bool
+		{
+			counter2 = 20;
+		}
+	}
+	process
+	{
+		for counter = counter2 to 7
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter)) within 50 cells of Darion {
+				if pathfind(pathEgg, 20)
+				{
+					if (counter = 0) or (counter = 2) or (counter = 4) or (counter = 6)
+					{
+						spar();
+					}
+					else if not somebodyTalking
+					{
+						randomBarkAtHome();
+						wait(100);
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(100);
+					}
+				}
+				else
+				{
+					wait(500);
+				}
+			}
+		}
+		wait(200);
+		counter2 = 0;
+	}
+}
+
+// Derived: routine 0x0411, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::randomBarkAtHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Darion:Referent);
+	if (ran < 200) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(3);
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		if ran = 1
+		{
+			if darionMet
+			{
+				bark("So, you are back. ");
+				realDoAnim(AS_FIDGET, getDir());
+			}
+			else
+			{
+				bark("What do you want? ");
+			}
+		}
+		if ran = 2
+		{
+			if darionMet
+			{
+				bark("Sword play is an art form. ");
+				realDoAnim(AS_FIDGET, getDir());
+			}
+			else
+			{
+				bark("You have interrupted my practice! ");
+			}
+		}
+		if ran = 3
+		{
+			bark("Hmmm, my parries need some work. ");
+			realDoAnim(AS_FIDGET, getDir());
+		}
+		wait(60);
+		return;
+	}
+	else
+	{
+		ran = urandom(7);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			realDoAnim(AS_DRAW_WEAPON, getDir());
+			realDoAnim(AS_SHEATH_WEAPON, getDir());
+			bark("No one can best me! ");
+		}
+		if ran = 2
+		{
+			realDoAnim(AS_DRAW_WEAPON, getDir());
+			bark("My blade needs cleaning... ");
+			realDoAnim(AS_SHEATH_WEAPON, getDir());
+			wait(60);
+		}
+		if ran = 3
+		{
+			bark("Perhaps more drilling on attacks... ");
+		}
+		if ran = 4
+		{
+			bark("My practice armor needs repair. ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(60);
+		}
+		if ran = 5
+		{
+			bark("What to do about Jenna. ");
+			realDoAnim(AS_FIDGET, getDir());
+		}
+		if ran = 6
+		{
+			realDoAnim(AS_DRAW_WEAPON, getDir());
+			bark("I need a new sword... ");
+			realDoAnim(AS_SHEATH_WEAPON, getDir());
+		}
+	}
+}
+
+// Derived: routine 0x0897, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::onPatrol()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	bool:Boolean;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach pathEgg where (type = TypePathMarker) within 25 cells of Darion {
+			counter2 = pathEgg.getFrame();
+			bool = 1;
+		}
+		if not bool
+		{
+			counter2 = 20;
+		}
+	}
+	process
+	{
+		for counter = counter2 to 27
+		{
+			bool = 0;
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter)) within 50 cells of Darion {
+				pathfind(pathEgg, 35);
+				bool = 1;
+				if not somebodyTalking
+				{
+					randomBarkOnPatrol();
+					wait(100);
+				}
+				else
+				{
+					realDoAnim(AS_FIDGET, getDir());
+					wait(100);
+				}
+			}
+			if not bool
+			{
+				wait(500);
+				realDoAnim(AS_FIDGET, getDir());
+			}
+		}
+		counter2 = 20;
+		wait(100);
+	}
+}
+
+// Derived: routine 0x09F5, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::randomBarkOnPatrol()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Darion:Referent);
+	if (ran < 200) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(3);
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		if ran = 1
+		{
+			if darionMet
+			{
+				bark("Good day to you. ");
+				realDoAnim(AS_FIDGET, getDir());
+			}
+			else
+			{
+				bark("New around here, are you? ");
+			}
+		}
+		if ran = 2
+		{
+			if darionMet
+			{
+				bark("Need some assistance? ");
+				realDoAnim(AS_FIDGET, getDir());
+			}
+			else
+			{
+				bark("Stranger, are you lost? ");
+			}
+		}
+		if ran = 3
+		{
+			if darionMet
+			{
+				bark("Nice day for a walk, is it not? ");
+				realDoAnim(AS_FIDGET, getDir());
+			}
+		}
+		wait(60);
+		return;
+	}
+	else
+	{
+		ran = urandom(7);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			bark("Curses, I think it is going to rain again! ");
+		}
+		if ran = 2
+		{
+			realDoAnim(AS_DRAW_WEAPON, getDir());
+			bark("I could use a new weapon... ");
+			realDoAnim(AS_SHEATH_WEAPON, getDir());
+			wait(60);
+		}
+		if ran = 3
+		{
+			realDoAnim(AS_FIDGET, getDir());
+			bark("It is getting late... ");
+		}
+		if ran = 4
+		{
+			bark("It seems too quiet around here... ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(60);
+		}
+		if ran = 5
+		{
+			bark("What to do about Jenna... ");
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Oh well... ");
+		}
+		if ran = 6
+		{
+			bark("Maybe I'll go to the tavern for an ale. ");
+			realDoAnim(AS_DRAW_WEAPON, getDir());
+			realDoAnim(AS_SHEATH_WEAPON, getDir());
+		}
+	}
+}
+
+// Derived: routine 0x0E9D, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::spar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	[[PT_ACTIVITY, referent]];
+	foreach item where (type = TypeDummy) within 6 cells of Darion {
+		turnToFace(getDirToItem(item), 0, 10);
+		realDoAnim(AS_WALK, getDir());
+		realDoAnim(AS_DRAW_WEAPON, getDir());
+		if urandom(10) > 5
+		{
+			bark("En guard! ");
+		}
+		else
+		{
+			bark("Watch this! ");
+		}
+		realDoAnim(AS_SWING_WEAPON, getDir());
+		wait(20);
+		if urandom(10) > 2
+		{
+			wait(45);
+			realDoAnim(AS_SWING_WEAPON, getDir());
+		}
+		killProcess(referent, PT_BARK);
+		if urandom(10) > 6
+		{
+			realDoAnim(AS_SHEATH_WEAPON, getDir());
+			turnToFace(8 - getDirToItem(item), 0, 15);
+			wait(60);
+			turnToFace(getDirToItem(item), 0, 5);
+			realDoAnim(AS_DRAW_WEAPON, getDir());
+			realDoAnim(AS_SWING_WEAPON, getDir());
+		}
+		realDoAnim(AS_SHEATH_WEAPON, getDir());
+	}
+}
+
+// Derived: routine 0x10DB, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::buyWeapon()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	askList:String List;
+	answer:String;
+	cost:Number;
+	fram:Number;
+	typearmor:Type;
+	[[PT_DEFAULT, referent]];
+	bark("Yes, I do. I have leather armor called cuir-bouilli, leather leggings and boots, leather gloves and bracers, and a helm. Would you be interested in any of these? ");
+	askList = <<"Cuirbolli. ", "Leather leggings and boots. ", "Leather gloves and bracers. ", "Helmet. ", "Nothing, thank you. ">>;
+	answer = ask(askList);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch answer
+	{
+		case "Cuirbolli. "
+		{
+			bark("A fine choice. That'll cost you 6 blacks. Will you take it? ");
+			cost = 6;
+			fram = 4;
+			typearmor = 523;
+		}
+		case "Leather gloves and bracers. "
+		{
+			bark("Ah, you won't be disappointed in the quality. The price is 5 bright stones. Do we have a deal? ");
+			cost = 5;
+			fram = 4;
+			typearmor = 530;
+		}
+		case "Leather leggings and boots. "
+		{
+			bark("Every warrior needs boots and leggings. A set of mine will cost you 10 stones. ");
+			cost = 10;
+			fram = 0;
+			typearmor = 532;
+		}
+		case "Helmet. "
+		{
+			bark("Just the thing for those long journeys. For 2 black stones it can be yours. ");
+			cost = 2;
+			fram = 4;
+			typearmor = 531;
+		}
+		case "Nothing, thank you. "
+		{
+			bark("Well, you're turning down a good deal here, you know. Ah well, there is no accounting for taste, I suppose. ");
+			return;
+		}
+		default
+		{
+			bark("If you didn't want anything, why did you ask? ");
+			return;
+		}
+	}
+	askList = <<"Here is the amount. ", "Never mind, thank you. ">>;
+	answer = ask(askList);
+	if answer = "Here is the amount. "
+	{
+		if class_0581_take(1, 143, 0, 0, cost)
+		{
+			if class_0581_give(1, typearmor, fram, 0, 1)
+			{
+				bark("There you go. Thank you for your business. ");
+			}
+			else
+			{
+				bark("Ha ha, you may be strong, but you can't carry all that! Why don't I just keep this for you until you have room for it. ");
+				class_0581_give(1, 143, 5, 0, cost);
+			}
+		}
+		else
+		{
+			bark("Hey, what are you trying to do here? Cheat me? Come back when you've got some real money to spend! ");
+			return;
+		}
+	}
+	else
+	{
+		bark("Oh well, 'Tis your loss! ");
+		return;
+	}
+	if answer = ""
+	{
+		bark("Can't make your mind up? Well, just think on it a while. ");
+		return;
+	}
+}
+
+// Derived: routine 0x17F2, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::training()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	counter:Number;
+	limit:Number;
+	hit:Number;
+	gotHit:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, NULL_REF]];
+		Item_bark(u8_string_address("You may strike first. "), u8_stack_ref(5));
+		Darion.realDoAnim(AS_DRAW_WEAPON, getDir());
+		setAvatarInStasis(0);
+		Darion.setAlignment(8);
+		Avatar.setImmortal();
+		DarionTraining = 1;
+		limit = 5 * Avatar.getStr();
+	}
+	process
+	{
+		wait(30);
+		counter++;
+		if AvatarTookHit
+		{
+			AvatarTookHit = 0;
+			hit++;
+		}
+		if DarionTookHit
+		{
+			DarionTookHit = 0;
+			gotHit++;
+		}
+		if counter > limit
+		{
+			setAvatarInStasis(1);
+			if Avatar.isInCombat()
+			{
+				ClrAvatarInCombat();
+			}
+			resetRef(1, PT_ANIM);
+			resetRef(5, PT_ANIM);
+			Darion.clrInCombat();
+			Avatar.clrImmortal();
+			Item_bark(u8_string_address("Time is up! "), u8_stack_ref(5));
+			Darion.setAlignment(2);
+			Darion.realDoAnim(AS_SHEATH_WEAPON, getDir());
+			Item_bark(u8_string_address("Come back when you need training again. "), u8_stack_ref(5));
+			setAvatarInStasis(0);
+			Item_enterFastArea(u8_stack_ref(5));
+			DarionTraining = 0;
+			return;
+		}
+		if getDistance(Avatar:Referent, Darion:Referent) > 500
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("I will not chase cowards! "), u8_stack_ref(5)) -> return;
+			if Avatar.isInCombat()
+			{
+				ClrAvatarInCombat();
+			}
+			resetRef(1, PT_ANIM);
+			resetRef(5, PT_ANIM);
+			Darion.clrInCombat();
+			Avatar.clrImmortal();
+			Darion.setAlignment(2);
+			Darion.realDoAnim(AS_SHEATH_WEAPON, getDir());
+			setAvatarInStasis(0);
+			Item_enterFastArea(u8_stack_ref(5));
+			DarionTraining = 0;
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x1A8C, event mask 0x00000020.
+// R: `hit` identifies event 05; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::hit()
+{
+}
+
+// Derived: routine 0x1A99, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::gotHit(r:Referent, vel:Word)
+{
+}
+
+// Derived: routine 0x1AA6, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::look()
+{
+	if isDead()
+	{
+		bark("The late Captain of the Guard. ");
+	}
+	else
+	{
+		if darionName and darionJob
+		{
+			bark("Darion, Captain of the Guard ");
+		}
+		if darionName
+		{
+			bark("Darion");
+		}
+		if darionJob
+		{
+			bark("Captain of the Guard ");
+		}
+		else
+		{
+			bark("man ");
+		}
+	}
+}
+
+// Derived: routine 0x1BA8, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	answer:String;
+	askList:String List;
+	ran:Number;
+	if not toranDead
+	{
+		return;
+	}
+	if getMap() = 3
+	{
+		if not devonInRule
+		{
+			bark("You are blocking the way! Move! ");
+			cSetActivity(0);
+			return;
+		}
+		else
+		{
+			if urandom(10) > 5
+			{
+				bark("Oowwww... ");
+			}
+			else
+			{
+				bark("Argh... ");
+			}
+			return;
+		}
+	}
+	if darionMet
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("A moment, sir! "), u8_stack_ref(1)) -> return;
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Hello there. "), u8_stack_ref(1)) -> return;
+	}
+	enterConvo();
+	killProcess(1, PT_BARK);
+	if hasHeart
+	{
+		bark("What?! What do you want?! Can't you see this is an emergency situation?! ");
+		askList = <<"An emergency situation? ">>;
+	}
+	else
+	{
+		if spokeAboutJenna
+		{
+			bark("I see you've come back. You've reconsidered about my daughter then, have you? ");
+			askList = <<"I regret to tell you no. ", "Yes, I want to marry your daughter! ">>;
+		}
+		else if darionMet
+		{
+			if hydrosFree
+			{
+				if hasAvaName
+				{
+					bark("Miserable weather and all, we're having, eh " + getName() + ".");
+					askList = <<"Yes, just terrible, Captain Darion. ">>;
+				}
+				else
+				{
+					bark("Miserable weather and all we're having, eh? ");
+					askList = <<"Yes, just terrible, Captian Darion. ">>;
+				}
+			}
+			else
+			{
+				if hasAvaName
+				{
+					bark("Good day to you, " + getName() + ".");
+				}
+				else
+				{
+					bark("Good day to you. ");
+				}
+				askList = <<"Good morrow, Captain Darion. ">>;
+			}
+		}
+		else
+		{
+			bark("Hail! ");
+			askList += <<"Good day to you, Sir. ">>;
+		}
+		if darionSchedule = 1
+		{
+			bark("And as you can see, I am a trainer. Since you appear to be in shape I could take you on as a student if you so desire. Only ask, and I will spar with you. ");
+			askList ^= <<"I need training. ">>;
+		}
+	}
+	askList ^= <<"bye ">>;
+	u8label label_20E9:
+	u8goto label_6211 if not (answer != "bye ");
+	if avatarTooCheap
+	{
+		avatarTooCheap = 0;
+		exitConvo();
+		return;
+	}
+	answer = ask(askList);
+	u8goto label_21A8 if not (answer = "Good day to you, Sir. ");
+	bark("And good day to you. ");
+	askList = <<"May I know your name? ", "bye ">>;
+	u8goto label_620E;
+	u8label label_21A8:
+	u8goto label_234B if not (answer = "May I know your name? ");
+	bark("I am Darion, the Arms Master and Captain of the Palace Guard here in Tenebrae. ");
+	darionMet = 1;
+	darionName = 1;
+	bark("And you? ");
+	askList = <<"Tell me about the palace. ", "Tell me about Tenebrae. ", "Who are the Palace Guards? ">>;
+	askList += <<("I am " + getName() + ".")>>;
+	if jennaGhostStory
+	{
+		askList += <<"I heard a tale from Orlok. ">>;
+	}
+	if darionSchedule = 1
+	{
+		askList += <<"Do you sell armaments? ">>;
+	}
+	askList += <<"bye ">>;
+	u8goto label_620E;
+	u8label label_234B:
+	u8goto label_23BB if not (answer = ("I am " + getName() + "."));
+	bark("Well met, " + getName() + ".");
+	askList -= <<("I am " + getName() + ".")>>;
+	hasAvaName = 1;
+	u8goto label_620E;
+	u8label label_23BB:
+	u8goto label_2437 if not (answer = ("Ich hei\xE1e " + getName() + "."));
+	bark("Freut mich, " + getName() + ".");
+	askList -= <<("Ich hei\xE1e " + getName() + ".")>>;
+	hasAvaName = 1;
+	u8goto label_620E;
+	u8label label_2437:
+	u8goto label_24AD if not (answer = ("Je suis " + getName() + "."));
+	bark("Enchant\x82, " + getName() + ".");
+	askList -= <<("Je suis " + getName() + ".")>>;
+	hasAvaName = 1;
+	u8goto label_620E;
+	u8label label_24AD:
+	u8goto label_2829 if not ((answer = "Good morrow, Captain Darion. ") or (answer = "Yes, just terrible, Captain Darion. "));
+	if hydrosFree
+	{
+		bark("I don't know what we'll do if it gets much worse. ");
+	}
+	else if hasAvaName
+	{
+		bark("Good morrow to you, " + getName() + ".");
+	}
+	else
+	{
+		bark("Good morrow to you. ");
+	}
+	askList ^= <<"Tell me about the palace. ", "Tell me about Tenebrae. ">>;
+	askList -= <<"Good morrow, Captain Darion. ", "Yes, just terrible, Captain Darion. ">>;
+	if jennaGhostStory and (not darionGhostStory)
+	{
+		askList += <<"I heard a tale from Orlok. ">>;
+	}
+	if salkindMet
+	{
+		askList += <<"What do you know about Salkind? ">>;
+	}
+	if benticMet and benticStoryTold
+	{
+		askList += <<"I met Bentic. ">>;
+	}
+	if kilandraMet
+	{
+		askList += <<"I met Kilandra. ">>;
+	}
+	if jennaMet and darionGhostStory
+	{
+		askList += <<"I met your daughter, Jenna. ">>;
+	}
+	if devonInRule
+	{
+		askList += <<"So Devon is now your Tempest. ">>;
+	}
+	if darionSchedule = 1
+	{
+		askList ^= <<"I need training. ">>;
+		darionJob = 1;
+		if askedAboutSell
+		{
+			askList += <<"I'm interested in your wares. ">>;
+		}
+		else
+		{
+			askList += <<"Do you sell armaments? ">>;
+		}
+	}
+	askList -= <<"bye ">>;
+	askList += <<"bye ">>;
+	u8goto label_620E;
+	u8label label_2829:
+	u8goto label_2B75 if not (answer = "I need training. ");
+	bark("I would be glad to have you as a student! ");
+	bark("I charge 50 black stones per session, and I guarantee that you will get your moneys worth. ");
+	bark("Do you still wish to spar with me? ");
+	u8goto label_2ACC if not (class_0581_askYesNo(0x00000000));
+	if class_0581_take(1, 143, 0, 0, 50)
+	{
+		bark("Draw your weapon and prepare for combat. ");
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0405_training(this) -> return;
+		if getDistance(referent, Avatar:Referent) >= 384
+		{
+			scrollBack(20);
+		}
+		else
+		{
+			scrollBack(15);
+		}
+		somebodyTalking = 0;
+		setAvatarInStasis(0);
+		return;
+	}
+	else
+	{
+		bark("It looks like you do not have the money. ");
+		bark("I am sorry, but I do not give credit. Try me later when you can afford my services. ");
+		askList -= <<"I need training. ">>;
+	}
+	u8goto label_2B2D;
+	u8label label_2ACC:
+	bark("Do not worry, I will look upon you as a coward for not accepting my offer. ");
+	u8label label_2B2D:
+	askList -= <<"I need training. ">>;
+	askList -= <<"bye ">>;
+	askList += <<"bye ">>;
+	u8goto label_620E;
+	u8label label_2B75:
+	u8goto label_2C6E if not ((answer = "Do you sell armaments? ") or (answer = "I'm interested in your wares. "));
+	bark("My armaments are the finest available. Are you looking for something in particular? ");
+	askList = <<"Yes, I am. ", "No, I'm not. ", "What do you have? ", "bye ">>;
+	u8goto label_620E;
+	u8label label_2C6E:
+	u8goto label_2CF1 if not ((answer = "Yes, I am. ") or (answer = "What do you have? "));
+	askList -= <<"Yes, I am. ", "No, I'm not. ", "What do you have? ">>;
+	buyWeapon();
+	u8goto label_620E;
+	u8label label_2CF1:
+	u8goto label_2E30 if not ((answer = "No, I'm not. ") or (answer = "No, sorry. ") or (answer = "Nothing, thank you. "));
+	bark("Ok, well, if you change your mind, let me know. ");
+	if spokeAboutJenna
+	{
+		bark("Have you reconsidered about Jenna, then? ");
+		askList = <<"Yes, I want to marry your daughter! ", "I regret to tell you no. ", "Bye ">>;
+	}
+	else
+	{
+		exitConvo();
+		return;
+	}
+	u8goto label_620E;
+	u8label label_2E30:
+	u8goto label_2EFB if not (answer = "So Devon is now your Tempest. ");
+	bark("And make no mistake, I will serve him as I served Mordea. I am loyal to the Tempestry, I am. ");
+	askList -= <<"So Devon is now your Tempest. ">>;
+	u8goto label_620E;
+	u8label label_2EFB:
+	u8goto label_2FDA if not (answer = "I heard a tale from Orlok. ");
+	bark("That is not unusual from him. He's got quite a few of them. ");
+	askList -= <<"I heard a tale from Orlok. ", "bye ">>;
+	askList += <<"This tale concerned a ghost. ", "bye ">>;
+	u8goto label_620E;
+	u8label label_2FDA:
+	u8goto label_3230 if not (answer = "This tale concerned a ghost. ");
+	bark("Ghosts? In my town? Never!! Why If there were any ghosts seen here it would only be in the minds of those who had too much of Orlok's ale. I'll just bet he's been talking to those simple-minded herdsmen in the hills again. They are always spreading some crazy story around. Spend too much time with their torax, that's what I think. Ghosts? Pshaw! No such things ... and I'll mind you not to spread tales like that. Upsets the citizens of this town, it does. Now, if you'll excuse me.");
+	darionGhostStory = 1;
+	exitConvo();
+	return;
+	darionGhostStory = 1;
+	exitConvo();
+	u8goto label_6221;
+	u8goto label_620E;
+	u8label label_3230:
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch answer
+	{
+		case "Tell me about the palace. "
+		{
+			if devonInRule
+			{
+				bark("The palace is the home of our Tempest, Devon. ");
+			}
+			else
+			{
+				bark("The palace is the home of our Tempest, the Lady Mordea. ");
+			}
+			askList -= <<"Tell me about the palace. ", "bye ">>;
+			askList += <<"Who is Lady Mordea? ", "bye ">>;
+		}
+		case "Tell me about Tenebrae. "
+		{
+			if hasAvaName
+			{
+				bark("Ah, Tenebrae, 'tis the finest gem in this fair land. I have served this city and her leaders since I was a mere lad, as an apprentice in the guard. I welcome you, " + getName() + ", to our fair city.");
+			}
+			else
+			{
+				bark("Ah, Tenebrae, 'tis the finest gem in this fair land. I have served this city and her leaders since I was a mere lad, as an apprentice in the guard. I welcome you to our fair city. ");
+			}
+			askList -= <<"Tell me about Tenebrae. ", "bye ">>;
+			askList += <<"bye ">>;
+		}
+		case "Who is Lady Mordea? "
+		{
+			bark("The fair Tempest of our City. ");
+			askList -= <<"Who is Lady Mordea? ", "bye ">>;
+			askList += <<"bye ">>;
+		}
+		case "Who are the Palace Guards? "
+		{
+			bark("The finest fighting regiment in the land. But there is not much call for defense anymore. We mostly spend our time in preserving the peace. That's not to say we wouldn't be ready if needed, though. ");
+			askList -= <<"Who are the Palace Guards? ">>;
+			askList = <<"Ready for what? ", "bye ">>;
+		}
+		case "Ready for what? "
+		{
+			bark("Of course, you never know what those Necromancers are up to. And we do have our fine Tempest to defend. ");
+			askList -= <<"Ready for what? ">>;
+			askList = <<"Who is the Tempest? ", "Who are the Necromancers? ", "You defend her? ", "bye ">>;
+		}
+		case "You defend her? "
+		{
+			bark("Of course, our Tempest is more than capable of defending herself. She has a portion of Hydros' power. ");
+			askList -= <<"You defend her? ", "bye ">>;
+			askList += <<"bye ">>;
+		}
+		case "Who is the Tempest? "
+		{
+			bark("Why, she is the representative of that mightiest of Titans, Hydros. Hydros' visage is much too fearsome and powerful for the likes of you and I, so Lady Mordea serves as her representative. In exchange, Lady Mordea is able to wield some of the power from Hydros. ");
+			askList -= <<"Who is the Tempest? ">>;
+			askList = <<"What power? ", "Who is Hydros? ", "bye ">>;
+		}
+		case "What power? "
+		{
+			bark("Why do you think we have fair weather all the day? With her share of Hydros' power, Lady Mordea is able to control the weather. 'Tis a blessing, it is. ");
+			askList -= <<"What power? ", "bye ">>;
+			askList += <<"bye ">>;
+		}
+		case "Who is Hydros? "
+		{
+			bark("Keep a respectful tongue in your head when you speak that name, my friend. The Lurker is a force to be reckoned with. She is the power of all the waters. She can be as gentle as a spring rain or as powerful and terrible as a thundering waterfall. She is the mightiest of all the Titans. Well worth your respect and worship. ");
+			askList -= <<"Who is Hydros? ", "bye ">>;
+			askList += <<"bye ">>;
+		}
+		case "Who are the Necromancers? "
+		{
+			bark("Filthy things, they live in the cemetery and muck about with dead bodies. They serve the Titan Lithos. 'Tis no wonder there are so few Necromancers left. Only those who grub for a paltry living from the mud and dirt have anything to do with Lithos and the Necromancers. Phaw! ");
+			askList -= <<"Who are the Necromancers? ", "bye ">>;
+			askList ^= <<"Tell me about the cemetery. ", "Only a few Necromancers? ", "bye ">>;
+		}
+		case "Only a few Necromancers? "
+		{
+			bark("I do not know exactly how many there are, but even one is one too many for my liking. ");
+			askList -= <<"Only a few Necromancers? ", "bye ">>;
+			askList += <<"bye ">>;
+		}
+		case "Tell me about the cemetery. "
+		{
+			bark("That's where those filthy creatures keep their home. They like to be as near the dead as they can. If you ask me, I think they wait until late in the night and then dig up the bodies so they can do all manner of grotesque things to them. It churns my belly to think of it. ");
+			askList -= <<"Tell me about the cemetery. ", "bye ">>;
+			askList += <<"bye ">>;
+		}
+		case "An emergency situation? "
+		{
+			bark("By Hydros' spume, man! Can't you see? The dead are walking the streets! I have a town to protect! A Tempest to find! People to calm! I haven't time for gawkers! ");
+			exitConvo();
+			return;
+		}
+		case "What do you know about Salkind? "
+		{
+			bark("Hmmmmm, I don't know much about him, except he is always at the side of Lady Mordea. I'm not sure I trust him. ");
+			askList -= <<"What do you know about Salkind? ", "bye ">>;
+			askList += <<"Why don't you trust Salkind? ", "bye ">>;
+		}
+		case "Why don't you trust Salkind? "
+		{
+			bark("Well, the Tempest has always ruled alone. This seneschal bit seems to go against our fine line of tradition here in Tenebrae. I'm not sure I agree, but then, Lady Mordea seems to like him, so I'll protect him as well as her. ");
+			askList -= <<"Why don't you trust Salkind? ">>;
+		}
+		case "I met your daughter, Jenna. "
+		{
+			bark("Ah, she is a beauty, isn't she? She is my pride and joy, you know. Why, she is the exact picture of her dear, departed mother. ");
+			askList -= <<"I met your daughter, Jenna. ">>;
+			askList = <<"What happened to her mother? ", "She is beautiful. ", "bye ">>;
+		}
+		case "What happened to her mother? "
+		{
+			bark("That is a sad tale. She was the love of my life. A beauty with long blonde hair and eyes as green as the Sea of Rains. She took with the fever shortly after dear Jenna was born. I did everything I could, but it was no use. She died in my arms and with her last breath whispered, 'I love you'. ");
+			askList -= <<"What happened to her mother? ", "bye ">>;
+			askList += <<"That is a tragic tale. ", "bye ">>;
+		}
+		case "That is a tragic tale. "
+		{
+			bark("I can only honor her with my memories, for there is no physical marker for her, no grave. ");
+			askList -= <<"That is a tragic tale. ", "bye ">>;
+			askList += <<"Why is there no grave? ", "bye ">>;
+		}
+		case "Why is there no grave? "
+		{
+			bark("There was a grave, there WAS one. But one day as I went to leave flowers on her stone, as was my want, I found the grave ripped open and the body missing. It could only be the work of those filthy Necromancers. It pains me still to think of it. ");
+			askList -= <<"Why is there no grave? ">>;
+		}
+		case "She is beautiful. "
+		{
+			bark("That she is. Every man in town has asked for her hand, but I'm afraid there is too much of her father in her. I do wish she could find the right one, though. But it will take someone with a strength of character and a soundness of mind that you just don't find around here. Perhaps it will take someone... someone much like yourself, hmmmm? ");
+			askList -= <<"She is beautiful. ">>;
+			askList = <<"Bye ">>;
+		}
+		case "Bye "
+		{
+			spokeAboutJenna = 1;
+			ran = random(5);
+			if ran = 0
+			{
+				bark("Did I tell you that she can wield a sword as well as any man? Taught her myself. Right dangerous she is with that thing. ");
+				askList = <<"Bye ">>;
+			}
+			if ran = 1
+			{
+				bark("Did I mention she can cook? She makes a fine pie, Yessir, makes my mouth water just thinking about it. ");
+				askList = <<"Bye ">>;
+			}
+			if ran = 2
+			{
+				bark("She keeps an immaculate house, she does. Why you could eat right off the floor. ");
+				askList = <<"Bye ">>;
+			}
+			if ran = 3
+			{
+				bark("She's a beauty, all right. A man would be right proud to have her by his side. ");
+				askList = <<"Bye ">>;
+			}
+			if ran = 4
+			{
+				bark("Oh, and did I mention how much she loves children? Wants a house full of them, she does. ");
+				askList = <<"GOODBYE! ">>;
+			}
+		}
+		case "I regret to tell you no. "
+		{
+			bark("You're sure then? Did I mention that she is educated and can discuss many matters of interest quite well? ");
+			askList = <<"Bye ">>;
+		}
+		case "Yes, I want to marry your daughter! "
+		{
+			bark("Oh that's wonderful! But, ummm...there is one little detail I forgot to mention, Oh but it's a little thing, it can wait till after the ceremony. Now, how soon do you want the ceremony? ");
+			askList -= <<"Yes, I want to marry your daughter! ">>;
+			askList = <<"What little detail? ", "What ceremony? ", "Bye ">>;
+		}
+		case "What little detail? "
+		{
+			bark("Just a little something. Ummmm, well, it's really nothing. Ummm, has she mentioned whether or not she likes you, at all? ");
+			askList -= <<"What little detail? ", "Bye ">>;
+			askList += <<"She is angry with me. ", "Oh, she likes me. ", "Bye ">>;
+		}
+		case "Oh, she likes me. "
+		{
+			bark("Oh that is wonderful. Perhaps that will avoid the problem then. ");
+			askList -= <<"Oh, she likes me. ", "She is angry with me. ", "Bye ">>;
+			askList ^= <<"What problem? ">>;
+			askList += <<"Bye ">>;
+		}
+		case "She is angry with me. "
+		{
+			bark("Oh, that could be a problem. ");
+			askList -= <<"She is angry with me. ", "Oh, she likes me. ", "Bye ">>;
+			askList += <<"What problem? ", "Bye ">>;
+		}
+		case "What problem? "
+		{
+			bark("Well, it's just that she, ahhh, has...well it's a little embarrassing, it seems she has sworn to kill any man chosen for her to marry...see, nothing really. ");
+			askList -= <<"What problem? ">>;
+			askList = <<"Bye ">>;
+		}
+		case "What ceremony? "
+		{
+			bark("Why the wedding ceremony, of course. I could arrange it for quite soon. ");
+			askList -= <<"What ceremony? ">>;
+		}
+		case "GOODBYE! "
+		{
+			bark("Then that's settled. You'll think about it and get back to me with your answer. ");
+			exitConvo();
+			return;
+		}
+		case "I met Bentic. "
+		{
+			if benticCacked
+			{
+				bark("Ah yes, he was just executed...for conducting forbidden research, if I remember rightly. He was a good fellow, too bad he got involved in such shady dealings. ");
+				askList -= <<"I met Bentic. ", "bye ">>;
+				askList ^= <<"What shady dealings? ", "Orlok told a story of Bentic. ", "bye ">>;
+			}
+			else
+			{
+				bark("Bentic, now there's a good fellow. Always in his library, he is. Stays out of trouble. Too bad more of our citizens aren't more like that. ");
+				askList -= <<"I met Bentic. ", "bye ">>;
+				askList ^= <<"Orlok told a story of Bentic. ">>;
+				askList += <<"bye ">>;
+			}
+		}
+		case "What shady dealings? "
+		{
+			bark("Well, you know...just, shady ones. Ones that are forbidden by Lady Mordea. Ahem, I can't say anymore than that, you know, official policy and all. ");
+			askList -= <<"What shady dealings? ", "bye ">>;
+			askList += <<"Orlok told a story of Bentic. ", "bye ">>;
+		}
+		case "Orlok told a story of Bentic. "
+		{
+			bark("Of course he did, he's Orlok, after all and he does enjoy his story. Didn't tell you the one about the map on Bentic's chest, did he? Well, that's nothing but hogwash. I had cause to visit Bentic in his home one day. He was wearing a robe and showed his chest quite plainly. There was no map on it. ");
+			askList -= <<"Orlok told a story of Bentic. ", "bye ">>;
+			askList += <<"Do you know of Blowhard's treasure? ", "bye ">>;
+		}
+		case "Do you know of Blowhard's treasure? "
+		{
+			bark("So, come for treasure, have you? Well, you're not the first young man to come to me with that look in your eye. No sirree, in fact, were I a younger man, I might take it into my head to look, myself. ");
+			askList -= <<"Do you know of Blowhard's treasure? ", "bye ">>;
+			askList += <<"Where would you look? ", "bye ">>;
+		}
+		case "Where would you look? "
+		{
+			bark("Well, when I was just a tyke, my father told me a story Much like one of Orlok's stories about John Blowhard. Only my father's story went this way. A bunch of trolls had taken up residence on an island. They raided neighboring villages and stole the children away to eat them. One night, the trolls came again and tried to steal the last child in the village. The child's mother was so enraged, she grabbed one of her knitting needles and killed the troll. Stratos was so impressed by this mother's defense, she turned the knitting needle into a magical sword. It is said this sword is hidden somewhere in the mountains outside Tenebrae, perhaps in Herdsman's valley. Were I looking for treasure, that's where'd I'd look.");
+			askList -= <<"Where would you look? ">>;
+		}
+		case "I met Kilandra. "
+		{
+			bark("She is a crazy old thing, isn't she? ");
+			askList -= <<"I met Kilandra. ", "bye ">>;
+			askList += <<"Her tale is tragic. ", "bye ">>;
+		}
+		case "Her tale is tragic. "
+		{
+			bark("Oh, told you about her daughter, did she? Well, ever since that little girl died, she has not been the same. Never comes into town, never speaks to anyone. Rather pathetic, if you ask me. ");
+			askList -= <<"Her tale is tragic. ">>;
+		}
+		case "bye "
+		{
+			bark("Farewell. ");
+			exitConvo();
+			return;
+		}
+		default
+		{
+			bark("Stay out of trouble. ");
+			exitConvo();
+			return;
+		}
+	}
+	u8label label_620E:
+	u8goto label_20E9;
+	u8label label_6211:
+	exitConvo();
+	u8label label_6221:
+	u8_free_local_string(answer);
+	u8_free_local_string_list(askList);
+}
+
+// Derived: routine 0x6227, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Darion::moan()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		wait(200 + urandom(260));
+	}
+	process
+	{
+		wait(200 + urandom(260));
+		if urandom(10) > 5
+		{
+			bark("uuuhhhhgggg... ");
+		}
+		else
+		{
+			bark("aahhhhrrrggg... ");
+		}
+	}
+}
+

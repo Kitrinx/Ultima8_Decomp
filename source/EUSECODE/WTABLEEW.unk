@@ -1,0 +1,38 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0119
+// FLEX slot: 283
+// Original offset: 0x00124D0C
+// Naming evidence: E, exact object-1 linker name `WTABLEEW`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/WTABLEEW.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass WTABLEEW inherits Item
+{
+	process wtableew_look_bark_table();
+	process wtableew_got_hit_change_frame(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process WTABLEEW::wtableew_look_bark_table()
+{
+	bark("table ");
+}
+
+// Derived: routine 0x00A9, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process WTABLEEW::wtableew_got_hit_change_frame(arg_04:U8Word)
+{
+	if not arg_04
+	{
+		setFrame(1);
+	}
+}
+

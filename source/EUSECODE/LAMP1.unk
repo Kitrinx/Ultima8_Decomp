@@ -1,0 +1,34 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x013A
+// FLEX slot: 316
+// Original offset: 0x000A6804
+// Naming evidence: E, exact object-1 linker name `LAMP1`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LAMP1.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass LAMP1 inherits Item
+{
+	process lamp1_look_bark_wall_lamp();
+	process lamp1_use_place_alternate_wall_lamp_type();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LAMP1::lamp1_look_bark_wall_lamp()
+{
+	bark("wall lamp ");
+}
+
+// Derived: routine 0x00AD, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LAMP1::lamp1_use_place_alternate_wall_lamp_type()
+{
+	class_0581_legal_setType(referent, 606, 0, getX() - 32, getY(), getZ());
+}
+

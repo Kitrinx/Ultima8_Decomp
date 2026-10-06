@@ -1,0 +1,272 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00E8
+// FLEX slot: 234
+// Original offset: 0x0009A833
+// Naming evidence: E, exact object-1 linker name `KEYONEC`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/KEYONEC.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass KEYONEC inherits Item
+{
+	process keyonec_look_bark_description_by_frame();
+	process keyonec_use_run_key_burial_interaction();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KEYONEC::keyonec_look_bark_description_by_frame()
+{
+	if getFrame() = 0
+	{
+		bark("Key of the Caretaker ");
+	}
+	if getFrame() = 3
+	{
+		bark("Key of the Scion ");
+	}
+	if getFrame() = 4
+	{
+		bark("Key of the Necromancer ");
+	}
+}
+
+// Derived: routine 0x0139, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KEYONEC::keyonec_use_run_key_burial_interaction()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m04_w01:U8Bytes1;
+	local_m05:U8Byte;
+	local_m07:U8Word;
+	local_m09:Item;
+	local_m0B:Item;
+	local_m0C:U8Byte;
+	local_m0E:U8Word;
+	local_m10:U8Word;
+	local_m12:U8List2;
+	local_m14:U8Word;
+	local_m16:U8Word;
+	local_m18:U8Word;
+	local_m1A:U8Word;
+	local_m1C:U8Word;
+	local_m1E:U8Word;
+	local_m20:U8Word;
+	local_m22:U8Word;
+	local_m24:U8Word;
+	local_m26:Item;
+	local_m28:Item;
+	local_m2A:Item;
+	local_m2C:U8Word;
+	local_m2E:U8Word;
+	local_m30:String List;
+	local_m32:U8Word;
+	u8goto label_04ED if not (getFrame() = 3);
+	if lothInterred
+	{
+		local_m04 = referent;
+		class_004F_keyring_use_on_target(u8_local_address(local_m04_w01));
+		return;
+	}
+	else
+	{
+		local_m02 = target();
+		if local_m02.getType() = 628
+		{
+			if lothInterred = 1
+			{
+				return;
+			}
+			local_m05 = 0;
+			foreach local_m07 where (type = 628) within 60 cells of Avatar {
+				local_m05 = 1;
+				local_m0B = local_m02;
+			}
+			if not local_m05
+			{
+				return;
+			}
+			local_m0C = 1;
+			foreach local_m09 where (type = 453) within 60 cells of Avatar {
+				if local_m09.getFrame() = 0
+				{
+					local_m0C = 0;
+				}
+			}
+			if not local_m0C
+			{
+				return;
+			}
+			local_m0E = 0;
+			local_m10 = 0;
+			foreach local_m02 where (type = 331) within 60 cells of Avatar {
+				local_m10++;
+				local_m12 += <<local_m02>>;
+			}
+			if local_m10 < 3
+			{
+				return;
+			}
+			local_m14 = 0;
+			for local_m14 = 1 to 4
+			{
+				// X: directional surface search; no Origin spelling is known.
+				foreach local_m02 on surface above local_m12[local_m14] {
+					local_m0E++;
+				}
+			}
+			setAvatarInStasis(1);
+			scrollTo(local_m0B.getX(), local_m0B.getY(), local_m0B.getZ(), 4);
+			Npc_doAnim(0, 10000, 3, 35, u8_stack_ref(1));
+			Item_bark(u8_string_address("Lord Lithos, I have come to inter Lothian into Your Earth as You have commanded. "), u8_stack_ref(1));
+			Camera_startQuake(1);
+			playSFX(49, 200);
+			wait(24);
+			Camera_stopQuake();
+			bark("THIS DOES PLEASE ME WELL, LIVE ONE. ");
+			Item_bark(u8_string_address("All has been prepared according to your law, Mountain King. "), u8_stack_ref(1));
+			bark("COME NOW TO ME, LOTHIAN. LET ME ENFOLD YOU IN MY ARMS. ");
+			createSprite(628, 0, 15, 3, local_m0B.getX(), local_m0B.getY(), local_m0B.getZ());
+			local_m0B.setFrame(15);
+			scrollBack(16);
+			Npc_doAnim(0, 10000, 7, 2, u8_stack_ref(1));
+			setAvatarInStasis(0);
+			lothInterred = 1;
+		}
+		else
+		{
+			local_m04 = referent;
+			class_004F_keyring_use_on_target(u8_local_address(local_m04_w01));
+			return;
+		}
+	}
+	return;
+	u8label label_04ED:
+	local_m18 = 0;
+	local_m02 = target();
+	if local_m02 = 0
+	{
+		return;
+	}
+	if Item_canReach(128, local_m02, u8_stack_ref(1)) = 0
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn local_m02.bark("can't reach ") -> return;
+	}
+	else
+	{
+		if local_m02.getType() = 637
+		{
+			local_m1A = 0;
+			local_m1C = 0;
+			local_m1E = 0;
+			local_m20 = 0;
+			local_m22 = 0;
+			local_m24 = 0;
+			foreach recursive local_m26 where (type = 395) within container local_m02 {
+				local_m2C = local_m26.getFrame();
+				local_m2E = local_m26.getQuantity();
+				if local_m2C <= 5
+				{
+					local_m1A += local_m2E;
+				}
+				else if (local_m2C = 6) or (local_m2C = 7)
+				{
+					local_m1C += local_m2E;
+				}
+				else if local_m2C = 8
+				{
+					local_m1E += local_m2E;
+				}
+				else if local_m2C = 9
+				{
+					local_m20 += local_m2E;
+				}
+				else if (local_m2C >= 10) and (local_m2C <= 12)
+				{
+					local_m22 += local_m2E;
+				}
+				else if (local_m2C = 14) or (local_m2C = 15)
+				{
+					local_m24 += local_m2E;
+				}
+				local_m26.destroy();
+			}
+			if (local_m1A > 0) and (local_m1C = local_m1A) and (local_m1E = 0) and (local_m20 = 0) and (local_m22 = 0) and (local_m24 = 0)
+			{
+				local_m16 = 0;
+				local_m18 = local_m1A;
+			}
+			else if (local_m1A = 0) and (local_m1C = 0) and (local_m1E > 0) and (local_m20 = 0) and (local_m22 = local_m1E) and (local_m24 = 0)
+			{
+				local_m16 = 1;
+				local_m18 = local_m1E;
+			}
+			else if (local_m1A = 0) and (local_m1C = 0) and (local_m1E > 0) and (local_m20 = local_m1E) and (local_m22 = 0) and (local_m24 = 0)
+			{
+				local_m16 = 2;
+				local_m18 = local_m1E;
+			}
+			else if (local_m1A > 0) and (local_m1C = local_m1A) and (local_m1E = local_m1A) and (local_m20 = 0) and (local_m22 = 0) and (local_m24 = 0)
+			{
+				local_m16 = 3;
+				local_m18 = local_m1A;
+			}
+			else if (local_m1A > 0) and (local_m1C = 0) and (local_m1E = 0) and (local_m20 = 0) and (local_m22 = 0) and (local_m24 = local_m1A)
+			{
+				local_m16 = 4;
+				local_m18 = local_m1A;
+			}
+			else if (local_m1A > 0) and (local_m1C = local_m1A) and (local_m1E = local_m1A) and (local_m20 = local_m1A) and (local_m22 = 0) and (local_m24 = local_m1A)
+			{
+				local_m16 = 5;
+				local_m18 = local_m1A;
+			}
+			else if (local_m1A = 0) and (local_m1C = 0) and (local_m1E > 0) and (local_m20 = local_m1E) and (local_m22 = 0) and (local_m24 = local_m1E)
+			{
+				local_m16 = 6;
+				local_m18 = local_m1E;
+			}
+			else if (local_m1A = 0) and (local_m1C = 0) and (local_m1E = 0) and (local_m20 = 0) and (local_m22 > 0) and (local_m24 = local_m22)
+			{
+				local_m16 = 7;
+				local_m18 = local_m22;
+			}
+			else if (local_m1A = 0) and (local_m1C > 0) and (local_m1E = local_m1C) and (local_m20 = local_m1C) and (local_m22 = 0) and (local_m24 = local_m1C)
+			{
+				local_m16 = 8;
+				local_m18 = 1;
+			}
+			if local_m18 > 0
+			{
+				local_m30 = <<"Kal Wis Corp!", "Quas Corp!", "Rel Sanct Ylem!", "Kal Corp Xen!", "Des Por Ylem!", "In Ort Ylem Xen!", "Vas An Corp!", "In Vas Corp!", "Vas Por Ylem!">>;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn Item_bark(u8_string_address(local_m30[(local_m16 + 1)]), u8_stack_ref(1)) -> return;
+				Item_create(0, 587, u8_local_address(local_m2A_w01));
+				local_m2A.pop(local_m02.getX(), local_m02.getY(), local_m02.getZ() + 8);
+				for local_m32 = 1 to local_m18
+				{
+					Item_create(local_m16, 746, u8_local_address(local_m28_w01));
+					local_m28.pop(local_m02);
+				}
+				wait(25);
+				local_m2A.destroy();
+			}
+		}
+		if local_m18 = 0
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("Something's not right. "), u8_stack_ref(1)) -> return;
+			class_0583_firespel_play_sound(1);
+		}
+	}
+}
+

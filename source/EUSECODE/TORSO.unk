@@ -1,0 +1,29 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0168
+// FLEX slot: 362
+// Original offset: 0x0010BAD2
+// Naming evidence: E, exact object-1 linker name `TORSO`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/TORSO.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass TORSO inherits Item
+{
+	process torso_hit_forward_to_bodypart_animate_body_part_hit();
+}
+
+// Derived: routine 0x0080, event mask 0x00000020.
+// R: `hit` identifies event 05; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TORSO::torso_hit_forward_to_bodypart_animate_body_part_hit()
+{
+	if not Kernel_getNumProcesses(522, referent)
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0594_bodypart_animate_body_part_hit(0x00000000, referent) -> return;
+	}
+}
+

@@ -1,0 +1,454 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0585
+// FLEX slot: 1415
+// Original offset: 0x0006D80C
+// Naming evidence: E, exact object-1 linker name `ETHRSPEL`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ETHRSPEL.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process confusionBlast()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Npc;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_057C_timedBark(this, 40, u8_string_address("In Quas Wis!"));
+	LightningBolt();
+	local_m02 = 0;
+	foreach local_m02 within 20 cells of referent {
+		if local_m02 < 256
+		{
+			if local_m02.isInCombat()
+			{
+				if Npc_getTarget(u8_local_address(local_m02_w01)) = referent
+				{
+					local_m02.clrInCombat();
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn local_m02.cSetActivity(0) -> return;
+				}
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0114, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process ethrspel_spawn_meteor_shower_projectiles()
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[544, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+		local_m02 = 64 + urandom(32);
+	}
+	process
+	{
+		wait(urandom(32));
+		if local_m04.legal_create(840, 0, (Avatar.getX() + urandom(400)) - 200, (Avatar.getY() + urandom(400)) - 200, 250)
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m04.hurl(urandom(64) - 32, urandom(64) - 32, 0, 4) -> return;
+		}
+		if local_m02 = 0
+		{
+			return;
+		}
+		local_m02--;
+	}
+}
+
+// Derived: routine 0x01CE, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process meteorShower()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_057C_timedBark(this, 40, u8_string_address("Kal Des Flam Ylem!"));
+	LightningBolt();
+	class_0585_ethrspel_spawn_meteor_shower_projectiles(0x00000000);
+}
+
+// Derived: routine 0x0225, event mask 0x00000000.
+// O: recovered callable name.
+// X: BP-bound neutral argument storage views; overlapping names alias bytes.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process summonCreature(arg_04:U8Bytes5, arg_04_w02:U8Word, arg_06:U8Word, arg_08:U8Byte)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m03:U8Byte;
+	local_m05:Number;
+	local_m07:Item;
+	local_m09:U8Word;
+	local_m0B:Npc;
+	local_m0B_w01:U8Bytes1;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_057C_timedBark(this, 40, u8_string_address("Kal Xen!"));
+	if referent = 1
+	{
+		if not getAvatarInStasis()
+		{
+			setAvatarInStasis(1);
+		}
+		local_m02 = target();
+		if local_m02 = 0
+		{
+			class_0583_firespel_play_sound(this);
+			return;
+		}
+		arg_04_w02 = local_m02.getX();
+		arg_06 = local_m02.getY();
+		arg_08 = local_m02.getZ();
+	}
+	class_057C_turnToFace(this, getDirToCoords(arg_04_w02, arg_06), 0, 6);
+	class_057C_realDoAnim(this, 35, getDir());
+	wait(10);
+	local_m03 = 0;
+	local_m05 = urandom(4);
+	if local_m05 = 0
+	{
+		local_m05 = 357;
+	}
+	else if local_m05 = 1
+	{
+		local_m05 = 509;
+	}
+	else if local_m05 = 2
+	{
+		local_m05 = 83;
+	}
+	else if local_m05 = 3
+	{
+		local_m05 = 76;
+	}
+	if not canExistAt(local_m05, arg_04_w02, arg_06, arg_08, 1, 0, 0)
+	{
+		arg_08 += 8;
+		if canExistAt(local_m05, arg_04_w02, arg_06, arg_08, 1, 0, 0)
+		{
+			local_m03 = 1;
+		}
+	}
+	else
+	{
+		local_m03 = 1;
+	}
+	u8goto label_06D2 if not (local_m03);
+	Item_create(0, 511, u8_local_address(local_m07_w01));
+	local_m07.pop(arg_04_w02, arg_06, arg_08);
+	playSFX(27, 200);
+	for local_m09 = 0 to 4
+	{
+		local_m07.setFrame(local_m09);
+		wait(2);
+	}
+	local_m07.destroy();
+	arg_04_w02 += 96;
+	arg_06 += 96;
+	arg_08 += 8;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, arg_04) -> return;
+	wait(25);
+	arg_04_w02 -= 96;
+	arg_06 -= 96;
+	arg_08 -= 8;
+	Npc_create(0, local_m05, u8_local_address(local_m0B_w01));
+	local_m0B.setStr(class_0581_randRange(15, 25));
+	Npc_setInt(class_0581_randRange(15, 20), u8_local_address(local_m0B_w01));
+	local_m0B.setDex(class_0581_randRange(15, 20));
+	local_m0B.setHp(class_0581_randRange(30, 50));
+	local_m0B.pop(arg_04_w02, arg_06, arg_08);
+	class_057C_toggleStatus(16, u8_local_address(local_m0B_w01));
+	class_057C_realDoAnim(u8_local_address(local_m0B_w01), 2, local_m0B.getDirToItem(referent));
+	class_057C_toggleStatus(16, u8_local_address(local_m0B_w01));
+	local_m0B.touch();
+	wait(25);
+	temp = u8_process_dependency(u8_spawn_inline(class_0585_ethrspel_finish_summon_creature_success_inline_053E, 2, 5), u8_spawn(class_0581_wait(0x00000000, 25)), 1, 1);
+	u8goto label_05AB;
+	u8label label_053E:
+	u8_inline_frame(0);
+	[[PT_DEFAULT, 1]];
+	suspend;
+	if referent = 1
+	{
+		class_057C_realDoAnim(this, 34, getDir());
+	}
+	else
+	{
+		class_057C_realDoAnim(this, 20, getDir());
+	}
+	class_057C_realDoAnim(this, 2, getDir());
+	return;
+	u8label label_05AB:
+	wait(35);
+	class_057C_realDoAnim(u8_local_address(local_m0B_w01), 2, local_m0B.getDirToItem(referent));
+	if referent = 1
+	{
+		setAvatarInStasis(0);
+		class_057C_timedBark(u8_local_address(local_m0B_w01), 60, u8_string_address("Who shall I destroy, Master? "));
+		local_m02 = target();
+		if (local_m02.isNpc() = 1) and (local_m02 != local_m0B)
+		{
+			class_057C_timedBark(u8_local_address(local_m0B_w01), 40, u8_string_address("Yes, Master? "));
+			local_m0B.setTarget(local_m02);
+		}
+		else
+		{
+			class_057C_timedBark(u8_local_address(local_m0B_w01), 40, u8_string_address("You will be my victim! "));
+			local_m0B.setTarget(1);
+		}
+	}
+	else
+	{
+		local_m0B.setTarget(1);
+	}
+	u8goto label_0770;
+	u8label label_06D2:
+	class_0583_firespel_play_sound(this);
+	temp = u8_process_dependency(u8_spawn_inline(class_0585_ethrspel_finish_summon_creature_failure_inline_0703, 2, 5), u8_spawn(class_0581_wait(0x00000000, 45)), 1, 1);
+	u8goto label_0770;
+	u8label label_0703:
+	u8_inline_frame(0);
+	[[PT_DEFAULT, 1]];
+	suspend;
+	if referent = 1
+	{
+		class_057C_realDoAnim(this, 34, getDir());
+	}
+	else
+	{
+		class_057C_realDoAnim(this, 20, getDir());
+	}
+	class_057C_realDoAnim(this, 2, getDir());
+	return;
+	u8label label_0770:
+	if referent = 1
+	{
+		if getAvatarInStasis()
+		{
+			setAvatarInStasis(0);
+		}
+	}
+}
+
+// Derived: routine 0x078C, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process callDestruction()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Npc;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_057C_timedBark(this, 40, u8_string_address("Kal Vas Grav Corp!"));
+	LightningBolt();
+	local_m02 = 0;
+	foreach local_m02 within 20 cells of referent {
+		if local_m02 < 256
+		{
+			if local_m02.isInCombat()
+			{
+				if Npc_getTarget(u8_local_address(local_m02_w01)) = referent
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0585_deathBlast(this, local_m02) -> return;
+				}
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0821, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process etherialTravel()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	[[544, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_057C_timedBark(this, 40, u8_string_address("Ort Grav Por!"));
+	FadeToBlack();
+	Avatar.teleport(16767, 17279, 16, 43);
+	FadeFromBlack();
+}
+
+// Derived: routine 0x087D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process ethrspel_play_devastation_lightning_strike(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	local_m04:U8Word;
+	[[PT_DEFAULT, NULL_REF]];
+	playSFX(91, 200);
+	wait(15);
+	LightningBolt();
+	wait(25);
+	Item_create(0, 511, u8_local_address(local_m02_w01));
+	local_m02.pop(arg_00.getX(), arg_00.getY(), arg_00.getZ());
+	for local_m04 = 0 to 4
+	{
+		local_m02.setFrame(local_m04);
+		wait(2);
+	}
+	local_m02.destroy();
+}
+
+// Derived: routine 0x0939, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process ethrspel_remove_devastation_target(arg_00:Npc)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	[[PT_DEFAULT, NULL_REF]];
+	local_m05_w02 = arg_00.getX() + 96;
+	local_m03 = arg_00.getY() + 96;
+	local_m01 = arg_00.getZ() + 8;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m05) -> return;
+	wait(10);
+	if arg_00 != 1
+	{
+		arg_00.teleport(urandom(10000), urandom(10000), 0, 0);
+	}
+	else
+	{
+		Avatar.receiveHit(0, 0, Avatar.getHp(), 128);
+	}
+}
+
+// Derived: routine 0x09DD, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process devastation()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m04:Npc;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent != 1
+	{
+		return;
+	}
+	[[544, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_0581_unkCloseAllGumps();
+	setAvatarInStasis(1);
+	class_057C_timedBark(this, 40, u8_string_address("In Vas Ort Corp!"));
+	foreach local_m02 within 30 cells of Avatar {
+		if local_m02.isNpc()
+		{
+			local_m04 = local_m02;
+			if (local_m04.isDead() = 0) and (local_m04 != 0) and (local_m04 != 1)
+			{
+				if local_m04.isInCombat()
+				{
+					local_m04.clrInCombat();
+				}
+				killProcess(local_m04, PT_ACTIVITY);
+				killProcess(local_m04, PT_BARK);
+				killProcess(local_m04, PT_ANIM);
+				killProcess(local_m04, PT_PATHFIND);
+			}
+		}
+	}
+	foreach local_m02 within 30 cells of Avatar {
+		if local_m02.isNpc()
+		{
+			local_m04 = local_m02;
+			if (local_m04.isDead() = 0) and (local_m04 != 0) and (local_m04 != 1)
+			{
+				if random(2)
+				{
+					class_0585_ethrspel_play_devastation_lightning_strike(0x00000000, local_m04);
+				}
+				else
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0585_ethrspel_play_devastation_lightning_strike(0x00000000, local_m04) -> return;
+				}
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0585_ethrspel_remove_devastation_target(0x00000000, local_m04) -> return;
+			}
+		}
+	}
+	class_0571_storm_start_fire_storm();
+	wait(60);
+	playSFX(158);
+	while Avatar.isBusy()
+	{
+		wait(1);
+	}
+	class_057C_realDoAnim(this, 32, Avatar.getDir());
+	class_057C_realDoAnim(this, 33, Avatar.getDir());
+	class_057C_timedBark(1, 100, u8_string_address("What have I done? "));
+	class_0585_ethrspel_play_devastation_lightning_strike(0x00000000, 1);
+	class_0585_ethrspel_remove_devastation_target(0x00000000, 1);
+}
+
+// Derived: routine 0x0C2D, event mask 0x00000000.
+// O: recovered callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] deathBlast(arg_04:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m02_w01:U8Bytes1;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:Item;
+	local_m0C:Item;
+	local_m0E:U8Bytes2; // X: untouched.
+	local_m10:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m02 = arg_04;
+	if local_m02 = 0
+	{
+		local_m02 = target();
+	}
+	local_m04 = local_m02.getX();
+	local_m06 = local_m02.getY();
+	local_m08 = local_m02.getZ();
+	Item_create(0, 511, u8_local_address(local_m0A_w01));
+	local_m0A.pop(local_m04, local_m06, local_m08);
+	for local_m10 = 0 to 4
+	{
+		local_m0A.setFrame(local_m10);
+		wait(2);
+	}
+	Item_create(0, 480, u8_local_address(local_m0C_w01));
+	local_m0C.pop(local_m04 - 10, local_m06 - 10, local_m08);
+	local_m0A.destroy();
+	class_057C_receiveHit(127, 8, referent, u8_local_address(local_m02_w01));
+	for local_m10 = 0 to 9
+	{
+		local_m0C.setFrame(local_m10);
+		wait(10);
+	}
+	local_m0C.destroy();
+}
+

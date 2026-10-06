@@ -1,0 +1,489 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0595
+// FLEX slot: 1431
+// Original offset: 0x0001CBA8
+// Naming evidence: E, exact object-1 linker name `BANE2`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BANE2.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bane2_greet_avatar()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String List;
+	local_m0A:U8Word;
+	local_m0C:Number;
+	local_m06 = "I am " + getName() + ".";
+	if not baneMet
+	{
+		bark("Ah. A stranger comes to the Enclave. How rare.*You are also a stranger to the island of Morgaelin.*Are you not? ");
+		local_m0A = askYesNo(2);
+		if local_m0A = 1
+		{
+			local_m02 = "So I thought. And what ";
+		}
+		else if local_m0A = 0
+		{
+			local_m02 = "How odd, I've never seen one like you before.*What ";
+		}
+		else
+		{
+			local_m02 = "Your silence is understood, but fear not, I intend you no harm.*What ";
+		}
+		local_m02 += "might you be called, my friend? ";
+		bark(u8_string_local_address(local_m02));
+		local_m08 = <<local_m06, "It is of no matter. ", "You are not my friend, lady. ">>;
+		local_m04 = ask(local_m08);
+		if local_m04 = local_m06
+		{
+			local_m02 = "What an interesting name. I shall be sure to make note of it. However, you have need of a name ";
+			baneAvaName = 1;
+		}
+		else
+		{
+			if local_m04 = "You are not my friend, lady. "
+			{
+				local_m02 = "Ah, I shall be if only you wish it ";
+			}
+			else
+			{
+				local_m02 = "I see you are a humble one ";
+			}
+			local_m02 += ", but there is no reason for you to reveal your name to me. I would prefer to give you one ";
+		}
+		local_m02 += " that has meaning in the Elder Tongue. I sense that your name should be Daemion. It means Fire of the Sky.*Do you like it? ";
+		bark(u8_string_local_address(local_m02));
+		if class_0581_askYesNo(0x00000000)
+		{
+			local_m02 = "It gladdens me to hear it. ";
+		}
+		else
+		{
+			local_m02 = "Nonetheless, it is what I shall call you. You may respond or not as you see fit. ";
+		}
+		local_m02 += " Perhaps later, when you have earned it, you will be given a Truename. Daemion seems right and will suffice for now. With what may I assist you? ";
+		bark(u8_string_local_address(local_m02));
+		baneMet = 1;
+	}
+	else
+	{
+		local_m0C = urandom(3);
+		if not baneMad
+		{
+			if not acolyteKilled
+			{
+				if not local_m0C
+				{
+					local_m02 = "To what do I owe the pleasure of your presence, Daemion? ";
+				}
+				else if local_m0C = 1
+				{
+					local_m02 = "How may I aid you, friend? ";
+				}
+				else
+				{
+					local_m02 = "Yes? ";
+				}
+				if baneHasAsked and (not baneJoined)
+				{
+					local_m02 += "*Have you decided to become my Disciple? ";
+				}
+			}
+			else
+			{
+				if (sponsorTest = 1) or (keyOfTheAcolyte = 1)
+				{
+					return;
+				}
+				if not local_m0C
+				{
+					local_m02 = "To what do I owe the pleasure of your presence, Daemion? ";
+				}
+				else if local_m0C = 1
+				{
+					local_m02 = "How may I aid you, Disciple? ";
+				}
+				else
+				{
+					local_m02 = "Yes? ";
+				}
+			}
+			bark(u8_string_local_address(local_m02));
+		}
+		else if baneMad = 1
+		{
+			if not local_m0C
+			{
+				bark("Is there something we have to discuss? Because if not, I have much to attend to. ");
+			}
+			else if local_m0C = 1
+			{
+				bark("Unless you've come to apologize for your rude behavior, I have nothing to say to you. ");
+			}
+			else
+			{
+				bark("What do you want? ");
+			}
+		}
+		else if baneMad = 2
+		{
+			if not local_m0C
+			{
+				bark("Leave me be! I grow weary of your presence. ");
+			}
+			else if local_m0C = 1
+			{
+				bark("How can I make you understand?!*I do not wish to speak with you! ");
+			}
+			else
+			{
+				bark("If you do not give me peace, I shall have no other alternative than to give it to you. ");
+			}
+		}
+		else
+		{
+			bark("I will feed your entrails to my Daemon! ");
+			setTarget(1);
+		}
+	}
+}
+
+// Derived: routine 0x0A03, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bane2_say_farewell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:String;
+	local_m04:Number;
+	local_m04 = urandom(3);
+	if baneMad = 1
+	{
+		if not local_m04
+		{
+			bark("Return only when you have found your manners. ");
+		}
+		else if local_m04 = 1
+		{
+			bark("Leave as you wish. ");
+		}
+		else
+		{
+			bark("I cannot say I am sorry to see you go. I hope you understand. ");
+		}
+	}
+	else if baneMad = 2
+	{
+		if not local_m04
+		{
+			bark("Do not return here. ");
+		}
+		else if local_m04 = 1
+		{
+			bark("Leave as you wish, for I wish it also. ");
+		}
+		else
+		{
+			bark("Farewell, but not too well. ");
+		}
+	}
+	else if acolyteKilled
+	{
+		if not local_m04
+		{
+			bark("Farewell, Disciple. ");
+		}
+		else if local_m04 = 1
+		{
+			bark("Return when you seek more training. ");
+		}
+		else
+		{
+			bark("Goodbye, Daemion. ");
+		}
+	}
+	else
+	{
+		if not local_m04
+		{
+			bark("Farewell, my Daemion. ");
+		}
+		else if local_m04 = 1
+		{
+			bark("Going so soon? Well, do return when it pleases you. ");
+		}
+		else
+		{
+			bark("Goodbye. ");
+		}
+		if baneHasAsked and (not baneJoined)
+		{
+			bark("Remember, my offer still stands, Daemion. ");
+		}
+	}
+}
+
+// Derived: routine 0x0D58, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bane2_handle_silent_avatar()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:String;
+	local_m04:Number;
+	local_m04 = urandom(3);
+	if not baneMad
+	{
+		if not local_m04
+		{
+			bark("I do have things to tend to, Daemion. When you have your thoughts collected, feel free to call upon me. ");
+		}
+		else if local_m04 = 1
+		{
+			bark("If you do not seek my attention, I shall not keep yours.* Farewell, Daemion. ");
+		}
+		else
+		{
+			bark("Do you hear me? Apparently not. If so, surely you would answer. Please return when you wish to speak. ");
+		}
+	}
+	else if baneMad = 1
+	{
+		if not local_m04
+		{
+			bark("I do not have time for this, Daemion. ");
+		}
+		else if local_m04 = 1
+		{
+			bark("If you do not seek my attention, I shall not keep yours. ");
+		}
+		else
+		{
+			bark("Do you hear me? Apparently not. If so, surely you would answer. Return when you have something important to say. ");
+		}
+	}
+	else if baneMad = 2
+	{
+		if not local_m04
+		{
+			bark("You are a most infuriating person. It would not be wise for you to remain. Some here are not as friendly as I. ");
+		}
+		else if local_m04 = 2
+		{
+			bark("Should you decide to seek my advice later, I will not be available. ");
+		}
+		else
+		{
+			bark("I am surrounded by half-wits and imbeciles! ");
+		}
+	}
+}
+
+// Derived: routine 0x1162, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bane2_handle_avatar_apology()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String List;
+	if baneMad > 2
+	{
+		return;
+	}
+	local_m04 = "Please forgive me ";
+	if not baneName
+	{
+		local_m04 += ", kind lady. ";
+	}
+	else
+	{
+		local_m04 += ", Bane. ";
+	}
+	if baneMad < 2
+	{
+		local_m06 = "I need information, woman! ";
+	}
+	else
+	{
+		local_m06 = "Tell me what I need to know, wench! ";
+	}
+	local_m08 = <<local_m04, "I did not mean to give offense. ", local_m06, "Nevermind. ">>;
+	local_m02 = "";
+	while local_m02 != "Nevermind. "
+	{
+		local_m02 = ask(local_m08);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case local_m04
+			{
+				bark("I'm not so sure I should...*Your manners were atrocious. But you seem sincere now. Very well. I suppose I do forgive you. Just don't let it happen again. Now then, what do you seek of me? ");
+				baneMad = 0;
+				if not baneJoined
+				{
+					class_041D_bane_recruit_disciple(this);
+				}
+				else if not acolyteKilled
+				{
+					class_0595_bane2_ask_vardion_truename(this);
+				}
+				else
+				{
+					class_058A_daemscen_run_sorcery_training_conversation(this);
+				}
+				local_m02 = "Nevermind. ";
+			}
+			case "I did not mean to give offense. "
+			{
+				bark("Well you did! But you are a foreigner. Let us not dwell on your past mistakes. Now then, what do you seek of me? ");
+				baneMad = 0;
+				if not baneJoined
+				{
+					class_041D_bane_recruit_disciple(this);
+				}
+				else if not acolyteKilled
+				{
+					class_0595_bane2_ask_vardion_truename(this);
+				}
+				else
+				{
+					class_058A_daemscen_run_sorcery_training_conversation(this);
+				}
+				local_m02 = "Nevermind. ";
+			}
+			case local_m06
+			{
+				if baneMad < 2
+				{
+					bark("By Pyros' flaming eyes! Take that tone with me again, and I'll incinerate your heart where it beats within your chest. ");
+				}
+				else
+				{
+					bark("Your pain will be legendary, even in Pagan! ");
+					setTarget(1);
+				}
+				baneMad = 1 + baneMad;
+				local_m02 = "Nevermind. ";
+			}
+			case "Nevermind. "
+			{
+				class_0595_bane2_say_farewell(this);
+			}
+			case ""
+			{
+				class_0595_bane2_handle_silent_avatar(this);
+				local_m02 = "Nevermind. ";
+			}
+			default
+			{
+				bark("I believe something you said was incorrectly spelled. I don't know why I know this. It was as if giant, blue letters had appeared, blazing across the sky. ");
+			}
+		}
+	}
+}
+
+// Derived: routine 0x170E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bane2_ask_vardion_truename()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:U8Word;
+	local_m04:String;
+	local_m06:String List;
+	bark("Do you perchance have Vardion's Truename? ");
+	local_m02 = class_0581_askYesNo(0x00000000);
+	if local_m02 = 1
+	{
+		bark("Wonderful! Give it to me and I will perform the ritual necessary to end Vardion's designs upon the Mastery. ");
+	}
+	else
+	{
+		bark("I see. You must be swift about this. If he kills the Master before I know his intentions, it will be too late. ");
+		return;
+	}
+	local_m06 = <<"I don't know it yet. ">>;
+	if vardionJoined
+	{
+		local_m06 ^= <<" Morduin.">>;
+	}
+	if not baneFool
+	{
+		local_m06 ^= <<" Vardion.">>;
+	}
+	if not baneIdiot
+	{
+		local_m06 ^= <<" Daemion.">>;
+	}
+	if not baneMoron
+	{
+		local_m06 ^= <<" Sabriane.">>;
+	}
+	local_m04 = ask(local_m06);
+	if local_m04 = " Vardion."
+	{
+		bark("You poor stupid fool. If you truly believe that Vardion is his Truename, you are of no use as a Sorcerer. ");
+		bark("Try again. And this time do not fail me. ");
+		baneFool = 1;
+		return;
+	}
+	if local_m04 = " Daemion."
+	{
+		bark("No, you little idiot. That is the name I gave you. Perhaps I should have called you Daemient. Fire of the Brain. ");
+		baneIdiot = 1;
+		return;
+	}
+	if local_m04 = " Sabriane."
+	{
+		bark("That is my name. Have I entrusted my Truename, and the future of the Cabal to a simpering moron? Please run along now and get Vardion's Truename for me, won't you dear? ");
+		baneMoron = 1;
+		return;
+	}
+	if local_m04 = "I don't know it yet. "
+	{
+		if not baneFalse
+		{
+			bark("Do you toy with me?! I am not accustomed to having my Disciples lie to me. Get his Truename or I'll personally feed you to the Fire. ");
+			baneFalse = 1;
+			baneMad = 1;
+		}
+		else
+		{
+			bark("I gave fair warning. Your life has come to a close, my irritating little friend. ");
+			baneMad = 3;
+			setTarget(1);
+			return;
+		}
+		return;
+	}
+	if local_m04 = " Morduin."
+	{
+		bark("Ah, yes! I should have guessed it. Dark Flame. It could have been no other. Thank you, my disciple. Now prepare to witness his undoing. ");
+		acolyteKilled = 2;
+		class_058A_daemscen_play_rival_acolyte_assassination(this);
+		class_058A_daemscen_play_avatar_disciple_induction(this);
+		return;
+	}
+	else
+	{
+		class_0595_bane2_handle_silent_avatar(this);
+	}
+}
+

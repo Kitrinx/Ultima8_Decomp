@@ -1,0 +1,58 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x043A
+// FLEX slot: 1084
+// Original offset: 0x0006E55F
+// Naming evidence: E, exact object-1 linker name `EVILSORC`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/EVILSORC.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+
+npcclass EVILSORC inherits Npc
+{
+	process evilsorc_cast_forward_to_spell_combat(arg_04:U8Word);
+	process evilsorc_look_bark_living_or_dead_identity();
+	process evilsorc_use_threaten_and_target_intruder();
+}
+
+// Derived: routine 0x0080, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process EVILSORC::evilsorc_cast_forward_to_spell_combat(arg_04:U8Word)
+{
+	class_0574_spelcmbt_run_spell_combat(this, arg_04);
+}
+
+// Derived: routine 0x00A1, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process EVILSORC::evilsorc_look_bark_living_or_dead_identity()
+{
+	if isDead()
+	{
+		bark("dead Sorcerer ");
+	}
+	else
+	{
+		bark("Sorcerer ");
+	}
+}
+
+// Derived: routine 0x0100, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process EVILSORC::evilsorc_use_threaten_and_target_intruder()
+{
+	if (isDead() = 0) and (isInCombat() = 0)
+	{
+		if getMap() = 14
+		{
+			bark("You will not steal my spell! I will kill you first! ");
+		}
+		setTarget(1);
+	}
+}
+

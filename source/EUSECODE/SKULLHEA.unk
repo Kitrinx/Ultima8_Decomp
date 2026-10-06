@@ -1,0 +1,66 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x032E
+// FLEX slot: 816
+// Original offset: 0x000F5E9D
+// Naming evidence: E, exact object-1 linker name `SKULLHEA`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SKULLHEA.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass SKULLHEA inherits Item
+{
+	process skullhea_look_describe_the_skull_of_quakes();
+	process skullhea_use_trigger_earthquake_at_target();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SKULLHEA::skullhea_look_describe_the_skull_of_quakes()
+{
+	bark("The Skull of Quakes ");
+}
+
+// Derived: routine 0x00B7, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SKULLHEA::skullhea_use_trigger_earthquake_at_target()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	if Item_getQ(this) != 0
+	{
+		return;
+	}
+	local_m02 = target();
+	if local_m02 = 0
+	{
+		return;
+	}
+	if local_m02.getType() = 805
+	{
+		push();
+		pop(local_m02.getX(), local_m02.getY() - 8, local_m02.getZ() + 16);
+		Item_setQ(1, this);
+		local_m04 = Avatar.getX();
+		local_m06 = Avatar.getY();
+		local_m08 = Avatar.getZ();
+		Camera_startQuake(5);
+		playSFX(48, 100);
+		playSFX(49, 100);
+		Npc_doAnim(1, 0, 8, 14, u8_stack_ref(1));
+		FadeToBlack();
+		Avatar.teleport(0, 0, 0, Avatar.getMap());
+		postEarthQuake = 1;
+		Avatar.teleport(local_m04, local_m06, local_m08, Avatar.getMap());
+		FadeFromBlack();
+		Camera_stopQuake();
+	}
+}
+

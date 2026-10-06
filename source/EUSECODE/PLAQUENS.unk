@@ -1,0 +1,368 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0257
+// FLEX slot: 601
+// Original offset: 0x000D9ADF
+// Naming evidence: E, exact object-1 linker name `PLAQUENS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/PLAQUENS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "plaque";
+
+typeclass TypeNSGoldPlaque inherits GoldPlaque
+{
+	process look();
+	process use();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process TypeNSGoldPlaque::look()
+{
+	bark("plaque ");
+}
+
+// Derived: routine 0x00AA, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process TypeNSGoldPlaque::use()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0257_readPlaque(this) -> return;
+}
+
+// Derived: routine 0x00C2, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process [[PT_DEFAULT, referent]] GoldPlaque::readPlaque()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	qual:Number;
+	qual = getQuality();
+	if qual = 1
+	{
+		Plaque_read(u8_string_address("THE MONASTERY*OF THE*THEURGISTS "), 16, this);
+		return;
+	}
+	else if qual = 2
+	{
+		Plaque_read(u8_string_address("THE PALACE*OF THE TEMPEST "), 16, this);
+		return;
+	}
+	else if qual = 3
+	{
+		Plaque_read(u8_string_address("MESS HALL "), 16, this);
+		return;
+	}
+	else if qual = 4
+	{
+		Plaque_read(u8_string_address("PALACE*BARRACKS "), 16, this);
+		return;
+	}
+	else if qual = 5
+	{
+		Plaque_read(u8_string_address("THE*ROYAL*HALL "), 16, this);
+		return;
+	}
+	else if qual = 6
+	{
+		Plaque_read(u8_string_address("AUTHORIZED*PERSONNEL*ONLY "), 16, this);
+		return;
+	}
+	else if qual = 7
+	{
+		Plaque_read(u8_string_address("WATERS*OF THE*TEMPEST "), 16, this);
+		return;
+	}
+	else if qual = 8
+	{
+		Plaque_read(u8_string_address("DANGER*DO NOT*ENTER "), 16, this);
+		return;
+	}
+	else if qual = 9
+	{
+		Plaque_read(u8_string_address("BLACKALLER*FINALLY RESTING "), 16, this);
+		return;
+	}
+	else if qual = 10
+	{
+		Plaque_read(u8_string_address("T'IS FAR*TOO LATE*FOR ME "), 16, this);
+		return;
+	}
+	else if qual = 11
+	{
+		Plaque_read(u8_string_address("TOWARDS*FATE DO YOU*TRAVEL "), 16, this);
+		return;
+	}
+	else if qual = 12
+	{
+		Plaque_read(u8_string_address("KAYLITH*-TREASURER- "), 16, this);
+		return;
+	}
+	else if qual = 13
+	{
+		Plaque_read(u8_string_address("MASTER OF KEYS "), 16, this);
+		return;
+	}
+	else if qual = 14
+	{
+		Plaque_read(u8_string_address("JOHAH "), 16, this);
+		return;
+	}
+	else if qual = 15
+	{
+		Plaque_read(u8_string_address("HEGLAND HEGWOOD "), 16, this);
+		return;
+	}
+	else if qual = 16
+	{
+		Plaque_read(u8_string_address("DON'T*LOOK*NOW "), 16, this);
+		return;
+	}
+	else if qual = 17
+	{
+		Plaque_read(u8_string_address("SCHOENROCK "), 16, this);
+		return;
+	}
+	else if qual = 18
+	{
+		Plaque_read(u8_string_address("HEAVRIN*ARCHITECT*LAID TO REST*IN HIS OWN PLAN "), 16, this);
+		return;
+	}
+	else if qual = 19
+	{
+		Plaque_read(u8_string_address("TO*LOWER CATACOMBS "), 16, this);
+		return;
+	}
+	else if qual = 20
+	{
+		Plaque_read(u8_string_address("R.E.M.*G.T.H.*A.S.T."), 16, this);
+		return;
+	}
+	else if qual = 21
+	{
+		Plaque_read(u8_string_address("JOHN*OF*GARLAND "), 16, this);
+		return;
+	}
+	else if qual = 22
+	{
+		Plaque_read(u8_string_address("LESIFER*BELOVED*SISTER*M.F.H. "), 16, this);
+		return;
+	}
+	else if qual = 23
+	{
+		Plaque_read(u8_string_address("GOOD RIDDANCE "), 16, this);
+		return;
+	}
+	else if qual = 24
+	{
+		Plaque_read(u8_string_address("JUST LOOK*AT ME*NOW "), 16, this);
+		return;
+	}
+	else if qual = 25
+	{
+		Plaque_read(u8_string_address("WHEW**I FEEL BETTER "), 16, this);
+		return;
+	}
+	else if qual = 26
+	{
+		Plaque_read(u8_string_address("BITTER RAGE*FILLED WITH HATE*SO LIES*THIS INGRATE "), 16, this);
+		return;
+	}
+	else if qual = 27
+	{
+		Plaque_read(u8_string_address("I TOLD YOU*IT WAS MY*ECHIDNAS "), 16, this);
+		return;
+	}
+	else if qual = 28
+	{
+		Plaque_read(u8_string_address("TENEBRAE*LIBRARY "), 16, this);
+		return;
+	}
+	else if qual = 29
+	{
+		Plaque_read(u8_string_address("FIGHTMASTER "), 16, this);
+		return;
+	}
+	else if qual = 30
+	{
+		Plaque_read(u8_string_address("DO*NOT*ENTER "), 16, this);
+		return;
+	}
+	else if qual = 31
+	{
+		Plaque_read(u8_string_address("TEMPLE*OF THE*DIVINE*HYDROS "), 16, this);
+		return;
+	}
+	else if qual = 32
+	{
+		Plaque_read(u8_string_address("SALKIND*THE*SENESCHAL "), 16, this);
+		return;
+	}
+	else if qual = 33
+	{
+		Plaque_read(u8_string_address("QUIET "), 16, this);
+		return;
+	}
+	else if qual = 34
+	{
+		Plaque_read(u8_string_address("SPRING*OF THE*ETERNAL*HYDROS "), 16, this);
+		return;
+	}
+	else if qual = 35
+	{
+		Plaque_read(u8_string_address("THE HALL*OF THE*SORCERERS "), 16, this);
+		return;
+	}
+	else if qual = 36
+	{
+		Plaque_read(u8_string_address("THE*LIBRARY*OF SORCERY "), 16, this);
+		return;
+	}
+	else if qual = 37
+	{
+		if (acolyteKilled = 2) and (goToInnerSanctum = 1)
+		{
+			Plaque_read(u8_string_address("FIRST ACOLYTE*BANE "), 16, this);
+		}
+		else
+		{
+			Plaque_read(u8_string_address("FIRST ACOLYTE*VARDION "), 16, this);
+		}
+		return;
+	}
+	else if qual = 38
+	{
+		if (acolyteKilled > 0) and (goToInnerSanctum = 1)
+		{
+			Plaque_read(u8_string_address("DO*NOT*ENTER "), 16, this);
+		}
+		else
+		{
+			Plaque_read(u8_string_address("ACOLYTE*BANE "), 16, this);
+		}
+		return;
+	}
+	else if qual = 39
+	{
+		Plaque_read(u8_string_address("ACOLYTE*BEREN "), 16, this);
+		return;
+	}
+	else if qual = 40
+	{
+		Plaque_read(u8_string_address("ACOLYTE*GORGROND "), 16, this);
+		return;
+	}
+	else if qual = 41
+	{
+		Plaque_read(u8_string_address("FLAM POR*FLASH "), 16, this);
+		return;
+	}
+	else if qual = 42
+	{
+		Plaque_read(u8_string_address("AN FLAM*EXTINGUISH "), 16, this);
+		return;
+	}
+	else if qual = 43
+	{
+		Plaque_read(u8_string_address("SANCT FLAM*ENDURE HEAT "), 16, this);
+		return;
+	}
+	else if qual = 44
+	{
+		Plaque_read(u8_string_address("VAS SANCT FLAM*ARMOR OF FLAMES "), 16, this);
+		return;
+	}
+	else if qual = 45
+	{
+		Plaque_read(u8_string_address("FORENCIA*BELOVED WIFE*DEVOTED MOTHER*DIED IN ACCIDENT "), 16, this);
+		return;
+	}
+	else if qual = 46
+	{
+		Plaque_read(u8_string_address("THE UPPER CATACOMBS "), 16, this);
+		return;
+	}
+	else if qual = 47
+	{
+		Plaque_read(u8_string_address("REST IN PEACE "), 16, this);
+		return;
+	}
+	else if qual = 48
+	{
+		Plaque_read(u8_string_address("TO THE SHRINE "), 16, this);
+		return;
+	}
+	else if qual = 49
+	{
+		Plaque_read(u8_string_address("WHY ARE YOU*READING THIS*WHEN YOU CAN*BE FIGHTING "), 16, this);
+		return;
+	}
+	else if qual = 50
+	{
+		Plaque_read(u8_string_address("GABRIEL*LOVELY DAUGHTER*LOVE OF MY LIFE "), 16, this);
+		return;
+	}
+	else if qual = 51
+	{
+		Plaque_read(u8_string_address("SYSAPHUS*EXECUTED*FOR MURDER*LEFT TO BURN "), 16, this);
+		return;
+	}
+	else if qual = 52
+	{
+		Plaque_read(u8_string_address("NORTH "), 16, this);
+		return;
+	}
+	else if qual = 53
+	{
+		Plaque_read(u8_string_address("WEST "), 16, this);
+		return;
+	}
+	else if qual = 54
+	{
+		Plaque_read(u8_string_address("MORATAIN*FAMILY*MAUSOLEUM*DO NOT DISTURB! "), 16, this);
+		return;
+	}
+	else if qual = 55
+	{
+		Plaque_read(u8_string_address("*ADMIRE*BUT*TOUCH NOT "), 16, this);
+		return;
+	}
+	else if qual = 56
+	{
+		Plaque_read(u8_string_address("SHOPLIFTERS*WILL BE*FLOGGED "), 16, this);
+		return;
+	}
+	else if qual = 57
+	{
+		Plaque_read(u8_string_address("CONVENTICLE*OF THE*DEAD "), 16, this);
+		return;
+	}
+	else if qual = 58
+	{
+		Plaque_read(u8_string_address("MARIOTA*CONVENTICLER "), 16, this);
+		return;
+	}
+	else if qual = 59
+	{
+		Plaque_read(u8_string_address("NOW ENTERING*THE PIT*OF DEATH "), 16, this);
+		return;
+	}
+	else if qual = 69
+	{
+		Plaque_read(u8_string_address("THE*BIRTHPLACE*OF MORIENS "), 16, this);
+		if saidBirth
+		{
+			openBirth = 1;
+		}
+		return;
+	}
+	else
+	{
+		Plaque_read(u8_string_address("NO SOLICITING! "), 15, this);
+		return;
+	}
+}
+

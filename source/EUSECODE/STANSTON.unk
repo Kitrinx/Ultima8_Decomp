@@ -1,0 +1,28 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x030C
+// FLEX slot: 782
+// Original offset: 0x000FAAC4
+// Naming evidence: E, exact object-1 linker name `STANSTON`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/STANSTON.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass STANSTON inherits Item
+{
+	process stanston_release_award_dexterity_from_surface_weight();
+}
+
+// Derived: routine 0x0080, event mask 0x00000200.
+// R: `release` identifies event 09; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process STANSTON::stanston_release_award_dexterity_from_surface_weight()
+{
+	if Item_getSurfaceWeight(this) = 0
+	{
+		AccumulateDexterity(15);
+	}
+}
+

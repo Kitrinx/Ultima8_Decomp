@@ -1,0 +1,44 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0073
+// FLEX slot: 117
+// Original offset: 0x0001EA5F
+// Naming evidence: E, exact object-1 linker name `BARREL`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BARREL.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass BARREL inherits Item
+{
+	process barrel_look_bark_barrel();
+	process barrel_use_toggle_container_gump();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BARREL::barrel_look_bark_barrel()
+{
+	bark("barrel ");
+}
+
+// Derived: routine 0x00AA, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BARREL::barrel_use_toggle_container_gump()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getStatus();
+	if local_m02 & 256
+	{
+		closeGump();
+	}
+	else
+	{
+		Item_openGump(4, this);
+	}
+}
+

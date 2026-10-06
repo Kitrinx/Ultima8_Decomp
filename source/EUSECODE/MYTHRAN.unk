@@ -1,0 +1,1864 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0421
+// FLEX slot: 1059
+// Original offset: 0x000B91F0
+// Naming evidence: E, exact object-1 linker name `MYTHRAN`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MYTHRAN.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+globalflag mythGaveStuff;
+globalflag knowAboutReagents;
+globalflag didReagents;
+globalflag heardScrollJust;
+
+npcclass MYTHRAN inherits Npc
+{
+	process mythran_look_bark_identity_description();
+	process mythran_schedule_update_period_schedule_and_safe_teleport();
+	process mythran_enter_fast_area_set_npc_activity();
+	process mythran_leave_fast_area_stop_active_process();
+	process [[PT_DEFAULT, referent]] mythran_sell_portal_scroll();
+	process [[PT_DEFAULT, referent]] mythran_sell_reagents();
+	process [[PT_DEFAULT, referent]] mythran_teach_thaumaturgy_spell();
+	process mythran_use_run_conversation();
+	process [[PT_DEFAULT, referent]] mythran_introduce_himself();
+	process [[PT_DEFAULT, referent]] mythran_discuss_initial_topics();
+	process [[PT_DEFAULT, referent]] mythran_recommend_history_essay();
+	process [[PT_DEFAULT, referent]] mythran_discuss_pagan_lore();
+	process [[PT_DEFAULT, referent]] mythran_confirm_trade_or_lesson();
+	process [[PT_DEFAULT, referent]] mythran_discuss_return_visit();
+	process [[PT_DEFAULT, referent]] mythran_discuss_blackrock_quest();
+	process [[PT_DEFAULT, referent]] mythran_cast_apply_lethal_spell_to_attacker();
+	process [[PT_DEFAULT, referent]] mythran_apply_lethal_spell();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MYTHRAN::mythran_look_bark_identity_description()
+{
+	if mythranName
+	{
+		bark("Mythran");
+	}
+	else if mythranJob
+	{
+		bark("mage ");
+	}
+	else
+	{
+		bark("man ");
+	}
+}
+
+// Derived: routine 0x00F3, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MYTHRAN::mythran_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	local_m07 = 8;
+	if (class_0581_getPeriod() = 2) or (class_0581_getPeriod() = 5)
+	{
+		local_m05_w02 = 2008;
+		local_m03 = 1448;
+		local_m01 = 0;
+	}
+	if class_0581_getPeriod() = 0
+	{
+		local_m05_w02 = 1588;
+		local_m03 = 1180;
+		local_m01 = 48;
+	}
+	if class_0581_getPeriod() = 3
+	{
+		local_m05_w02 = 1588;
+		local_m03 = 1180;
+		local_m01 = 48;
+	}
+	if class_0581_getPeriod() = 1
+	{
+		local_m05_w02 = 2196;
+		local_m03 = 2204;
+		local_m01 = 48;
+	}
+	if class_0581_getPeriod() = 4
+	{
+		local_m05_w02 = 2196;
+		local_m03 = 2204;
+		local_m01 = 48;
+	}
+	class_057C_safeTeleport(this, local_m05, local_m07);
+}
+
+// Derived: routine 0x01A7, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MYTHRAN::mythran_enter_fast_area_set_npc_activity()
+{
+	if isDead()
+	{
+		return;
+	}
+	cSetActivity(0);
+}
+
+// Derived: routine 0x01D4, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MYTHRAN::mythran_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x01EF, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_sell_portal_scroll()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:String List;
+	local_m04:String;
+	local_m06:U8Bytes2; // X: untouched.
+	local_m08:U8Word;
+	local_m0A:U8Bytes2; // X: untouched.
+	local_m0F:U8Bytes5;
+	local_m0B:U8Byte;
+	local_m0D:U8Word;
+	local_m0F_w02:U8Word;
+	[[PT_DEFAULT, referent]];
+	if lockSpellSpeech
+	{
+		bark("Very well. ");
+	}
+	else
+	{
+		bark("There is only one spell which I have bothered to transcribe onto scrolls. This spell enables the caster to dispel magics that seal entryways and portals. Unlike other spells, you do not need to learn this spell before casting it. However, the magics upon the scroll will disappear after you read it, so you may use each spell of opening once. ");
+		lockSpellSpeech = 1;
+	}
+	bark("You wish to buy the Scroll of Dispelling Magical Portals? ");
+	local_m02 = <<"Aye. ", "Nay. ">>;
+	local_m04 = ask(local_m02);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "Aye. "
+		{
+			if not heardScrollJust
+			{
+				bark("Since the ink and parchment do have a cost to them, as well as the time I take to transcribe the magical words, I must ask you for 50 obsidians. ");
+				heardScrollJust = 1;
+			}
+			else
+			{
+				bark("As you know, I must charge you 50 obsidians for the scroll. ");
+			}
+		}
+		case "", "Nay. "
+		{
+			bark("Perhaps you wish to discuss something other than scrolls. ");
+			return;
+		}
+	}
+	local_m02 = <<"I will pay that. ", "I cannot pay that. ">>;
+	local_m04 = ask(local_m02);
+	if local_m04 = "I will pay that. "
+	{
+		if class_0581_take(1, 143, 0, 0, 50)
+		{
+			local_m0F_w02 = Avatar.getX();
+			local_m0D = Avatar.getY();
+			local_m0B = Avatar.getZ();
+			if class_0581_give(1, 827, local_m08, 1, 1)
+			{
+				bark("Excellent. Use this well. ");
+			}
+			else if class_0581_createNear(local_m0F, 827, local_m08, 1, 1)
+			{
+				bark("Excellent. Use this well. ");
+			}
+		}
+		else
+		{
+			bark("My friend, it seems you have not the obsidian for this. Of course, I realize you were not attempting to fool me, but perhaps you should return later when you can pay the fee. ");
+			return;
+		}
+	}
+	if local_m04 = "I cannot pay that. "
+	{
+		bark("I am sorry that I cannot help you then. Perhaps you should return later when you can pay the fee. ");
+	}
+	else if local_m04 = ""
+	{
+		bark("Perhaps you wish to discuss something other than scrolls. ");
+	}
+}
+
+// Derived: routine 0x08A6, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_sell_reagents()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:String List;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0E:U8Word;
+	local_m10:U8Word;
+	local_m15:U8Bytes5;
+	local_m11:U8Byte;
+	local_m13:U8Word;
+	local_m15_w02:U8Word;
+	[[PT_DEFAULT, referent]];
+	if knowAboutReagents
+	{
+		bark("Do you wish to purchase the reagents of Necromancy, Sorcery, or those specific to Thaumaturgy? ");
+	}
+	else
+	{
+		bark("You do realize that I only have reagents for the spells I teach. Do you wish to purchase the reagents of Necromancy, Sorcery, or those specific to Thaumaturgy? ");
+		knowAboutReagents = 1;
+	}
+	local_m02 = <<"Necromancy. ", "Sorcery. ", "Thaumaturgy. ", "Nevermind. ">>;
+	local_m04 = ask(local_m02);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "Necromancy. "
+		{
+			bark("Do you wish to buy Bone, Executioner's Hood, or Blackmoor? ");
+			local_m10 = 0;
+			local_m02 -= <<"Necromancy. ">>;
+		}
+		case "Sorcery. "
+		{
+			bark("Do you wish to buy Obsidian, Brimstone, Pumice, Ash, or Pig Iron? ");
+			local_m10 = 1;
+			local_m02 -= <<"Sorcery. ">>;
+		}
+		case "Thaumaturgy. "
+		{
+			bark("Do you wish to buy Eye of Newt, Bat Wing, Serpent Scale, or Dragon Blood? ");
+			local_m10 = 2;
+			local_m02 -= <<"Thaumaturgy. ">>;
+		}
+		case "Nevermind. "
+		{
+			bark("Very well. ");
+			return;
+		}
+	}
+	if local_m10 = 0
+	{
+		local_m02 = <<"Bone. ", "Executioner's Hood. ", "Blackmoor. ", "Nevermind. ">>;
+	}
+	if local_m10 = 1
+	{
+		local_m02 = <<"Obsidian. ", "Brimstone. ", "Pumice. ", "Ash. ", "Pig Iron. ", "Nevermind. ">>;
+	}
+	if local_m10 = 2
+	{
+		local_m02 = <<"Eye of Newt. ", "Bat Wing. ", "Serpent Scale. ", "Dragon Blood. ", "Nevermind. ">>;
+	}
+	local_m04 = ask(local_m02);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "Blackmoor. "
+		{
+			local_m0A = 10;
+			local_m0C = 15;
+			local_m0E = 395;
+			local_m06 = "Blackmoor ";
+		}
+		case "Executioner's Hood. "
+		{
+			local_m0A = 10;
+			local_m0C = 10;
+			local_m0E = 395;
+			local_m06 = "Executioner's Hood ";
+		}
+		case "Pig Iron. "
+		{
+			local_m0A = 15;
+			local_m0C = 10;
+			local_m0E = 398;
+			local_m06 = "Pig Iron ";
+		}
+		case "Ash. "
+		{
+			local_m0A = 15;
+			local_m0C = 0;
+			local_m0E = 398;
+			local_m06 = "Ash ";
+		}
+		case "Dragon Blood. "
+		{
+			local_m0A = 40;
+			local_m0C = 10;
+			local_m0E = 399;
+			local_m06 = "Dragon Blood ";
+		}
+		case "Bone. "
+		{
+			local_m0A = 10;
+			local_m0C = 6;
+			local_m0E = 395;
+			local_m06 = "Bone ";
+		}
+		case "Pumice. "
+		{
+			local_m0A = 15;
+			local_m0C = 2;
+			local_m0E = 398;
+			local_m06 = "Pumice ";
+		}
+		case "Brimstone. "
+		{
+			local_m0A = 15;
+			local_m0C = 14;
+			local_m0E = 398;
+			local_m06 = "Brimstone ";
+		}
+		case "Eye of Newt. "
+		{
+			local_m0A = 25;
+			local_m0C = 0;
+			local_m0E = 399;
+			local_m06 = "Eye of Newt ";
+		}
+		case "Bat Wing. "
+		{
+			local_m0A = 30;
+			local_m0C = 2;
+			local_m0E = 399;
+			local_m06 = "Bat Wing ";
+		}
+		case "Serpent Scale. "
+		{
+			local_m0A = 25;
+			local_m0C = 4;
+			local_m0E = 399;
+			local_m06 = "Serpent Scale ";
+		}
+		case "Obsidian. "
+		{
+			local_m0A = 15;
+			local_m0C = 6;
+			local_m0E = 398;
+			local_m06 = "Obsidian ";
+		}
+		case "Nevermind. "
+		{
+			bark("Very well. ");
+			local_m0A = 0;
+			return;
+		}
+		case ""
+		{
+			bark("Perhaps you are not truly interested in reagents. ");
+			return;
+		}
+	}
+	if local_m0A > 1
+	{
+		local_m08 = "I must ask " + numToStr(local_m0A) + " obsidian coins for the " + local_m06 + ".";
+	}
+	else
+	{
+		local_m08 = "I must ask " + numToStr(local_m0A) + " obsidian coin for the " + local_m06 + ".";
+	}
+	bark(u8_string_local_address(local_m08));
+	local_m02 = <<"I will pay that. ", "I cannot pay that. ">>;
+	local_m04 = ask(local_m02);
+	if local_m04 = "I will pay that. "
+	{
+		if class_0581_take(1, 143, 0, 0, local_m0A)
+		{
+			local_m15_w02 = Avatar.getX();
+			local_m13 = Avatar.getY();
+			local_m11 = Avatar.getZ();
+			if class_0581_give(1, local_m0E, local_m0C, 0, 1)
+			{
+				bark("Excellent. Use this well. ");
+			}
+			else if class_0581_createNear(local_m15, local_m0E, local_m0C, 0, 1)
+			{
+				bark("Excellent. Use this well. ");
+			}
+			didReagents = 1;
+		}
+		else
+		{
+			bark("My friend, it seems you have not the obsidian for this. Of course, I realize you were not attempting to fool me, but perhaps you should return later when you can pay the fee. ");
+			return;
+		}
+		return;
+	}
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "I cannot pay that. "
+		{
+			bark("I am sorry that I cannot help you then. Perhaps you should return later when you can pay the fee. ");
+			return;
+		}
+		case ""
+		{
+			bark("Perhaps you are not so interested in reagents after all. ");
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x143C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_teach_thaumaturgy_spell()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:String List;
+	local_m04:String;
+	local_m06:U8Word;
+	local_m08:U8Bytes2; // X: untouched.
+	local_m09:U8Byte;
+	local_m0A:U8Byte;
+	local_m0B:U8Byte;
+	local_m0C:U8Byte;
+	local_m0D:U8Byte;
+	local_m0E:U8Byte;
+	local_m0F:U8Byte;
+	local_m14:U8Bytes5;
+	local_m10:U8Byte;
+	local_m12:U8Word;
+	local_m14_w02:U8Word;
+	local_m16:U8Word;
+	[[PT_DEFAULT, referent]];
+	if gotDevastation
+	{
+		if Malchir.isDead()
+		{
+			bark("You are ready for the final spell that I can teach you -- the spell that permits travel through the very Ether itself. ");
+			local_m0E = 1;
+			local_m06 = 250;
+		}
+		else
+		{
+			bark("It is too early for you to learn another spell. ");
+			local_m0F = 1;
+			return;
+		}
+	}
+	else if gotDestruction
+	{
+		if hydrosFree
+		{
+			bark("You are ready for your fifth lesson in Thaumaturgy -- the spell of complete devastation. ");
+			local_m0D = 1;
+			local_m06 = 1000;
+		}
+		else
+		{
+			bark("It is too early for you to learn another spell. ");
+			local_m0F = 1;
+			return;
+		}
+	}
+	else if gotSummon
+	{
+		if permissionToAirWalk
+		{
+			bark("You are ready for your fourth spell -- Call Destruction. ");
+			local_m06 = 200;
+			local_m0C = 1;
+		}
+		else
+		{
+			bark("It is too early for you to learn another spell. ");
+			local_m0F = 1;
+			return;
+		}
+	}
+	else if gotShower
+	{
+		if getPowerAO
+		{
+			bark("You are ready for your third lesson in Thaumaturgy -- the spell of creature summoning. ");
+			local_m06 = 150;
+			local_m0B = 1;
+		}
+		else
+		{
+			bark("It is too early for you to learn another spell. ");
+			local_m0F = 1;
+			return;
+		}
+	}
+	else if gotBlast
+	{
+		if lithosMet
+		{
+			bark("You are ready for your second spell -- Meteor Shower. ");
+			local_m06 = 100;
+			local_m0A = 1;
+		}
+		else
+		{
+			bark("It is too early for you to learn another spell. ");
+			local_m0F = 1;
+			return;
+		}
+	}
+	else
+	{
+		bark("You are ready for your first lesson in Thaumaturgy -- the blast of confusion. ");
+		local_m06 = 50;
+		local_m09 = 1;
+	}
+	if local_m0F
+	{
+		return;
+	}
+	else
+	{
+		if gotBlast
+		{
+			bark("As you know, my friend, I am still forced to charge a modicum of obsidian for the knowledge I impart. ");
+		}
+		else
+		{
+			bark("Before we begin, I must confess that the eternal pursuit of knowledge, despite the solitude I afford myself on this dreary island, is costly. As I result, I am afraid I must charge you a modest fee to help defray the cost of my studies. Please accept my humble apologies for this inconvenience. ");
+		}
+		bark("I must ask " + numToStr(local_m06) + " in obsidian chits.");
+		local_m02 = <<"I will pay that. ", "I cannot pay that. ">>;
+		local_m04 = ask(local_m02);
+		if local_m04 = "I will pay that. "
+		{
+			if class_0581_take(1, 143, 0, 0, local_m06)
+			{
+				if local_m09
+				{
+					local_m16 = 81;
+					gotBlast = 1;
+				}
+				else if local_m0A
+				{
+					local_m16 = 82;
+					gotShower = 1;
+				}
+				else if local_m0B
+				{
+					local_m16 = 83;
+					gotSummon = 1;
+				}
+				else if local_m0C
+				{
+					local_m16 = 84;
+					gotDestruction = 1;
+				}
+				else if local_m0D
+				{
+					local_m16 = 85;
+					gotDevastation = 1;
+				}
+				else if local_m0E
+				{
+					local_m16 = 86;
+				}
+				local_m14_w02 = Avatar.getX();
+				local_m12 = Avatar.getY();
+				local_m10 = Avatar.getZ();
+				if class_0581_give(1, 288, 1, local_m16, 1)
+				{
+					bark("Excellent. We can now begin. ");
+				}
+				else if class_0581_createNear(local_m14, 288, 1, local_m16, 1)
+				{
+					bark("Excellent. We can now begin. ");
+				}
+				bark("Here is the book that describes the process by which you cast the spell. Study it well and you shall quickly master the necessary aspects. ");
+				if gotShower
+				{
+					bark("Do not forget that you will need reagents for your spells. ");
+				}
+				else
+				{
+					bark("As you will learn from the book I have given you, each spell has particular components, in this case reagents, that are a required part of casting the spell. I can sell some of these to you if you wish, but only after you have read the spell and determined what reagents you will need. ");
+					mythReagents = 1;
+				}
+			}
+			else
+			{
+				bark("My friend, it seems you have not the obsidian for this. Of course, I realize you were not attempting to fool me, but perhaps you should return later when you -can- pay the fee. ");
+				return;
+			}
+			return;
+		}
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "I cannot pay that. "
+			{
+				bark("I am sorry that I cannot help you then. Perhaps you should return later when you can pay the fee. ");
+				return;
+			}
+			case ""
+			{
+				bark("Perhaps you are not so interested in magic after all. ");
+				return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x208C, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MYTHRAN::mythran_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m05:U8Bytes5; // X: untouched.
+	local_m06:U8Byte;
+	local_m08:Item;
+	enterConvo();
+	wantsSpells = 0;
+	wantsScrolls = 0;
+	didReagents = 0;
+	if mythranAvaName
+	{
+		bark("Good day, " + getName() + ".");
+	}
+	else
+	{
+		bark("Hello. ");
+	}
+	u8_search_begin(local_m08, 3, 30 * 32, referent, <<65, u8_search_word(442), 36>>);
+	while u8_search_condition()
+	{
+		if local_m08.getFrame() = 4
+		{
+			local_m06 = 1;
+		}
+		u8_search_advance();
+	}
+	u8_search_end();
+	if not mythranMet
+	{
+		mythran_introduce_himself();
+	}
+	else if local_m06
+	{
+		mythran_discuss_blackrock_quest();
+	}
+	else if mythranSaidBlackLore
+	{
+		mythran_discuss_blackrock_quest();
+	}
+	else
+	{
+		mythran_discuss_return_visit();
+	}
+}
+
+// Derived: routine 0x219B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_introduce_himself()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String;
+	local_m09:U8Byte;
+	local_m0A:U8Byte;
+	local_m0B:U8Byte;
+	local_m10:U8Bytes5; // X: untouched.
+	local_m12:String List;
+	local_m12 += <<"May I ask your name? ", "What an unusual house. ">>;
+	local_m12 += <<"Goodbye. ">>;
+	while local_m02 != "Goodbye. "
+	{
+		if (local_m09 = 0) and (local_m0A = 0)
+		{
+			local_m12 -= <<"Goodbye. ">>;
+			local_m12 += <<"Goodbye. ">>;
+		}
+		local_m02 = ask(local_m12);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "What an unusual house. "
+			{
+				bark("Unusual? I do not see anything unusual about my living quarters. It does not differ from any other extra-dimensional abode. ");
+				local_m12 -= <<"What an unusual house. ">>;
+			}
+			case ""
+			{
+				if local_m0B = 0
+				{
+					bark("I am sorry, was my response unclear? You did hear me, I trust. ");
+					local_m0B = 1;
+				}
+				else
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("Very well. Your mind is filled with many thoughts other than what we are discussing. We can resume this later. ") -> return;
+					exitConvo();
+					return;
+				}
+			}
+			case "May I ask your name? "
+			{
+				bark("You may ask indeed, stranger. I am Mythran. By what name do you go, young one? ");
+				mythranName = 1;
+				mythranMet = 1;
+				local_m12 -= <<"May I ask your name? ">>;
+				local_m06 = "I am called " + getName() + ".";
+				local_m12 = <<local_m06, "I do not wish to say.">>;
+				local_m09 = 1;
+			}
+			case "I do not wish to say.", "Je pr\x82f\x8Are ne point le dire.", "Das will ich Euch lieber nicht verraten."
+			{
+				bark("Very well then. Please tell me your business with me so that I may return to my activities. ");
+				local_m12 -= <<local_m06, "I do not wish to say.">>;
+				local_m09 = 0;
+				mythran_discuss_initial_topics();
+				return;
+			}
+			case local_m06
+			{
+				mythranAvaName = 1;
+				local_m08 = "Greetings, " + getName() + ". And how might I assist you?";
+				local_m12 -= <<local_m06, " I do not wish to say.">>;
+				bark(u8_string_local_address(local_m08));
+				local_m09 = 0;
+				mythran_discuss_initial_topics();
+				return;
+			}
+			case "Goodbye. "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Ah, I see, you do not wish to converse with me. I am sorry for your interruption. ") -> return;
+				local_m12 -= <<"Goodbye. ">>;
+				exitConvo();
+				return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x27B4, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_discuss_initial_topics()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m01:U8Byte;
+	local_m02:U8Byte;
+	local_m03:U8Byte;
+	local_m05:String;
+	local_m07:String;
+	local_m09:String;
+	local_m0E:U8Bytes5;
+	local_m0A:U8Byte;
+	local_m0C:U8Word;
+	local_m0E_w02:U8Word;
+	local_m10:String List;
+	local_m12:Item;
+	local_m14:U8Word;
+	local_m16:U8Bytes2; // X: untouched.
+	local_m10 = <<"I have many questions. ">>;
+	if mythranScrolls
+	{
+		local_m10 ^= <<"I wish to buy scrolls. ">>;
+	}
+	if mythMagic
+	{
+		local_m10 ^= <<"I wish to learn spells. ">>;
+	}
+	if mythReagents
+	{
+		local_m10 ^= <<"I wish to buy reagents. ">>;
+	}
+	local_m10 ^= <<"Goodbye. ">>;
+	while local_m05 != "Goodbye. "
+	{
+		if (local_m01 = 0) and (local_m02 = 0)
+		{
+			local_m10 -= <<"Goodbye. ">>;
+			local_m10 += <<"Goodbye. ">>;
+		}
+		if didReagents
+		{
+			local_m10 ^= <<"I wish to buy more reagents. ">>;
+		}
+		else
+		{
+			if wantsSpells and mythReagents
+			{
+				local_m10 ^= <<"I wish to buy reagents. ">>;
+				u8goto label_293E;
+			}
+		}
+		u8label label_293E:
+		local_m05 = ask(local_m10);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m05
+		{
+			case "I have many questions. "
+			{
+				bark("Ah, good. It is always important to ask questions. That way one will never run out of things to learn. I cannot refuse one who has traversed ghoul-filled passages to meet with my hospitality. What are some of these questions? ");
+				local_m10 -= <<"I have many questions. ">>;
+				local_m10 += <<"Tell me about Pagan. ", "What do you do? ">>;
+				if benticSaidMythran
+				{
+					local_m10 += <<"How can I leave Pagan? ">>;
+				}
+				if toldSticks
+				{
+					local_m10 += <<"Is there a haunted grove? ">>;
+				}
+				if not titansHis
+				{
+					local_m10 += <<"What about Pagan history? ">>;
+				}
+			}
+			case "I wish to buy scrolls. "
+			{
+				local_m10 -= <<"I wish to buy scrolls. ">>;
+				bark("Ah, yes. ");
+				mythran_sell_portal_scroll();
+			}
+			case ""
+			{
+				if local_m03 = 0
+				{
+					bark("I am sorry, was my response unclear? You did hear me, I trust. ");
+					local_m03 = 1;
+				}
+				else
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("Very well. Your mind is filled with many thoughts other than what we are discussing. We can resume this later. ") -> return;
+					exitConvo();
+					return;
+				}
+			}
+			case "I wish to buy reagents. ", "I wish to buy more reagents. "
+			{
+				local_m10 -= <<"I wish to buy reagents. ">>;
+				local_m10 ^= <<"I wish to buy more reagents. ">>;
+				bark("Very well. ");
+				mythran_sell_reagents();
+			}
+			case "Is there a haunted grove? "
+			{
+				bark("A haunted grove of trees? Well, I have heard such rumors applied to a circle of dead trees here on the plateau, though I will not confirm the existence of undead there. ");
+				mythSticks = 1;
+				local_m10 -= <<"Is there a haunted grove? ">>;
+			}
+			case "What do you do? "
+			{
+				bark("That is an interesting question. I do many things. I suppose I spend most of my time studying and exploring the mind. I do not believe that thoughts should be confined within the skull, so I study a little bit of everything. ");
+				mythranJob = 1;
+				local_m10 -= <<"What do you do? ">>;
+				local_m10 ^= <<"What do you study? ">>;
+			}
+			case "What do you study? "
+			{
+				bark("To tell you would take nearly as much time as I have spent collecting the information. Suffice it to say that I try to learn as much about everything as I can. Of course, my preference is to study magic. ");
+				local_m10 -= <<"What do you study? ">>;
+				local_m10 ^= <<"Magic? ">>;
+			}
+			case "Magic? ", "I wish to learn spells. "
+			{
+				if devonInRule
+				{
+					bark("You wish to learn spells from me? ");
+					wantsSpells = 1;
+					mythran_confirm_trade_or_lesson();
+				}
+				else
+				{
+					bark("Perhaps in the future I will have the time to show you. ");
+				}
+				mythMagic = 1;
+				local_m10 -= <<"Magic? ", "I wish to learn spells. ">>;
+			}
+			case "Tell me about Pagan. "
+			{
+				bark("Your question is quite broad in scope. Do you wish me to talk about the city, the island, or all of Pagan? ");
+				mythran_discuss_pagan_lore();
+				local_m10 -= <<"Tell me about Pagan. ">>;
+			}
+			case "What about Pagan history? "
+			{
+				bark("The history of this land is quite long, and there is much I can tell you. Where would you prefer I start? ");
+				mythran_recommend_history_essay();
+				local_m10 -= <<"What about Pagan history? ">>;
+			}
+			case "Do you know of The Guardian? "
+			{
+				bark("Ah, interesting question. Indeed I do. Furthermore, I know that -you- know of him as well. However, you will find that no one else on Pagan has heard anything other than that this mysterious Guardian spoke to the early Pagans to warn them of disaster. Perhaps, some other time and place, we may speak further on this subject. Ask of it no more for now, please. ");
+				mythGuard = 1;
+				local_m10 -= <<"Do you know of The Guardian? ">>;
+			}
+			case "How can I leave Pagan? "
+			{
+				if mythranAvaName
+				{
+					local_m07 = "I have never had anyone ask such a question, " + getName() + ". Do you truly wish a means off this world? Or are you simply testing the limits of my knowledge? I ask this because finding the answer would be extremely tedious, and I do not plan to toil for no reason.";
+				}
+				else
+				{
+					local_m07 = "I have never had anyone ask such a question. Do you truly wish a means off this world? Or are you simply testing the limits of my knowledge? I ask this because finding the answer would be extremely tedious, and I do not plan to toil for no reason. ";
+				}
+				bark(u8_string_local_address(local_m07));
+				local_m10 -= <<"How can I leave Pagan? ">>;
+				local_m10 = <<"I plan to leave Pagan. ", "This was a test. ", "Goodbye. ">>;
+			}
+			case "I plan to leave Pagan. "
+			{
+				bark("That 'tis, indeed, a tremendous task you are planning to undertake. I, myself, have given considerable thought to finding ways to cross into what you would call `other worlds.' I have not yet uncovered a solution. However, I -have- come to the conclusion that it is the power of the Titans that makes such travel impossible even for one with my command of the arcane. Therefore, it is reasonable to assume that to depart from Pagan, one must master the powers of all four of the Titans. I suppose the best place to begin is with one of the schools of magic. Have you spoken with the Necromancers?");
+				mythDoneLeave = 1;
+				local_m10 = <<"Yes, I have. ", "No, I have not. ">>;
+				local_m01 = 1;
+			}
+			case "Yes, I have. "
+			{
+				if nowCaretaker
+				{
+					bark("Then I expect you still have much more to learn about the powers of Necromancy. With enough study, perhaps, you will be able to master the abilities Lithos grants to his followers and use them to locate the other mages. Only by seeking the talents of all four Titans will you have any hope of succeeding in your mission. ");
+				}
+				else
+				{
+					bark("Then I expect you will have more to learn more about the powers of Necromancy. In fact, you must attempt to acquire those powers for yourself. With enough study, perhaps, you will be able to master the abilities Lithos grants to his followers and use them to locate the other mages. Only by seeking the talents of all four Titans will you have any hope of succeeding in your mission. ");
+				}
+				local_m10 = <<"Do you know of The Guardian? ", "Goodbye. ">>;
+				mythranNec = 1;
+				local_m01 = 0;
+			}
+			case "No, I have not. "
+			{
+				if lothianDead
+				{
+					bark("That is the answer you wish to give me? How sad. Oh well, nevermind. ");
+					bark("I suggest you begin with the Necromancers, then. Speak with Vividos about becoming his apprentice. I realize the thought of dealing with the rituals of death may seem distasteful, but I expect it is something to which you must become accustomed if you wish to succeed. ");
+				}
+				else
+				{
+					bark("Then I suggest you begin with them. Speak with Vividos about becoming his apprentice once Lothian has passed on her powers to him. I realize the thought of dealing with the rituals of death may seem distasteful, but I expect it is something to which you must become accustomed if you wish to succeed. ");
+				}
+				local_m10 = <<"Where are the Necromancers? ", "Goodbye. ">>;
+				mythranNec = 1;
+				local_m01 = 0;
+			}
+			case "Where are the Necromancers? "
+			{
+				bark("They reside in the cemetery. I believe you will wish to take the East Road from the city. I suggest you go with care, for many of the walking dead also reside in the graveyard. ");
+				local_m10 -= <<"Where are the Necromancers? ">>;
+			}
+			case "This was a test. "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("I do not like to be tested. Perhaps you should give me time to renew my desire to speak with you. ") -> return;
+				exitConvo();
+				return;
+			}
+			case "Goodbye. "
+			{
+				bark("May you fare well, stranger to this land. If there is anything in my house that will aid you on your journeys, feel free to help yourself. ");
+				if not mythGaveStuff
+				{
+					mythGaveStuff = 1;
+					bark("Wait. Before you go, my friend, I wish to give you two items that I believe will assist you in your travels. The first is an item of recall I acquired many years ago. When you find yourself in trouble, you may use this item to teleport to my front door. Througout the world there are other disks to which you can also be transported if you so wish, providing you can visualize these places. How powerful this item is, I cannot say, for I do not know whether other, stronger powers may prevent it from functioning at certain times.~Furthermore, I wish to give you this potion of healing, which will magically aid the recovery of your wounds. I will try to have others for you as you make return visits, but since the cost to me in time and energy is great, I will not have one for you every time you visit me.");
+					local_m0E_w02 = Avatar.getX();
+					local_m0C = Avatar.getY();
+					local_m0A = Avatar.getZ();
+					Item_create(0, 833, u8_local_address(local_m12_w01));
+					local_m14 = Avatar.getEquip(6);
+					local_m12.pop(local_m14);
+					bark("Excellent. Use this well. ");
+					if class_0581_give(1, 766, 1, 0, 1)
+					{
+						bark("Here. ");
+					}
+					else if class_0581_createNear(local_m0E, 766, 1, 0, 1)
+					{
+						bark("I will set it down for you. ");
+					}
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("Again, fare well. ") -> return;
+				}
+				local_m10 -= <<"Goodbye. ">>;
+				exitConvo();
+				return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x48FE, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_recommend_history_essay()
+{
+	bark("Better than wasting your time and mine with a lengthy story when we could be discussing more interesting matters, let me simply suggest that you read my essay on the subject. The book should be around here somewhere. Most likely I have left it upstairs. Feel free to borrow it if you wish. ");
+	return;
+}
+
+// Derived: routine 0x4A45, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_discuss_pagan_lore()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String List;
+	if paganLore = 1
+	{
+		bark("Have we not already discussed this subject enough? Ah, very well, what is it you wish to know? ");
+	}
+	if paganLore = 0
+	{
+		paganLore = 1;
+	}
+	local_m08 = <<"Are they not all the same? ", "The city. ", "The island. ", "All of Pagan. ", "Actually, I meant the people. ", "Enough about Pagan. ">>;
+	while local_m02 != "Enough about Pagan. "
+	{
+		local_m02 = ask(local_m08);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "Are they not all the same? "
+			{
+				bark("Indeed, no, although many people use -- or should I say misuse -- the word `Pagan' to mean the world, the island, and, for a few ethnocentrics, the city. In actuality, Pagan is only the name for the world. ");
+				local_m08 -= <<"Are they not all the same? ">>;
+			}
+			case "Actually, I meant the people. "
+			{
+				bark("To be honest, I know little about the people. A few come to visit me for my knowledge. And even fewer to buy my scrolls. I do know a little about the mages of Pagan. Is it them you are interested in knowing? ");
+				mythranScrolls = 1;
+				local_m08 -= <<"Are they not all the same? ", "Actually, I meant the people. ">>;
+				local_m08 ^= <<"Tell me of the mages. ", "You sell scrolls? ">>;
+			}
+			case "Tell me of the mages. "
+			{
+				local_m08 -= <<"Tell me of the mages. ">>;
+				bark("There are four of what I call 'schools' of magic on Pagan -- one for each of the Titans. The study of death and the ground is called Necromancy. It is the Necromancer who is responsible for carrying out the pact with Lithos by burying the dead and sending their spirits to him. ");
+				if lothianDead
+				{
+					bark("The current Necromancer, Vividos, is fairly new to his position. This means that he has been away from the city for only a few years, and is, therefore, less reclusive. In time, however, he will have forgotten most of his social graces, and the people will find dealing with him as distasteful as they did his predecessors. ");
+				}
+				else
+				{
+					bark("The current Necromancer, Lothian, is very old. I expect she soon will be passing her role to her Apprentice. Vividos should handle the responsibility quite well. ");
+				}
+				bark("Tempestry's main focus is water, though its aspect does involve combining with Hydros' sister Titan, Stratos, making storms as much a part of Tempestry as is the sea. Unlike the other schools, Tempestry is not learned. It is passed on through the bloodline. The eldest living Tempest possesses the greatest amount of power. However, as long as a younger Tempest's spell does not contradict an elder's, the younger's magic will work fully. ");
+				if devonInRule
+				{
+					bark("Since there seems to be little cap on the powers of Tempestry, I am glad for the Pagans that Devon now rules Tenebrae. You should be commended for your role in that. ");
+				}
+				else
+				{
+					bark("Since there seems to be little cap on the powers of Tempestry, it is a true tragedy that Mordea rules the city. I hope for the sake of the people that her reign is not a long one. ");
+				}
+				bark("Stellos was the first follower of Stratos. His Order of Enlightenment teaches Theurgy, the study of the winds. He is a good and learned man, if you will permit me a judgement of ethics, who freely uses his powers of healing. ");
+				bark("The fourth school, Sorcery, involves the Titan of Fire. I have never spoken to Malchir in person, but I feel the Sorcerers' reputation for deceit is unchanged by his rise to power. Take care when dealing with those who consort with Pyros, for it seems they become as wicked as he. ");
+				bark("Those are the mages of the four schools. Of course, they do not represent -all- aspects of magic on Pagan. ");
+				local_m08 ^= <<"What other magic exists? ">>;
+			}
+			case "What other magic exists? "
+			{
+				local_m08 -= <<"What other magic exists? ">>;
+				bark("There is what I call Thaumaturgy. It is not tied to any of the Titans, but borrows bits and pieces from any form of magic you can imagine. I am a practitioner of Thaumaturgy. ");
+				local_m08 ^= <<"Can you teach me Thaumaturgy? ">>;
+				mythMagic = 1;
+			}
+			case "Can you teach me Thaumaturgy? "
+			{
+				local_m08 -= <<"Can you teach me Thaumaturgy? ">>;
+				if devonInRule
+				{
+					bark("You wish to learn spells from me? ");
+					wantsSpells = 1;
+					mythran_confirm_trade_or_lesson();
+				}
+				else
+				{
+					bark("You are not ready yet, my friend. Perhaps, with a little more time to adjust to this world, you will be prepared. ");
+				}
+			}
+			case "You sell scrolls? "
+			{
+				local_m08 -= <<"You sell scrolls? ">>;
+				bark("Indeed, I do. Do you wish to purchase some? ");
+				wantsScrolls = 1;
+				paganLore = 2;
+				mythran_confirm_trade_or_lesson();
+			}
+			case "The city. "
+			{
+				bark("Ah, Tenebrae. The city was not settled until near the end of the war between the Pagans and Zealans. After the Titans defeated the Destroyer, most of the world lay in such ruin and disarray that the few people who were left on the island congregated into a single community. They called their city Tenebrae, meaning 'city of eternal twilight.' At first the Necromancers held rulership, but once Kalen became a Tempest as well, the people elected to have their leaders come from that line. ");
+				local_m08 -= <<"Are they not all the same? ", "The city. ">>;
+				if not titansHis
+				{
+					local_m08 ^= <<"Who is Kalen? ">>;
+				}
+			}
+			case "The island. "
+			{
+				bark("The island is called Morgaelin, same as the mountain -- or volcano -- from which it sprang. As far as the people know, this is the only piece of land remaining after the Titans vanquished the Destroyer. ");
+				local_m08 -= <<"Are they not all the same? ", "The island. ">>;
+			}
+			case "All of Pagan. "
+			{
+				if titansHis
+				{
+					bark("Much of this I have already told you from our discussion of Pagan's history. ");
+				}
+				bark("The lands of this world once spanned great distances. At that time, the people were prosperous and -- for the most part -- unified. However, when the words of warning came from a mysterious being called the Guardian, the population split into two factions: the Zealans, who believed in the ancient traditions, and Pagans, who felt that the Guardian's words meant the end of things that were.~The two factions fell to fighting against each other, while the very forces of the elements began to take form and grow. When a malevolent entity called the Destroyer attempted to conquer the world, the elements, who had amassed Titanic levels of power, rose to battle it. During the struggle, the lands were demolished, leaving only a few peoples scattered across a single island -- this island. Shortly thereafter the Zealans fell to their enemies, and the world became known as Pagan.");
+				local_m08 -= <<"Are they not all the same? ", "All of Pagan. ">>;
+			}
+			case "Who is Kalen? "
+			{
+				local_m08 -= <<"Who is Kalen? ">>;
+				bark("He was the first Tempest. An early hero to the people, his life as a Necromancer was filled with some amount of tragedy. When we have time I will relate the history of this world to you, then you will have a better understanding. ");
+			}
+			case "Enough about Pagan. "
+			{
+				bark("Very well. ");
+				return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x64C5, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_confirm_trade_or_lesson()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String List;
+	local_m06 = <<"Yes. ", "No. ">>;
+	while local_m02 != "No. "
+	{
+		local_m02 = ask(local_m06);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "Yes. "
+			{
+				if wantsScrolls
+				{
+					mythran_sell_portal_scroll();
+				}
+				else if wantsSpells
+				{
+					mythran_teach_thaumaturgy_spell();
+				}
+				else if wantsReagents
+				{
+					mythran_sell_reagents();
+				}
+				return;
+			}
+			case "No. "
+			{
+				bark("Perhaps another time, then. ");
+				return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x65C3, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_discuss_return_visit()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m07:U8Byte;
+	local_m08:U8Byte;
+	local_m09:U8Byte;
+	local_m0B:String List;
+	local_m10:U8Bytes5;
+	local_m0C:U8Byte;
+	local_m0E:U8Word;
+	local_m10_w02:U8Word;
+	local_m12:String;
+	local_m14:Item;
+	local_m16:U8Word;
+	local_m18:U8Bytes2; // X: untouched.
+	if mythranName
+	{
+		local_m0B += <<"Hello, Mythran. ">>;
+	}
+	else
+	{
+		local_m0B += <<"Hello again. ">>;
+	}
+	local_m0B ^= <<"Goodbye. ">>;
+	while local_m02 != "Goodbye. "
+	{
+		if (local_m07 = 0) and (local_m08 = 0)
+		{
+			local_m0B -= <<"Goodbye. ">>;
+			local_m0B += <<"Goodbye. ">>;
+		}
+		if didReagents
+		{
+			local_m0B ^= <<"I wish to buy more reagents. ">>;
+		}
+		else
+		{
+			if wantsSpells and mythReagents
+			{
+				local_m0B ^= <<"I wish to buy reagents. ">>;
+				u8goto label_66E5;
+			}
+		}
+		u8label label_66E5:
+		local_m02 = ask(local_m0B);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "Hello, Mythran. ", "Hello again. "
+			{
+				bark("Good to see you, my friend. Is there some assistance I can give you? ");
+				local_m0B -= <<"Hello, Mythran. ", "Hello again. ">>;
+				if paganLore <= 2
+				{
+					local_m0B += <<"Tell me about Pagan. ">>;
+				}
+				if not mythranJob
+				{
+					local_m0B += <<"What do you do? ">>;
+				}
+				if benticSaidMythran and (not mythDoneLeave)
+				{
+					local_m0B += <<"How can I leave Pagan? ">>;
+				}
+				if toldSticks and (not mythSticks)
+				{
+					local_m0B += <<"Is there a haunted grove? ">>;
+				}
+				if not titansHis
+				{
+					local_m0B += <<"What about Pagan history? ">>;
+				}
+				if mythMagic
+				{
+					local_m0B += <<"I want to learn magic. ">>;
+				}
+				if mythranScrolls
+				{
+					local_m0B ^= <<"I wish to buy scrolls. ">>;
+				}
+				if mythMagic
+				{
+					local_m0B ^= <<"I wish to learn spells. ">>;
+				}
+				if mythReagents
+				{
+					local_m0B ^= <<"I wish to buy reagents. ">>;
+				}
+				if mythDoneLeave
+				{
+					local_m0B ^= <<"May I have another potion? ">>;
+				}
+			}
+			case "I wish to buy scrolls. "
+			{
+				local_m0B -= <<"I wish to buy scrolls. ">>;
+				bark("Ah, yes. ");
+				mythran_sell_portal_scroll();
+			}
+			case "May I have another potion? "
+			{
+				local_m0B -= <<"May I have another potion? ">>;
+				if usedRecall
+				{
+					usedRecall = 0;
+					bark("Aye, my friend, I have had time to concoct another. ");
+					local_m10_w02 = Avatar.getX();
+					local_m0E = Avatar.getY();
+					local_m0C = Avatar.getZ();
+					if class_0581_give(1, 766, 1, 0, 1)
+					{
+						bark("Here. ");
+					}
+					else
+					{
+						if class_0581_createNear(local_m10, 766, 1, 0, 1)
+						{
+							bark("I will set it down for you. ");
+							u8goto label_6B52;
+						}
+					}
+					u8label label_6B52:
+				}
+				else
+				{
+					bark("Nay, my friend, I have not had the time to concoct another. Perhaps it will be ready for your next visit. ");
+				}
+			}
+			case ""
+			{
+				if local_m09 = 0
+				{
+					bark("I am sorry, was my response unclear? You did hear me, I trust. ");
+					local_m09 = 1;
+				}
+				else
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("Very well. Your mind is filled with many thoughts other than what we are discussing. We can resume this later. ") -> return;
+					exitConvo();
+					return;
+				}
+			}
+			case "I wish to buy reagents. ", "I wish to buy more reagents. "
+			{
+				local_m0B -= <<"I wish to buy reagents. ">>;
+				local_m0B ^= <<"I wish to buy more reagents. ">>;
+				bark("Very well. ");
+				mythran_sell_reagents();
+			}
+			case "Tell me about Pagan. "
+			{
+				bark("Your question is quite broad in scope. Do you wish me to talk about the city, the island, or all of Pagan? ");
+				mythran_discuss_pagan_lore();
+				local_m0B -= <<"Tell me about Pagan. ">>;
+			}
+			case "Do you know of The Guardian? "
+			{
+				bark("Ah, interesting question. Perhaps some other time I can better answer that. Ask of it no more, please. ");
+				mythGuard = 1;
+				local_m0B -= <<"Do you know of The Guardian? ">>;
+			}
+			case "What do you do? "
+			{
+				bark("That is an interesting question. I do many things. I suppose I spend most of my time studying and exploring the mind. I do not believe that thoughts should be confined within the skull, so I study a little bit of everything. ");
+				mythranJob = 1;
+				local_m0B -= <<"What do you do? ">>;
+				local_m0B ^= <<"What do you study? ">>;
+			}
+			case "What do you study? "
+			{
+				bark("To tell you would take nearly as much time as I have spent collecting the information. Suffice it to say that I try to learn as much about everything as I can. Of course, my preference is to study magic. ");
+				local_m0B -= <<"What do you study? ">>;
+				local_m0B ^= <<"Magic? ">>;
+			}
+			case "Magic? ", "I wish to learn spells. "
+			{
+				if devonInRule
+				{
+					bark("You wish to learn spells from me? ");
+					wantsSpells = 1;
+					mythran_confirm_trade_or_lesson();
+				}
+				else
+				{
+					bark("Perhaps in the future I will have the time to show you. ");
+				}
+				mythMagic = 1;
+				local_m0B -= <<"Magic? ", "I wish to learn spells. ">>;
+			}
+			case "How can I leave Pagan? "
+			{
+				if mythranAvaName
+				{
+					local_m04 = "I have never had anyone ask such a question, " + getName() + ". Do you truly wish a means off this world? Or are you simply testing the limits of my knowledge? I ask this because finding the answer would be extremely tedious, and I do not plan to toil for no reason.";
+				}
+				else
+				{
+					local_m04 = "I have never had anyone ask such a question. Do you truly wish a means off this world? Or are you simply testing the limits of my knowledge? I ask this because finding the answer would be extremely tedious, and I do not plan to toil for no reason. ";
+				}
+				bark(u8_string_local_address(local_m04));
+				local_m0B -= <<"How can I leave Pagan? ">>;
+				local_m0B = <<"I plan to leave Pagan. ", "This was a test. ", "Goodbye. ">>;
+			}
+			case "I plan to leave Pagan. "
+			{
+				bark("That 'tis, indeed, a tremendous task you are planning to undertake. I, myself, have given considerable thought to finding ways to cross into what you would call `other worlds.' I have not yet uncovered a solution. However, I -have- come to the conclusion that it is the power of the Titans that makes such travel impossible even for one with my command of the arcane. Therefore, it is reasonable to assume that to depart from Pagan, one must master the powers of all four of the Titans. I suppose the best place to begin is with one of the schools of magic. Have you spoken with the Necromancers?");
+				mythDoneLeave = 1;
+				local_m07 = 1;
+				local_m0B = <<"Yes, I have. ", "No, I have not. ">>;
+			}
+			case "Yes, I have. "
+			{
+				if nowCaretaker
+				{
+					bark("Then I expect you still have much more to learn about the powers of Necromancy. With enough study, perhaps, you will be able to master the abilities Lithos grants to his followers and use them to locate the other mages. Only by seeking the talents of all four Titans will you have any hope of succeeding in your mission. ");
+				}
+				else
+				{
+					bark("Then I expect you will have more to learn more about the powers of Necromancy. In fact, you must attempt to acquire those powers for yourself. With enough study, perhaps, you will be able to master the abilities Lithos grants to his followers and use them to locate the other mages. Only by seeking the talents of all four Titans will you have any hope of succeeding in your mission. ");
+				}
+				if not mythGuard
+				{
+					local_m0B += <<"Do you know of The Guardian? ">>;
+				}
+				local_m0B = <<"Goodbye. ">>;
+				mythranNec = 1;
+				local_m07 = 0;
+			}
+			case "No, I have not. "
+			{
+				if lothianDead
+				{
+					bark("Then I suggest you begin with them. Speak with Vividos about becoming his apprentice. I realize the thought of dealing with the rituals of death may seem distasteful, but I expect it is something to which you must become accustomed if you wish to succeed. ");
+				}
+				else
+				{
+					bark("Then I suggest you begin with them. Speak with Vividos about becoming his apprentice once Lothian has passed on her powers to him. I realize the thought of dealing with the rituals of death may seem distasteful, but I expect it is something to which you must become accustomed if you wish to succeed. ");
+				}
+				local_m0B = <<"Where are the Necromancers? ", "Goodbye. ">>;
+				mythranNec = 1;
+				local_m07 = 0;
+			}
+			case "Where are the Necromancers? "
+			{
+				bark("They reside in the cemetery. I believe you will wish to take the East Road from the city. I suggest you go with care, for many of the walking dead also reside in the graveyard. ");
+				local_m0B -= <<"Where are the Necromancers? ">>;
+			}
+			case "This was a test. "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("I do not like to be tested. Perhaps you should give me time to renew my desire to speak with you. ") -> return;
+				exitConvo();
+				return;
+			}
+			case "Is there a haunted grove? "
+			{
+				bark("A haunted grove of trees? Well, I have heard such rumors applied to a circle of dead trees here on the plateau, though I will not confirm the existence of undead there. ");
+				mythSticks = 1;
+				local_m0B -= <<"Is there a haunted grove? ">>;
+			}
+			case "What about Pagan history? "
+			{
+				bark("The history of this land is quite long, and there is much I can tell you. Where would you prefer I start? ");
+				mythran_recommend_history_essay();
+				local_m0B -= <<"What about Pagan history? ">>;
+			}
+			case "I want to learn magic. "
+			{
+				mythran_teach_thaumaturgy_spell();
+				local_m0B -= <<"I want to learn magic. ">>;
+			}
+			case "Goodbye. "
+			{
+				if (class_0581_getPeriod() = 0) or (class_0581_getPeriod() = 4) or (class_0581_getPeriod() = 5)
+				{
+					local_m12 = "Good evening, my friend, and farewell. ";
+				}
+				else if class_0581_getPeriod() = 1
+				{
+					local_m12 = "Good morning, my friend, and farewell. ";
+				}
+				else if (class_0581_getPeriod() = 2) or (class_0581_getPeriod() = 3)
+				{
+					local_m12 = "Good day, my friend, and farewell. ";
+				}
+				bark(u8_string_local_address(local_m12));
+				if not mythGaveStuff
+				{
+					mythGaveStuff = 1;
+					bark("Wait. Before you go, my friend, I wish to give you two items that I believe will assist you in your travels. The first is an item of recall I acquire many years ago. When you find yourself in trouble, you may use this item to teleport to my front door. How powerful this item is, I cannot say, for I do not know whether other, stronger powers may prevent it from functioning at certain times.~Furthermore, I wish to give you this potion of healing, which will magically aid the recovery of your wounds. I will try to have others for you as you make return visits, but since the cost to me in time and energy is great, I will not have one for you every time you visit me.");
+					local_m10_w02 = Avatar.getX();
+					local_m0E = Avatar.getY();
+					local_m0C = Avatar.getZ();
+					Item_create(0, 833, u8_local_address(local_m14_w01));
+					local_m16 = Avatar.getEquip(6);
+					local_m14.pop(local_m16);
+					bark("Excellent. Use this well. ");
+					if class_0581_give(1, 766, 1, 0, 1)
+					{
+						bark("Here. ");
+					}
+					else if class_0581_createNear(local_m10, 766, 1, 0, 1)
+					{
+						bark("I will set it down for you. ");
+					}
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("Again, fare well. ") -> return;
+				}
+				exitConvo();
+				return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x87A8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_discuss_blackrock_quest()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String List;
+	local_m0A:U8Bytes2; // X: untouched.
+	local_m0B:U8Byte;
+	local_m0C:U8Byte;
+	local_m0D:U8Byte;
+	local_m12:U8Bytes5;
+	local_m0E:U8Byte;
+	local_m10:U8Word;
+	local_m12_w02:U8Word;
+	local_m14:U8Word;
+	local_m16:Item;
+	local_m18:Item;
+	local_m1A:Item;
+	local_m1C:U8Word;
+	local_m1E:U8Bytes2; // X: untouched.
+	if mythranName
+	{
+		local_m08 ^= <<"Hello, Mythran. ">>;
+	}
+	else
+	{
+		local_m08 ^= <<"Hello again. ">>;
+	}
+	local_m08 ^= <<"Goodbye. ">>;
+	while local_m02 != "Goodbye. "
+	{
+		if (local_m0B = 0) and (local_m0C = 0)
+		{
+			local_m08 -= <<"Goodbye. ">>;
+			local_m08 += <<"Goodbye. ">>;
+		}
+		if didReagents
+		{
+			local_m08 ^= <<"I wish to buy more reagents. ">>;
+		}
+		else
+		{
+			if wantsSpells and mythReagents
+			{
+				local_m08 ^= <<"I wish to buy reagents. ">>;
+				u8goto label_88CC;
+			}
+		}
+		u8label label_88CC:
+		local_m02 = ask(local_m08);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "Hello, Mythran. ", "Hello again. "
+			{
+				bark("Ah, greetings, traveler. How fare things? ");
+				local_m08 ^= <<"Things are well. ">>;
+				if mythranSaidBlackLore and blackLoreSeen
+				{
+					local_m08 ^= <<"I want to recreate the obelisk. ">>;
+				}
+				else
+				{
+					if not mythranSaidBlackLore
+					{
+						local_m08 ^= <<"I found this with the Sorcerers. ">>;
+						u8goto label_89ED;
+					}
+				}
+				u8label label_89ED:
+				local_m08 -= <<"Hello, Mythran. ", "Hello again. ">>;
+				if mythDoneLeave
+				{
+					local_m08 ^= <<"May I have another potion? ">>;
+				}
+				if mythranScrolls
+				{
+					local_m08 ^= <<"I wish to buy scrolls. ">>;
+				}
+				if mythMagic
+				{
+					local_m08 ^= <<"I wish to learn spells. ">>;
+				}
+				if mythReagents
+				{
+					local_m08 ^= <<"I wish to buy reagents. ">>;
+				}
+			}
+			case "I wish to buy scrolls. "
+			{
+				local_m08 -= <<"I wish to buy scrolls. ">>;
+				bark("Ah, yes. ");
+				mythran_sell_portal_scroll();
+			}
+			case ""
+			{
+				if local_m0D = 0
+				{
+					bark("I am sorry, was my response unclear? You did hear me, I trust. ");
+					local_m0D = 1;
+				}
+				else
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("Very well. Your mind is filled with many thoughts other than what we are discussing. We can resume this later. ") -> return;
+					exitConvo();
+					return;
+				}
+			}
+			case "May I have another potion? "
+			{
+				local_m08 -= <<"May I have another potion? ">>;
+				if usedRecall
+				{
+					usedRecall = 0;
+					bark("Aye, my friend, I have had time to concoct another. ");
+					local_m12_w02 = Avatar.getX();
+					local_m10 = Avatar.getY();
+					local_m0E = Avatar.getZ();
+					if class_0581_give(1, 766, 1, 0, 1)
+					{
+						bark("Here. ");
+					}
+					else
+					{
+						if class_0581_createNear(local_m12, 766, 1, 0, 1)
+						{
+							bark("I will set it down for you. ");
+							u8goto label_8DA5;
+						}
+					}
+					u8label label_8DA5:
+				}
+				else
+				{
+					bark("Nay, my friend, I have not had the time to concoct another. Perhaps it will be ready for your next visit. ");
+				}
+			}
+			case "I wish to buy reagents. ", "I wish to buy more reagents. "
+			{
+				local_m08 -= <<"I wish to buy reagents. ">>;
+				local_m08 ^= <<"I wish to buy more reagents. ">>;
+				bark("Very well. ");
+				mythran_sell_reagents();
+			}
+			case "I wish to learn spells. "
+			{
+				if devonInRule
+				{
+					bark("You wish to learn spells from me? ");
+					wantsSpells = 1;
+					mythran_confirm_trade_or_lesson();
+				}
+				else
+				{
+					bark("Perhaps in the future I will have the time to show you. ");
+				}
+				mythMagic = 1;
+				local_m08 -= <<"I wish to learn spells. ">>;
+			}
+			case "I want to recreate the obelisk. "
+			{
+				bark("Recreate the obelisk? Do you mean that you wish reconstruct the Blackrock obelisk of the Great Temple? Of course! You are hoping to use the conduit as a way to leave Pagan! I know just the spell you will need. You must cast the Ethereal Travel spell. I do not know where the spell will send you on your first attempt, though I expect the Titans will intervene and direct your journey. Should you encounter and defeat them, know that you would have the worship and admiration of all Pagans. Good luck... ");
+				if not gotDevastation
+				{
+					gotDevastation = 1;
+				}
+				mythran_teach_thaumaturgy_spell();
+				local_m08 -= <<"I want to recreate the obelisk. ">>;
+			}
+			case "Things are well. "
+			{
+				bark("I am very glad to hear that. ");
+				if mythranSaidBlackLore
+				{
+					local_m14 = 0;
+					if hydrosFree
+					{
+						local_m14++;
+					}
+					if hasHeart
+					{
+						local_m14++;
+					}
+					if hasBreath
+					{
+						local_m14++;
+					}
+					if local_m14 > 2
+					{
+						bark("By the way, considering the tumultuous effect you have had on Pagan, may I commend you on your ability to rouse, or should I say anger, the Titans. ");
+					}
+					else if hasBreath
+					{
+						bark("By the way, I hope you realize the effect of taking the Breath of Wind. The citizens have little in the way of healing now. Please understand that I do not disagree with your choice of action, but I wanted to be sure you are cognizant of the ramifications. ");
+					}
+					else
+					{
+						if hasHeart
+						{
+							bark("By the way, I notice your presence carries with it a tremendous impact, so to speak. I assume the quakes are your responsibility. ");
+							u8goto label_9573;
+						}
+					}
+					u8label label_9573:
+				}
+				else
+				{
+					bark("Is there perhaps something you wish to discuss? ");
+					local_m08 = <<"Yes. ", "No. ", "Goodbye. ">>;
+				}
+				local_m08 -= <<"Things are well. ">>;
+			}
+			case "No. "
+			{
+				bark("Very well, then, I shall return to my work. ");
+				local_m08 = <<"Goodbye. ">>;
+			}
+			case "Yes. "
+			{
+				bark("Very well, then, and what would that be? ");
+				local_m08 = <<"I found this with the Sorcerers. ", "Goodbye. ">>;
+			}
+			case "I found this with the Sorcerers. "
+			{
+				bark("That piece of black stone? ");
+				mythranSaidBlackLore = 1;
+				bark("It is not obsidian, that much is obvious. I wonder if it could be... You say it came from the Sorcerers, eh? It is possible you have found one of the Fragments of the obelisk in the Ancient Temple. ");
+				bark("Somewhere I have a book that might delve into greater detail. You're welcome to it if you can find it. I would strongly suggest that you study it closely before we continue our discussion. ");
+				local_m08 -= <<"I found this with the Sorcerers. ", "Things are well. ">>;
+				Item_create(11, 587, u8_local_address(local_m18_w01));
+				local_m18.pop(1109, 1621, 42);
+				wait(60);
+				local_m18.destroy();
+				Item_create(1, 288, u8_local_address(local_m16_w01));
+				local_m16.setQuality(25);
+				local_m16.pop(1109, 1621, 42);
+			}
+			case "Goodbye. "
+			{
+				bark("Farewell and good luck, " + getName() + ".");
+				if not mythGaveStuff
+				{
+					mythGaveStuff = 1;
+					bark("Wait. Before you go, my friend, I wish to give you two items that I believe will assist you in your travels. The first is an item of recall I acquire many years ago. When you find yourself in trouble, you may use this item to teleport to my front door. How powerful this item is, I cannot say, for I do not know whether other, stronger powers may prevent it from functioning at certain times.~Furthermore, I wish to give you this potion of healing, which will magically aid the recovery of your wounds. I will try to have others for you as you make return visits, but since the cost to me in time and energy is great, I will not have one for you every time you visit me.");
+					local_m12_w02 = Avatar.getX();
+					local_m10 = Avatar.getY();
+					local_m0E = Avatar.getZ();
+					Item_create(0, 833, u8_local_address(local_m1A_w01));
+					local_m1C = Avatar.getEquip(6);
+					local_m1A.pop(local_m1C);
+					bark("Excellent. Use this well. ");
+					if class_0581_give(1, 766, 1, 0, 1)
+					{
+						bark("Here. ");
+					}
+					else if class_0581_createNear(local_m12, 766, 1, 0, 1)
+					{
+						bark("I will set it down for you. ");
+					}
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("Again, fare well. ") -> return;
+				}
+				exitConvo();
+				return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x9E04, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_cast_apply_lethal_spell_to_attacker()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = 25;
+	while (not Npc_getTarget(this)) and local_m02
+	{
+		wait(1);
+		local_m02--;
+	}
+	if Npc_getTarget(this) = 1
+	{
+		if not Avatar.isDead()
+		{
+			setAvatarInStasis(1);
+			clrInCombat();
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(29, getDir());
+			realDoAnim(AS_EXIT_CAST, getDir());
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0421_mythran_apply_lethal_spell(this) -> return;
+		}
+	}
+}
+
+// Derived: routine 0x9ED6, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MYTHRAN::mythran_apply_lethal_spell()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m08 = (250 - Avatar.getZ()) * 4;
+	class_057C_turnToFace(33, getDirToItem(Avatar:Referent), 0, 10);
+	Item_bark(u8_string_address("I do not wish to do this. "), u8_stack_ref(33));
+	Item_bark(u8_string_address("Kal Vas Grav Corp!"), u8_stack_ref(33));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	LightningBolt();
+	Item_create(0, 511, u8_local_address(local_m04_w01));
+	local_m04.pop(Avatar.getX() + local_m08, Avatar.getY() + local_m08, 250);
+	playSFX(27, 200);
+	for local_m06 = 0 to 4
+	{
+		local_m04.setFrame(local_m06);
+		wait(4);
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	local_m04.destroy();
+	Item_create(0, 480, u8_local_address(local_m02_w01));
+	local_m02.pop(Avatar.getX() + local_m08, Avatar.getY() + local_m08, 249);
+	Avatar.receiveHit(referent, Avatar.getDir(), Avatar.getHp(), 128);
+	Avatar.setDead();
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Avatar.realDoAnim(14, 3) -> return;
+	for local_m06 = 0 to 9
+	{
+		local_m02.setFrame(local_m06);
+		wait(10);
+	}
+	local_m02.destroy();
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	LightningBolt();
+	Item_bark(u8_string_address("A pity... "), u8_stack_ref(33));
+}
+

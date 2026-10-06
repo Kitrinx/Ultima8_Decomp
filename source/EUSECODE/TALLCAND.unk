@@ -1,0 +1,53 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x01C5
+// FLEX slot: 455
+// Original offset: 0x00105EF1
+// Naming evidence: E, exact object-1 linker name `TALLCAND`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/TALLCAND.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass TALLCAND inherits Item
+{
+	process tallcand_look_bark_candlestick();
+	process tallcand_anim_forward_to_candleanim();
+	process tallcand_use_change_frame();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TALLCAND::tallcand_look_bark_candlestick()
+{
+	bark("candlestick ");
+}
+
+// Derived: routine 0x00AF, event mask 0x00000004.
+// R: `anim` identifies event 02; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TALLCAND::tallcand_anim_forward_to_candleanim()
+{
+	candleAnim();
+}
+
+// Derived: routine 0x00CC, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TALLCAND::tallcand_use_change_frame()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getFrame();
+	if (local_m02 & 3) = 0
+	{
+		setFrame(local_m02 + 1);
+	}
+	else
+	{
+		setFrame(local_m02 & 252);
+	}
+}
+

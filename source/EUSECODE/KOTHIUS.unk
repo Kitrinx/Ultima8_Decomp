@@ -1,0 +1,62 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0438
+// FLEX slot: 1082
+// Original offset: 0x000A66C5
+// Naming evidence: E, exact object-1 linker name `KOTHIUS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/KOTHIUS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+
+npcclass KOTHIUS inherits Npc
+{
+	process kothius_look_forward_to_sorcerer_identity_description();
+	process kothius_use_forward_to_sorcerer_disciple_conversation();
+	process kothius_enter_fast_area_forward_to_sorcerer_idle_banter();
+	process kothius_leave_fast_area_forward_to_stop_sorcerer_idle_banter();
+	process kothius_cast_forward_to_spell_combat(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KOTHIUS::kothius_look_forward_to_sorcerer_identity_description()
+{
+	class_0575_sorcerer_say_identity_description(this, "Kothius");
+}
+
+// Derived: routine 0x00AC, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KOTHIUS::kothius_use_forward_to_sorcerer_disciple_conversation()
+{
+	class_0575_sorcerer_run_disciple_conversation(this, "Kothius");
+}
+
+// Derived: routine 0x00D8, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KOTHIUS::kothius_enter_fast_area_forward_to_sorcerer_idle_banter()
+{
+	class_0575_sorcerer_start_idle_banter(this);
+}
+
+// Derived: routine 0x00F5, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KOTHIUS::kothius_leave_fast_area_forward_to_stop_sorcerer_idle_banter()
+{
+	class_0575_sorcerer_stop_idle_banter(this);
+}
+
+// Derived: routine 0x0112, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process KOTHIUS::kothius_cast_forward_to_spell_combat(arg_04:U8Word)
+{
+	class_0574_spelcmbt_run_spell_combat(this, arg_04);
+}
+

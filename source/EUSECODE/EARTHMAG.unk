@@ -1,0 +1,20 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0588
+// FLEX slot: 1418
+// Original offset: 0x00068F7F
+// Naming evidence: E, exact object-1 linker name `EARTHMAG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/EARTHMAG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] earthmag_read_beware_unto_any_who_may_read()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("Beware unto any who may read this tome: The power of the Mountain King is great, and the dread sovereign of all clay and Earth is to be feared and respected. Therefore, as you read the words of might contained within these pages, know that the power that the Mountain King will grant to you is great. Use the power that you learn here wisely and remember: The Mountain King can take from you anything that He has given you. Do not abuse that which you learn while in the service of mighty Lithos. The first spell that the student of Earthen Magic must learn is the Open Ground spell. The use of this spell will open the sacred clay of our father, and allow you to enter therein. The reagents needed for this spell are Blood and Blackmoor. Speak the words Des Por Ylem to create your magic token, then shall you be allowed to envelop yourself in the arms of the Mountain King. The second spell that student must learn is Death Speak. This must be, for the student must first learn from the long dead Necromancers of old. From their dead lips shall come words of knowledge and power. So that the student may speak to his dead tutors, the student must know Death Speak. The reagents needed for Death Speak are but Blood and Bone. Use these reagents together with the words Kal Wis Corp and the student shall then be able to learn from the Ancient Necromancers."), this);
+}
+

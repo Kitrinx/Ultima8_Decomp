@@ -1,0 +1,34 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04A1
+// FLEX slot: 1187
+// Original offset: 0x0008A96D
+// Naming evidence: E, exact object-1 linker name `GUARDEGG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GUARDEGG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass GUARDEGG inherits Egg
+{
+	process guardegg_hatch_trigger_guard_scene_once();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARDEGG::guardegg_hatch_trigger_guard_scene_once()
+{
+	if Egg_getEggId(this) = 1
+	{
+		Egg_setEggId(0, this);
+		if not guard1met
+		{
+			xavierSitting = 1;
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_use(u8_stack_ref(4)) -> return;
+		}
+	}
+}
+

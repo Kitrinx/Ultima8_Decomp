@@ -1,0 +1,28 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04A8
+// FLEX slot: 1194
+// Original offset: 0x000949D0
+// Naming evidence: E, exact object-1 linker name `INTERG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/INTERG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass INTERG inherits Egg
+{
+	process interg_hatch_trigger_interrogation_scene();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process INTERG::interg_hatch_trigger_interrogation_scene()
+{
+	if (benticCacked = 1) and (interrogEW = 0) and (devonInRule = 0)
+	{
+		Item_use(u8_stack_ref(59));
+	}
+}
+

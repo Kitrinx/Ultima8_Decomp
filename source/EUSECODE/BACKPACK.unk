@@ -1,0 +1,65 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0211
+// FLEX slot: 531
+// Original offset: 0x0001707A
+// Naming evidence: E, exact object-1 linker name `BACKPACK`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BACKPACK.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass BACKPACK inherits Item
+{
+	process backpack_look_describe_backpack();
+	routine backpack_merge_nested_obsidian_coins();
+	process backpack_use_toggle_pack_and_merge_obsidian_coins();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BACKPACK::backpack_look_describe_backpack()
+{
+	bark("backpack ");
+}
+
+// Derived: routine 0x00AC, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine BACKPACK::backpack_merge_nested_obsidian_coins()
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Bytes2; // X: untouched.
+	local_m04:Item;
+	local_m06:U8Word;
+	foreach recursive local_m04 where (family = 6) within container 1 {
+		if not (local_m04.getStatus() & 256)
+		{
+			foreach local_m06 where (type = 143) within container local_m04 {
+				class_0581_combine(local_m06);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0103, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BACKPACK::backpack_use_toggle_pack_and_merge_obsidian_coins()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getStatus();
+	if local_m02 & 256
+	{
+		closeGump();
+		class_0211_backpack_merge_nested_obsidian_coins();
+	}
+	else
+	{
+		Item_openGump(2, this);
+	}
+}
+

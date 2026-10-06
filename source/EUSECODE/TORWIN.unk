@@ -1,0 +1,947 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x041A
+// FLEX slot: 1052
+// Original offset: 0x0010BD0A
+// Naming evidence: E, exact object-1 linker name `TORWIN`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/TORWIN.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "flags";
+uses "free";
+uses "npc";
+uses "snddefs";
+
+npcclass Torwin inherits Npc
+{
+	process look();
+	process schedule(currentTime:Long);
+	process enterFastArea();
+	process leaveFastArea();
+	process AvatarStoleSomething(ref:Referent);
+	process cast(ref:Referent);
+	process atMonastery();
+	process randomBarkAtMonastery();
+	process atHome();
+	process randomBarkAtHome();
+	process use();
+	process cleanPoint();
+	process torwinRun();
+	process avatarRun();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::look()
+{
+	if isDead()
+	{
+		bark("Torwin the ex-monk ");
+	}
+	else if torwinName and torwinJob
+	{
+		bark("Torwin the monk ");
+	}
+	else if torwinName
+	{
+		bark("Torwin");
+	}
+	else if torwinJob
+	{
+		bark("monk ");
+	}
+	else
+	{
+		bark("man ");
+	}
+}
+
+// Derived: routine 0x015F, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::schedule(currentTime:Long)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	point:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	map:MapNum;
+	sched:Number;
+	if Torwin.isDead()
+	{
+		return;
+	}
+	map = 37;
+	if (class_0581_getPeriod() = 0) or (class_0581_getPeriod() = 5)
+	{
+		local_m05_w02 = 17858;
+		local_m03 = 18470;
+		local_m01 = 104;
+		sched = 2;
+	}
+	if (class_0581_getPeriod() = 1) or (class_0581_getPeriod() = 2) or (class_0581_getPeriod() = 3)
+	{
+		local_m05_w02 = 17503;
+		local_m03 = 20223;
+		local_m01 = 56;
+		sched = 1;
+	}
+	if torwinGottaJump
+	{
+		local_m05_w02 = 13585;
+		local_m03 = 18950;
+		local_m01 = 112;
+		sched = 0;
+	}
+	if class_057C_canSafeTeleport(this, point, map)
+	{
+		torwinSchedule = sched;
+		class_057C_safeTeleport(this, point, map);
+	}
+}
+
+// Derived: routine 0x022D, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::enterFastArea()
+{
+	if isDead()
+	{
+		teleport(urandom(10000), urandom(10000), 0, 0);
+	}
+	else
+	{
+		killProcess(referent, PT_ACTIVITY);
+		killProcess(referent, PT_PATHFIND);
+		killProcess(referent, PT_ANIM);
+		killProcess(referent, PT_BARK);
+		if torwinSchedule = 1
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_041A_atHome(this) -> return;
+		}
+		else if torwinSchedule = 2
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_041A_atMonastery(this) -> return;
+		}
+		else if torwinSchedule = 0
+		{
+			realDoAnim(AS_STAND, 7);
+		}
+	}
+}
+
+// Derived: routine 0x02F4, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::leaveFastArea()
+{
+	killProcess(referent, PT_ACTIVITY);
+	killProcess(referent, PT_PATHFIND);
+	killProcess(referent, PT_ANIM);
+	killProcess(referent, PT_BARK);
+}
+
+// Derived: routine 0x0339, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::AvatarStoleSomething(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	stolenItem:Item;
+	item = ref;
+	if torwinSchedule != 1
+	{
+		return;
+	}
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_BARK);
+	resetRef(referent, PT_ANIM);
+	foreach recursive stolenItem within container 1 {
+		if stolenItem = item
+		{
+			cSetActivity(1);
+		}
+	}
+	turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+	bark("What are you doing there...? ");
+	wait(120);
+	enterFastArea();
+	return;
+}
+
+// Derived: routine 0x0436, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::cast(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	count:Number;
+	count = 10;
+	while (not Npc_getTarget(this)) and count
+	{
+		wait(1);
+		count--;
+	}
+	ref = Npc_getTarget(this);
+	if ref = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+		bark("Stratos! Preserve me! ");
+		class_057C_toggleStatus(16, this);
+		setFrame(getFrame());
+		clrImmortal();
+		setDead();
+		safePlaySFX(116, 100);
+		teleport(urandom(10000), urandom(10000), 0, 0);
+	}
+}
+
+// Derived: routine 0x0531, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::atMonastery()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	dir:Number;
+	ran:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+	}
+	process
+	{
+		for counter = 0 to 31
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter) and (quality = 2)) within 50 cells of Torwin {
+				if pathfind(pathEgg, 10)
+				{
+					if not somebodyTalking
+					{
+						randomBarkAtMonastery();
+						wait(30);
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+					}
+				}
+				else
+				{
+					wait(500);
+				}
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0623, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::randomBarkAtMonastery()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Torwin:Referent);
+	if (ran < 200) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(8);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Excuse me? ") -> return;
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_ENTER_CAST, getDir());
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Can I help you? ") -> return;
+			realDoAnim(29, getDir());
+			realDoAnim(29, getDir());
+			wait(60);
+			realDoAnim(AS_EXIT_CAST, getDir());
+			wait(120);
+		}
+		if ran = 3
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Ask if you need something! ") -> return;
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if ran = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("What do you want? ") -> return;
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(29, getDir());
+			realDoAnim(AS_EXIT_CAST, getDir());
+			wait(120);
+		}
+	}
+	else
+	{
+		ran = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			bark("Where is that old man? ");
+			realDoAnim(AS_FIDGET, getDir());
+		}
+		if ran = 2
+		{
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(29, getDir());
+			bark("hmmmm... ");
+			realDoAnim(AS_EXIT_CAST, getDir());
+			wait(60);
+		}
+		if ran = 3
+		{
+			bark("Studying is such a waste of my time. ");
+		}
+		if ran = 4
+		{
+			bark("Where is that book...? ");
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(29, getDir());
+			realDoAnim(29, getDir());
+			realDoAnim(AS_EXIT_CAST, getDir());
+			wait(60);
+		}
+		if ran = 5
+		{
+			bark("I know it is here somewhere... ");
+		}
+		if ran = 6
+		{
+			bark("I need to sit down... ");
+		}
+		if ran = 7
+		{
+			bark("I don't know why I put up with this. ");
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(AS_EXIT_CAST, getDir());
+			realDoAnim(AS_FIDGET, getDir());
+			wait(100);
+		}
+	}
+}
+
+// Derived: routine 0x0C23, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::atHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	dir:Number;
+	ran:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		if Npc_getLastAnimSet(this) = 51
+		{
+			realDoAnim(AS_SIT_UP, getDir());
+		}
+	}
+	process
+	{
+		counter = urandom(7);
+		foreach pathEgg where ((type = TypePathMarker) and (frame = counter) and (quality = 1)) within 20 cells of Torwin {
+			if pathfind(pathEgg, 5)
+			{
+				if counter = 0
+				{
+					turnToFace(2, 0, 10);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("I must meditate! ") -> return;
+					realDoAnim(AS_SIT_DOWN, getDir());
+					wait(400);
+					realDoAnim(AS_SIT_UP, getDir());
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("I can't concentrate! ") -> return;
+					realDoAnim(AS_FIDGET, getDir());
+				}
+				else if not somebodyTalking
+				{
+					randomBarkAtHome();
+					wait(30);
+				}
+				else
+				{
+					realDoAnim(AS_FIDGET, getDir());
+					wait(30);
+				}
+				wait(60 + urandom(100));
+			}
+			else
+			{
+				wait(500);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0E31, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::randomBarkAtHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Torwin:Referent);
+	if (ran < 200) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(8);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Excuse me! ");
+			realDoAnim(AS_FIDGET, getDir());
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_ENTER_CAST, getDir());
+			bark("Yes? ");
+			realDoAnim(29, getDir());
+			realDoAnim(29, getDir());
+			wait(60);
+			realDoAnim(AS_EXIT_CAST, getDir());
+			wait(120);
+		}
+		if ran = 3
+		{
+			bark("Humph. Some people...! ");
+			wait(100);
+		}
+		if ran = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Do you mind? ");
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(29, getDir());
+			realDoAnim(AS_EXIT_CAST, getDir());
+			wait(120);
+		}
+	}
+	else
+	{
+		ran = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			bark("I must speak with Cyrrus. ");
+		}
+		if ran = 2
+		{
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(29, getDir());
+			bark("hmmmm...  ");
+			realDoAnim(AS_EXIT_CAST, getDir());
+			realDoAnim(AS_FIDGET, getDir());
+			wait(60);
+		}
+		if ran = 3
+		{
+			bark("heh, heh... ");
+		}
+		if ran = 4
+		{
+			bark("Where is that focus? ");
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(29, getDir());
+			realDoAnim(29, getDir());
+			realDoAnim(AS_EXIT_CAST, getDir());
+			wait(60);
+		}
+		if ran = 5
+		{
+			bark("Damn... ");
+			realDoAnim(AS_FIDGET, getDir());
+		}
+		if ran = 6
+		{
+			bark("I feel tired. ");
+		}
+		if ran = 7
+		{
+			bark("I should take a walk. ");
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(AS_EXIT_CAST, getDir());
+			wait(60);
+		}
+	}
+}
+
+// Derived: routine 0x13EC, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	askList:String List;
+	answer:String;
+	sentence:String;
+	nameStr:String;
+	avaNam:String;
+	heal:Number;
+	pathEgg:Item;
+	ran:Number;
+	foci:Item;
+	x:Number;
+	y:Number;
+	z:Number;
+	avaNam = "I am " + getName() + ".";
+	nameStr = "My name is " + getName() + ".";
+	if not torwinGottaJump
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Excuse me "), u8_stack_ref(1)) -> return;
+		if Npc_getLastAnimSet(this) = 51
+		{
+			enterConvo2();
+		}
+		else
+		{
+			enterConvo();
+		}
+		killProcess(1, PT_BARK);
+		if torwinMet
+		{
+			if torwinPissed
+			{
+				bark("Will you be wasting more of my time? ");
+			}
+			else
+			{
+				ran = urandom(10);
+				if ran < 5
+				{
+					bark("What do you want this time? ");
+				}
+				else
+				{
+					bark("I haven't much time. What do you need? ");
+				}
+			}
+			if torwinName
+			{
+				askList ^= <<"Hello, Torwin. ">>;
+			}
+			else
+			{
+				askList ^= <<"Is your name not Torwin? ">>;
+			}
+			if (Avatar.getHp() < (Avatar.getStr() * 2)) and torwinJob
+			{
+				askList ^= <<"I need healing ">>;
+			}
+			if passedTests
+			{
+				askList ^= <<"I have completed the Tests. ">>;
+			}
+		}
+		else
+		{
+			bark("Have I met you before? ");
+			torwinMet = 1;
+			askList ^= <<"I don't believe we have met. ">>;
+		}
+		u8goto label_1848;
+	}
+	setAvatarInStasis(1);
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	killProcess(1, PT_ANIM);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn realDoAnim(AS_EXIT_CAST, 7) -> return;
+	wait(10);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_041A_cleanPoint(this) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Torwin!"), u8_stack_ref(1)) -> return;
+	foreach pathEgg where ((type = TypePathMarker) and (frame = 0)) within 30 cells of Avatar {
+		Npc_pathfind(10, pathEgg, u8_stack_ref(1));
+		Avatar.teleport(pathEgg.getX(), pathEgg.getY(), pathEgg.getZ(), Avatar.getMap());
+		break;
+	}
+	Avatar.turnToFace(6, 0, 10);
+	turnToFace(2, 0, 10);
+	killProcess(1, PT_BARK);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(this, 2, 27) ->
+	spawn class_057C_realDoAnim(this, 2, 28) -> return;
+	bark("Go away, leave me alone! ");
+	askList = <<"Someone's Focus is missing. ">>;
+	u8label label_1848:
+	while answer != "bye "
+	{
+		answer = ask(askList);
+		if not torwinGottaJump
+		{
+			askList -= <<"bye ">>;
+			askList += <<"bye ">>;
+		}
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch answer
+		{
+			case "Hello, Torwin. "
+			{
+				torwinName = 1;
+				bark("Oh, I'm very bad with names. What was yours again? ");
+				askList -= <<"Hello, Torwin. ">>;
+				askList ^= <<nameStr, "You don't need to know. ">>;
+			}
+			case "Is your name not Torwin? "
+			{
+				torwinName = 1;
+				torwinMet = 1;
+				bark("Yes, my name is Torwin. I'm very bad with names. What was yours again? ");
+				askList ^= <<nameStr, "You don't need to know. ">>;
+				askList -= <<"Is your name not Torwin? ">>;
+			}
+			case nameStr
+			{
+				bark("Yes, well, I probably won't remember it next time I see you. What do you want? ");
+				askList -= <<nameStr, "You don't need to know. ">>;
+				askList += <<"What do you do here? ">>;
+				if spokenAboutFoci
+				{
+					askList += <<"Someone's focus is missing. ">>;
+				}
+			}
+			case "I don't believe we have met. "
+			{
+				torwinName = 1;
+				torwinMet = 1;
+				bark("My name is Torwin. And yours? ");
+				askList -= <<"I don't believe we have met. ">>;
+				askList ^= <<avaNam, "You don't need to know. ">>;
+			}
+			case avaNam
+			{
+				torwinPissed = 0;
+				bark("Well, anyway, hello, " + getName() + ". What brings you here?");
+				askList ^= <<"What do you do here? ">>;
+				if spokenAboutFoci
+				{
+					askList ^= <<"Someone's Focus is missing. ">>;
+				}
+				askList -= <<avaNam, "You don't need to know. ">>;
+			}
+			case "What do you do here? "
+			{
+				torwinJob = 1;
+				bark("For now I am only a healer. But that is just because they have not recognized my superior abilities, but they will. Believe me, they will. ");
+				askList -= <<"What do you do here? ">>;
+				askList ^= <<"You are a healer? ", "What superior abilities? ", "Who will recognize your abilities? ">>;
+			}
+			case "What superior abilities? "
+			{
+				bark("Why, my talent for magic, of course. I've passed all the tests, faster than anyone ever has before...and anyone ever will, I'm sure. ");
+				askList -= <<"What superior abilities? ">>;
+			}
+			case "Who will recognize your abilities? "
+			{
+				bark("Everyone, of course. I never make an error when I am casting the magic. I even constructed my foci correctly on the very first try. And it is the finest of all the foci, I might add. ");
+				askList -= <<"Who will recognize your abilities? ">>;
+				askList += <<"What is a Focus? ">>;
+			}
+			case "What is a Focus? "
+			{
+				bark("Oh, I could explain it, but I doubt you would understand. It's very complicated, magic and all. ");
+				askList -= <<"What is a Focus? ">>;
+			}
+			case "You are a healer? "
+			{
+				bark("Yes, why else would I be here? Anyway, are you in need of healing? ");
+				askList -= <<"You are a healer? ">>;
+				askList ^= <<"aye ", "nay ">>;
+			}
+			case "You don't need to know. "
+			{
+				bark("If you are going to be rude, then I shall not take the time to assist you. ");
+				torwinPissed = 1;
+				exitConvo();
+				return;
+			}
+			case "aye ", "I need healing "
+			{
+				bark("What? You look healthy enough to me! Begone! I do not have the time nor the patience for hangnails and paper cuts! ");
+				torwinPissed = 1;
+				exitConvo();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Wimp! ") -> return;
+				return;
+			}
+			case "nay "
+			{
+				bark("Actually, I'm relieved, for I do not wish to take precious time away from my studies. No one here has the raw talent and ability I have. And, I will suffer no one to surpass me. I -must- be the best, I -will- be the best! Now, if you will excuse me. ");
+				exitConvo();
+				return;
+			}
+			case "I have completed the Tests. "
+			{
+				bark("What?! That is not possible! No one has ever completed the tests faster than I! I will not stand for this! ");
+				exitConvo();
+				return;
+			}
+			case "Someone's Focus is missing. "
+			{
+				bark("A missing focus? I know nothing about this matter. ");
+				askList -= <<"Someone's Focus is missing. ">>;
+				askList ^= <<"I believe you do. ">>;
+			}
+			case "I believe you do. "
+			{
+				bark("I know nothing, I tell you. Why I haven't even been near Brother Xavier! ");
+				askList -= <<"I believe you do. ">>;
+				askList ^= <<"But you knew it was Brother Xavier. ">>;
+			}
+			case "But you knew it was Brother Xavier. "
+			{
+				bark("Well, I didn't steal it. I only meant to borrow it. ");
+				askList -= <<"But you knew it was Brother Xavier. ">>;
+				askList ^= <<"Did not steal it? ", "Only borrowed it? ">>;
+			}
+			case "Did not steal it? "
+			{
+				bark("I told you, I'm not a thief! ");
+				askList -= <<"Did not steal it? ">>;
+			}
+			case "Only borrowed it? "
+			{
+				bark("I needed the magic in it for my father. ");
+				askList -= <<"Only borrowed it? ", "Did not steal it? ">>;
+				askList = <<"the magic in it? ", "your father? ">>;
+			}
+			case "the magic in it? "
+			{
+				bark("Foci are very strong lines to the great Stratos. I thought that perhaps with two, I might be able to draw twice as much power from the great Air Titan. ");
+				askList -= <<"the magic in it? ">>;
+			}
+			case "your father? "
+			{
+				bark("Yes, my father. His name is....er,..was Toran. He lived in Tenebrae, my home town. He's dead now, killed by that evil Mordea. ");
+				askList -= <<"your father? ">>;
+				askList ^= <<"Toran was your father? ", "Why did Mordea kill him? ">>;
+			}
+			case "Toran was your father? "
+			{
+				bark("Yes. He was a good man, not afraid to speak out for what he believed...and he was killed for it. ");
+				askList -= <<"Toran was your father? ">>;
+			}
+			case "Why did Mordea kill him? "
+			{
+				bark("That murdering bitch! She had him executed for simply speaking his mind. Is that right? Can a man's life be snuffed out for mere words? Is that right, I ask you!? ");
+				askList -= <<"Why did Mordea kill him? ">>;
+				askList ^= <<"I saw his execution. ">>;
+				if mordeaDead
+				{
+					askList ^= <<"Mordea is dead. ">>;
+				}
+			}
+			case "I saw his execution. "
+			{
+				bark("Then you saw as his head was severed from his body with the single swing of the executioner's ax. In that instant, the most important man in my life was taken from me, and I could do nothing about it... not then anyway. ");
+				askList -= <<"I saw his execution. ">>;
+				if mordeaDead
+				{
+					askList += <<"You could do nothing? ">>;
+				}
+				else
+				{
+					askList += <<"You could do nothing about it? ">>;
+				}
+			}
+			case "You could do nothing? "
+			{
+				bark("I could do nothing, just as I could do nothing to stop you surpassing my deeds here at Argentrock. Until you arrived, I was the quickest learner and the most clever with the magic. You stole that from me, but I will still have my revenge. No, that is mine and mine alone. Do you hear me? ");
+				askList -= <<"You could do nothing? ">>;
+				askList += <<"revenge ">>;
+			}
+			case "Mordea is dead. "
+			{
+				bark("She is dead? This can not be! I was to kill her! ~You have stolen from me every thing. I was the best student here until you arrived. ~I was the quickest learner and the cleverest with the magic. ~You stole that from me, and now you have stolen my revenge! ");
+				askList -= <<"Mordea is dead. ">>;
+				askList ^= <<"revenge ">>;
+			}
+			case "revenge "
+			{
+				bark("I will still have my revenge! I will bring my father back to life! I will bring him back from the Pit of Death! ");
+				askList -= <<"revenge ">>;
+				askList += <<"Your father is with the Lurker. ">>;
+			}
+			case "Your father is with the Lurker. "
+			{
+				bark("YOU LIE! He is in the Pit of Death and I SHALL BRING HIM BACK! Do you hear? I shall! And I shall do it now! ");
+				bark("Why, I don't need this extra focus at all! ");
+				killProcess(26, PT_ANIM);
+				realDoAnim(AS_CLIMB_5, 2);
+				x = getX() + 32;
+				y = getY();
+				z = getZ() + 24;
+				Item_create(9, 396, u8_local_address(local_m12_w01));
+				foci.setQuality(1);
+				foci.pop(x, y, z);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn foci.hurl(15, -30, 0, 3) -> return;
+				x = getX() + 32;
+				y = getY();
+				z = getZ() + 24;
+				Item_create(0, 832, u8_local_address(local_m12_w01));
+				foci.pop(x, y, z);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn foci.hurl(15, -30, 5, 2) -> return;
+				realDoAnim(AS_CLIMB_4, 2);
+				wait(30);
+				bark("I am strong enough to do it on my own... ");
+				bark("And I will! I'm coming for you, father!! ");
+				torwinJumped = 1;
+				solvedMystery = 1;
+				hasXavierFoci = 1;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_041A_torwinRun(this) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn Item_bark(u8_string_address("Torwin, wait! "), u8_stack_ref(1)) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_041A_avatarRun(this) -> return;
+				return;
+			}
+			case "You could do nothing about it? "
+			{
+				bark("Not then, but with what I have learned here, I will be able to make things right again! ");
+				askList -= <<"You could do nothing about it? ">>;
+				askList += <<"How will you make things right? ">>;
+			}
+			case "How will you make things right? "
+			{
+				bark("I will use the magic from Stratos to bring my father back to life. I will have my revenge! ");
+				askList -= <<"How will you make things right? ">>;
+				askList += <<"revenge ">>;
+			}
+			case "bye "
+			{
+				bark("Goodbye. ");
+				exitConvo();
+				return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x3725, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::cleanPoint()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	item:Item;
+	barrel:Item;
+	inpc:Npc;
+	x:Number;
+	y:Number;
+	point:WorldPoint;
+	local_m0B:U8Byte;
+	local_m0D:U8Word;
+	local_m0F_w02:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m0F_w02 = 18080;
+	local_m0D = 20426;
+	local_m0B = 56;
+	barrel = class_0581_createNear(point, 115, 0, 0, 1);
+	if barrel
+	{
+		Item_create(15, 538, u8_local_address(local_m02_w01));
+		item.pop(barrel);
+		Item_create(16, 538, u8_local_address(local_m02_w01));
+		item.pop(barrel);
+		foreach item within 50 cells of Torwin {
+			if item.getZ() >= 112
+			{
+				x = item.getX();
+				y = item.getY();
+				if (x > 12895) and (x < 14335) and (y > 18430) and (y < 19360)
+				{
+					if (item.getType() = 66) or (item.getType() = 152) or (item.getType() = 73) or (item.getType() = TypePathMarker)
+					{
+					}
+					else if item.isNpc()
+					{
+					}
+					else
+					{
+						item.push();
+						item.pop(barrel);
+					}
+				}
+			}
+		}
+	}
+}
+
+// Derived: routine 0x383B, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::torwinRun()
+{
+	[[PT_DEFAULT, NULL_REF]];
+	killProcess(26, PT_ANIM);
+	turnToFace(6, 0, 1);
+	realDoAnim(AS_CLIMB_2, 6);
+	realDoAnim(AS_CLIMB_2, 6);
+	playSFX(99, 200);
+	realDoAnim(AS_CLIMB_3, 6);
+	return;
+}
+
+// Derived: routine 0x38B8, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Torwin::avatarRun()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	counter:Number;
+	[[PT_DEFAULT, NULL_REF]];
+	wait(100);
+	Avatar.turnToFace(6, 0, 5);
+	Avatar.realDoAnim(AS_WALK, 6);
+	for counter = 1 to 4
+	{
+		Avatar.realDoAnim(AS_RUN, 6);
+		if getDistance(Avatar:Referent, Torwin:Referent) < 100
+		{
+			wait(15);
+		}
+	}
+	Avatar.realDoAnim(AS_STAND, 6);
+	setAvatarInStasis(0);
+	return;
+}
+

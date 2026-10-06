@@ -1,0 +1,65 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02F2
+// FLEX slot: 756
+// Original offset: 0x000AED3D
+// Naming evidence: E, exact object-1 linker name `LOTHLAY`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LOTHLAY.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass LOTHLAY inherits Item
+{
+	process lothlay_look_describe_lothian();
+	process lothlay_got_hit_summon_quake_and_damage_attacker(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LOTHLAY::lothlay_look_describe_lothian()
+{
+	bark("Lothian");
+}
+
+// Derived: routine 0x00AA, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process LOTHLAY::lothlay_got_hit_summon_quake_and_damage_attacker(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:Npc;
+	local_m04_w01:U8Bytes1;
+	if Item_getQ(this)
+	{
+		return;
+	}
+	Item_setQ(1, this);
+	if arg_04
+	{
+		local_m02 = arg_04;
+		if local_m02.isNpc()
+		{
+			local_m04 = arg_04;
+			if local_m04.isDead()
+			{
+				return;
+			}
+			else
+			{
+				bark("Mountain King, I call Your name. Save me from this interloper! ");
+				Camera_startQuake(1);
+				playSFX(49, 200);
+				wait(360);
+				class_057C_receiveHit(Avatar.getHp(), Item_getDirFromItem(referent, this), referent, u8_local_address(local_m04_w01));
+				Camera_stopQuake();
+			}
+		}
+	}
+}
+

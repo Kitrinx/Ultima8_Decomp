@@ -1,0 +1,358 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0181
+// FLEX slot: 387
+// Original offset: 0x00104683
+// Naming evidence: E, exact object-1 linker name `STRATOS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/STRATOS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "flags";
+uses "free";
+uses "npc";
+uses "snddefs";
+uses "titans";
+
+typeclass TypeAirTitan inherits MrsStratos
+{
+	process look();
+	process use();
+	process sailAvatar();
+	process blowMe();
+	process giveFocus();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process TypeAirTitan::look()
+{
+	if stratosName
+	{
+		bark("Stratos, the Air Titan ");
+	}
+	else
+	{
+		bark("Titan");
+	}
+}
+
+// Derived: routine 0x00DF, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process TypeAirTitan::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	miniTitan:Item;
+	answer:String;
+	Correct:String;
+	askList:String List;
+	referent:Referent;
+	counter:Number;
+	item:Item;
+	local_m0E_w01:U8Bytes1;
+	item2:Item;
+	item3:Item;
+	item4:Item;
+	rock:Item;
+	bool:Boolean;
+	numb:Number;
+	resetRef(1, PT_ANIM);
+	playMusic(115);
+	Avatar.turnToFace(7, 0, 1);
+	Avatar.realDoAnim(AS_STAND, 7);
+	setAvatarInStasis(1);
+	safePlaySFX(15, 200);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0181_blowMe(this) -> return;
+	levitateAvatar = 1;
+	Item_create(0, 481, u8_local_address(local_m0E_w01));
+	item.pop(getX(), getY(), getZ());
+	item.look();
+	class_057C_moveItemTo(u8_local_address(local_m0E_w01), Avatar.getX(), Avatar.getY(), Avatar.getZ() + 20, 15);
+	Avatar.orStatus(4096);
+	wait(20);
+	safePlaySFX(9, 200);
+	item.push();
+	Avatar.realDoAnim(14, Avatar.getDir());
+	item2.legal_create(481, 0, Avatar.getX() - 4, Avatar.getY(), Avatar.getZ());
+	item3.legal_create(481, 0, Avatar.getX(), Avatar.getY() - 4, Avatar.getZ());
+	item4.legal_create(481, 0, Avatar.getX() - 4, Avatar.getY() - 4, Avatar.getZ());
+	item2.use();
+	wait(10);
+	item3.use();
+	wait(10);
+	item4.use();
+	wait(10);
+	for counter = 1 to 45
+	{
+		Avatar.move(Avatar.getX(), Avatar.getY(), Avatar.getZ() + 2);
+		if counter = 6
+		{
+			safePlaySFX(146, 200);
+		}
+		wait(1);
+	}
+	scrollTo(getX(), getY(), getZ(), 15);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0181_sailAvatar(this) -> return;
+	if stratosMet
+	{
+		foreach recursive rock where ((type = 442) and (frame = 3)) within container 1 {
+			bool = 1;
+		}
+		if (stratosTakenBreath = 0) and (bool = 1)
+		{
+			stratosTakenBreath = 1;
+			bark("Oh small one, you You have come to return the Breath of Wind. ");
+			askList = <<"bye ">>;
+		}
+		else if stratosTakenBreath
+		{
+			bark("Yes, my most precious child? ");
+			askList = <<"I must have the Breath of Wind. ", "bye ">>;
+		}
+		else
+		{
+			bark("My child, you have returned to me. ");
+			askList = <<"Who are your children? ", "bye ">>;
+			if not rewardMe
+			{
+				askList ^= <<"Reward me? ">>;
+			}
+			if spokenAboutBreath
+			{
+				askList ^= <<"I must have the Breath of Wind. ", "bye ">>;
+			}
+		}
+	}
+	else
+	{
+		bark("And yet another child is found. Please, small one, come closer. ");
+		askList = <<"Who are you? ">>;
+	}
+	while answer != "bye "
+	{
+		answer = ask(askList);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch answer
+		{
+			case "Who are you? "
+			{
+				stratosName = 1;
+				stratosMet = 1;
+				bark("Who am I? Ah, such a dear child. So very young in his knowledge. Why, he is no more than a babe. I am Stratos, Titan of Air, Giver of Life. To reach me took a great deal of courage. I wish to reward you. ");
+				askList -= <<"Who are you? ">>;
+				askList ^= <<"Titan of Air? ", "Reward me? ", "Who are your children? ", "bye ">>;
+			}
+			case "Titan of Air? "
+			{
+				bark("I am the breeze which cools your cheek on a warm day. I am the raging wind which drives the waves before it. I am the fuel which feeds the tongues of flame to heat your supper and the teeth that bite you in a winter storm. With my help, my children can be cured of their illnesses and pain; without me, they die. ");
+				askList -= <<"Titan of Air? ">>;
+			}
+			case "Reward me? "
+			{
+				rewardMe = 1;
+				bark("Take this Focus, Adept. With it you will be able to cast the Air Walk spell at will. ");
+				askList -= <<"Reward me? ">>;
+				giveFocus();
+			}
+			case "Who are your children? "
+			{
+				bark("All who live are my children. Do they not all partake of my gift of sweet air? Some have forgotten their mother. But they will return to me, they always do. When they are hurt or ailing, they will come to me for healing. ");
+				askList -= <<"Who are your children? ">>;
+				askList ^= <<"How are they healed? ">>;
+			}
+			case "How are they healed? "
+			{
+				bark("Through the Breath of Wind my Chosen Children heal those in need. ");
+				askList -= <<"How are they healed? ">>;
+				askList ^= <<"Tell me of the Breath of Wind. ">>;
+			}
+			case "Tell me of the Breath of Wind. "
+			{
+				spokenAboutBreath = 1;
+				bark("The Breath of Wind is that through which I touch my children. It's location is known only to Honorable Stellos. ");
+				askList -= <<"Tell me of the Breath of Wind. ">>;
+				askList = <<"May I have the Breath of Wind? ", "bye ">>;
+			}
+			case "May I have the Breath of Wind? "
+			{
+				bark("Oh, child, you know not what you ask. To take the Breath of Wind from me is to sever the link to my healers. ");
+				askList -= <<"May I have the Breath of Wind? ">>;
+				askList ^= <<"I must have the Breath of Wind. ", "bye ">>;
+			}
+			case "I must have the Breath of Wind. "
+			{
+				bark("Without the Breath of Wind, many would die. Many would pay the price for your quest for power. No, Child, I cannot allow this. ");
+				askList = <<"bye ">>;
+			}
+			case "bye "
+			{
+				if not rewardMe
+				{
+					rewardMe = 1;
+					bark("Take this Focus, Adept. With it you will be able to cast the Air Walk spell at will. ");
+					askList -= <<"Reward me? ">>;
+					giveFocus();
+				}
+				bark("Farewell, my dear child. ");
+				scrollBack(15);
+				for counter = 1 to 40
+				{
+					Avatar.move(Avatar.getX(), Avatar.getY(), Avatar.getZ() - 2);
+					wait(2);
+				}
+				if Avatar.getZ() > 113
+				{
+					numb = Avatar.getZ() - 112;
+					for counter = 1 to numb
+					{
+						Avatar.move(Avatar.getX(), Avatar.getY(), Avatar.getZ() - 1);
+						wait(4);
+					}
+				}
+				safePlaySFX(41, 200);
+				Avatar.orStatus(4096);
+				levitateAvatar = 0;
+				resetRef(item, PT_ANIM);
+				resetRef(item2, PT_ANIM);
+				resetRef(item3, PT_ANIM);
+				resetRef(item4, PT_ANIM);
+				item2.push();
+				item3.push();
+				item4.push();
+				resetRef(1, PT_ANIM);
+				Avatar.realDoAnim(AS_GET_UP, 7);
+				wait(10);
+				resetRef(1, PT_ANIM);
+				Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+				wait(30);
+				Avatar.turnToFace(7, 0, 10);
+				setAvatarInStasis(0);
+				item.destroy();
+				item2.destroy();
+				item3.destroy();
+				item4.destroy();
+				playMusic(97);
+				return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x126B, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process TypeAirTitan::sailAvatar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	countz:Number;
+	dirz:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, 1]];
+		countz = 0;
+		dirz = 1;
+	}
+	process
+	{
+		wait(20);
+		if levitateAvatar
+		{
+			if countz > 5
+			{
+				dirz = -1;
+			}
+			if countz < -5
+			{
+				dirz = 1;
+			}
+			countz += dirz;
+			Avatar.move(Avatar.getX(), Avatar.getY(), Avatar.getZ() + dirz);
+			continue; // X: reconstructed process-phase latch transfer.
+		}
+		if countz > 0
+		{
+			Avatar.move(Avatar.getX(), Avatar.getY(), Avatar.getZ() - countz);
+		}
+		return;
+	}
+}
+
+// Derived: routine 0x1327, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process TypeAirTitan::blowMe()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+	}
+	process
+	{
+		wait(100);
+		if not levitateAvatar
+		{
+			return;
+		}
+		if (not isSFXPlaying(115)) and (not isSFXPlaying(116))
+		{
+			if urandom(2) = 0
+			{
+				if urandom(2)
+				{
+					playSFX(115, 10, referent);
+				}
+				else
+				{
+					playSFX(116, 10, referent);
+				}
+			}
+		}
+	}
+}
+
+// Derived: routine 0x13AA, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process TypeAirTitan::giveFocus()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	dustDevil:Item;
+	local_m02_w01:U8Bytes1;
+	pathEgg:Item;
+	focus:Item;
+	magic:Item;
+	eggX:Number;
+	eggY:Number;
+	eggZ:Number;
+	[[PT_DEFAULT, referent]];
+	Item_create(12, 481, u8_local_address(local_m02_w01));
+	dustDevil.pop(getX(), getY(), getZ());
+	safePlaySFX(59, 200);
+	dustDevil.look();
+	wait(100);
+	foreach pathEgg where (type = TypePathMarker) within 50 cells of referent {
+		eggX = pathEgg.getX();
+		eggY = pathEgg.getY();
+		eggZ = pathEgg.getZ();
+		class_057C_moveItemTo(u8_local_address(local_m02_w01), eggX + 10, eggY + 10, eggZ + 10, 15);
+		safePlaySFX(57, 200);
+		Item_create(11, 587, u8_local_address(local_m08_w01));
+		magic.pop(eggX + 10, eggY + 10, eggZ + 10);
+		wait(150);
+		Item_create(13, 396, u8_local_address(local_m06_w01));
+		focus.pop(eggX, eggY, eggZ);
+		wait(150);
+		magic.destroy();
+		class_057C_moveItemTo(u8_local_address(local_m02_w01), getX(), getY(), getZ() + 10, 15);
+		wait(30);
+	}
+	safePlaySFX(59, 200);
+	dustDevil.destroy();
+}
+

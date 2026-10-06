@@ -1,0 +1,648 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x048B
+// FLEX slot: 1165
+// Original offset: 0x000096CE
+// Naming evidence: E, exact object-1 linker name `ANCTONES`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ANCTONES.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+globalflag startedConvo;
+globalflag doneDefault;
+
+eggclass ANCTONES inherits Egg
+{
+	process anctones_hatch_reveal_ether_destiny();
+	process anctones_leave_fast_area_stop_reveal_process();
+	process [[PT_DEFAULT, referent]] anctones_reveal_ether_destiny();
+	process [[PT_DEFAULT, referent]] anctones_animate_third_speaker_nod(arg_04:Item);
+	process [[PT_DEFAULT, referent]] anctones_animate_third_speaker_appear(arg_04:Item);
+	process [[PT_DEFAULT, referent]] anctones_animate_third_speaker_fade(arg_04:Item);
+	process [[PT_DEFAULT, referent]] anctones_animate_first_speaker_appear(arg_04:Item);
+	process [[PT_DEFAULT, referent]] anctones_animate_second_speaker_appear(arg_04:Item);
+	process [[PT_DEFAULT, referent]] anctones_animate_second_speaker_emphasis(arg_04:Item);
+	process [[PT_DEFAULT, referent]] anctones_animate_second_speaker_glow(arg_04:Item);
+	process [[PT_DEFAULT, referent]] anctones_animate_first_speaker_glow(arg_04:Item);
+	process [[PT_DEFAULT, referent]] anctones_animate_first_speaker_emphasis(arg_04:Item);
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ANCTONES::anctones_hatch_reveal_ether_destiny()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+	}
+	process
+	{
+		u8goto label_00DF if not (local_m01 = 0);
+		foreach local_m03 where (type = 828) within 80 cells of referent {
+			local_m01 = 1;
+		}
+		u8goto label_00DC if not (local_m01);
+		if startedConvo = 1
+		{
+			return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_048B_anctones_reveal_ether_destiny(this) -> return;
+			return;
+		}
+		u8label label_00DC:
+		continue; // X: reconstructed process-phase latch transfer.
+		u8label label_00DF:
+		wait(30);
+	}
+}
+
+// Derived: routine 0x00FB, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ANCTONES::anctones_leave_fast_area_stop_reveal_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x0116, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ANCTONES::anctones_reveal_ether_destiny()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:Item;
+	local_m08:U8Word;
+	local_m0A:Item;
+	local_m0C:Item;
+	local_m0E:Item;
+	local_m10:Item;
+	[[PT_DEFAULT, referent]];
+	if getPowerAO
+	{
+		return;
+	}
+	else if ancientOnesMet = 0
+	{
+		startedConvo = 1;
+		playMusic(120);
+		ancientOnesMet = 1;
+		// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+		foreach local_m08 where (type = 597) within 1024 units of referent {
+			local_m02 = local_m08;
+		}
+		// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+		foreach local_m08 where (type = 44) within 1024 units of referent {
+			local_m04 = local_m08;
+		}
+		// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+		foreach local_m08 where (type = 129) within 1024 units of referent {
+			local_m06 = local_m08;
+		}
+		setAvatarInStasis(1);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(1, 10, 0, Avatar.getDirToItem(referent)) -> return;
+		scrollTo(local_m04.getX() - 50, local_m04.getY() - 50, local_m04.getZ(), 25);
+		Item_create(0, 587, u8_local_address(local_m0C_w01));
+		local_m0C.pop(local_m02.getX() + 14, local_m02.getY(), local_m02.getZ() + 14);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_048B_anctones_animate_first_speaker_appear(this, local_m02) -> return;
+		local_m02.bark("Greetings, Avatar. We are aware of you and from where you come. We also know of what you seek. ");
+		local_m0C.destroy();
+		Item_create(20, 587, u8_local_address(local_m0E_w01));
+		local_m0E.pop(local_m04.getX() + 14, local_m04.getY(), local_m04.getZ() + 14);
+		local_m04.bark("And we wish to help you. You must become your destiny. ");
+		local_m0E.destroy();
+		Item_bark(u8_string_address("What is my destiny? "), u8_stack_ref(1));
+		Item_create(20, 587, u8_local_address(local_m0E_w01));
+		local_m0E.pop(local_m04.getX() + 14, local_m04.getY(), local_m04.getZ() + 14);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_048B_anctones_animate_second_speaker_glow(this, local_m04) -> return;
+		local_m04.bark("That is not important now. Know that we wish to help you in your quest. Behind us lies the Tomb of Khumash-Gor. ");
+		local_m0E.destroy();
+		Item_bark(u8_string_address("Who is Khumash-Gor? "), u8_stack_ref(1));
+		Item_create(11, 587, u8_local_address(local_m0A_w01));
+		local_m0A.pop(local_m06.getX() + 14, local_m06.getY(), local_m06.getZ() + 14);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_048B_anctones_animate_third_speaker_appear(this, local_m06) -> return;
+		local_m06.bark("Only the most fearsome warrior who ever lived. Eons ago he was a great chieftain to our worshippers, but now he lies forever entombed in honor of his valor! ");
+		local_m0A.destroy();
+		Item_create(20, 587, u8_local_address(local_m0E_w01));
+		local_m0E.pop(local_m04.getX() + 14, local_m04.getY(), local_m04.getZ() + 14);
+		local_m04.bark("With him rests an artifact that is the key to tremendous power. It is made of Blackrock, a substance with which you have considerable familiarity. The small object is shaped much like a pyramid. But be warned... ");
+		local_m0E.destroy();
+		Item_create(11, 587, u8_local_address(local_m0A_w01));
+		local_m0A.pop(local_m06.getX() + 14, local_m06.getY(), local_m06.getZ() + 14);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_048B_anctones_animate_third_speaker_nod(this, local_m06) -> return;
+		local_m06.bark("...for even in death, Khumash-Gor has kept the fighting spirit to which he held so tenaciously in life. He will not part readily with his possessions. ");
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_048B_anctones_animate_second_speaker_emphasis(this, local_m04) -> return;
+		wait(10);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_048B_anctones_animate_first_speaker_emphasis(this, local_m02) -> return;
+		local_m0A.destroy();
+		Item_create(20, 587, u8_local_address(local_m0E_w01));
+		local_m0E.pop(local_m04.getX() + 14, local_m04.getY(), local_m04.getZ() + 14);
+		local_m04.bark("Good luck... Avatar. ");
+		local_m0E.destroy();
+		scrollBack(20);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_048B_anctones_animate_third_speaker_fade(this, local_m06) -> return;
+		if getAvatarInStasis()
+		{
+			setAvatarInStasis(0);
+		}
+		startedConvo = 0;
+	}
+	else
+	{
+		if ancientOnesMet = 1
+		{
+			// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+			foreach local_m08 where (type = 597) within 1024 units of referent {
+				local_m02 = local_m08;
+			}
+			// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+			foreach local_m08 where (type = 44) within 1024 units of referent {
+				local_m04 = local_m08;
+			}
+			// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+			foreach local_m08 where (type = 129) within 1024 units of referent {
+				local_m06 = local_m08;
+			}
+			u8_search_begin(local_m10, 3, 30 * 32, referent, <<65, u8_search_word(442), 36>>);
+			while u8_search_condition()
+			{
+				if local_m10.getFrame() = 0
+				{
+					gotObTip = 1;
+				}
+				u8_search_advance();
+			}
+			u8_search_end();
+			if (gotObTip = 0) and doneDefault
+			{
+				return;
+			}
+			setAvatarInStasis(1);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_057C_turnToFace(1, 10, 0, Avatar.getDirToItem(referent)) -> return;
+			scrollTo(local_m02.getX(), local_m02.getY(), local_m02.getZ(), 25);
+			startedConvo = 1;
+			playMusic(120);
+			if gotObTip = 1
+			{
+				getPowerAO = 1;
+				Item_create(0, 587, u8_local_address(local_m0C_w01));
+				local_m0C.pop(local_m02.getX() + 14, local_m02.getY(), local_m02.getZ() + 14);
+				local_m02.bark("Well done, mortal.  The item of Blackrock which you now possess is the first key to unlocking tremendous power within yourself. ");
+				local_m0C.destroy();
+				Item_bark(u8_string_address("What power? "), u8_stack_ref(1));
+				Item_create(0, 587, u8_local_address(local_m0C_w01));
+				local_m0C.pop(local_m02.getX() + 14, local_m02.getY(), local_m02.getZ() + 14);
+				local_m02.bark("Beyond Earth, Water, Air, and Fire, there is another element -- a fifth element. ");
+				local_m0C.destroy();
+				Item_create(20, 587, u8_local_address(local_m0E_w01));
+				local_m0E.pop(local_m04.getX() + 14, local_m04.getY(), local_m04.getZ() + 14);
+				local_m04.bark("You have heard of it before. It is called Ether. ");
+				local_m0E.destroy();
+				Item_create(11, 587, u8_local_address(local_m0A_w01));
+				local_m0A.pop(local_m06.getX() + 14, local_m06.getY(), local_m06.getZ() + 14);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_048B_anctones_animate_third_speaker_appear(this, local_m06) -> return;
+				local_m06.bark("And like the others, this element will assume a form of titanic proportions. ");
+				local_m0A.destroy();
+				Item_create(20, 587, u8_local_address(local_m0E_w01));
+				local_m0E.pop(local_m04.getX() + 14, local_m04.getY(), local_m04.getZ() + 14);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_048B_anctones_animate_second_speaker_appear(this, local_m04) -> return;
+				local_m04.bark("You are to be that Titan -- the Titan of Ether. We know that the power is within you. ");
+				local_m0E.destroy();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_048B_anctones_animate_third_speaker_nod(this, local_m06) -> return;
+				Item_create(11, 587, u8_local_address(local_m0A_w01));
+				local_m0A.pop(local_m06.getX() + 14, local_m06.getY(), local_m06.getZ() + 14);
+				local_m06.bark("But is up to -you- to have the courage to use this power. You must take the power from the other Titans. You must take their worshipers, just as our followers were ripped from\x09our grasp. ");
+				local_m0A.destroy();
+				Item_create(20, 587, u8_local_address(local_m0E_w01));
+				local_m0E.pop(local_m04.getX() + 14, local_m04.getY(), local_m04.getZ() + 14);
+				local_m04.bark("Continue your quest for the powers of the other Titans, for that is the way to gain their followers. The greater the abilities you can accrue, the better chance you will have of weakening the other four and eventually standing with them as more than just an equal. ");
+				local_m0E.destroy();
+				Item_create(0, 587, u8_local_address(local_m0C_w01));
+				local_m0C.pop(local_m02.getX() + 14, local_m02.getY(), local_m02.getZ() + 14);
+				local_m02.bark("Go now to find the Titans called Stratos, Hydros, and Pyros. ");
+				local_m0C.destroy();
+				Item_create(20, 587, u8_local_address(local_m0E_w01));
+				local_m0E.pop(local_m04.getX() + 14, local_m04.getY(), local_m04.getZ() + 14);
+				local_m04.bark("You shall find Hydros in her underground Temple. The other two dwell on the surface. ");
+				local_m04.bark("Farewell... ");
+				local_m0E.destroy();
+				Item_create(0, 587, u8_local_address(local_m0C_w01));
+				local_m0C.pop(local_m02.getX() + 14, local_m02.getY(), local_m02.getZ() + 14);
+				local_m02.bark("... and good haste... ");
+				local_m0C.destroy();
+				Item_create(11, 587, u8_local_address(local_m0A_w01));
+				local_m0A.pop(local_m06.getX() + 14, local_m06.getY(), local_m06.getZ() + 14);
+				local_m06.bark("... in your conquest! ");
+				local_m0A.destroy();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_048B_anctones_animate_third_speaker_fade(this, local_m06) -> return;
+			}
+			else
+			{
+				Item_create(0, 587, u8_local_address(local_m0C_w01));
+				local_m0C.pop(local_m02.getX() + 14, local_m02.getY(), local_m02.getZ() + 14);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_048B_anctones_animate_first_speaker_glow(this, local_m02) -> return;
+				local_m02.bark("There is nothing more we can tell you until you have found the ancient artifact. ");
+				local_m0C.destroy();
+				doneDefault = 1;
+			}
+			scrollBack(20);
+			startedConvo = 0;
+			Camera::setCenterOn(1);
+			setAvatarInStasis(0);
+			u8goto label_12F5;
+		}
+	}
+	u8label label_12F5:
+	if startedConvo != 0
+	{
+		startedConvo = 0;
+	}
+	playMusic(99);
+}
+
+// Derived: routine 0x130F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ANCTONES::anctones_animate_third_speaker_nod(arg_04:Item)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m03:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m02 = 4;
+		local_m03 = 0;
+		arg_04.setFrame(local_m02);
+	}
+	process
+	{
+		local_m02 = 10;
+		arg_04.setFrame(local_m02);
+		wait(20);
+		local_m02++;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02--;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 4;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		return;
+	}
+}
+
+// Derived: routine 0x13CE, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ANCTONES::anctones_animate_third_speaker_appear(arg_04:Item)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m02 = 0;
+		arg_04.setFrame(local_m02);
+	}
+	process
+	{
+		local_m02 = 1;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 2;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 3;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 4;
+		arg_04.setFrame(local_m02);
+		return;
+	}
+}
+
+// Derived: routine 0x146C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ANCTONES::anctones_animate_third_speaker_fade(arg_04:Item)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m02 = 4;
+		arg_04.setFrame(local_m02);
+	}
+	process
+	{
+		local_m02 = 3;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 2;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 1;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 0;
+		arg_04.setFrame(local_m02);
+		return;
+	}
+}
+
+// Derived: routine 0x150A, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ANCTONES::anctones_animate_first_speaker_appear(arg_04:Item)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m02 = 0;
+		arg_04.setFrame(local_m02);
+	}
+	process
+	{
+		local_m02 = 1;
+		arg_04.setFrame(local_m02);
+		wait(5);
+		local_m02 = 2;
+		arg_04.setFrame(local_m02);
+		wait(5);
+		return;
+	}
+}
+
+// Derived: routine 0x1575, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ANCTONES::anctones_animate_second_speaker_appear(arg_04:Item)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m02 = 0;
+		arg_04.setFrame(local_m02);
+	}
+	process
+	{
+		local_m02 = 1;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 2;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 3;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 4;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 5;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 6;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 7;
+		arg_04.setFrame(local_m02);
+		wait(10);
+		local_m02 = 8;
+		arg_04.setFrame(local_m02);
+		return;
+	}
+}
+
+// Derived: routine 0x16A7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ANCTONES::anctones_animate_second_speaker_emphasis(arg_04:Item)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m05:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m02 = 0;
+		local_m04 = 9;
+		arg_04.setFrame(local_m04);
+		local_m05 = 0;
+	}
+	process
+	{
+		if local_m02 = 2
+		{
+			return;
+		}
+		if local_m05
+		{
+			if not (local_m04 = 9)
+			{
+				local_m04--;
+			}
+			else
+			{
+				local_m05 = 0;
+			}
+		}
+		else
+		{
+			local_m04++;
+		}
+		if local_m04 = 11
+		{
+			local_m05 = 1;
+			local_m02++;
+		}
+		wait(5);
+		arg_04.setFrame(local_m04);
+	}
+}
+
+// Derived: routine 0x1732, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ANCTONES::anctones_animate_second_speaker_glow(arg_04:Item)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m05:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m02 = 0;
+		local_m04 = 13;
+		arg_04.setFrame(local_m04);
+		local_m05 = 0;
+	}
+	process
+	{
+		if local_m02 = 3
+		{
+			return;
+		}
+		if local_m05
+		{
+			if not (local_m04 = 13)
+			{
+				local_m04--;
+			}
+			else
+			{
+				local_m05 = 0;
+			}
+		}
+		else
+		{
+			local_m04++;
+		}
+		if local_m04 = 15
+		{
+			local_m05 = 1;
+			local_m02++;
+		}
+		wait(5);
+		arg_04.setFrame(local_m04);
+	}
+}
+
+// Derived: routine 0x17BD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ANCTONES::anctones_animate_first_speaker_glow(arg_04:Item)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m05:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m02 = 0;
+		local_m04 = 3;
+		arg_04.setFrame(local_m04);
+		local_m05 = 0;
+	}
+	process
+	{
+		if local_m02 = 3
+		{
+			return;
+		}
+		if local_m05
+		{
+			if not (local_m04 = 3)
+			{
+				local_m04--;
+			}
+			else
+			{
+				local_m05 = 0;
+			}
+		}
+		else
+		{
+			local_m04++;
+		}
+		if local_m04 = 6
+		{
+			local_m05 = 1;
+			local_m02++;
+		}
+		wait(5);
+		arg_04.setFrame(local_m04);
+	}
+}
+
+// Derived: routine 0x1848, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ANCTONES::anctones_animate_first_speaker_emphasis(arg_04:Item)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m05:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m02 = 0;
+		local_m04 = 7;
+		arg_04.setFrame(local_m04);
+		local_m05 = 0;
+	}
+	process
+	{
+		if local_m02 = 2
+		{
+			return;
+		}
+		if local_m05
+		{
+			if not (local_m04 = 7)
+			{
+				local_m04--;
+			}
+			else
+			{
+				local_m05 = 0;
+			}
+		}
+		else
+		{
+			local_m04++;
+		}
+		if local_m04 = 9
+		{
+			local_m05 = 1;
+			local_m02++;
+		}
+		wait(5);
+		arg_04.setFrame(local_m04);
+	}
+}
+

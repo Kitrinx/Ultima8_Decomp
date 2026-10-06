@@ -1,0 +1,37 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0270
+// FLEX slot: 626
+// Original offset: 0x000B8508
+// Naming evidence: E, exact object-1 linker name `MOREFISH`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MOREFISH.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass MOREFISH inherits Item
+{
+	process morefish_look_describe_fish();
+	process morefish_use_eat_fish_and_feed_avatar();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MOREFISH::morefish_look_describe_fish()
+{
+	bark("fish ");
+}
+
+// Derived: routine 0x00A8, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MOREFISH::morefish_use_eat_fish_and_feed_avatar()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Mmmm... "), u8_stack_ref(1)) -> return;
+	destroy();
+	FeedAvatar(2);
+}
+

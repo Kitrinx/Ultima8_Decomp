@@ -1,0 +1,32 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x049C
+// FLEX slot: 1182
+// Original offset: 0x0001EB4B
+// Naming evidence: E, exact object-1 linker name `BARRKILL`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BARRKILL.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass BARRKILL inherits Egg
+{
+	process barrkill_hatch_destroy_nearby_barrier_items();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BARRKILL::barrkill_hatch_destroy_nearby_barrier_items()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	if metNec1
+	{
+		foreach local_m02 where (type = 66) within 15 cells of referent {
+			local_m02.destroy();
+		}
+	}
+}
+

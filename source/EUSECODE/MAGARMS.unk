@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x034C
+// FLEX slot: 846
+// Original offset: 0x000AF5C6
+// Naming evidence: E, exact object-1 linker name `MAGARMS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MAGARMS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass MAGARMS inherits Item
+{
+	process magarms_look_describe_magic_arm_guards();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MAGARMS::magarms_look_describe_magic_arm_guards()
+{
+	bark("magic arm guards ");
+}
+

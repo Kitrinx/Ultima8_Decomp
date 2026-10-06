@@ -1,0 +1,3101 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x007C
+// FLEX slot: 126
+// Original offset: 0x000D2176
+// Naming evidence: E, exact object-1 linker name `PENT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/PENT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass PENT inherits Item
+{
+	process pent_enter_fast_area_destroy_item();
+	process pent_got_hit_free_pyros_with_tongue_of_flame(arg_04:U8Word);
+	process pent_use_run_pentagram_interaction();
+	process pent_apply_reagent_side_effect(arg_00:U8Word, arg_02:Item);
+	routine pent_is_reagent_category(arg_00:U8Word, arg_02:U8Word);
+	process pent_play_spell_burst(arg_00:Item);
+	process pent_burn_consumed_component(arg_00:Item);
+	process pent_destroy_component_burn_effect(arg_00:Item);
+	process pent_play_flame_ambient_sfx();
+	process pent_spawn_candles_with_removal_prompts();
+	unkroutine pent_place_spell_focus(arg_00:U8DWord, arg_04:U8Word, arg_06:U8List);
+	unkroutine pent_place_spell_candles(arg_00:U8DWord, arg_04:U8Word, arg_06:U8List);
+	unkroutine pent_split_spell_reagents(arg_00:U8DWord, arg_04:U8Word, arg_06:U8List2, arg_08:U8List);
+	process pent_prepare_portable_cast();
+	process pent_cast_portable_spell(arg_04:String, arg_06:U8List, arg_08:U8List, arg_0A:U8List);
+	unkroutine pent_find_center_focus(arg_00:U8DWord);
+	routine pent_find_lit_candles(arg_00:U8DWord);
+	routine pent_identify_candle_incantation(arg_00:U8DWord, arg_04:U8List);
+	routine pent_match_spell_reagents(arg_00:U8DWord, arg_04:String, arg_06:U8Word, arg_08:U8List);
+	routine pent_is_avatar_inside_ritual_area(arg_00:U8DWord);
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PENT::pent_enter_fast_area_destroy_item()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	if acolyteKilled = 0
+	{
+		return;
+	}
+	if (Avatar.getMap() = 12) and (getFrame() = 4)
+	{
+		u8_search_begin(local_m02, 2, 10 * 32, referent, <<66, u8_search_word(634), u8_search_word(313), 36>>);
+		while u8_search_condition()
+		{
+			local_m02.destroy();
+			u8_search_advance();
+		}
+		u8_search_end();
+		foreach local_m02 where (type = 400) within 7 cells of referent {
+			if (local_m02.getX() <= getX()) and (local_m02.getX() <= getX())
+			{
+				local_m02.destroy();
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0133, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process PENT::pent_got_hit_free_pyros_with_tongue_of_flame(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05:Item;
+	local_m07:Item;
+	local_m07_w01:U8Bytes1;
+	local_m09:Item;
+	if (tonguing = 1) or (pyrosFree = 1) or (arg_04 <= 0)
+	{
+		return;
+	}
+	local_m01 = 0;
+	local_m07 = arg_04;
+	local_m05 = 0;
+	local_m09 = 0;
+	if getFrame() >= 4
+	{
+		return;
+	}
+	else if getFrame() != 2
+	{
+		foreach local_m03 where ((type = 124) and (frame = 2)) within 20 cells of referent {
+			local_m05 = local_m03;
+		}
+	}
+	else
+	{
+		local_m05 = referent;
+	}
+	if local_m05
+	{
+		if (local_m07.getX() < (local_m05.getX() - 96)) and (local_m07.getX() > (local_m05.getX() - 416)) and (local_m07.getY() < (local_m05.getY() - 96)) and (local_m07.getY() > (local_m05.getY() - 416))
+		{
+			if arg_04 = 1
+			{
+				foreach recursive local_m03 where ((type = 442) and (frame = 4)) within container 1 {
+					local_m09 = local_m03;
+					local_m01 = 1;
+					tonguing = 1;
+				}
+			}
+			else if (local_m07.getType() = 442) and (local_m07.getFrame() = 4)
+			{
+				local_m09 = arg_04;
+				tonguing = 1;
+			}
+			else
+			{
+				class_0581_free_wait(0x00000000, local_m07);
+				if class_057C_isInWorld(u8_local_address(local_m07_w01))
+				{
+					local_m07.destroy();
+				}
+			}
+			if local_m09
+			{
+				if not getAvatarInStasis()
+				{
+					setAvatarInStasis(1);
+				}
+				while Avatar.isBusy()
+				{
+					wait(1);
+				}
+				class_0581_free_wait(0x00000000, local_m07);
+				wait(25);
+				local_m09.push();
+				local_m09.pop(local_m05.getX() - 256, local_m05.getY() - 256, 0);
+				if local_m01
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_realDoAnim(1, Avatar.getDirToItem(local_m09), 14) -> return;
+				}
+				scrollTo(local_m09.getX(), local_m09.getY(), local_m05.getZ() + 20, 20);
+				while Avatar.isBusy()
+				{
+					wait(1);
+				}
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_free_consume_tongue_of_flame_to_free_pyros(0x00000000, local_m05, local_m09) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_free_play_pyros_release_effects(0x00000000, local_m05) -> return;
+				wait(250);
+				class_0571_storm_start_fire_storm();
+				wait(120);
+				scrollBack(20);
+				if getAvatarInStasis()
+				{
+					setAvatarInStasis(0);
+				}
+				tonguing = 1;
+				return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x046B, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PENT::pent_use_run_pentagram_interaction()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8List;
+	local_m0A:U8List2;
+	local_m0C:String;
+	local_m0D:U8Byte;
+	local_m0F:U8Word;
+	local_m11:U8Word;
+	local_m06 = 0;
+	local_m0D = 0;
+	local_m0F = 0;
+	local_m11 = 0;
+	local_m04 = referent;
+	if local_m04.getFrame() != 4
+	{
+		return;
+	}
+	if (vardionJoined = 0) and (baneJoined = 0)
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I wonder how this pentagram is used. "), u8_stack_ref(1)) -> return;
+		return;
+	}
+	if acolyteKilled = 1
+	{
+		local_m02 = 28;
+	}
+	else
+	{
+		local_m02 = 29;
+	}
+	if class_007C_pent_is_avatar_inside_ritual_area(this)
+	{
+		if sponsorTest = 1
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m02.bark("You are standing too close to the pentagram. ") -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("I must be standing too close to the pentagram. "), u8_stack_ref(1)) -> return;
+		}
+		return;
+	}
+	local_m06 = class_007C_pent_find_center_focus(this);
+	if (sponsorTest = 1) and (local_m06 < 2)
+	{
+		if local_m06 = 0
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m02.bark("You must place a focus at the center of the pentagram to contain the spell. ") -> return;
+		}
+		else if local_m06 = 1
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m02.bark("Multiple foci disrupt the empowering of a spell. You may only enchant one focus at a time ") -> return;
+		}
+		return;
+	}
+	else if local_m06 < 2
+	{
+		if local_m06 = 0
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("I forgot to place a focus in the center of the pentagram. "), u8_stack_ref(1)) -> return;
+		}
+		else if local_m06 = 1
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("I have too many foci on the pentagram. "), u8_stack_ref(1)) -> return;
+		}
+		return;
+	}
+	if local_m06
+	{
+		class_0581_unkCloseAllGumps();
+		if not getAvatarInStasis()
+		{
+			setAvatarInStasis(1);
+		}
+		Avatar.turnToFace(Avatar.getDirToItem(local_m06), 0, 10);
+		local_m08 = class_007C_pent_find_lit_candles(this);
+		if (class_0581_free_count_list_items(local_m08) != 5) and (sponsorTest = 1)
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m02.bark("Make sure you are using the proper candles and they are all lit. ") -> return;
+		}
+		else if class_0581_free_count_list_items(local_m08) != 5
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("I must have misplaced or forgotten to light a candle. "), u8_stack_ref(1)) -> return;
+		}
+		else
+		{
+			local_m0D = 1;
+			Avatar.realDoAnim(35, Avatar.getDir());
+			local_m0C = class_007C_pent_identify_candle_incantation(local_m08, this);
+			if local_m0C = "Something's not right. "
+			{
+				wait(30);
+				class_057C_timedBark(1, 40, u8_string_local_address(local_m0C));
+				if local_m0D
+				{
+					Avatar.realDoAnim(34, Avatar.getDir());
+					Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+				}
+				if sponsorTest = 1
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn local_m02.bark("Your candles are incorrect. ") -> return;
+				}
+				else
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn Item_bark(u8_string_address("Perhaps the candles are set incorrectly. "), u8_stack_ref(1)) -> return;
+				}
+				if getAvatarInStasis()
+				{
+					setAvatarInStasis(0);
+				}
+				return;
+			}
+			local_m0F = class_0581_free_get_sorcery_spell_mana_cost(local_m0C);
+			local_m11 = class_0581_free_get_sorcery_spell_index(local_m0C);
+			local_m0A = class_007C_pent_match_spell_reagents(local_m08, local_m06, local_m0C, this);
+			class_057C_timedBark(1, 40, u8_string_local_address(local_m0C));
+			local_m04 = local_m0A[1];
+			if local_m04 = 0
+			{
+				if local_m0D
+				{
+					Avatar.realDoAnim(34, Avatar.getDir());
+					Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+				}
+				wait(30);
+				class_057C_timedBark(1, 40, u8_string_address("Something's wrong. "));
+				if sponsorTest = 1
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn local_m02.bark("Indeed, your reagents were incorrect for that spell. ") -> return;
+				}
+				else
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn Item_bark(u8_string_address("The reagents don't seem right. "), u8_stack_ref(1)) -> return;
+				}
+				if getAvatarInStasis()
+				{
+					setAvatarInStasis(0);
+				}
+				return;
+			}
+			else
+			{
+				local_m0D = class_0581_free_empower_sorcery_focus(0x00000000, referent, local_m0C, local_m11, local_m0F, local_m06, local_m0A);
+			}
+		}
+	}
+	if local_m0D
+	{
+		Avatar.realDoAnim(34, Avatar.getDir());
+		Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+	}
+	if getAvatarInStasis()
+	{
+		setAvatarInStasis(0);
+	}
+}
+
+// Derived: routine 0x0BCF, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process PENT::pent_apply_reagent_side_effect(arg_00:U8Word, arg_02:Item)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:Item List;
+	local_m08:U8Bytes4; // X: untouched.
+	local_m09:U8Byte;
+	local_m0A:U8Byte;
+	local_m0F:U8Bytes5;
+	local_m0B:U8Byte;
+	local_m0D:U8Word;
+	local_m0F_w02:U8Word;
+	local_m11:Npc;
+	local_m11_w01:U8Bytes1;
+	[[PT_DEFAULT, arg_02]];
+	local_m09 = 0;
+	local_m0A = 0;
+	foreach local_m02 where ((type = 398) or (type = 454) or (type = 397)) within 8 cells of arg_02 {
+		if (local_m02.getX() <= arg_02.getX()) and (local_m02.getY() <= arg_02.getY())
+		{
+			local_m04 += <<local_m02>>;
+			if class_007C_pent_is_reagent_category(5, local_m02)
+			{
+				local_m09 = 1;
+			}
+			if class_007C_pent_is_reagent_category(4, local_m02)
+			{
+				local_m0A = 1;
+			}
+		}
+	}
+	if local_m09
+	{
+		if sponsorTest = 1
+		{
+			class_0581_free_warn_excess_sorcery_reagent(0x00000000, arg_00, 5);
+			return ((1) : DWord);
+		}
+		foreach local_m02 in local_m04 {
+			class_007C_pent_burn_consumed_component(0x00000000, local_m02);
+		}
+		wait(15);
+		local_m0F_w02 = arg_02.getX() - 32;
+		local_m0D = arg_02.getY() - 32;
+		local_m0B = arg_02.getZ() + 8;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m0F) -> return;
+		wait(25);
+		local_m0F_w02 -= 64;
+		local_m0D -= 64;
+		Npc_create(0, 96, u8_local_address(local_m11_w01));
+		local_m11.setStr(class_0581_randRange(15, 25));
+		Npc_setInt(class_0581_randRange(15, 20), u8_local_address(local_m11_w01));
+		local_m11.setDex(class_0581_randRange(15, 20));
+		local_m11.setHp(class_0581_randRange(30, 50));
+		local_m11.pop(local_m0F_w02, local_m0D, local_m0B);
+		class_057C_toggleStatus(16, u8_local_address(local_m11_w01));
+		class_057C_realDoAnim(u8_local_address(local_m11_w01), 2, local_m11.getDirToItem(Avatar:Referent));
+		class_057C_toggleStatus(16, u8_local_address(local_m11_w01));
+		local_m11.touch();
+		wait(75);
+		class_057C_realDoAnim(u8_local_address(local_m11_w01), 47, local_m11.getDirToItem(Avatar:Referent));
+		class_057C_realDoAnim(u8_local_address(local_m11_w01), 12, local_m11.getDirToItem(Avatar:Referent));
+		wait(25);
+		class_057C_timedBark(u8_local_address(local_m11_w01), 50, u8_string_address("I've come for you, Sorcerer! "));
+		if getAvatarInStasis()
+		{
+			setAvatarInStasis(0);
+		}
+		local_m11.setTarget(1);
+		return ((1) : DWord);
+	}
+	if local_m0A
+	{
+		if sponsorTest = 1
+		{
+			class_0581_free_warn_excess_sorcery_reagent(0x00000000, arg_00, 4);
+			return ((1) : DWord);
+		}
+		foreach local_m02 in local_m04 {
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0583_firespel_resolve_fire_spell_impact(0x00000000, 0, local_m02, 1) -> return;
+			wait(30);
+		}
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_resolve_fire_spell_impact(0x00000000, 1, arg_00, 1) -> return;
+		if getAvatarInStasis()
+		{
+			setAvatarInStasis(0);
+		}
+		return ((1) : DWord);
+	}
+	return ((0) : DWord);
+}
+
+// Derived: routine 0x0F4B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine PENT::pent_is_reagent_category(arg_00:U8Word, arg_02:U8Word)
+{
+	if arg_00.getType() = 398
+	{
+		if arg_02 = 0
+		{
+			if arg_00.getFrame() <= 1
+			{
+				return 1;
+			}
+		}
+		else if arg_02 = 1
+		{
+			if (arg_00.getFrame() >= 2) and (arg_00.getFrame() <= 5)
+			{
+				return 1;
+			}
+		}
+		else if arg_02 = 2
+		{
+			if (arg_00.getFrame() >= 6) and (arg_00.getFrame() <= 9)
+			{
+				return 1;
+			}
+		}
+		else if arg_02 = 3
+		{
+			if (arg_00.getFrame() >= 10) and (arg_00.getFrame() <= 13)
+			{
+				return 1;
+			}
+		}
+		else if arg_02 = 4
+		{
+			if (arg_00.getFrame() >= 14) and (arg_00.getFrame() <= 17)
+			{
+				return 1;
+			}
+		}
+		else
+		{
+			if arg_02 = 5
+			{
+				if (arg_00.getFrame() >= 18) and (arg_00.getFrame() <= 20)
+				{
+					return 1;
+				}
+				u8goto label_105E;
+			}
+		}
+	}
+	u8label label_105E:
+	return 0;
+}
+
+// Derived: routine 0x1066, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process PENT::pent_play_spell_burst(arg_00:Item)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	[[PT_DEFAULT, arg_00]];
+	local_m05_w02 = arg_00.getX() - 32;
+	local_m03 = arg_00.getY() - 32;
+	local_m01 = arg_00.getZ() + 8;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m05) -> return;
+	wait(25);
+}
+
+// Derived: routine 0x10C3, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process PENT::pent_burn_consumed_component(arg_00:Item)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m05:U8Byte;
+	[[PT_DEFAULT, NULL_REF]];
+	local_m02 = arg_00.getX();
+	local_m04 = arg_00.getY();
+	local_m05 = arg_00.getZ();
+	arg_00.destroy();
+	if arg_00.legal_create(569, urandom(8), local_m02, local_m04, local_m05)
+	{
+		playSFX(132, 100);
+		wait(class_0581_randRange(3, 8));
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_007C_pent_destroy_component_burn_effect(0x00000000, arg_00) -> return;
+	}
+}
+
+// Derived: routine 0x1151, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process PENT::pent_destroy_component_burn_effect(arg_00:Item)
+{
+	[[PT_DEFAULT, NULL_REF]];
+	wait(30);
+	arg_00.destroy();
+}
+
+// Derived: routine 0x1179, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process PENT::pent_play_flame_ambient_sfx()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_FX, referent]];
+		playSFX(135, 100, referent);
+	}
+	process
+	{
+		wait(275);
+		playSFX(135, 100, referent);
+	}
+}
+
+// Derived: routine 0x11BF, event mask 0x00000000.
+// R: behavior-derived callable name.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process PENT::pent_spawn_candles_with_removal_prompts()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	[[PT_DEFAULT, referent]];
+	Item_create(13, 454, u8_local_address(local_m02_w01));
+	local_m02.pop(getX() - 70, getY() - 70, getZ());
+	if class_0581_askYesNo(0x00000000)
+	{
+		local_m02.destroy();
+	}
+	else
+	{
+	}
+	Item_create(13, 454, u8_local_address(local_m02_w01));
+	local_m02.pop(getX() - 41, getY() - 201, getZ());
+	if class_0581_askYesNo(0x00000000)
+	{
+		local_m02.destroy();
+	}
+	else
+	{
+	}
+	Item_create(13, 454, u8_local_address(local_m02_w01));
+	local_m02.pop(getX() - 167, getY() - 266, getZ());
+	if class_0581_askYesNo(0x00000000)
+	{
+		local_m02.destroy();
+	}
+	else
+	{
+	}
+	Item_create(13, 454, u8_local_address(local_m02_w01));
+	local_m02.pop(getX() - 266, getY() - 167, getZ());
+	if class_0581_askYesNo(0x00000000)
+	{
+		local_m02.destroy();
+	}
+	else
+	{
+	}
+	Item_create(13, 454, u8_local_address(local_m02_w01));
+	local_m02.pop(getX() - 201, getY() - 41, getZ());
+	if class_0581_askYesNo(0x00000000)
+	{
+		local_m02.destroy();
+		return;
+	}
+}
+
+// Derived: routine 0x138D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+unkroutine PENT::pent_place_spell_focus(arg_00:U8DWord, arg_04:U8Word, arg_06:U8List)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	local_m04:Item;
+	[[PT_DEFAULT, u8_load(arg_00, 2)]];
+	local_m04 = 0;
+	if arg_04 = 1
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 19
+			{
+				local_m04 = local_m02;
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 15
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 16
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 17
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+	}
+	else if arg_04 = 2
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 19
+			{
+				local_m04 = local_m02;
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 15
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 16
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 17
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+	}
+	else if arg_04 = 3
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 15
+			{
+				local_m04 = local_m02;
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 16
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 17
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+	}
+	else if arg_04 = 4
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 15
+			{
+				local_m04 = local_m02;
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 16
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 17
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+	}
+	else if arg_04 = 5
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 16
+			{
+				local_m04 = local_m02;
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 17
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+	}
+	else if arg_04 = 6
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 16
+			{
+				local_m04 = local_m02;
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 17
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+	}
+	else if arg_04 = 7
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 16
+			{
+				local_m04 = local_m02;
+			}
+		}
+		if not local_m04
+		{
+			foreach local_m02 in arg_06 {
+				if local_m02.getFrame() = 17
+				{
+					local_m04 = local_m02;
+				}
+			}
+		}
+	}
+	else if arg_04 = 8
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 17
+			{
+				local_m04 = local_m02;
+			}
+		}
+	}
+	else if arg_04 = 9
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 17
+			{
+				local_m04 = local_m02;
+			}
+		}
+	}
+	else if arg_04 = 10
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 18
+			{
+				local_m04 = local_m02;
+			}
+		}
+	}
+	else if arg_04 = 11
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 18
+			{
+				local_m04 = local_m02;
+			}
+		}
+	}
+	else if arg_04 = 12
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 18
+			{
+				local_m04 = local_m02;
+			}
+		}
+	}
+	if not local_m04
+	{
+		foreach local_m02 in arg_06 {
+			if local_m02.getFrame() = 19
+			{
+				local_m04 = local_m02;
+			}
+		}
+	}
+	if local_m04
+	{
+		local_m04.push();
+		local_m04.pop(Item_getX(arg_00) - 128, Item_getY(arg_00) - 128, Item_getZ(arg_00));
+	}
+	temp = local_m04;
+	return;
+}
+
+// Derived: routine 0x180C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+unkroutine PENT::pent_place_spell_candles(arg_00:U8DWord, arg_04:U8Word, arg_06:U8List)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8List;
+	local_m04:Item;
+	local_m06:Item;
+	local_m08:Item;
+	local_m0A:Item;
+	local_m0C:Item;
+	local_m0E:Item;
+	[[PT_DEFAULT, u8_load(arg_00, 2)]];
+	local_m06 = 0;
+	local_m08 = 0;
+	local_m0A = 0;
+	local_m0C = 0;
+	local_m0E = 0;
+	if arg_04 = 1
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m06 = 0
+				{
+					local_m04.setFrame(13);
+					local_m06 = local_m04;
+				}
+			}
+			else if local_m08 = 0
+			{
+				local_m04.setFrame(9);
+				local_m08 = local_m04;
+			}
+			else if local_m0A = 0
+			{
+				local_m04.setFrame(9);
+				local_m0A = local_m04;
+			}
+			else if local_m0C = 0
+			{
+				local_m04.setFrame(9);
+				local_m0C = local_m04;
+			}
+			else if local_m0E = 0
+			{
+				local_m04.setFrame(9);
+				local_m0E = local_m04;
+			}
+		}
+	}
+	else if arg_04 = 2
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 8
+			{
+				if local_m06 = 0
+				{
+					local_m04.setFrame(9);
+					local_m06 = local_m04;
+				}
+				if local_m08 = 0
+				{
+					local_m04.setFrame(9);
+					local_m08 = local_m04;
+				}
+				else if local_m0A = 0
+				{
+					local_m04.setFrame(9);
+					local_m0A = local_m04;
+				}
+				else if local_m0C = 0
+				{
+					local_m04.setFrame(9);
+					local_m0C = local_m04;
+				}
+				else if local_m0E = 0
+				{
+					local_m04.setFrame(9);
+					local_m0E = local_m04;
+				}
+			}
+		}
+	}
+	else if arg_04 = 3
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m06 = 0
+				{
+					local_m04.setFrame(13);
+					local_m06 = local_m04;
+				}
+				else if local_m0A = 0
+				{
+					local_m04.setFrame(13);
+					local_m0A = local_m04;
+				}
+				else if local_m0C = 0
+				{
+					local_m04.setFrame(13);
+					local_m0C = local_m04;
+				}
+			}
+			else if local_m08 = 0
+			{
+				local_m04.pop(Item_getX(arg_00) - 41, Item_getY(arg_00) - 201, Item_getZ(arg_00));
+				local_m08 = local_m04;
+			}
+			else if local_m0E = 0
+			{
+				local_m04.setFrame(9);
+				local_m0E = local_m04;
+			}
+		}
+	}
+	else if arg_04 = 4
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m06 = 0
+				{
+					local_m04.setFrame(13);
+					local_m06 = local_m04;
+				}
+				else if local_m08 = 0
+				{
+					local_m04.setFrame(13);
+					local_m08 = local_m04;
+				}
+				else if local_m0C = 0
+				{
+					local_m04.setFrame(13);
+					local_m0C = local_m04;
+				}
+			}
+			else if local_m0A = 0
+			{
+				local_m04.setFrame(9);
+				local_m0A = local_m04;
+			}
+			else if local_m0E = 0
+			{
+				local_m04.setFrame(9);
+				local_m0E = local_m04;
+			}
+		}
+	}
+	else if arg_04 = 5
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m08 = 0
+				{
+					local_m04.setFrame(13);
+					local_m08 = local_m04;
+				}
+				else if local_m0C = 0
+				{
+					local_m04.setFrame(13);
+					local_m0C = local_m04;
+				}
+			}
+			else if local_m06 = 0
+			{
+				local_m04.setFrame(9);
+				local_m06 = local_m04;
+			}
+			else if local_m0A = 0
+			{
+				local_m04.setFrame(9);
+				local_m0A = local_m04;
+			}
+			else if local_m0E = 0
+			{
+				local_m04.setFrame(9);
+				local_m0E = local_m04;
+			}
+		}
+	}
+	else if arg_04 = 6
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m08 = 0
+				{
+					local_m04.setFrame(13);
+					local_m08 = local_m04;
+				}
+				else if local_m0A = 0
+				{
+					local_m04.setFrame(13);
+					local_m0A = local_m04;
+				}
+				else if local_m0C = 0
+				{
+					local_m04.setFrame(13);
+					local_m0C = local_m04;
+				}
+			}
+			else if local_m06 = 0
+			{
+				local_m04.setFrame(9);
+				local_m06 = local_m04;
+			}
+			else if local_m0E = 0
+			{
+				local_m04.setFrame(9);
+				local_m0E = local_m04;
+			}
+		}
+	}
+	else if arg_04 = 7
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m0A = 0
+				{
+					local_m04.setFrame(13);
+					local_m0A = local_m04;
+				}
+				else if local_m0C = 0
+				{
+					local_m04.setFrame(13);
+					local_m0C = local_m04;
+				}
+				else if local_m0E = 0
+				{
+					local_m04.setFrame(13);
+					local_m0E = local_m04;
+				}
+			}
+			else if local_m06 = 0
+			{
+				local_m04.setFrame(9);
+				local_m06 = local_m04;
+			}
+			else if local_m08 = 0
+			{
+				local_m04.setFrame(9);
+				local_m08 = local_m04;
+			}
+		}
+	}
+	else if arg_04 = 8
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m08 = 0
+				{
+					local_m04.setFrame(13);
+					local_m08 = local_m04;
+				}
+				else if local_m0E = 0
+				{
+					local_m04.setFrame(13);
+					local_m0E = local_m04;
+				}
+			}
+			else if local_m06 = 0
+			{
+				local_m04.setFrame(9);
+				local_m06 = local_m04;
+			}
+			else if local_m0A = 0
+			{
+				local_m04.setFrame(9);
+				local_m0A = local_m04;
+			}
+			else if local_m0C = 0
+			{
+				local_m04.setFrame(9);
+				local_m0C = local_m04;
+			}
+		}
+	}
+	else if arg_04 = 9
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m06 = 0
+				{
+					local_m04.setFrame(13);
+					local_m06 = local_m04;
+				}
+				else if local_m0A = 0
+				{
+					local_m04.setFrame(13);
+					local_m0A = local_m04;
+				}
+				else if local_m0E = 0
+				{
+					local_m04.setFrame(13);
+					local_m0E = local_m04;
+				}
+			}
+			else if local_m08 = 0
+			{
+				local_m04.setFrame(9);
+				local_m08 = local_m04;
+			}
+			else if local_m0C = 0
+			{
+				local_m04.setFrame(9);
+				local_m0C = local_m04;
+			}
+		}
+	}
+	else if arg_04 = 10
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m06 = 0
+				{
+					local_m04.setFrame(13);
+					local_m06 = local_m04;
+				}
+				else if local_m08 = 0
+				{
+					local_m04.setFrame(13);
+					local_m08 = local_m04;
+				}
+				else if local_m0A = 0
+				{
+					local_m04.setFrame(13);
+					local_m0A = local_m04;
+				}
+				else if local_m0C = 0
+				{
+					local_m04.setFrame(13);
+					local_m0C = local_m04;
+				}
+			}
+			else
+			{
+				if local_m0E = 0
+				{
+					local_m04.setFrame(9);
+					local_m0E = local_m04;
+				}
+			}
+		}
+	}
+	else if arg_04 = 11
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m06 = 0
+				{
+					local_m04.setFrame(13);
+					local_m06 = local_m04;
+				}
+				else if local_m0A = 0
+				{
+					local_m04.setFrame(13);
+					local_m0A = local_m04;
+				}
+				else if local_m0C = 0
+				{
+					local_m04.setFrame(13);
+					local_m0C = local_m04;
+				}
+				else if local_m0E = 0
+				{
+					local_m04.setFrame(13);
+					local_m0E = local_m04;
+				}
+			}
+			else
+			{
+				if local_m08 = 0
+				{
+					local_m04.setFrame(9);
+					local_m08 = local_m04;
+				}
+			}
+		}
+	}
+	else if arg_04 = 12
+	{
+		foreach local_m04 in arg_06 {
+			if local_m04.getFrame() = 12
+			{
+				if local_m06 = 0
+				{
+					local_m04.setFrame(13);
+					local_m06 = local_m04;
+				}
+				else if local_m08 = 0
+				{
+					local_m04.setFrame(13);
+					local_m08 = local_m04;
+				}
+				else if local_m0A = 0
+				{
+					local_m04.setFrame(13);
+					local_m0A = local_m04;
+				}
+				else if local_m0C = 0
+				{
+					local_m04.setFrame(13);
+					local_m0C = local_m04;
+				}
+				else if local_m0E = 0
+				{
+					local_m04.setFrame(13);
+					local_m0E = local_m04;
+				}
+			}
+		}
+	}
+	local_m06.push();
+	local_m06.pop(Item_getX(arg_00) - 70, Item_getY(arg_00) - 70, Item_getZ(arg_00));
+	local_m08.push();
+	local_m08.pop(Item_getX(arg_00) - 41, Item_getY(arg_00) - 201, Item_getZ(arg_00));
+	local_m0A.push();
+	local_m0A.pop(Item_getX(arg_00) - 167, Item_getY(arg_00) - 266, Item_getZ(arg_00));
+	local_m0C.push();
+	local_m0C.pop(Item_getX(arg_00) - 266, Item_getY(arg_00) - 167, Item_getZ(arg_00));
+	local_m0E.push();
+	local_m0E.pop(Item_getX(arg_00) - 201, Item_getY(arg_00) - 41, Item_getZ(arg_00));
+	local_m02 += <<local_m06>>;
+	local_m02 += <<local_m08>>;
+	local_m02 += <<local_m0A>>;
+	local_m02 += <<local_m0C>>;
+	local_m02 += <<local_m0E>>;
+	temp = local_m02;
+	return;
+	u8_free_local_list(local_m02);
+}
+
+// Derived: routine 0x215E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+unkroutine PENT::pent_split_spell_reagents(arg_00:U8DWord, arg_04:U8Word, arg_06:U8List2, arg_08:U8List)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8List;
+	local_m09:U8Byte;
+	local_m0A:U8Byte;
+	local_m0B:U8Byte;
+	local_m0C:U8Byte;
+	local_m0D:U8Byte;
+	local_m0E:U8Byte;
+	[[PT_DEFAULT, u8_load(arg_00, 2)]];
+	local_m09 = 0;
+	local_m0A = 0;
+	local_m0B = 0;
+	local_m0C = 0;
+	local_m0D = 0;
+	local_m0E = 0;
+	if arg_04 = 1
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m09
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m09 = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0B
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[3];
+					local_m0B = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0C
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[4];
+					local_m0C = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 2
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m09
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m09 = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0B
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[3];
+					local_m0B = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0C
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[4];
+					local_m0C = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 3
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m09
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m09 = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0A
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[2];
+					local_m0A = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0D
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[5];
+					local_m0D = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 4
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m0A
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[2];
+					local_m0A = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0C
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[4];
+					local_m0C = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0D
+			{
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					local_m02 = arg_06[5];
+					local_m0D = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 5
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m09
+			{
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m09 = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0B
+			{
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					local_m02 = arg_06[3];
+					local_m0B = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0C
+			{
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					local_m02 = arg_06[4];
+					local_m0C = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 6
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m09
+			{
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m09 = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0A
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[2];
+					local_m0A = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0B
+			{
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					local_m02 = arg_06[3];
+					local_m0B = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0C
+			{
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					local_m02 = arg_06[4];
+					local_m0C = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 7
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m09
+			{
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m09 = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0A
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[2];
+					local_m0A = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0B
+			{
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					local_m02 = arg_06[3];
+					local_m0B = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0C
+			{
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					local_m02 = arg_06[4];
+					local_m0C = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0D
+			{
+				if class_007C_pent_is_reagent_category(4, local_m04)
+				{
+					local_m02 = arg_06[5];
+					local_m0D = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 8
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m0A
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[2];
+					local_m0A = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0B
+			{
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					local_m02 = arg_06[3];
+					local_m0B = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0C
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[4];
+					local_m0C = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0D
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[5];
+					local_m0D = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 9
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m09
+			{
+				if class_007C_pent_is_reagent_category(4, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m09 = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0A
+			{
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					local_m02 = arg_06[2];
+					local_m0A = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0B
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[3];
+					local_m0B = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0D
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[5];
+					local_m0D = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 10
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m09
+			{
+				if class_007C_pent_is_reagent_category(5, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m09 = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0A
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[2];
+					local_m0A = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0B
+			{
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					local_m02 = arg_06[3];
+					local_m0B = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0C
+			{
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					local_m02 = arg_06[4];
+					local_m0C = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0D
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[5];
+					local_m0D = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 11
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m09
+			{
+				if class_007C_pent_is_reagent_category(5, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m09 = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0A
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[2];
+					local_m0A = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0B
+			{
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					local_m02 = arg_06[3];
+					local_m0B = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0C
+			{
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					local_m02 = arg_06[4];
+					local_m0C = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0D
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[5];
+					local_m0D = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	else if arg_04 = 12
+	{
+		foreach local_m04 in arg_08 {
+			if not local_m09
+			{
+				if class_007C_pent_is_reagent_category(4, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m09 = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+			if not local_m0E
+			{
+				if class_007C_pent_is_reagent_category(5, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m0E = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		local_m0E = 0;
+		foreach local_m04 in arg_08 {
+			if not local_m0A
+			{
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					local_m02 = arg_06[2];
+					local_m0A = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0B
+			{
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					local_m02 = arg_06[3];
+					local_m0B = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+			if not local_m0E
+			{
+				if class_007C_pent_is_reagent_category(5, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m0E = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		local_m0E = 0;
+		foreach local_m04 in arg_08 {
+			if not local_m0C
+			{
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					local_m02 = arg_06[4];
+					local_m0C = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+			if not local_m0E
+			{
+				if class_007C_pent_is_reagent_category(5, local_m04)
+				{
+					local_m02 = arg_06[1];
+					local_m0E = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+		foreach local_m04 in arg_08 {
+			if not local_m0D
+			{
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					local_m02 = arg_06[5];
+					local_m0D = 1;
+					local_m06 = class_0581_free_split_item_stack_near_target(local_m02, local_m04);
+					arg_08 -= <<local_m06>>;
+					local_m08 += <<local_m06>>;
+				}
+			}
+		}
+	}
+	u8_free_local_list(local_m08);
+}
+
+// Derived: routine 0x3347, event mask 0x00000000.
+// R: behavior-derived callable name.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process PENT::pent_prepare_portable_cast()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:Item;
+	local_m06:Item;
+	local_m08:U8Word;
+	local_m0A:U8List;
+	local_m0C:U8List;
+	local_m0E:U8List;
+	local_m10:Item;
+	local_m12:U8Word;
+	local_m14:U8List2;
+	[[PT_DEFAULT, referent]];
+	local_m02 = "";
+	local_m08 = 0;
+	foreach recursive local_m04 within container 1 {
+		if local_m04.getType() = 398
+		{
+			local_m0A += <<local_m04>>;
+		}
+		else if (local_m04.getType() = 454) and (local_m04.getFrame() >= 8) and (local_m04.getFrame() <= 15)
+		{
+			if (local_m04.getFrame() >= 8) and (local_m04.getFrame() <= 11)
+			{
+				local_m04.setFrame(8);
+			}
+			else
+			{
+				local_m04.setFrame(12);
+			}
+			local_m0C += <<local_m04>>;
+		}
+		else if local_m04.getType() = 397
+		{
+			local_m0E += <<local_m04>>;
+		}
+	}
+	local_m10 = Avatar.getEquip(6);
+	if not local_m10
+	{
+		Item_create(0, 529, u8_local_address(local_m10_w01));
+		local_m10.popToEnd(1);
+		Avatar.setEquip(6, local_m10);
+	}
+	local_m12 = 1;
+	local_m14 = <<referent>>;
+	u8label label_3466:
+	u8goto label_3692 if not (local_m14[local_m12]);
+	// X: directional surface search; no Origin spelling is known.
+	foreach local_m04 on surface below local_m14[local_m12] {
+		u8goto label_34B0 if not (local_m04.getType() = 398);
+		local_m0A += <<local_m04>>;
+		local_m14 += <<local_m04>>;
+		u8goto label_35FC;
+		u8label label_34B0:
+		u8goto label_352A if not ((local_m04.getType() = 454) and (local_m04.getFrame() >= 8) and (local_m04.getFrame() <= 15));
+		if (local_m04.getFrame() >= 8) and (local_m04.getFrame() <= 11)
+		{
+			local_m04.setFrame(8);
+		}
+		else
+		{
+			local_m04.setFrame(12);
+		}
+		local_m0C += <<local_m04>>;
+		local_m14 += <<local_m04>>;
+		u8goto label_35FC;
+		u8label label_352A:
+		u8goto label_3557 if not (local_m04.getType() = 397);
+		local_m0E += <<local_m04>>;
+		local_m14 += <<local_m04>>;
+		u8goto label_35FC;
+		u8label label_3557:
+		if ((local_m04.getTypeFlag(0) = 0) and (local_m04.getTypeFlag(9) = 0) and (local_m04.getTypeFlag(10) = 0) and (local_m04.getTypeFlag(44) = 0)) or (local_m04.isNpc() = 1)
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("The pentagram must be clear of all but sorcerous components. "), u8_stack_ref(1)) -> return;
+			return ((1) : DWord);
+		}
+		else
+		{
+		}
+		u8label label_35FC:
+		if not local_m06.legal_create(local_m04.getType(), local_m04.getFrame(), local_m10, 1)
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("I can't carry all that is on the pentagram. "), u8_stack_ref(1)) -> return;
+			return ((1) : DWord);
+		}
+		else
+		{
+			local_m06.destroy();
+			local_m04.push();
+			local_m04.popToEnd(local_m10);
+		}
+	}
+	local_m12++;
+	u8goto label_3466;
+	u8label label_3692:
+	u8goto label_36F9 if not (local_m02 = "");
+	local_m02 = class_0581_free_choose_sorcery_spell(0x00000000);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m02
+	{
+		case "Invoke Pentagram"
+		{
+			return ((0) : DWord);
+		}
+		case "Nevermind"
+		{
+			return ((1) : DWord);
+		}
+	}
+	u8goto label_3692;
+	u8label label_36F9:
+	if not class_0581_free_validate_sorcery_spell_supplies(local_m0A, local_m0C, local_m0E, local_m02)
+	{
+		return ((1) : DWord);
+	}
+	class_007C_pent_cast_portable_spell(this, local_m02, local_m0E, local_m0C, local_m0A);
+	return ((1) : DWord);
+}
+
+// Derived: routine 0x3757, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process PENT::pent_cast_portable_spell(arg_04:String, arg_06:U8List, arg_08:U8List, arg_0A:U8List)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05:U8Bytes2; // X: untouched.
+	local_m07:U8List;
+	local_m09:U8List;
+	local_m0B:U8Word;
+	local_m0D:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m0B = class_0581_free_get_sorcery_spell_mana_cost(arg_04);
+	local_m0D = class_0581_free_get_sorcery_spell_index(arg_04);
+	Avatar.turnToFace(Avatar.getDirToItem(referent), 0, 7);
+	Avatar.realDoAnim(AS_ENTER_CAST, Avatar.getDir());
+	playSFX(54, 100);
+	Avatar.realDoAnim(31, Avatar.getDir());
+	local_m03 = class_007C_pent_place_spell_focus(arg_06, local_m0D, this);
+	local_m07 = class_007C_pent_place_spell_candles(arg_08, local_m0D, this);
+	local_m09 = class_007C_pent_split_spell_reagents(arg_0A, local_m07, local_m0D, this);
+	Avatar.realDoAnim(31, Avatar.getDir());
+	Avatar.realDoAnim(AS_EXIT_CAST, Avatar.getDir());
+	wait(10);
+	Avatar.realDoAnim(35, Avatar.getDir());
+	local_m01 = class_0581_free_empower_sorcery_focus(0x00000000, referent, arg_04, local_m0D, local_m0B, local_m03, local_m09);
+	if local_m01
+	{
+		Avatar.realDoAnim(34, Avatar.getDir());
+		Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+	}
+	if getAvatarInStasis()
+	{
+		setAvatarInStasis(0);
+	}
+}
+
+// Derived: routine 0x3940, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+unkroutine PENT::pent_find_center_focus(arg_00:U8DWord)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	[[PT_DEFAULT, u8_load(arg_00, 2)]];
+	local_m02 = 0;
+	local_m06 = 0;
+	foreach local_m04 where (type = 397) within 5 cells of u8_load(arg_00, 2) {
+		local_m08 = local_m04.getX();
+		local_m0A = local_m04.getY();
+		if local_m04.getX() < Item_getX(arg_00)
+		{
+			if local_m04.getY() < Item_getY(arg_00)
+			{
+				if getDistance(local_m04, u8_load(arg_00, 2)) >= 64
+				{
+					local_m02 = local_m04;
+					local_m06++;
+				}
+			}
+		}
+	}
+	if local_m06 > 1
+	{
+		local_m02 = 1;
+	}
+	temp = local_m02;
+	return;
+}
+
+// Derived: routine 0x39E7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine PENT::pent_find_lit_candles(arg_00:U8DWord)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:Item;
+	local_m08:U8List;
+	u8_search_begin(local_m06, 6, 65535, u8_load(arg_00, 2), <<37, u8_search_word(454), 64, 61, 102, u8_search_word(15), u8_search_word(14), u8_search_word(13), u8_search_word(11), u8_search_word(10), u8_search_word(9), 38, 36>>);
+	while u8_search_condition()
+	{
+		local_m02 = local_m06.getX();
+		local_m04 = local_m06.getY();
+		if class_0581_free_is_point_near_coordinates(local_m04, local_m02, Item_getY(arg_00) - 70, Item_getX(arg_00) - 70)
+		{
+			local_m08 += <<local_m06>>;
+		}
+		if class_0581_free_is_point_near_coordinates(local_m04, local_m02, Item_getY(arg_00) - 201, Item_getX(arg_00) - 41)
+		{
+			local_m08 += <<local_m06>>;
+		}
+		if class_0581_free_is_point_near_coordinates(local_m04, local_m02, Item_getY(arg_00) - 266, Item_getX(arg_00) - 167)
+		{
+			local_m08 += <<local_m06>>;
+		}
+		if class_0581_free_is_point_near_coordinates(local_m04, local_m02, Item_getY(arg_00) - 167, Item_getX(arg_00) - 266)
+		{
+			local_m08 += <<local_m06>>;
+		}
+		if class_0581_free_is_point_near_coordinates(local_m04, local_m02, Item_getY(arg_00) - 41, Item_getX(arg_00) - 201)
+		{
+			local_m08 += <<local_m06>>;
+		}
+		u8_search_advance();
+	}
+	u8_search_end();
+	return local_m08;
+}
+
+// Derived: routine 0x3B43, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine PENT::pent_identify_candle_incantation(arg_00:U8DWord, arg_04:U8List)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:String List;
+	local_m0A = <<"In Flam!", "An Flam!", "Flam Por!", "In Ort Flam!", "Sanct Flam!", "In Flam An Por!", "Vas Sanct Flam!", "In Flam Ylem!", "Vas Ort Flam!", "Kal Flam Corp Xen!", "An Flam Corp Xen!", "Kal Vas Flam Corp Xen!", "Something's not right. ">>;
+	foreach local_m08 in arg_04 {
+		local_m04 = local_m08.getX();
+		local_m06 = local_m08.getY();
+		local_m02 = local_m08.getFrame();
+		if class_0581_free_is_point_near_coordinates(local_m06, local_m04, Item_getY(arg_00) - 70, Item_getX(arg_00) - 70)
+		{
+			if (local_m02 >= 13) and (local_m02 <= 15)
+			{
+				local_m0A -= <<"An Flam!", "Sanct Flam!", "In Flam An Por!", "Vas Sanct Flam!">>;
+			}
+			else
+			{
+				local_m0A -= <<"In Flam!", "Flam Por!", "In Ort Flam!", "Vas Ort Flam!", "Kal Flam Corp Xen!", "An Flam Corp Xen!", "Kal Vas Flam Corp Xen!">>;
+			}
+		}
+		if class_0581_free_is_point_near_coordinates(local_m06, local_m04, Item_getY(arg_00) - 201, Item_getX(arg_00) - 41)
+		{
+			if (local_m02 >= 13) and (local_m02 <= 15)
+			{
+				local_m0A -= <<"An Flam!", "In Flam!", "Flam Por!", "Sanct Flam!", "Vas Sanct Flam!", "Vas Ort Flam!", "An Flam Corp Xen!">>;
+			}
+			else
+			{
+				local_m0A -= <<"In Ort Flam!", "In Flam An Por!", "In Flam Ylem!", "Kal Flam Corp Xen!", "Kal Vas Flam Corp Xen!">>;
+			}
+		}
+		if class_0581_free_is_point_near_coordinates(local_m06, local_m04, Item_getY(arg_00) - 266, Item_getX(arg_00) - 167)
+		{
+			if (local_m02 >= 13) and (local_m02 <= 15)
+			{
+				local_m0A -= <<"An Flam!", "In Flam!", "In Ort Flam!", "In Flam Ylem!">>;
+			}
+			else
+			{
+				local_m0A -= <<"Flam Por!", "Sanct Flam!", "In Flam An Por!", "Vas Sanct Flam!", "Vas Ort Flam!", "Kal Flam Corp Xen!", "An Flam Corp Xen!", "Kal Vas Flam Corp Xen!">>;
+			}
+		}
+		if class_0581_free_is_point_near_coordinates(local_m06, local_m04, Item_getY(arg_00) - 167, Item_getX(arg_00) - 266)
+		{
+			if (local_m02 >= 13) and (local_m02 <= 15)
+			{
+				local_m0A -= <<"An Flam!", "In Flam!", "In Flam Ylem!", "Vas Ort Flam!">>;
+			}
+			else
+			{
+				local_m0A -= <<"Flam Por!", "In Ort Flam!", "Sanct Flam!", "In Flam An Por!", "Vas Sanct Flam!", "Kal Flam Corp Xen!", "An Flam Corp Xen!", "Kal Vas Flam Corp Xen!">>;
+			}
+		}
+		if class_0581_free_is_point_near_coordinates(local_m06, local_m04, Item_getY(arg_00) - 41, Item_getX(arg_00) - 201)
+		{
+			if (local_m02 >= 13) and (local_m02 <= 15)
+			{
+				local_m0A -= <<"An Flam!", "In Flam!", "Flam Por!", "In Ort Flam!", "Sanct Flam!", "In Flam An Por!", "Kal Flam Corp Xen!">>;
+			}
+			else
+			{
+				local_m0A -= <<"Vas Sanct Flam!", "In Flam Ylem!", "Vas Ort Flam!", "An Flam Corp Xen!", "Kal Vas Flam Corp Xen!">>;
+			}
+		}
+	}
+	return local_m0A[1];
+}
+
+// Derived: routine 0x4206, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine PENT::pent_match_spell_reagents(arg_00:U8DWord, arg_04:String, arg_06:U8Word, arg_08:U8List)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8List;
+	local_m08:U8List;
+	local_m0A:U8List;
+	local_m0C:U8List;
+	local_m0E:U8List;
+	local_m10:U8Word;
+	local_m12:U8Word;
+	local_m14:U8Word;
+	local_m16:U8Word;
+	local_m18:U8Word;
+	local_m1A:U8Word;
+	local_m1C:U8Word;
+	local_m1D:U8Byte;
+	local_m1F:U8List;
+	foreach local_m02 in arg_08 {
+		local_m10 = local_m02.getX();
+		local_m12 = local_m02.getY();
+		if class_0581_free_is_point_near_coordinates(local_m12, local_m10, Item_getY(arg_00) - 70, Item_getX(arg_00) - 70)
+		{
+			foreach local_m04 where (type = 398) within 2 cells of local_m02 {
+				if getDistance(local_m02, local_m04) <= 48
+				{
+					local_m06 += <<local_m04>>;
+				}
+			}
+		}
+		if class_0581_free_is_point_near_coordinates(local_m12, local_m10, Item_getY(arg_00) - 201, Item_getX(arg_00) - 41)
+		{
+			foreach local_m04 where (type = 398) within 2 cells of local_m02 {
+				if getDistance(local_m02, local_m04) <= 48
+				{
+					local_m08 += <<local_m04>>;
+				}
+			}
+		}
+		if class_0581_free_is_point_near_coordinates(local_m12, local_m10, Item_getY(arg_00) - 266, Item_getX(arg_00) - 167)
+		{
+			foreach local_m04 where (type = 398) within 2 cells of local_m02 {
+				if getDistance(local_m02, local_m04) <= 48
+				{
+					local_m0A += <<local_m04>>;
+				}
+			}
+		}
+		if class_0581_free_is_point_near_coordinates(local_m12, local_m10, Item_getY(arg_00) - 167, Item_getX(arg_00) - 266)
+		{
+			foreach local_m04 where (type = 398) within 2 cells of local_m02 {
+				if getDistance(local_m02, local_m04) <= 48
+				{
+					local_m0C += <<local_m04>>;
+				}
+			}
+		}
+		if class_0581_free_is_point_near_coordinates(local_m12, local_m10, Item_getY(arg_00) - 41, Item_getX(arg_00) - 201)
+		{
+			foreach local_m04 where (type = 398) within 2 cells of local_m02 {
+				if getDistance(local_m02, local_m04) <= 48
+				{
+					local_m0E += <<local_m04>>;
+				}
+			}
+		}
+	}
+	local_m14 = 0;
+	local_m16 = 0;
+	local_m18 = 0;
+	local_m1A = 0;
+	local_m1C = 0;
+	local_m1D = 1;
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch arg_04
+	{
+		case "In Flam!"
+		{
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m18) or (not local_m1A)
+			{
+				local_m1D = 0;
+			}
+			if class_057C_focusCheck(arg_06) = 5
+			{
+				local_m1D = 0;
+			}
+		}
+		case "An Flam!"
+		{
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m18) or (not local_m1A)
+			{
+				local_m1D = 0;
+			}
+			if class_057C_focusCheck(arg_06) = 5
+			{
+				local_m1D = 0;
+			}
+		}
+		case "Flam Por!"
+		{
+			foreach local_m04 in local_m08 {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m16
+					{
+						local_m1F += <<local_m04>>;
+						local_m16++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0E {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m1C
+					{
+						local_m1F += <<local_m04>>;
+						local_m1C++;
+					}
+				}
+			}
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m16) or (not local_m1C)
+			{
+				local_m1D = 0;
+			}
+			if class_057C_focusCheck(arg_06) = 5
+			{
+				local_m1D = 0;
+			}
+		}
+		case "In Ort Flam!"
+		{
+			foreach local_m04 in local_m08 {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m16
+					{
+						local_m1F += <<local_m04>>;
+						local_m16++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0E {
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					if not local_m1C
+					{
+						local_m1F += <<local_m04>>;
+						local_m1C++;
+					}
+				}
+			}
+			if (not local_m16) or (not local_m1A) or (not local_m1C)
+			{
+				local_m1D = 0;
+			}
+			if class_057C_focusCheck(arg_06) = 5
+			{
+				local_m1D = 0;
+			}
+		}
+		case "Sanct Flam!"
+		{
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m18) or (not local_m1A)
+			{
+				local_m1D = 0;
+			}
+			if (class_057C_focusCheck(arg_06) = 2) or (class_057C_focusCheck(arg_06) = 5)
+			{
+				local_m1D = 0;
+			}
+		}
+		case "In Flam An Por!"
+		{
+			foreach local_m04 in local_m08 {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m16
+					{
+						local_m1F += <<local_m04>>;
+						local_m16++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m16) or (not local_m18) or (not local_m1A)
+			{
+				local_m1D = 0;
+			}
+			if (class_057C_focusCheck(arg_06) = 2) or (class_057C_focusCheck(arg_06) = 5)
+			{
+				local_m1D = 0;
+			}
+		}
+		case "Vas Sanct Flam!"
+		{
+			foreach local_m04 in local_m08 {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m16
+					{
+						local_m1F += <<local_m04>>;
+						local_m16++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0E {
+				if class_007C_pent_is_reagent_category(4, local_m04)
+				{
+					if not local_m1C
+					{
+						local_m1F += <<local_m04>>;
+						local_m1C++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m16) or (not local_m18) or (not local_m1A) or (not local_m1C)
+			{
+				local_m1D = 0;
+			}
+			if (class_057C_focusCheck(arg_06) = 2) or (class_057C_focusCheck(arg_06) = 5)
+			{
+				local_m1D = 0;
+			}
+		}
+		case "In Flam Ylem!"
+		{
+			foreach local_m04 in local_m08 {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m16
+					{
+						local_m1F += <<local_m04>>;
+						local_m16++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0E {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m1C
+					{
+						local_m1F += <<local_m04>>;
+						local_m1C++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			if (not local_m16) or (not local_m18) or (not local_m1A) or (not local_m1C)
+			{
+				local_m1D = 0;
+			}
+			if (class_057C_focusCheck(arg_06) = 2) or (class_057C_focusCheck(arg_06) = 3) or (class_057C_focusCheck(arg_06) = 5)
+			{
+				local_m1D = 0;
+			}
+		}
+		case "Vas Ort Flam!"
+		{
+			foreach local_m04 in local_m0E {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m1C
+					{
+						local_m1F += <<local_m04>>;
+						local_m1C++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m08 {
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					if not local_m16
+					{
+						local_m1F += <<local_m04>>;
+						local_m16++;
+					}
+				}
+			}
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(4, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m16) or (not local_m18) or (not local_m1C)
+			{
+				local_m1D = 0;
+			}
+			if (class_057C_focusCheck(arg_06) = 2) or (class_057C_focusCheck(arg_06) = 3) or (class_057C_focusCheck(arg_06) = 5)
+			{
+				local_m1D = 0;
+			}
+		}
+		case "Kal Flam Corp Xen!"
+		{
+			foreach local_m04 in local_m0E {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m1C
+					{
+						local_m1F += <<local_m04>>;
+						local_m1C++;
+					}
+				}
+			}
+			foreach local_m04 in local_m08 {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m16
+					{
+						local_m1F += <<local_m04>>;
+						local_m16++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(5, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m16) or (not local_m18) or (not local_m1A) or (not local_m1C)
+			{
+				local_m1D = 0;
+			}
+			if (class_057C_focusCheck(arg_06) = 2) or (class_057C_focusCheck(arg_06) = 3) or (class_057C_focusCheck(arg_06) = 4)
+			{
+				local_m1D = 0;
+			}
+		}
+		case "An Flam Corp Xen!"
+		{
+			foreach local_m04 in local_m08 {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m16
+					{
+						local_m1F += <<local_m04>>;
+						local_m16++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0E {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m1C
+					{
+						local_m1F += <<local_m04>>;
+						local_m1C++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(5, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m16) or (not local_m18) or (not local_m1A) or (not local_m1C)
+			{
+				local_m1D = 0;
+			}
+			if (class_057C_focusCheck(arg_06) = 2) or (class_057C_focusCheck(arg_06) = 3) or (class_057C_focusCheck(arg_06) = 4)
+			{
+				local_m1D = 0;
+			}
+		}
+		case "Kal Vas Flam Corp Xen!"
+		{
+			foreach local_m04 in local_m0E {
+				if class_007C_pent_is_reagent_category(0, local_m04)
+				{
+					if not local_m1C
+					{
+						local_m1F += <<local_m04>>;
+						local_m1C++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(1, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(2, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m08 {
+				if class_007C_pent_is_reagent_category(3, local_m04)
+				{
+					if not local_m16
+					{
+						local_m1F += <<local_m04>>;
+						local_m16++;
+					}
+				}
+			}
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(4, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m16) or (not local_m18) or (not local_m1A) or (not local_m1C)
+			{
+				local_m1D = 0;
+			}
+			local_m14 = 0;
+			local_m16 = 0;
+			local_m18 = 0;
+			local_m1A = 0;
+			local_m1C = 0;
+			foreach local_m04 in local_m06 {
+				if class_007C_pent_is_reagent_category(5, local_m04)
+				{
+					if not local_m14
+					{
+						local_m1F += <<local_m04>>;
+						local_m14++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0A {
+				if class_007C_pent_is_reagent_category(5, local_m04)
+				{
+					if not local_m18
+					{
+						local_m1F += <<local_m04>>;
+						local_m18++;
+					}
+				}
+			}
+			foreach local_m04 in local_m0C {
+				if class_007C_pent_is_reagent_category(5, local_m04)
+				{
+					if not local_m1A
+					{
+						local_m1F += <<local_m04>>;
+						local_m1A++;
+					}
+				}
+			}
+			if (not local_m14) or (not local_m18) or (not local_m1A)
+			{
+				local_m1D = 0;
+			}
+			if (class_057C_focusCheck(arg_06) = 2) or (class_057C_focusCheck(arg_06) = 3) or (class_057C_focusCheck(arg_06) = 4)
+			{
+				local_m1D = 0;
+			}
+		}
+	}
+	if not local_m1D
+	{
+		local_m04 = 0;
+		local_m1F = <<local_m04>>;
+	}
+	return local_m1F;
+}
+
+// Derived: routine 0x5336, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine PENT::pent_is_avatar_inside_ritual_area(arg_00:U8DWord)
+{
+	if (Avatar.getX() < (Item_getX(arg_00) - 32)) and (Avatar.getX() > (Item_getX(arg_00) - 224)) and (Avatar.getY() < (Item_getY(arg_00) - 32)) and (Avatar.getY() > (Item_getY(arg_00) - 224))
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+

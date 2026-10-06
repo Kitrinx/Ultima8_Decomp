@@ -1,0 +1,101 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00E3
+// FLEX slot: 229
+// Original offset: 0x000930C0
+// Naming evidence: E, exact object-1 linker name `HOURGLAS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/HOURGLAS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass HOURGLAS inherits Item
+{
+	process hourglas_anim_advance_hourglass_frames();
+	process hourglas_look_bark_clock();
+	process hourglas_use_announce_current_period();
+}
+
+// Derived: routine 0x0080, event mask 0x00000004.
+// R: `anim` identifies event 02; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process HOURGLAS::hourglas_anim_advance_hourglass_frames()
+{
+	wait(30);
+	if getFrame() = 0
+	{
+		setFrame(1);
+	}
+	else if getFrame() = 1
+	{
+		setFrame(0);
+		playSFX(122, 100, referent);
+	}
+	else if getFrame() = 2
+	{
+		setFrame(3);
+	}
+	else if getFrame() = 3
+	{
+		setFrame(2);
+		playSFX(122, 100, referent);
+	}
+}
+
+// Derived: routine 0x0130, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process HOURGLAS::hourglas_look_bark_clock()
+{
+	bark("clock ");
+}
+
+// Derived: routine 0x0159, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process HOURGLAS::hourglas_use_announce_current_period()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:U8Word;
+	local_m02 = "The time is now ";
+	local_m04 = 0;
+	if class_0581_getPeriod() = 0
+	{
+		local_m02 += "Bloodwatch.";
+		local_m04 = 1;
+	}
+	if class_0581_getPeriod() = 1
+	{
+		local_m02 += "FirstEbb.";
+		local_m04 = 1;
+	}
+	if class_0581_getPeriod() = 2
+	{
+		local_m02 += "DayTide.";
+		local_m04 = 1;
+	}
+	if class_0581_getPeriod() = 3
+	{
+		local_m02 += "ThreeMoons.";
+		local_m04 = 1;
+	}
+	if class_0581_getPeriod() = 4
+	{
+		local_m02 += "LastEbb.";
+		local_m04 = 1;
+	}
+	if class_0581_getPeriod() = 5
+	{
+		local_m02 += "EvenTide.";
+		local_m04 = 1;
+	}
+	if not local_m04
+	{
+		local_m02 = "This clock is broken ";
+	}
+	bark(u8_string_local_address(local_m02));
+}
+

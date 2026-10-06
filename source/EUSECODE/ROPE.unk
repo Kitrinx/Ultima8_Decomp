@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0215
+// FLEX slot: 535
+// Original offset: 0x000E6120
+// Naming evidence: E, exact object-1 linker name `ROPE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ROPE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass ROPE inherits Item
+{
+	process rope_look_describe_rope();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ROPE::rope_look_describe_rope()
+{
+	bark("rope ");
+}
+

@@ -1,0 +1,87 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00AF
+// FLEX slot: 177
+// Original offset: 0x000213FE
+// Naming evidence: E, exact object-1 linker name `BEDNS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BEDNS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass BEDNS inherits Item
+{
+	process bedns_look_bark_bed();
+	process bedns_use_rest_avatar_for_selected_periods();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BEDNS::bedns_look_bark_bed()
+{
+	bark("bed ");
+}
+
+// Derived: routine 0x00A7, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BEDNS::bedns_use_rest_avatar_for_selected_periods()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String List;
+	local_m04:String;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	if Avatar.isInCombat() or Avatar.areEnemiesNear()
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("This is no time to rest! ") -> return;
+	}
+	else
+	{
+		bark("Rest for how many periods of time? ");
+		local_m02 = <<"0", "1", "2", "3", "4", "5">>;
+		local_m04 = ask(local_m02);
+		local_m06 = 0;
+		if local_m04 = "0"
+		{
+			local_m06 = 0;
+		}
+		if local_m04 = "1"
+		{
+			local_m06 = 1;
+		}
+		if local_m04 = "2"
+		{
+			local_m06 = 2;
+		}
+		if local_m04 = "3"
+		{
+			local_m06 = 3;
+		}
+		if local_m04 = "4"
+		{
+			local_m06 = 4;
+		}
+		if local_m04 = "5"
+		{
+			local_m06 = 5;
+		}
+		if local_m06 > 0
+		{
+			local_m08 = getAvatarInStasis();
+			setAvatarInStasis(1);
+			FadeToBlack();
+			SetTimeInGameHours(TimeInGameHours() + (local_m06 * 4));
+			wait(100);
+			Avatar.setHp(Avatar.getStr() * 2);
+			Avatar.setMana(Avatar.getInt() * 2);
+			FadeFromBlack();
+			setAvatarInStasis(local_m08);
+		}
+	}
+}
+

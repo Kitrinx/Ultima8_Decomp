@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0271
+// FLEX slot: 627
+// Original offset: 0x000F5471
+// Naming evidence: E, exact object-1 linker name `SHORTMSH`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SHORTMSH.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass SHORTMSH inherits Item
+{
+	process shortmsh_look_describe_mushroom();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SHORTMSH::shortmsh_look_describe_mushroom()
+{
+	bark("mushroom  ");
+}
+

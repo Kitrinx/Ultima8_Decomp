@@ -1,0 +1,263 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02F3
+// FLEX slot: 757
+// Original offset: 0x000A6F99
+// Naming evidence: E, exact object-1 linker name `LAVASINK`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LAVASINK.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass LAVASINK inherits Item
+{
+	process lavasink_got_hit_raise_linked_stone_then_sink_self();
+	process lavasink_release_award_dexterity_and_sink_when_unoccupied();
+	process lavasink_look_describe_stepping_stone();
+	process lavasink_enter_fast_area_no_op();
+	process lavasink_leave_fast_area_no_op();
+	process lavasink_sink_stepping_stone();
+	process lavasink_lower_stepping_stone(arg_04:U8Byte);
+	process lavasink_raise_stepping_stone(arg_04:U8Byte);
+	process lavasink_replace_stone_with_lava();
+}
+
+// Derived: routine 0x0080, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LAVASINK::lavasink_got_hit_raise_linked_stone_then_sink_self()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:Item;
+	local_m04_w01:U8Bytes1;
+	local_m06:U8Word;
+	local_m02 = getQuality();
+	if getFrame() != 8
+	{
+		return;
+	}
+	if (local_m02 = 1) or (local_m02 >= 100)
+	{
+		if local_m02 >= 100
+		{
+			foreach local_m04 where (type = 755) within 20 cells of referent {
+				local_m06 = local_m04.getQuality();
+				local_m06--;
+				if local_m02 = local_m06
+				{
+					class_02F3_lavasink_raise_stepping_stone(u8_local_address(local_m04_w01), local_m04.getFrame());
+				}
+			}
+		}
+		lavasink_sink_stepping_stone();
+	}
+}
+
+// Derived: routine 0x0126, event mask 0x00000200.
+// R: `release` identifies event 09; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LAVASINK::lavasink_release_award_dexterity_and_sink_when_unoccupied()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m02 = 0;
+	local_m02 = getQuality();
+	if (local_m02 >= 10) and (local_m02 <= 99)
+	{
+		local_m02 = 0;
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m04 on surface below referent {
+			if local_m04 = 1
+			{
+				local_m02 = 1;
+			}
+		}
+		if not local_m02
+		{
+			AccumulateDexterity(15);
+			lavasink_sink_stepping_stone();
+		}
+	}
+}
+
+// Derived: routine 0x0194, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LAVASINK::lavasink_look_describe_stepping_stone()
+{
+	bark("stepping stone ");
+}
+
+// Derived: routine 0x01C6, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LAVASINK::lavasink_enter_fast_area_no_op()
+{
+}
+
+// Derived: routine 0x01D3, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LAVASINK::lavasink_leave_fast_area_no_op()
+{
+}
+
+// Derived: routine 0x01E0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LAVASINK::lavasink_sink_stepping_stone()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m01:U8Byte;
+	[[PT_ACTIVITY, referent]];
+	local_m01 = getFrame();
+	playSFX(205, 100, referent);
+	class_02F3_lavasink_lower_stepping_stone(this, local_m01);
+	lavasink_replace_stone_with_lava();
+	return;
+}
+
+// Derived: routine 0x022D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LAVASINK::lavasink_lower_stepping_stone(arg_04:U8Byte)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	[[PT_DEFAULT, referent]];
+	push();
+	setType(755);
+	if arg_04
+	{
+		setFrame(8);
+	}
+	else
+	{
+		setFrame(0);
+	}
+	pop(getX(), getY(), getZ());
+	for local_m06 = 1 to 8
+	{
+		local_m04 = 0;
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m02 on surface below referent {
+			if local_m02.getType() != 409
+			{
+				local_m02.push();
+				local_m04++;
+			}
+		}
+		push();
+		setFrame(getFrame() + 1);
+		pop(getX(), getY(), getZ());
+		if local_m04
+		{
+			for local_m08 = 1 to local_m04
+			{
+				local_m02 = getEtherealTop();
+				local_m02.pop(local_m02.getX(), local_m02.getY(), local_m02.getZ());
+			}
+		}
+		wait(8);
+	}
+}
+
+// Derived: routine 0x0374, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LAVASINK::lavasink_raise_stepping_stone(arg_04:U8Byte)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	[[PT_DEFAULT, referent]];
+	setType(755);
+	if arg_04
+	{
+		setFrame(0);
+	}
+	else
+	{
+		setFrame(8);
+	}
+	for local_m06 = 1 to 8
+	{
+		local_m04 = 0;
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m02 on surface below referent {
+			if local_m02.getType() != 409
+			{
+				local_m02.push();
+				local_m04++;
+			}
+		}
+		push();
+		setFrame(getFrame() - 1);
+		pop(getX(), getY(), getZ() + 1);
+		if local_m04
+		{
+			for local_m08 = 1 to local_m04
+			{
+				local_m02 = getEtherealTop();
+				local_m02.pop(local_m02.getX(), local_m02.getY(), local_m02.getZ() + 1);
+			}
+		}
+		wait(5);
+	}
+	push();
+	setType(755);
+	if arg_04
+	{
+		setFrame(1);
+	}
+	else
+	{
+		setFrame(0);
+	}
+	pop(getX(), getY(), getZ());
+}
+
+// Derived: routine 0x04E8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LAVASINK::lavasink_replace_stone_with_lava()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	[[PT_DEFAULT, referent]];
+	// X: directional surface search; no Origin spelling is known.
+	foreach local_m02 on surface below referent {
+		if local_m02.getType() != 409
+		{
+			local_m02.push();
+			local_m04++;
+		}
+	}
+	push();
+	setType(763);
+	setFrame(0);
+	pop();
+	if local_m04
+	{
+		for local_m06 = 1 to local_m04
+		{
+			local_m02 = getEtherealTop();
+			local_m02.pop();
+			local_m02.fall();
+		}
+	}
+}
+

@@ -1,0 +1,38 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00E1
+// FLEX slot: 227
+// Original offset: 0x00124C3A
+// Naming evidence: E, exact object-1 linker name `WTABLE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/WTABLE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass WTABLE inherits Item
+{
+	process wtable_look_bark_table();
+	process wtable_got_hit_change_frame(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process WTABLE::wtable_look_bark_table()
+{
+	bark("table ");
+}
+
+// Derived: routine 0x00A9, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process WTABLE::wtable_got_hit_change_frame(arg_04:U8Word)
+{
+	if not arg_04
+	{
+		setFrame(1);
+	}
+}
+

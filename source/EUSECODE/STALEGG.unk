@@ -1,0 +1,49 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x049D
+// FLEX slot: 1183
+// Original offset: 0x000FA97F
+// Naming evidence: E, exact object-1 linker name `STALEGG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/STALEGG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass STALEGG inherits Egg
+{
+	process stalegg_hatch_quake_and_drop_stalactite();
+	process stalegg_leave_fast_area_clear_stalactite_egg_quality();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process STALEGG::stalegg_hatch_quake_and_drop_stalactite()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	if Egg_getEggId(this) = 1
+	{
+		return;
+	}
+	Egg_setEggId(1, this);
+	Camera_startQuake(1);
+	playSFX(49, 200);
+	wait(60);
+	Item_create(0, 330, u8_local_address(local_m02_w01));
+	local_m02.pop(getX(), getY(), 245);
+	local_m02.orStatus(2);
+	Camera_stopQuake();
+	local_m02.hurl(0, 0, 0, 4);
+}
+
+// Derived: routine 0x0122, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process STALEGG::stalegg_leave_fast_area_clear_stalactite_egg_quality()
+{
+	setQuality(0);
+}
+

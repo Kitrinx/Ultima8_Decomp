@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0245
+// FLEX slot: 583
+// Original offset: 0x000A7524
+// Naming evidence: E, exact object-1 linker name `LAYGHOUL`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LAYGHOUL.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass LAYGHOUL inherits Item
+{
+	process layghoul_look_describe_ghoul();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LAYGHOUL::layghoul_look_describe_ghoul()
+{
+	bark("ghoul ");
+}
+

@@ -1,0 +1,26 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00A6
+// FLEX slot: 168
+// Original offset: 0x0007663B
+// Naming evidence: E, exact object-1 linker name `FIRESTRM`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FIRESTRM.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass FIRESTRM inherits Item
+{
+	process firestrm_hit_play_sound_and_destroy_item();
+}
+
+// Derived: routine 0x0080, event mask 0x00000020.
+// R: `hit` identifies event 05; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIRESTRM::firestrm_hit_play_sound_and_destroy_item()
+{
+	playSFX(31, 100);
+	destroy();
+}
+

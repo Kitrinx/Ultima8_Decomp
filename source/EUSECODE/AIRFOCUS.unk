@@ -1,0 +1,143 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x018C
+// FLEX slot: 398
+// Original offset: 0x00005123
+// Naming evidence: E, exact object-1 linker name `AIRFOCUS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/AIRFOCUS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass AIRFOCUS inherits Item
+{
+	process airfocus_look_bark_description_by_frame();
+	process airfocus_use_dispatch_air_spell_by_frame();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process AIRFOCUS::airfocus_look_bark_description_by_frame()
+{
+	if getFrame() = 0
+	{
+		bark("sextant focus ");
+	}
+	if getFrame() = 1
+	{
+		bark("pointing hand focus ");
+	}
+	if getFrame() = 2
+	{
+		bark("bracer focus ");
+	}
+	if getFrame() = 3
+	{
+		bark("open hand focus ");
+	}
+	if getFrame() = 4
+	{
+		bark("closed eye focus ");
+	}
+	if getFrame() = 5
+	{
+		bark("wings focus ");
+	}
+	if getFrame() = 6
+	{
+		bark("chain focus ");
+	}
+	if getFrame() = 7
+	{
+		bark("fist focus ");
+	}
+	if getFrame() = 8
+	{
+		bark("Divination focus ");
+	}
+	if getFrame() = 9
+	{
+		bark("Healing Touch focus ");
+	}
+	if getFrame() = 10
+	{
+		bark("Aerial Servant focus ");
+	}
+	if getFrame() = 11
+	{
+		bark("Restoration focus ");
+	}
+	if getFrame() = 12
+	{
+		bark("Fade From Sight focus ");
+	}
+	if getFrame() = 13
+	{
+		bark("Air Walk focus ");
+	}
+	if getFrame() = 14
+	{
+		bark("Hear Truth focus ");
+	}
+	if getFrame() = 15
+	{
+		bark("Intervention focus ");
+	}
+	if getFrame() = 16
+	{
+		bark("open eye focus ");
+	}
+	if getFrame() = 17
+	{
+		bark("Reveal focus ");
+	}
+}
+
+// Derived: routine 0x044B, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process AIRFOCUS::airfocus_use_dispatch_air_spell_by_frame()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = 0;
+	if getFrame() = 8
+	{
+		class_0596_airspel_cast_divination(1);
+	}
+	if getFrame() = 9
+	{
+		Avatar.healingTouch(1);
+	}
+	if getFrame() = 10
+	{
+		class_0596_aerialServant(1);
+	}
+	if getFrame() = 11
+	{
+		class_0596_restoration(1, 1);
+	}
+	if getFrame() = 12
+	{
+		class_0596_fadeFromSight(1);
+	}
+	if getFrame() = 13
+	{
+		class_0596_airWalk(1);
+	}
+	if getFrame() = 14
+	{
+		class_0596_hearTruth(1);
+	}
+	if getFrame() = 15
+	{
+		class_0596_intervention(1);
+	}
+	if getFrame() = 17
+	{
+		class_0596_reveal(1);
+	}
+}
+

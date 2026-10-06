@@ -1,0 +1,125 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0052
+// FLEX slot: 84
+// Original offset: 0x0009A34F
+// Naming evidence: E, exact object-1 linker name `KEY`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/KEY.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass KEY inherits Item
+{
+	process key_look_bark_description_by_quality();
+	process key_use_forward_to_keyring_use_on_target();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KEY::key_look_bark_description_by_quality()
+{
+	if getQuality() = 0
+	{
+		bark("key blank ");
+	}
+	else if getQuality() = 8
+	{
+		bark("silver mine key ");
+	}
+	else if getQuality() = 9
+	{
+		bark("key ");
+	}
+	else if getQuality() = 10
+	{
+		bark("key ");
+	}
+	else if getQuality() = 16
+	{
+		bark("key ");
+	}
+	else if getQuality() = 48
+	{
+		bark("key ");
+	}
+	else if getQuality() = 59
+	{
+		bark("Key of the Conventicler ");
+	}
+	else if getQuality() = 69
+	{
+		bark("Disciple's key ");
+	}
+	else if getQuality() = 70
+	{
+		bark("Acolyte's key ");
+	}
+	else if getQuality() = 71
+	{
+		bark("Master's key ");
+	}
+	else if getQuality() = 80
+	{
+		bark("Key ");
+	}
+	else if getQuality() = 81
+	{
+		bark("Key ");
+	}
+	else if getQuality() = 82
+	{
+		bark("Key ");
+	}
+	else if getQuality() = 83
+	{
+		bark("Key ");
+	}
+	else if getQuality() = 84
+	{
+		bark("Key ");
+	}
+	else if getQuality() = 90
+	{
+		bark("Devon's key ");
+	}
+	else if getQuality() = 91
+	{
+		bark("Key ");
+	}
+	else if getQuality() = 92
+	{
+		bark("Key ");
+	}
+	else if getQuality() = 93
+	{
+		bark("Key ");
+	}
+	else if getQuality() = 97
+	{
+		bark("Key ");
+	}
+	else if getQuality() = 98
+	{
+		bark("Key ");
+	}
+	else if getQuality() = 99
+	{
+		bark("Key ");
+	}
+	else
+	{
+		bark("key ");
+	}
+}
+
+// Derived: routine 0x04BB, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KEY::key_use_forward_to_keyring_use_on_target()
+{
+	class_004F_keyring_use_on_target(this);
+}
+

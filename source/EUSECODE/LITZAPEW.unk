@@ -1,0 +1,101 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x003B
+// FLEX slot: 61
+// Original offset: 0x000A9C30
+// Naming evidence: E, exact object-1 linker name `LITZAPEW`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LITZAPEW.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass LITZAPEW inherits Item
+{
+	process litzapew_enter_fast_area_start_lightning_trap();
+	process litzapew_leave_fast_area_stop_lightning_trap_process();
+	process litzapew_run_lightning_trap();
+	process litzapew_play_flash_animation();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LITZAPEW::litzapew_enter_fast_area_start_lightning_trap()
+{
+	setFrame(0);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_003B_litzapew_run_lightning_trap(this) -> return;
+}
+
+// Derived: routine 0x00A2, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LITZAPEW::litzapew_leave_fast_area_stop_lightning_trap_process()
+{
+	killProcess(referent, 6);
+}
+
+// Derived: routine 0x00BC, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITZAPEW::litzapew_run_lightning_trap()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:Npc;
+	local_m04_w01:U8Bytes1;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ANIM, referent]];
+		wait(250);
+	}
+	process
+	{
+		urandom(600 + urandom(400));
+		setFrame(1);
+		wait(60);
+		setFrame(2);
+		wait(30);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_003B_litzapew_play_flash_animation(this) -> return;
+		foreach local_m02 within 5 cells of referent {
+			if Item_overlaps(referent, u8_local_address(local_m02_w01))
+			{
+				if local_m02.isNpc()
+				{
+					local_m04 = local_m02;
+					if not local_m04.isDead()
+					{
+						class_057C_receiveHit(urandom(5) + 5, local_m04.getDir(), referent, u8_local_address(local_m04_w01));
+					}
+				}
+			}
+		}
+		wait(30);
+	}
+}
+
+// Derived: routine 0x01C3, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITZAPEW::litzapew_play_flash_animation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_ANIM, referent]];
+	playSFX(173, 100, referent);
+	for local_m02 = 3 to 5
+	{
+		setFrame(local_m02);
+		wait(7);
+	}
+	setFrame(2);
+	wait(30);
+	setFrame(1);
+	wait(15);
+	setFrame(0);
+}
+

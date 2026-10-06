@@ -1,0 +1,124 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04B4
+// FLEX slot: 1206
+// Original offset: 0x0010FBA7
+// Naming evidence: E, exact object-1 linker name `TRIALHAT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/TRIALHAT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass TRIALHAT inherits Egg
+{
+	process trialhat_hatch_route_avatar_through_sorcery_trial();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TRIALHAT::trialhat_hatch_route_avatar_through_sorcery_trial()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:Npc;
+	local_m04_w01:U8Bytes1;
+	local_m06:Item List;
+	local_m0B:U8Bytes5;
+	local_m07:U8Byte;
+	local_m09:U8Word;
+	local_m0B_w02:U8Word;
+	if Avatar.getMap() = 14
+	{
+		if (MalchirTest = 0) or (MalchirTest >= 6)
+		{
+			Item_use(u8_stack_ref(27));
+		}
+	}
+	else
+	{
+		if not getAvatarInStasis()
+		{
+			setAvatarInStasis(1);
+		}
+		local_m0B_w02 = getX() + 64;
+		local_m09 = getY() + 128;
+		local_m07 = getZ() + 8;
+		Malchir.teleport(getX() - 32, getY() + 32, 0, 12);
+		class_057C_toggleStatus(27, 16, u8_stack_address(-2));
+		Malchir.realDoAnim(AS_STAND, Malchir.getDirToItem(Avatar:Referent));
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m0B) -> return;
+		wait(20);
+		Malchir.teleport(getX() - 32, getY() + 32, getZ(), 12);
+		wait(25);
+		class_057C_toggleStatus(27, 16, u8_stack_address(-2));
+		wait(30);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(1, 6, 0, Avatar.getDirToItem(Malchir:Referent)) -> return;
+		scrollTo(Malchir.getX(), Malchir.getY(), Malchir.getZ() + 20, 20);
+		Camera::setCenterOn(27);
+		Item_bark(u8_string_address("Greetings Disciple.*You will remain within this fortress until you have found my inner sanctum, or you are dead. Even then, you shall not leave this place. Within the chamber beyond this hall you will see the fate that befalls those who fail. The Trials of the Obsidian Fortress begin now. "), u8_stack_ref(27));
+		foreach local_m02 where (type = 684) within 10 cells of Malchir {
+			Malchir.turnToFace(Malchir.getDirToItem(local_m02), 0, 10);
+			Malchir.realDoAnim(AS_ENTER_CAST, Malchir.getDir());
+			Malchir.realDoAnim(30, Malchir.getDir());
+			createSprite(578, 0, 17, 2, local_m02.getX() + 336, local_m02.getY() + 336, local_m02.getZ() + 56);
+			playSFX(158, 100, local_m02);
+			Npc_create(8, 96, u8_local_address(local_m04_w01));
+			local_m06 += <<local_m04>>;
+			local_m04.setDex(class_0581_randRange(16, 23));
+			local_m04.setHp(class_0581_randRange(60, 90));
+			wait(25);
+			local_m04.pop(local_m02.getX(), local_m02.getY(), local_m02.getZ());
+			if local_m02.getFrame() = 1
+			{
+				class_057C_realDoAnim(u8_local_address(local_m04_w01), 2, 1);
+			}
+			else
+			{
+				class_057C_realDoAnim(u8_local_address(local_m04_w01), 2, 3);
+			}
+			local_m04.push();
+			local_m04.pop(local_m02.getX(), local_m02.getY(), local_m02.getZ());
+			class_057C_toggleStatus(128, u8_local_address(local_m04_w01));
+			local_m02.destroy();
+			Malchir.realDoAnim(30, Malchir.getDir());
+			Malchir.realDoAnim(AS_EXIT_CAST, Malchir.getDir());
+		}
+		Malchir.turnToFace(Malchir.getDirToItem(Avatar:Referent), 0, 10);
+		Item_bark(u8_string_address("Guardians! Do your duties! "), u8_stack_ref(27));
+		foreach local_m04 in local_m06 {
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_057C_realDoAnim(u8_local_address(local_m04_w01), local_m04.getDir(), 47) -> return;
+			wait(35);
+		}
+		Item_bark(u8_string_address("Farewell, Disciple. I sincerely hope you survive to become an Acolyte. Good luck. "), u8_stack_ref(27));
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(27, Malchir.getDir(), 27) -> return;
+		wait(35);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m0B) -> return;
+		wait(20);
+		class_057C_toggleStatus(27, 16, u8_stack_address(-2));
+		wait(40);
+		Camera::setCenterOn(0);
+		Malchir.teleport(getX() - 32, getY() + 32, 0, 12);
+		class_057C_toggleStatus(27, 16, u8_stack_address(-2));
+		scrollTo(Avatar.getX(), Avatar.getY(), Avatar.getZ() + 20, 20);
+		Camera::setCenterOn(1);
+		if getAvatarInStasis()
+		{
+			setAvatarInStasis(0);
+		}
+		foreach local_m04 in local_m06 {
+			local_m04.setTarget(1);
+			wait(35);
+		}
+		[[527, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+		destroy();
+	}
+}
+

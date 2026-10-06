@@ -1,0 +1,148 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x049A
+// FLEX slot: 1180
+// Original offset: 0x000470F4
+// Naming evidence: E, exact object-1 linker name `CEMHAT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/CEMHAT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass CEMHAT inherits Egg
+{
+	process cemhat_hatch_reconfigure_cemetery_items();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process CEMHAT::cemhat_hatch_reconfigure_cemetery_items()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:Referent;
+	local_m06:Npc;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0F:U8Bytes5;
+	local_m0B:U8Byte;
+	local_m0D:U8Word;
+	local_m0F_w02:U8Word;
+	if toldDagger and (not toldDaggerDone)
+	{
+		foreach local_m02 where (type = 754) within 200 cells of referent {
+			local_m02.destroy();
+		}
+		Item_create(1, 196, u8_local_address(local_m02_w01));
+		local_m02.pop(8223, 24287, 64);
+		foreach local_m02 where (type = 550) within 200 cells of referent {
+			local_m02.destroy();
+		}
+		Item_create(0, 572, u8_local_address(local_m02_w01));
+		local_m02.pop(7925, 24863, 8);
+		toldDaggerDone = 1;
+	}
+	if haveDagger
+	{
+		resetRef(21, PT_ACTIVITY);
+		resetRef(21, PT_PATHFIND);
+		ceremonySoon = 1;
+		Npc_teleport(6, 8, 24831, 7839, u8_stack_ref(21));
+		class_057C_realDoAnim(21, 2, 2);
+	}
+	if lithosMet and (not lithosMetDone)
+	{
+		foreach local_m02 where (type = 572) within 200 cells of referent {
+			local_m02.destroy();
+		}
+		Item_create(0, 550, u8_local_address(local_m02_w01));
+		local_m02.pop(7925, 24863, 8);
+		local_m0F_w02 = 8703;
+		local_m0D = 23711;
+		local_m0B = 8;
+		local_m04 = class_0581_createNear(local_m0F, 115, 0, 0, 1);
+		if local_m04
+		{
+			foreach local_m02 within 200 cells of Avatar {
+				if local_m02.getZ() > 8
+				{
+					local_m08 = local_m02.getX();
+					local_m0A = local_m02.getY();
+					if (local_m08 > 9087) and (local_m08 < 9535) and (local_m0A > 23743) and (local_m0A < 24319)
+					{
+						if local_m02.isNpc()
+						{
+							if local_m02 != 1
+							{
+								local_m06 = local_m02;
+								local_m06.teleport(random(1000), random(1000), 0, 1);
+							}
+						}
+						else
+						{
+							local_m02.push();
+							local_m02.pop(local_m04);
+						}
+					}
+				}
+			}
+		}
+		Item_create(1, 453, u8_local_address(local_m02_w01));
+		local_m02.pop(9343, 24191, 8);
+		Item_create(1, 453, u8_local_address(local_m02_w01));
+		local_m02.pop(9087, 24191, 8);
+		Item_create(1, 453, u8_local_address(local_m02_w01));
+		local_m02.pop(9119, 23743, 8);
+		Item_create(1, 453, u8_local_address(local_m02_w01));
+		local_m02.pop(9343, 23711, 8);
+		Item_create(0, 629, u8_local_address(local_m02_w01));
+		local_m02.pop(9471, 24191, 8);
+		Item_create(0, 629, u8_local_address(local_m02_w01));
+		local_m02.pop(9215, 24191, 8);
+		Item_create(0, 629, u8_local_address(local_m02_w01));
+		local_m02.pop(9215, 23711, 8);
+		Item_create(0, 629, u8_local_address(local_m02_w01));
+		local_m02.pop(9471, 23711, 8);
+		Item_create(2, 331, u8_local_address(local_m02_w01));
+		local_m02.pop(9471, 24191, 32);
+		Item_create(2, 331, u8_local_address(local_m02_w01));
+		local_m02.pop(9215, 24191, 32);
+		Item_create(2, 331, u8_local_address(local_m02_w01));
+		local_m02.pop(9215, 23711, 32);
+		Item_create(2, 331, u8_local_address(local_m02_w01));
+		local_m02.pop(9471, 23711, 32);
+		Item_create(0, 263, u8_local_address(local_m02_w01));
+		local_m02.pop(9599, 23999, 8);
+		Item_create(1, 605, u8_local_address(local_m02_w01));
+		local_m02.pop(9567, 23967, 24);
+		Item_create(0, 628, u8_local_address(local_m02_w01));
+		local_m02.pop(9471, 24063, 8);
+		lithosMetDone = 1;
+	}
+	if lothInterred
+	{
+		u8_search_begin(local_m02, 2, 100 * 32, referent, <<37, u8_search_word(453), 64, 61, 37, u8_search_word(5), 96, 60, 38, 36>>);
+		while u8_search_condition()
+		{
+			local_m02.destroy();
+			u8_search_advance();
+		}
+		u8_search_end();
+		foreach local_m02 where (type = 629) within 200 cells of referent {
+			local_m02.destroy();
+		}
+		foreach local_m02 where (type = 331) within 200 cells of referent {
+			local_m02.destroy();
+		}
+		foreach local_m02 where (type = 263) within 200 cells of referent {
+			local_m02.destroy();
+		}
+		foreach local_m02 where (type = 605) within 200 cells of referent {
+			local_m02.destroy();
+		}
+	}
+}
+

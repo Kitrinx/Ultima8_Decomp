@@ -1,0 +1,675 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0408
+// FLEX slot: 1034
+// Original offset: 0x0010636E
+// Naming evidence: E, exact object-1 linker name `TARNA`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/TARNA.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+globalflag saidOrlok;
+
+npcclass TARNA inherits Npc
+{
+	process tarna_look_bark_identity_description();
+	process tarna_schedule_update_period_schedule_and_safe_teleport();
+	process tarna_enter_fast_area_set_npc_activity();
+	process tarna_leave_fast_area_stop_active_process();
+	process tarna_use_run_conversation();
+	process [[PT_DEFAULT, referent]] tarna_question_newcomer();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TARNA::tarna_look_bark_identity_description()
+{
+	if tarnaName
+	{
+		bark("Tarna");
+	}
+	else
+	{
+		bark("guard ");
+	}
+}
+
+// Derived: routine 0x00CE, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TARNA::tarna_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	if (not toranDead) or (isDead() = 1)
+	{
+		return;
+	}
+	if class_0581_getPeriod() = 0
+	{
+		local_m05_w02 = 17466;
+		local_m03 = 18020;
+		local_m01 = 48;
+		local_m07 = 41;
+	}
+	if (class_0581_getPeriod() = 1) or (class_0581_getPeriod() = 5)
+	{
+		local_m05_w02 = 22079;
+		local_m03 = 10975;
+		local_m01 = 48;
+		local_m07 = 41;
+	}
+	if class_0581_getPeriod() = 2
+	{
+		local_m05_w02 = 18303;
+		local_m03 = 3487;
+		local_m01 = 48;
+		local_m07 = 39;
+	}
+	if class_0581_getPeriod() = 3
+	{
+		local_m05_w02 = 13055;
+		local_m03 = 7135;
+		local_m01 = 48;
+		local_m07 = 39;
+	}
+	if class_0581_getPeriod() = 4
+	{
+		local_m05_w02 = 13631;
+		local_m03 = 11519;
+		local_m01 = 48;
+		local_m07 = 39;
+	}
+	class_057C_safeTeleport(this, local_m05, local_m07);
+}
+
+// Derived: routine 0x01AA, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TARNA::tarna_enter_fast_area_set_npc_activity()
+{
+	if (not toranDead) or (isDead() = 1)
+	{
+		return;
+	}
+	cSetActivity(0);
+}
+
+// Derived: routine 0x01E0, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TARNA::tarna_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x01FB, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TARNA::tarna_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m07:U8Bytes1; // X: untouched.
+	local_m08:U8Byte;
+	local_m09:U8Bytes1; // X: untouched.
+	local_m0A:U8Byte;
+	local_m0B:U8Byte;
+	local_m0C:U8Byte;
+	local_m0E:U8Word;
+	local_m10:String List;
+	local_m12:U8Word;
+	if not toranDead
+	{
+		return;
+	}
+	enterConvo();
+	local_m0E = 0;
+	if hydrosFree
+	{
+		local_m0E++;
+	}
+	if hasHeart
+	{
+		local_m0E++;
+	}
+	if pyrosFree
+	{
+		local_m0E++;
+	}
+	if local_m0E > 1
+	{
+		bark("Run, you fool! The Titans have been angered. No one is safe from their wrath. ");
+		exitConvo();
+		return;
+	}
+	else if hasHeart
+	{
+		bark("Be off with you. There is no time for conversation when the walking dead march upon the city! ");
+		exitConvo();
+		return;
+	}
+	local_m10 = <<"Goodbye. ">>;
+	if tarnaMet = 0
+	{
+		tarna_question_newcomer();
+		return;
+	}
+	else
+	{
+		if tarnaMet = 1
+		{
+			if getMap() = 3
+			{
+				if not devonInRule
+				{
+					bark("I told you to move along! Bother me with your questions later. ");
+					exitConvo();
+					return;
+				}
+			}
+			else if tarnaName
+			{
+				local_m10 += <<"Hello, Tarna. ">>;
+			}
+			else if not tarnaName
+			{
+				local_m10 += <<"Hello. ", "What is your name? ">>;
+			}
+			u8goto label_0482;
+		}
+	}
+	u8label label_0482:
+	if tarnaAvaName
+	{
+		local_m06 = "Greetings, ";
+		local_m06 += getName();
+		local_m06 += ".";
+		bark(u8_string_local_address(local_m06));
+	}
+	else
+	{
+		bark("Greetings. ");
+	}
+	u8label label_04E9:
+	u8goto label_2DED if not (local_m02 != "Goodbye. ");
+	if (local_m0A = 0) and (local_m0B = 0)
+	{
+		local_m10 -= <<"Goodbye. ">>;
+		local_m10 += <<"Goodbye. ">>;
+	}
+	local_m02 = ask(local_m10);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m02
+	{
+		case "What is your name? "
+		{
+			bark("I am Tarna, guardswoman of Tenebrae. Please tell me what it is you wish to know so that I might get on with my business. ");
+			if not tarnaJob
+			{
+				local_m10 ^= <<"Tell me about your job. ">>;
+			}
+			local_m10 -= <<"What is your name? ">>;
+			if not tarnaTenebraed
+			{
+				local_m10 ^= <<"Tell me about Tenebrae. ">>;
+			}
+			local_m10 -= <<"Hello. ">>;
+			local_m10 -= <<"A chat. ", "Information. ">>;
+			tarnaName = 1;
+		}
+		case "Hello, Tarna. ", "Hello. "
+		{
+			local_m10 -= <<"Hello, Tarna. ", "Hello. ">>;
+			if tarnaAvaName
+			{
+				bark("You are, of course, staying out of trouble I trust, " + getName() + ".");
+			}
+			else
+			{
+				bark("You are, of course, staying out of trouble I trust. ");
+			}
+			bark("Have you stopped me to chat or for more information? ");
+			local_m10 ^= <<"A chat. ", "Information. ">>;
+		}
+		case ""
+		{
+			if local_m08 = 0
+			{
+				bark("Waste not my time! If you have need to speak, then do so. ");
+				local_m08 = 1;
+			}
+			else
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Be off! ") -> return;
+				exitConvo();
+				return;
+			}
+		}
+		case "A chat. "
+		{
+			local_m10 -= <<"A chat. ">>;
+			bark("I am sorry but I have not the time for such pleasantries. Good day. ");
+			exitConvo();
+			return;
+		}
+		case "Information. "
+		{
+			local_m10 -= <<"Information. ">>;
+			if hasBreath
+			{
+				bark("I have no time to talk. Now that the Theurgists have lost their healing powers, the guards are on extra duty to insure no trouble breaks out. ");
+				exitConvo();
+				return;
+			}
+			else if devonInRule
+			{
+				bark("I am sorry, but with the change in rule, I am too busy dealing with Devon to answer your questions. ");
+				exitConvo();
+				return;
+			}
+			else
+			{
+				local_m12 = 0;
+				if not tarnaTenebraed
+				{
+					local_m10 ^= <<"Tell me about Tenebrae. ">>;
+					local_m12++;
+				}
+				if not tarnaJob
+				{
+					local_m10 ^= <<"Tell me about your job. ">>;
+					local_m12++;
+				}
+				if not saidOrlok
+				{
+					local_m10 ^= <<"Who is Orlok? ">>;
+					local_m12++;
+				}
+				if local_m12 = 0
+				{
+					bark("I am sorry but I have not the time for such pleasantries. Good day. ");
+					exitConvo();
+					return;
+				}
+				else
+				{
+					bark("What information would you like? Surely by now you have seen enough of the city to have learned where everything is. Or was the Shattered Skull too busy for Orlok to tell you one of his tales? ");
+				}
+			}
+			local_m10 -= <<"A chat. ">>;
+		}
+		case "Who is Orlok? "
+		{
+			local_m10 -= <<"Who is Orlok? ">>;
+			bark("Orlok is the bartender at the tavern. Though his stories are rather long on time and short on truth, they are quite entertaining. And, better yet, he fills his tankards to the top. However, watch how many you have. If you cause too much trouble, you might get thrown out -- if not by Jenna, then by me. ");
+			local_m10 ^= <<"Where is the tavern? ", "Who is Jenna? ">>;
+			saidOrlok = 1;
+		}
+		case "Where is the tavern? "
+		{
+			local_m10 -= <<"Where is the tavern? ", "Who is Jenna? ">>;
+			bark("It is in the Southwest part of town. 'Tis hard to miss, it's such a large building. ");
+		}
+		case "Who is Jenna? "
+		{
+			local_m10 -= <<"Where is the tavern? ", "Who is Jenna? ">>;
+			bark("The barmaid? She is the daughter of the Captain of the Guard. She is feisty -- more like her father than he would care to admit. Judging the likes of you, she would come out the better in a fight. ");
+		}
+		case "Tell me about Tenebrae. "
+		{
+			bark("I suppose that should not be too difficult, since I have lived here my entire life. Some say Tenebrae does not need to be anything more than a bastion of security, since there is no other measure of civilization around, but I disagree. Give me my home and my blade and I'll protect her -- Tenebrae -- with my life. ");
+			tarnaTenebraed = 1;
+			local_m10 -= <<"Tell me about Tenebrae. ">>;
+			local_m10 ^= <<"Bastion of security from what? ", "No other measure? ">>;
+		}
+		case "Bastion of security from what? "
+		{
+			if nowCaretaker
+			{
+				bark("Well, initially, from the Zealans. That is why the city is divided into three sections. The rulers wanted addition defenses for the palace should the outer walls be breached.  Now, however, the walls are little more than divisions between the decent people and\x09the Necromancers. Not to, ah, imply that you or the Necromancers are -indecent- or any such thing, of course. ");
+			}
+			else
+			{
+				bark("Well, initially, from the Zealans. That is why the city is divided into three sections. The rulers wanted additional defenses for the palace should the outer walls be breached. Now, however, the walls are nothing more than divisions between the classes and boundaries for the weather... and the cemetery. ");
+				local_m10 ^= <<"Boundary for the weather? ", "What about the cemetery? ">>;
+				local_m0C = 1;
+			}
+			local_m10 -= <<"Bastion of security from what? ">>;
+			if not zealanHis
+			{
+				local_m10 ^= <<"Zealans? ", "Goodbye. ">>;
+			}
+		}
+		case "Zealans? "
+		{
+			bark("Indeed, you are a stranger not to know of the despicable Zealans. They are, or -were-, an insane collection of people who were too blind to recognize the power of the Titans. They foolishly and tenaciously held on to an archaic set of beliefs, and when the Titans demonstrated their might and authority, the Zealans refused to acknowledge the truth. ");
+			zealanHis = 1;
+			local_m10 -= <<"Zealans? ">>;
+			local_m10 = <<"What about the cemetery? ">>;
+			local_m10 ^= <<"Goodbye. ">>;
+			if local_m0C = 1
+			{
+				local_m10 += <<"Boundary for the weather? ">>;
+			}
+		}
+		case "Boundary for the weather? "
+		{
+			bark("As long as we show proper reverence for The Lady Mordea, she shall bless us with skies of peace and calm. Cross her, however, and she shall call upon the might of Hydros, raining down upon the people a tempest the likes of which have never been felt before. Yet the Lady does not extend her kindness without the city walls, traveler beware. ");
+			local_m10 -= <<"Boundary for the weather? ">>;
+		}
+		case "What about the cemetery? "
+		{
+			bark("'Tis home to more than the dead it is. In accordance with our pact, we bring the lifeless corpses of our friends and brethren to the Necromancers there, and only they and Lithos know what happens after that. ");
+			local_m10 -= <<"What about the cemetery? ">>;
+			local_m10 ^= <<"What pact? ", "Tell me about the Necromancers. ">>;
+		}
+		case "What pact? "
+		{
+			bark("Eons ago, our forebears formed a covenant with Lithos. He would cease his angry rumblings if we agreed to send our dead to him. There, deep in the heart of Pagan, the dead exist solely to serve the Mountain King's very wishes. And sometimes, Lithos has them wander the surface world as well! ");
+			local_m10 -= <<"What pact? ">>;
+			local_m10 ^= <<"How do you send the dead? ", "Wander up here? ">>;
+		}
+		case "Wander up here? "
+		{
+			bark("Aye, in the cemetery the undead wander, doing the bidding of the Necromancers, always ready to take the living down to the very depths of the Mountain King's domain. I would avoid the cemetery at all costs, I would.  Keep your business far from there. ");
+			local_m10 -= <<"Wander up here? ">>;
+		}
+		case "How do you send the dead? "
+		{
+			bark("How in the blazes do you expect me to know? Burying them does it I suppose.  Why not ask a Necromancer? ");
+			local_m10 -= <<"How do you send the dead? ">>;
+		}
+		case "Tell me about the Necromancers. "
+		{
+			bark("I'll tell you what I can. They say Necromancers deal with death. Well, I say that is not true -- Necromancers -are- death as far as I am concerned! I suppose someone must be responsible for maintaining our end of the pact, but how anyone can choose to do so willingly is beyond my comprehension. ");
+			local_m10 -= <<"Tell me about the Necromancers. ">>;
+		}
+		case "No other measure? "
+		{
+			bark("Well, we've seen neither hide nor hair of another community, save the mages. ");
+			local_m10 -= <<"No other measure? ">>;
+			local_m10 ^= <<"The mages? ">>;
+		}
+		case "The mages? "
+		{
+			bark("Aye. The healers and the Sorcerers! ");
+			local_m10 -= <<"The mages? ">>;
+			local_m10 = <<"Describe the healers. ", "What Sorcerers? ">>;
+			local_m10 ^= <<"Goodbye. ">>;
+		}
+		case "Describe the healers. "
+		{
+			bark("They call themselves Theurgists -- whatever -that- means. All I know is that they provide a valuable service to us here in the city, so I care not how it is done. I am grateful they do not require that we head to their home, Argentrock Isle, for such help. I consider it only too kind that the healers are willing to travel here. ");
+			local_m10 -= <<"Describe the healers. ">>;
+			local_m10 ^= <<"How do the Theurgists arrive? ">>;
+		}
+		case "How do the Theurgists arrive? "
+		{
+			bark("A good question, that one, and one for which I have no answer. Rumor tells of magical devices that permit all the mages to teleport about Pagan, but I have seen no such thing, myself. ");
+			local_m10 -= <<"How do the Theurgists arrive? ">>;
+		}
+		case "What Sorcerers? "
+		{
+			bark("Ah, the black ones, followers of the Lord of Flame. The Necromancers may deal with death, but oft times I wonder whether the followers of Pyros are not the true representatives of evil. I do know this: Ask not too many questions of the Town Sorcerer, Beren, for our peace with him is tenuous at best. ");
+			local_m10 -= <<"What Sorcerers? ">>;
+		}
+		case "Tell me about your job. "
+		{
+			bark("I see. Very well, 'tis my lot to take care of my fellow Tenebraens, though I suspect that would include you as well, so long as you stay out of trouble. I keep the peace within and the war without, if you know what I mean. ");
+			tarnaJob = 1;
+			local_m10 -= <<"Tell me about your job. ">>;
+			local_m10 = <<"The war without? ", "What about the executions? ">>;
+			local_m10 ^= <<"Goodbye. ">>;
+		}
+		case "The war without? "
+		{
+			bark("Well, I suppose that would seem a bit obscure -now-. However, 'twas not that long ago when the Zealans still attempted to scale our walls. Of course, the raids actually ceased nearly a century ago, but defending the city from invaders is still an integral part of a guard's training! ");
+			local_m10 -= <<"The war without? ">>;
+			if zealanHis
+			{
+				local_m10 = <<"Tell me about Tenebrae. ">>;
+				local_m10 ^= <<"Goodbye. ">>;
+			}
+			else
+			{
+				local_m10 = <<"What are Zealans? ">>;
+				local_m10 ^= <<"Goodbye. ">>;
+			}
+		}
+		case "What about the executions? "
+		{
+			local_m10 -= <<"What about the executions? ">>;
+			if devonInRule
+			{
+				bark("They were part of maintaining order under Mordea's iron grip. I am glad there are fewer under Devon's rule. ");
+			}
+			else
+			{
+				bark("What about them? They are a necessary part of maintaining order. Nothing more, but nothing less. ");
+			}
+		}
+		case "What are Zealans? "
+		{
+			bark("Indeed, you are a stranger not to know of the despicable Zealans. They are, or -were-, an insane collection of people who were too blind to recognize the power of the Titans. They foolishly and tenaciously held on to an archaic set of beliefs, and when the Titans demonstrated their might and authority, the Zealans refused to acknowledge the truth. ");
+			zealanHis = 1;
+			local_m10 -= <<"What are Zealans? ">>;
+			if not tarnaTenebraed
+			{
+				local_m10 ^= <<"Tell me about Tenebrae. ", "Goodbye. ">>;
+			}
+			else
+			{
+				local_m10 ^= <<"Goodbye. ">>;
+			}
+		}
+		case "Goodbye. "
+		{
+			exitConvo();
+			local_m10 -= <<"Goodbye. ">>;
+			return;
+		}
+	}
+	u8goto label_04E9;
+	u8label label_2DED:
+	u8_free_local_string(local_m02);
+	u8_free_local_string(local_m04);
+	u8_free_local_string(local_m06);
+	u8_free_local_string_list(local_m10);
+}
+
+// Derived: routine 0x2DF7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] TARNA::tarna_question_newcomer()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m07:U8Byte;
+	local_m08:U8Byte;
+	local_m09:U8Byte;
+	local_m0B:String List;
+	local_m0D:String;
+	bark("Halt! I have never seen you before, stranger. Identify yourself and your business in Tenebrae. ");
+	local_m06 = "I go by ";
+	local_m06 += getName();
+	local_m06 += ".";
+	local_m0B = <<"What just happened here? ">>;
+	while local_m02 != "Goodbye. "
+	{
+		local_m02 = ask(local_m0B);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "What just happened here? "
+			{
+				local_m0B -= <<"What just happened here? ">>;
+				bark("The execution is none of your business. Just be glad that a treasonous, despicable criminal has been properly punished. ");
+				class_057C_turnToFace(8, 7, 0, 15);
+				class_057C_realDoAnim(8, 0, 7);
+				class_057C_turnToFace(8, 0, 2, 15);
+				class_057C_realDoAnim(8, 0, 0);
+				class_057C_realDoAnim(8, 0, 0);
+				class_057C_turnToFace(8, getDirToItem(Avatar:Referent), 0, 15);
+				class_057C_realDoAnim(8, 5, getDirToItem(Avatar:Referent));
+				bark("Now answer the question! ");
+				local_m0B = <<local_m06, "I come in peace. ", "My business, not yours. ", "I do not remember. ">>;
+			}
+			case local_m06
+			{
+				if local_m07
+				{
+					bark("Well now, that's a little more like it. ");
+				}
+				local_m0D = "Well met, ";
+				local_m0D += getName() + ".";
+				bark(u8_string_local_address(local_m0D));
+				bark("And where do you hail from? ");
+				tarnaAvaName = 1;
+				local_m0B -= <<local_m06, "I come in peace. ", "My business, not yours. ", "I do not remember. ">>;
+				local_m0B ^= <<"The beach. ", "A place far away. ", "Another world. ">>;
+				if local_m08
+				{
+					local_m0B -= <<"Yes. ", "No. ">>;
+				}
+				if local_m09
+				{
+					local_m0B -= <<"I said, not your concern! ">>;
+				}
+			}
+			case "I come in peace. "
+			{
+				if local_m07
+				{
+					bark("Well now, that's a little more like it. ");
+				}
+				bark("'Tis good to hear, stranger. I am certain that will not change. Do not prove me wrong, stranger. ");
+				bark("Now tell me, where do you hail from? ");
+				local_m0B -= <<local_m06, "I come in peace. ", "My business, not yours. ", "I do not remember. ">>;
+				local_m0B ^= <<"The beach. ", "A place far away. ", "Another world. ">>;
+				if local_m08
+				{
+					local_m0B -= <<"Yes. ", "No. ">>;
+				}
+				if local_m09
+				{
+					local_m0B -= <<"I said, not your concern! ">>;
+				}
+			}
+			case "My business, not yours. "
+			{
+				bark("If you truly believe that, then you are sadly mistaken. For every moment you spend in Tenebrae, what you are doing and where you are doing it is exactly my business as guard of the royal household! Now I repeat, state your name and business. ");
+				local_m07 = 1;
+				local_m0B -= <<local_m06, "I come in peace. ", "My business, not yours. ", "I do not remember. ">>;
+				local_m0B += <<local_m06, "I come in peace. ", "I said, not your concern! ", "I do not remember. ">>;
+				local_m09 = 1;
+			}
+			case "I said, not your concern! "
+			{
+				bark("You won't last long here with an attitude like that. For the final time, will you tell me your name and business here in Tenebrae? ");
+				local_m0B -= <<"I said, not your concern! ">>;
+				local_m0B ^= <<"Yes. ", "No. ">>;
+				local_m08 = 1;
+			}
+			case "Yes. "
+			{
+				bark("Well, what is it then? ");
+				local_m0B -= <<"Yes. ", "No. ">>;
+				local_m0B = <<local_m06>>;
+			}
+			case "No. "
+			{
+				local_m0B -= <<"No. ">>;
+				bark("Then prepare to answer to my blade! ");
+				exitConvo();
+				Npc_setTarget(1, u8_stack_ref(8));
+				return;
+			}
+			case "I do not remember. "
+			{
+				if local_m07
+				{
+					bark("Well now, that's a little more like it. ");
+				}
+				bark("Had a bit too much of Orlok's brew, eh? Well, you just watch yourself and stay out of trouble, and we'll have no quarrel with you. ");
+				bark("Now tell me, where do you hail from? ");
+				if local_m08
+				{
+					local_m0B -= <<"Yes. ", "No. ">>;
+				}
+				if local_m09
+				{
+					local_m0B -= <<"I said, not your concern! ">>;
+				}
+				local_m0B -= <<local_m06, "I come in peace. ", "My business, not yours. ", "I do not remember. ">>;
+				local_m0B ^= <<"The beach. ", "A place far away. ", "Another world. ">>;
+			}
+			case "The beach. "
+			{
+				bark("A fisherman, then? You do not dress like one who makes his living pulling nets from the sea. Then your business in the city is...? ");
+				local_m0B -= <<"The beach. ", "A place far away. ", "Another world. ">>;
+				local_m0B += <<"I do not know. ", "To return home. ", "To leave this place. ", "To make money. ">>;
+			}
+			case "A place far away. "
+			{
+				bark("Another island? I admit your clothing is unusual, but I was not aware there were other cities. Well, I suggest you quickly learn the laws and customs of -this- city. What is your business in the city? ");
+				local_m0B -= <<"The beach. ", "A place far away. ", "Another world. ">>;
+				local_m0B += <<"I do not know. ", "To return home. ", "To leave this place. ", "To make money. ">>;
+			}
+			case "Another world. "
+			{
+				bark("I may appear to be just a simple guard to you, but I outgrew such fairytales years ago. I suggest you change your tone with me or I will see your worthless hide resting on the inside of a jail! Now, if you would, tell me your business in the city. ");
+				local_m0B -= <<"The beach. ", "A place far away. ", "Another world. ">>;
+				local_m0B += <<"I do not know. ", "To return home. ", "To leave this place. ", "To make money. ">>;
+			}
+			case "I do not know. "
+			{
+				local_m0B -= <<"I do not know. ", "To return home. ", "To leave this place. ", "To make money. ">>;
+				if tarnaAvaName
+				{
+					bark("Well you had best find out, " + getName() + ". We do not like trouble in the city.");
+				}
+				else
+				{
+					bark("Well you had best find out, stranger. We do not like trouble in the city. ");
+				}
+				bark("You may go about your business. Please move along and do not disturb the widow until after I have escorted her from the docks. ");
+				tarnaMet = 1;
+				exitConvo();
+				return;
+			}
+			case "To return home. ", "To leave this place. "
+			{
+				local_m0B -= <<"I do not know. ", "To return home. ", "To leave this place. ", "To make money. ">>;
+				bark("Then what in the Lady's name are you doing wandering around here? I suggest you quickly find your way. ");
+				bark("You may go about your business. Please move along and do not disturb the widow until after I have escorted her from the docks. ");
+				tarnaMet = 1;
+				exitConvo();
+				return;
+			}
+			case "To make money. "
+			{
+				local_m0B -= <<"I do not know. ", "To return home. ", "To leave this place. ", "To make money. ">>;
+				bark("Whose business is not? While you are at it, buy yourself some better attire. ");
+				bark("You may go about your business. Please move along and do not disturb the widow until after I have escorted her from the docks. ");
+				tarnaMet = 1;
+				exitConvo();
+				return;
+			}
+		}
+	}
+}
+

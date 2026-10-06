@@ -1,0 +1,1062 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x040E
+// FLEX slot: 1040
+// Original offset: 0x0008CF4F
+// Naming evidence: E, exact object-1 linker name `GWILLIM`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GWILLIM.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+globalflag gwillimToldDoor;
+
+npcclass GWILLIM inherits Npc
+{
+	process gwillim_look_bark_identity_description();
+	process gwillim_avatar_stole_something_warn_then_call_guards_for_theft(arg_04:U8Word);
+	process gwillim_schedule_update_period_schedule_and_safe_teleport();
+	process gwillim_enter_fast_area_start_location_schedule();
+	process gwillim_leave_fast_area_stop_active_process();
+	process gwillim_run_short_pasture_route();
+	process gwillim_play_short_pasture_bark();
+	process gwillim_run_long_pasture_route();
+	process gwillim_play_long_pasture_bark();
+	process gwillim_run_home_schedule();
+	process gwillim_play_random_home_bark();
+	process gwillim_use_run_conversation();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GWILLIM::gwillim_look_bark_identity_description()
+{
+	if metGwillim
+	{
+		bark("Gwillim");
+	}
+	else
+	{
+		bark("Herdsman ");
+	}
+}
+
+// Derived: routine 0x00D3, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process GWILLIM::gwillim_avatar_stole_something_warn_then_call_guards_for_theft(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m02 = arg_04;
+	resetRef(referent, PT_BARK);
+	resetRef(referent, PT_ACTIVITY);
+	realDoAnim(24, getDir());
+	if ((local_m02.getType() = 541) or (local_m02.getType() = 143) or (local_m02.getType() = 454)) and (not guardsCalled)
+	{
+		if (local_m02.getType() = 541) and (not stolenOnce)
+		{
+			stolenOnce = 1;
+			bark("I would not do that if I were you! ");
+			gwillim_enter_fast_area_start_location_schedule();
+		}
+		else
+		{
+			bark("Stop! Thief! ");
+			wait(160);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn callTheGuards(arg_04) -> return;
+		}
+	}
+}
+
+// Derived: routine 0x01FF, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GWILLIM::gwillim_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	local_m09:U8Word;
+	local_m07 = 7;
+	if Npc_isDead(u8_stack_ref(14))
+	{
+		return;
+	}
+	local_m05_w02 = 10047;
+	local_m03 = 17759;
+	local_m01 = 8;
+	local_m09 = 1;
+	if (class_0581_getPeriod() = 2) or (class_0581_getPeriod() = 3)
+	{
+		local_m05_w02 = 19455;
+		local_m03 = 25151;
+		local_m01 = 8;
+		local_m09 = 2;
+	}
+	if (class_0581_getPeriod() = 4) or (class_0581_getPeriod() = 5)
+	{
+		local_m05_w02 = 13631;
+		local_m03 = 21823;
+		local_m01 = 8;
+		local_m09 = 3;
+	}
+	if class_057C_canSafeTeleport(this, local_m05, local_m07)
+	{
+		gwillimSchedule = local_m09;
+		class_057C_safeTeleport(this, local_m05, local_m07);
+	}
+}
+
+// Derived: routine 0x02BC, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GWILLIM::gwillim_enter_fast_area_start_location_schedule()
+{
+	if Npc_isDead(u8_stack_ref(14))
+	{
+		return;
+	}
+	resetRef(referent, PT_BARK);
+	if gwillimSchedule = 1
+	{
+		resetRef(referent, PT_PATHFIND);
+		resetRef(referent, PT_ACTIVITY);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_040E_gwillim_run_short_pasture_route(this) -> return;
+	}
+	else if gwillimSchedule = 2
+	{
+		resetRef(referent, PT_PATHFIND);
+		resetRef(referent, PT_ACTIVITY);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_040E_gwillim_run_long_pasture_route(this) -> return;
+	}
+	else if gwillimSchedule = 3
+	{
+		resetRef(referent, PT_PATHFIND);
+		resetRef(referent, PT_ACTIVITY);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_040E_gwillim_run_home_schedule(this) -> return;
+	}
+}
+
+// Derived: routine 0x037D, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GWILLIM::gwillim_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x0398, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process GWILLIM::gwillim_run_short_pasture_route()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach local_m02 where ((type = TypePathMarker) and (quality = 4)) within 10 cells of 14 {
+			local_m06 = local_m02.getFrame();
+		}
+	}
+	process
+	{
+		for local_m04 = local_m06 to 6
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = local_m04)) within 50 cells of 14 {
+				if pathfind(local_m02, 10)
+				{
+					if not somebodyTalking
+					{
+						turnToFace(0, 0, 10);
+						realDoAnim(AS_FIDGET, getDir());
+						gwillim_play_short_pasture_bark();
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+						realDoAnim(AS_FIDGET, getDir());
+					}
+				}
+				else
+				{
+					wait(500);
+					realDoAnim(AS_FIDGET, getDir());
+				}
+			}
+		}
+		local_m06 = 0;
+	}
+}
+
+// Derived: routine 0x0510, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process GWILLIM::gwillim_play_short_pasture_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m0A:U8Bytes5;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	local_m0A_w02:U8Word;
+	local_m0C:U8Word;
+	[[PT_ACTIVITY, referent]];
+	local_m05_w02 = Avatar.getX();
+	local_m03 = Avatar.getY();
+	local_m01 = Avatar.getZ();
+	local_m0A_w02 = Item_getX(u8_stack_ref(14));
+	local_m08 = Item_getY(u8_stack_ref(14));
+	local_m06 = Item_getZ(u8_stack_ref(14));
+	local_m0C = class_0581_free_get_point_distance(local_m0A, local_m05);
+	if local_m0C < 200
+	{
+		local_m0C = urandom(8);
+		if local_m0C = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Good day. ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m0C = 2
+		{
+			bark("Ahh, what a fine bunch of torax! ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m0C = 3
+		{
+			bark("Shelby! Leave Pono alone! ");
+			wait(60);
+		}
+		if local_m0C = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Have you ever seen such fine torax? ");
+		}
+	}
+	else
+	{
+		local_m0C = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if local_m0C = 1
+		{
+			bark("How I love my flock. ");
+		}
+		else
+		{
+			if local_m0C = 2
+			{
+				bark("I wonder how Cyrrus is doing? ");
+				realDoAnim(AS_FIDGET, getDir());
+				wait(60);
+			}
+			if local_m0C = 3
+			{
+				bark("This life does get a bit boring from time to time. ");
+			}
+			if local_m0C = 4
+			{
+				bark("I hope that Cyrrus is well. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(60);
+			}
+			if local_m0C = 5
+			{
+				bark("I enjoy caring for my flock. ");
+				realDoAnim(AS_FIDGET, getDir());
+				bark("Yet, I would enjoy some company now and again. ");
+			}
+			if local_m0C = 6
+			{
+				turnToFace(urandom(3), 0, 10);
+				bark("I can see my house from here! ");
+			}
+			if local_m0C = 7
+			{
+				bark("The torax certainly are playful today. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(100);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0A50, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process GWILLIM::gwillim_run_long_pasture_route()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach local_m02 where ((type = TypePathMarker) and (quality = 4)) within 10 cells of 14 {
+			local_m06 = local_m02.getFrame();
+		}
+	}
+	process
+	{
+		for local_m04 = local_m06 to 8
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = local_m04)) within 50 cells of 14 {
+				if pathfind(local_m02, 10)
+				{
+					if not somebodyTalking
+					{
+						gwillim_play_long_pasture_bark();
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+						realDoAnim(AS_FIDGET, getDir());
+					}
+				}
+				else
+				{
+					wait(500);
+					realDoAnim(AS_FIDGET, getDir());
+				}
+			}
+		}
+		local_m06 = 0;
+	}
+}
+
+// Derived: routine 0x0B93, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process GWILLIM::gwillim_play_long_pasture_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m0A:U8Bytes5;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	local_m0A_w02:U8Word;
+	local_m0C:U8Word;
+	[[PT_ACTIVITY, referent]];
+	local_m05_w02 = Avatar.getX();
+	local_m03 = Avatar.getY();
+	local_m01 = Avatar.getZ();
+	local_m0A_w02 = Item_getX(u8_stack_ref(14));
+	local_m08 = Item_getY(u8_stack_ref(14));
+	local_m06 = Item_getZ(u8_stack_ref(14));
+	local_m0C = class_0581_free_get_point_distance(local_m0A, local_m05);
+	if local_m0C < 200
+	{
+		local_m0C = urandom(8);
+		if local_m0C = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Good day. ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m0C = 2
+		{
+			bark("Ahh, what a fine bunch of torax! ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m0C = 3
+		{
+			bark("Shelby! Leave Pono alone! ");
+			wait(60);
+		}
+		if local_m0C = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Have you ever seen such fine torax? ");
+		}
+	}
+	else
+	{
+		local_m0C = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if local_m0C = 1
+		{
+			bark("How I love my flock. ");
+		}
+		else
+		{
+			if local_m0C = 2
+			{
+				bark("I wonder how Cyrrus is doing? ");
+				realDoAnim(AS_FIDGET, getDir());
+				wait(60);
+			}
+			if local_m0C = 3
+			{
+				bark("This life does get a bit boring from time to time. ");
+			}
+			if local_m0C = 4
+			{
+				bark("I hope that Cyrrus is well. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(60);
+			}
+			if local_m0C = 5
+			{
+				bark("I enjoy caring for my flock. ");
+				realDoAnim(AS_FIDGET, getDir());
+				bark("Yet, I would enjoy some company now and again. ");
+			}
+			if local_m0C = 6
+			{
+				turnToFace(urandom(7), 0, 10);
+				bark("I can see my house from here! ");
+			}
+			if local_m0C = 7
+			{
+				bark("The torax certainly are playful today. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(100);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x10D3, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process GWILLIM::gwillim_run_home_schedule()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach local_m02 where ((type = TypePathMarker) and (quality = 4)) within 10 cells of 14 {
+			local_m06 = local_m02.getFrame();
+		}
+	}
+	process
+	{
+		for local_m04 = local_m06 to 8
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = local_m04)) within 50 cells of 14 {
+				if pathfind(local_m02, 10)
+				{
+					if not somebodyTalking
+					{
+						gwillim_play_random_home_bark();
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+						realDoAnim(AS_FIDGET, getDir());
+					}
+				}
+				else
+				{
+					wait(500);
+					realDoAnim(AS_FIDGET, getDir());
+				}
+			}
+		}
+		local_m06 = 0;
+	}
+}
+
+// Derived: routine 0x1216, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process GWILLIM::gwillim_play_random_home_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m0A:U8Bytes5;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	local_m0A_w02:U8Word;
+	local_m0C:U8Word;
+	[[PT_ACTIVITY, referent]];
+	local_m05_w02 = Avatar.getX();
+	local_m03 = Avatar.getY();
+	local_m01 = Avatar.getZ();
+	local_m0A_w02 = Item_getX(u8_stack_ref(14));
+	local_m08 = Item_getY(u8_stack_ref(14));
+	local_m06 = Item_getZ(u8_stack_ref(14));
+	local_m0C = class_0581_free_get_point_distance(local_m0A, local_m05);
+	if local_m0C < 200
+	{
+		local_m0C = urandom(8);
+		if local_m0C = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("What are you doing here? ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m0C = 2
+		{
+			bark("Not Kith filets again! ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m0C = 3
+		{
+			bark("What a lovely wife I have! ");
+			wait(60);
+		}
+		if local_m0C = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Have you ever seen such a beautiful woman? ");
+		}
+	}
+	else
+	{
+		local_m0C = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if local_m0C = 1
+		{
+			bark("I need to build a new room onto this house. ");
+		}
+		else
+		{
+			if local_m0C = 2
+			{
+				bark("I wonder how Cyrrus is doing? ");
+				realDoAnim(AS_FIDGET, getDir());
+				wait(60);
+			}
+			if local_m0C = 3
+			{
+				bark("This house is too small. ");
+			}
+			if local_m0C = 4
+			{
+				bark("I hope that Cyrrus is well. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(60);
+			}
+			if local_m0C = 5
+			{
+				bark("I need some ale. ");
+				realDoAnim(AS_FIDGET, getDir());
+				bark("Yet, I would enjoy some company now and again. ");
+			}
+			if local_m0C = 6
+			{
+				bark("I had a long day. ");
+			}
+			if local_m0C = 7
+			{
+				bark("I am exhausted. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(100);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x1712, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GWILLIM::gwillim_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:U8Bytes2; // X: untouched.
+	local_m06:String List;
+	enterConvo();
+	if metGwillim
+	{
+		local_m06 = <<"Hello, my friend. ">>;
+	}
+	else
+	{
+		local_m06 = <<"Greetings ">>;
+	}
+	if corinthToldGhost
+	{
+		local_m06 += <<"Corinth told me of the ghost. ">>;
+	}
+	else if darionGhostStory
+	{
+		local_m06 += <<"Is there a ghost in the valley? ">>;
+	}
+	while local_m02 != "Farewell. "
+	{
+		local_m06 -= <<"Farewell. ">>;
+		local_m06 += <<"Farewell. ">>;
+		local_m02 = ask(local_m06);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "Greetings "
+			{
+				bark("Greetings, friend, I am Gwillim. How fare you? ");
+				local_m06 += <<"I'm fine, thanks. ">>;
+				local_m06 -= <<"Greetings ">>;
+				metGwillim = 1;
+			}
+			case "Hello, my friend. "
+			{
+				bark("Well, it is quite good to see you. All is well for you, I hope. ");
+				local_m06 -= <<"Hello, my friend. ">>;
+			}
+			case "I'm fine, thanks. "
+			{
+				bark("Good and welcome! It is rare that Corinth and I get visitors here in the valley. ");
+				local_m06 += <<"Who is Corinth? ", "The valley ", "You don't get visitors? ">>;
+				local_m06 -= <<"I'm fine, thanks. ">>;
+			}
+			case "Who is Corinth? "
+			{
+				bark("Corinth is my wife. She is a fine lady, too. Corinth works hard every day, never complains, and has been a good mother to our son, too. ");
+				if corinthMet
+				{
+					local_m06 = <<"Oh yes, I've met your wife. ", "Where is your son? ">>;
+				}
+				else
+				{
+					local_m06 = <<"She sounds like a fine lady. ", "Where is your son? ">>;
+				}
+				local_m06 -= <<"Who is Corinth? ">>;
+			}
+			case "Where is your son? "
+			{
+				if corinthMet
+				{
+					bark("I am surprised that my wife did not talk your ear off about our son. Corinth is so proud of Cyrrus that sometimes I think that she can speak of nothing else. But make no mistake, we are law abiding folk here. We also honor Hydros as Her Ladyship does command. ");
+					local_m06 += <<"Talk my ear off? ", "Law abiding folk? ", "Her Ladyship? ">>;
+				}
+				else
+				{
+					bark("Cyrrus, that's our boy's name, joined the Theurgists not long ago. My wife was very proud of him. She has always said that Cyrrus was a natural healer. But make no mistake, we are law abiding folk here. We also honor Hydros as Her Ladyship does command. ");
+					local_m06 += <<"Who are the Theurgists? ", "Law abiding folk? ", "Her Ladyship? ">>;
+				}
+				local_m06 -= <<"Where is your son? ">>;
+			}
+			case "Talk my ear off? "
+			{
+				bark("I love Corinth, but if you give that woman a chance, she'll talk the legs off a Kith when it comes to that boy. Surely she told you that Cyrrus has become a Theurgist. ");
+				if toldThurgists
+				{
+					local_m06 += <<"Yes, Corinth did mention that Cyrrus is a Theurgist. ">>;
+				}
+				else
+				{
+					local_m06 += <<"No, Corinth didn't mention Theurgists. ">>;
+				}
+				local_m06 -= <<"Talk my ear off? ">>;
+			}
+			case "No, Corinth didn't mention Theurgists. "
+			{
+				if toldThurgists
+				{
+					bark("Well I am greatly surprised. My wife is very proud of our son. He left here to become one of the Theurgists that I told you about. My son is quite a good healer. ");
+				}
+				else
+				{
+					bark("Well, I am greatly surprised. You see, my wife is very proud of the fact that our son has become a Theurgist. They are the healers who serve Stratos, the Titan of Air. ");
+					toldThurgists = 1;
+				}
+				local_m06 -= <<"No, Corinth didn't mention Theurgists. ">>;
+			}
+			case "Oh yes, I've met your wife. "
+			{
+				bark("Quite a lady, that Corinth. ");
+				local_m06 -= <<"Oh yes, I've met your wife. ">>;
+			}
+			case "She sounds like a fine lady. "
+			{
+				bark("Oh she is. She certainly is. ");
+				local_m06 -= <<"She sounds like a fine lady. ">>;
+			}
+			case "Who are the Theurgists? "
+			{
+				bark("What? Have you never heard of the Theurgists? For Lithos' sake, man, did you just fall out of the sky? The Theurgists are the disciples of Stratos, the Air Titan. I thought that everyone knew that. ");
+				local_m06 -= <<"Who are the Theurgists? ">>;
+				toldThurgists = 1;
+			}
+			case "Yes, Corinth did mention that Cyrrus is a Theurgist. "
+			{
+				bark("Well, that is where he is; Argentrock Isle. ");
+				local_m06 -= <<"Yes, Corinth did mention that Cyrrus is a Theurgist. ">>;
+			}
+			case "The valley "
+			{
+				bark("It is beautiful here, is it not?  Many people say that this valley is the only truly beautiful place in the world. The beauty of the valley has made my life as a herdsman somewhat easier. Whenever I find myself feeling remorse, I contemplate the beauty of this place and it sometimes makes me feel better. ");
+				local_m06 = <<"You're a herdsman? ", "How long have you lived here? ">>;
+			}
+			case "How long have you lived here? "
+			{
+				bark("Oh, all of my life. I have strolled up to the plateau a time or two. I must go into town but twice a year. But other than that, I stay put here in the valley. ");
+				local_m06 += <<"The plateau? ", "Why go to town twice a year? ">>;
+				local_m06 -= <<"How long have you lived here? ">>;
+			}
+			case "The plateau? "
+			{
+				bark("Just take the trail that runs past our place here, and it will take you up to the plateau. Its very lovely up there. ");
+				local_m06 -= <<"The plateau? ">>;
+			}
+			case "Why go to town twice a year? "
+			{
+				bark("I must sell my surplus crops and the torax which are ready for slaughter. And you be assured that while I am there, I obey all of Her Ladyship's laws. We are good, law abiding folk up here. ");
+				local_m06 = <<"Law abiding folk? ", "Her Ladyship? ">>;
+			}
+			case "Can I buy something? "
+			{
+				bark("I afraid that there is nothing to sell. The time has not yet come for harvest. Do return at harvest time and I will sell you as many mushrooms as you can buy. ");
+				local_m06 -= <<"Can I buy something? ">>;
+			}
+			case "You're a herdsman? "
+			{
+				bark("Just like my father before me. ");
+				local_m06 += <<"Your father was a herdsman? ">>;
+				local_m06 -= <<"You're a herdsman? ">>;
+			}
+			case "You don't get visitors? "
+			{
+				bark("Not very often. No one really has much cause to come up here, other than Shaana and Mythran. That is why I was so surprised to see you. ");
+				local_m06 += <<"Who is Mythran? ">>;
+				local_m06 -= <<"You don't get visitors? ">>;
+			}
+			case "Who is Mythran? "
+			{
+				bark("Mythran is an old hermit who lives up on the plateau. Many people think that he sells magical scrolls. I do not know if that is true or not. Personally I doubt that there is anyone who does such a thing. The Titans are the only magic in the world. I believe that Mythran is just an eccentric old man. ");
+				local_m06 -= <<"Who is Mythran? ">>;
+				mythranScrolls = 1;
+			}
+			case "Gwillim "
+			{
+				bark("Yes, I am Gwillim. ");
+				local_m06 -= <<"Gwillim ">>;
+			}
+			case "Law abiding folk? "
+			{
+				bark("That is correct, sir. Her Ladyship's administration has never had reason to worry about us. ");
+				local_m06 -= <<"Law abiding folk? ">>;
+			}
+			case "Her Ladyship? "
+			{
+				bark("Our ruler, Lady Mordea. You need not pretend that you do not know The Lady. But be assured that I have always lived well by her mandates. You can tell Her Ladyship that all is well in this district. ");
+				if mordeaDead
+				{
+					local_m06 += <<"Gwillim, Mordea's dead. ">>;
+				}
+				else
+				{
+					local_m06 += <<"Tell Mordea what? ">>;
+				}
+				local_m06 -= <<"Her Ladyship? ">>;
+			}
+			case "Tell Mordea what? "
+			{
+				bark("Tell her that all is well here. She has no need to worry about her subjects in the valley breaking her laws. ");
+				local_m06 += <<"Do you think that I work for Mordea? ", "You're her subjects too? ">>;
+				local_m06 -= <<"Tell Mordea what? ">>;
+			}
+			case "You're her subjects too? "
+			{
+				bark("But of course, and happy to be so. ");
+				local_m06 -= <<"You're her subjects too? ">>;
+			}
+			case "Do you think that I work for Mordea? "
+			{
+				bark("What else would a man so equipped and well armoured do but protect our ruler? But do not think that that is the reason why I have taken the time to talk to you. I welcome the company of others. ");
+				if mordeaDead
+				{
+					local_m06 += <<"Gwillim, Mordea's dead. ">>;
+				}
+				else
+				{
+					local_m06 += <<"I don't work for Mordea. ">>;
+				}
+				local_m06 -= <<"Do you think that I work for Mordea? ">>;
+			}
+			case "Gwillim, Mordea's dead. "
+			{
+				bark("Really? I have not heard this. I must tell Corinth! She will be so excited, er, I mean saddened to hear of our ruler's untimely death. ");
+				local_m06 = <<"The plateau? ", "You're a herdsman? ">>;
+			}
+			case "I don't work for Mordea. "
+			{
+				bark("Well, that is your business, friend. It is not for me to pry into your life. ");
+				local_m06 -= <<"I don't work for Mordea. ">>;
+			}
+			case "Your father was a herdsman? "
+			{
+				bark("My family have always been herdmen. We have lived on this land for countless generations. ");
+				local_m06 += <<"Countless generations, huh? ">>;
+				local_m06 -= <<"Your father was a herdsman? ">>;
+			}
+			case "Countless generations, huh? "
+			{
+				bark("Yes, for as far back as anyone can remember. But I fear that I am the last. ");
+				local_m06 += <<"Why are you the last? ">>;
+				local_m06 -= <<"Countless generations, huh? ">>;
+			}
+			case "Why are you the last? "
+			{
+				bark("Because my son has become a Theurgist and I don't have any other children. ");
+				if toldThurgists
+				{
+					local_m06 += <<"Yes, you told me of the Theurgists. ">>;
+				}
+				else
+				{
+					local_m06 += <<"What's a Theurgist? ">>;
+				}
+				local_m06 -= <<"Why are you the last? ">>;
+			}
+			case "Yes, you told me of the Theurgists. "
+			{
+				bark("Then you understand that Cyrrus will never be a herdsman. ");
+				local_m06 -= <<"Yes, you told me of the Theurgists. ">>;
+			}
+			case "What's a Theurgist? "
+			{
+				bark("You have not heard of the Theurgists? They are the disciples of Stratos, the Air elemental. My son, Cyrrus, now lives with them on Argentrock Isle. ");
+				local_m06 -= <<"What's a Theurgist? ">>;
+			}
+			case "Farewell. "
+			{
+				bark("Farewell ");
+				local_m06 -= <<"Farewell. ">>;
+				exitConvo();
+				return;
+			}
+			case "Is there a ghost in the valley? "
+			{
+				bark("What? Where did you hear of such things? ");
+				local_m06 += <<"I heard stories in town. ", "Is it true? ">>;
+				local_m06 -= <<"Is there a ghost in the valley? ">>;
+			}
+			case "I heard stories in town. "
+			{
+				if metGwillim
+				{
+					bark("Well don't believe everything that you hear. ");
+					local_m06 += <<"But Darion told me of the legend. ">>;
+				}
+				else
+				{
+					bark("I do not know why you are here or who you may be, my friend, but if you have come here looking for a ghost you may as well go back where you came from. ");
+					local_m06 += <<"I didn't mean to upset you. ">>;
+				}
+				local_m06 -= <<"I heard stories in town. ">>;
+			}
+			case "Is it true? "
+			{
+				if metGwillim
+				{
+					bark("No, it is not. Now please, I have no wish to discuss this further. ");
+				}
+				else
+				{
+					bark("No. And I really do not have time to discuss silly stories. ");
+				}
+				local_m06 -= <<"Is it true? ">>;
+			}
+			case "But Darion told me of the legend. "
+			{
+				bark("Then Darion told you a lie, my friend. This story has gone on for far too long. People need to let this story go. I can not be bothered by such trivial\x09matters. ");
+				local_m06 += <<"Can you tell me the story? ">>;
+				local_m06 -= <<"But Darion told me of the legend. ">>;
+			}
+			case "Can you tell me the story? "
+			{
+				bark("No. Look, I do not mean to be rude, but I have no wish to discuss this further. Please, do not ask me any more about this. ");
+				local_m06 += <<"Please tell me about the ghost. ", "I didn't mean to upset you. ">>;
+				local_m06 -= <<"Can you tell me the story? ">>;
+			}
+			case "Please tell me about the ghost. "
+			{
+				bark("No! Are you deaf? I asked you to forget this subject! I am too busy to be bothered by this! Now, leave me alone! ");
+				local_m06 -= <<"Please tell me about the ghost. ">>;
+				exitConvo();
+				return;
+			}
+			case "I didn't mean to upset you. "
+			{
+				bark("Do not worry, friend. This ghost thing is just not a topic which I wish to discuss. ");
+				local_m06 -= <<"I didn't mean to upset you. ">>;
+			}
+			case "Corinth told me of the ghost. "
+			{
+				bark("She what?! ");
+				local_m06 = <<"You've -seen- it? ", "Please don't get angry. ">>;
+				local_m06 -= <<"Corinth told me of the ghost. ">>;
+			}
+			case "Please don't get angry. "
+			{
+				bark("Do not get angry? Just because my wife told of my darkest secret? I hardly know you and yet Corinth tells you everything that I would wish to keep hidden! No, I am not angry with you. But Corinth and I shall have words when you have gone. ");
+				local_m06 -= <<"Please don't get angry. ">>;
+			}
+			case "You've -seen- it? "
+			{
+				bark("Did she tell you that?! I do not believe it! She knows that I do not wish for anyone to know about that damned, malignant spirit! ");
+				local_m06 = <<"So it's true? ", "Don't get mad at Corinth. ">>;
+			}
+			case "So it's true? "
+			{
+				bark("Yes, it is true that this valley is cursed with a malign spirit. It is also true that only a fool would pursue this thing. ");
+				local_m06 -= <<"So it's true? ">>;
+			}
+			case "Don't get mad at Corinth. "
+			{
+				bark("Why shouldn't I? That woman knows well that I do not want to even think about what happened with that ghost. She knows this and yet she tells the first stranger that comes through the valley something that is very personal to me. ");
+				local_m06 += <<"She was trying to help. ", "It was my fault. ">>;
+				local_m06 -= <<"Don't get mad at Corinth. ">>;
+			}
+			case "It was my fault. "
+			{
+				bark("I can not accept that. Corinth is a grown woman and she is fully responsible for her actions. No, if Corinth told you of this thing then she did it herself. She and I must talk later about this. ");
+				local_m06 -= <<"It was my fault. ">>;
+			}
+			case "She was trying to help. "
+			{
+				bark("What do you mean by that? Who was she trying to help? ");
+				local_m06 += <<"Me. My task is very important. ", "You, Gwillim. ">>;
+				local_m06 -= <<"She was trying to help. ">>;
+			}
+			case "Me. My task is very important. "
+			{
+				bark("I doubt very seriously that whatever you have to do here is all that important. You certainly have no right to come here and stir up such trouble, my friend. Corinth and I have been through very great ordeals and we will certainly make our way through you and your scheming! Now, be on your way! ");
+				local_m06 -= <<"Me. My task is very important. ">>;
+				gwillimPissed = 1;
+				exitConvo();
+				return;
+			}
+			case "You, Gwillim. "
+			{
+				bark("Me? What was she trying to help -me- with? That is preposterous. ");
+				local_m06 += <<"She wants you to talk. ", "I don't know. ">>;
+				local_m06 -= <<"Me. My task is very important. ", "You, Gwillim. ">>;
+			}
+			case "I don't know. "
+			{
+				bark("Well I have a feeling that -I- know. Corinth has been laboring under the impression that I just talk about my brother, then somehow everything will be alright. ");
+				local_m06 += <<"What's wrong? ">>;
+				local_m06 -= <<"I don't know. ">>;
+			}
+			case "What's wrong? "
+			{
+				bark("Nothing that concerns you. This is a family matter and I do not need for you to come here and stir up trouble. ");
+				local_m06 -= <<"What's wrong? ">>;
+			}
+			case "She wants you to talk. "
+			{
+				bark("Why? Does she think that talking about my brother's death is going to somehow bring him back? That is in the past. Nothing can be done about it now. ");
+				local_m06 += <<"Maybe talking helps. ", "The ghost killed your brother? ">>;
+				local_m06 -= <<"She wants you to talk. ">>;
+			}
+			case "Maybe talking helps. "
+			{
+				bark("I have my solitude while tending the torax to think things through. I have dealt with this matter and I did it a very long time ago. ");
+				local_m06 -= <<"Maybe talking helps. ">>;
+			}
+			case "The ghost killed your brother? "
+			{
+				bark("Yes. There, I told you. Now are you happy? ");
+				local_m06 += <<"Where is the ghost? ", "How did he die? ">>;
+				local_m06 -= <<"The ghost killed your brother? ">>;
+			}
+			case "Where is the ghost? "
+			{
+				bark("Why should I tell you? So you can go there and get yourself killed like all of the others? Perhaps I should tell you. If the ghost were to kill you then you could no longer come here and create trouble between my wife and I. ");
+				local_m06 -= <<"Where is the ghost? ">>;
+			}
+			case "How did he die? "
+			{
+				bark("He died trying to find that damned ghost! Others have died doing the same, damn fool thing, so do not get any ideas about ghost hunting. ");
+				local_m06 += <<"Others have died? ", "I want to find the ghost. ">>;
+				local_m06 -= <<"How did he die? ">>;
+			}
+			case "Others have died? "
+			{
+				bark("Yes, many others. There is only one person to go after that spirit that lived and -she- lost her mind. ");
+				local_m06 += <<"How many have died? ", "Who is she? ">>;
+				local_m06 -= <<"Others have died? ">>;
+			}
+			case "How many have died? "
+			{
+				bark("Too many for you to go off and make one more dead fool. ");
+				local_m06 -= <<"How many have died? ">>;
+			}
+			case "Who is she? "
+			{
+				bark("Who? The mad woman? Her name is Kilandra and she is as mad as a keplock. Some have heard her claim to possess a key that will get you to the ghost. The woman also talks to fish, so I would not believe a word she says, but apparently the ghost and the key are not subjects she likes to brag about. She had to be pestered several times before she would even speak of it. ");
+				local_m06 += <<"She talks to fish? ">>;
+				local_m06 -= <<"Who is she? ">>;
+				gwillimToldDoor = 1;
+			}
+			case "She talks to fish? "
+			{
+				bark("Yes, she talks to fish. And unless you want to wind up dead or talking to fish for the rest of your life, you'd better give up these ridiculous notions. ");
+				local_m06 -= <<"She talks to fish? ">>;
+			}
+			case "I want to find the ghost. "
+			{
+				bark("Look, if you are in a hurry to die, then go and insult Lady Mordea. But I will have no hand in assisting you. Do you understand? ");
+				local_m06 += <<"Don't worry about me. ", "I need help only to find it. ">>;
+				if devonInRule
+				{
+					local_m06 += <<"Mordea's dead, Gwillim. ">>;
+				}
+				local_m06 -= <<"I want to find the ghost. ">>;
+			}
+			case "Mordea's dead, Gwillim. "
+			{
+				bark("Oh yes, I keep forgetting that. Mordead was Tempest for so long that it is difficult for me to think of anyone else as ruling Tenebrae. ");
+				local_m06 -= <<"Mordea's dead, Gwillim. ">>;
+			}
+			case "Don't worry about me. "
+			{
+				bark("Oh, you are so great and powerful that you need not fear the supernatural? I suppose that you are the type of person who goes around saving worlds. Perhaps after defeating the ghost, you'll overthrow the Titans. ");
+				local_m06 -= <<"Don't worry about me. ">>;
+			}
+			case "I need help only to find it. "
+			{
+				bark("You really are something, aren't you? Fine, go quickly unto your death then. Follow the path that runs past my house. As the path makes its final bend before going into the cave, continue to travel forward. You will find a large pile of brush and brambles against the mountain face. This hides the entrance to the ghost's lair. Now, be gone with you. You bothered my wife and I enough... ");
+				local_m06 -= <<"I need help only to find it. ">>;
+				exitConvo();
+				return;
+			}
+		}
+	}
+}
+

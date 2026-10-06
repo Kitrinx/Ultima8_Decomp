@@ -1,0 +1,26 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04BD
+// FLEX slot: 1215
+// Original offset: 0x00004FC2
+// Naming evidence: E, exact object-1 linker name `AFTERNEC`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/AFTERNEC.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass AFTERNEC inherits Egg
+{
+	process afternec_hatch_mark_dead_conversation_complete_and_destroy_egg();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process AFTERNEC::afternec_hatch_mark_dead_conversation_complete_and_destroy_egg()
+{
+	talkedToDeadDudes = 1;
+	destroy();
+}
+

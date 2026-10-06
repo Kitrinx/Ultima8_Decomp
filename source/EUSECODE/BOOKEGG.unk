@@ -1,0 +1,32 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04C7
+// FLEX slot: 1225
+// Original offset: 0x0003C488
+// Naming evidence: E, exact object-1 linker name `BOOKEGG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BOOKEGG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass BOOKEGG inherits Egg
+{
+	process bookegg_enter_fast_area_create_book_once();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BOOKEGG::bookegg_enter_fast_area_create_book_once()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	if (Egg_getEggId(this) = 0) and benticCacked
+	{
+		Egg_setEggId(1, this);
+		Item_create(0, 607, u8_local_address(local_m02_w01));
+		local_m02.pop(3839, 4703, 16);
+	}
+}
+

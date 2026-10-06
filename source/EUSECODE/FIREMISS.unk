@@ -1,0 +1,47 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02B9
+// FLEX slot: 699
+// Original offset: 0x00072BCA
+// Naming evidence: E, exact object-1 linker name `FIREMISS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FIREMISS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass FIREMISS inherits Item
+{
+	process firemiss_hit_damage_target_and_destroy_missile(arg_04:U8Word);
+	process firemiss_got_hit_forward_to_hit(arg_04:U8Word, arg_06:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000020.
+// R: `hit` identifies event 05; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process FIREMISS::firemiss_hit_damage_target_and_destroy_missile(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	killProcess(referent, 515);
+	if (arg_04 < 256) and (arg_04 > 0)
+	{
+		local_m02 = arg_04;
+		local_m02.receiveHit(referent, urandom(8), urandom(8) + 4, 8);
+	}
+	playSFX(31, 100, arg_04);
+	createSprite(772, 0, 13, 13, 1, 1, getX() + 32, getY() + 32, getZ());
+	destroy();
+}
+
+// Derived: routine 0x0119, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process FIREMISS::firemiss_got_hit_forward_to_hit(arg_04:U8Word, arg_06:U8Word)
+{
+	class_02B9_firemiss_hit_damage_target_and_destroy_missile(this, arg_04, arg_06);
+}
+

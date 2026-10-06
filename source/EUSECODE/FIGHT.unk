@@ -1,0 +1,153 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04C3
+// FLEX slot: 1221
+// Original offset: 0x0007104D
+// Naming evidence: E, exact object-1 linker name `FIGHT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FIGHT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass FIGHT inherits Egg
+{
+	process fight_enter_fast_area_start_scripted_interrogation_fight();
+	process fight_leave_fast_area_reset_fight_state_and_stop_process();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIGHT::fight_enter_fast_area_start_scripted_interrogation_fight()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Npc;
+	local_m02_w01:U8Bytes1;
+	local_m04:Npc;
+	local_m04_w01:U8Bytes1;
+	local_m06:Item;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Bytes2; // X: untouched.
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		if (Egg_getEggId(this) = 1) or (devonInRule = 1) or (urandom(100) > 15)
+		{
+			return;
+		}
+		Egg_setEggId(1, this);
+		foreach local_m06 where (type = TypePathMarker) within 5 cells of referent {
+			if local_m06.getFrame() = 0
+			{
+				Npc_create(0, 707, u8_local_address(local_m02_w01));
+				local_m02.orStatus(128);
+				Item_create(20, 174, u8_local_address(local_m08_w01));
+				local_m08.orStatus(128);
+				pop(local_m02);
+				local_m02.pop(local_m06.getX(), local_m06.getY(), local_m06.getZ());
+			}
+			if local_m06.getFrame() = 1
+			{
+				Npc_create(0, 574, u8_local_address(local_m04_w01));
+				local_m04.orStatus(128);
+				Item_create(20, 174, u8_local_address(local_m08_w01));
+				local_m08.orStatus(128);
+				pop(local_m04);
+				local_m04.pop(local_m06.getX(), local_m06.getY(), local_m06.getZ());
+			}
+			if local_m02 and local_m04
+			{
+				class_057C_turnToFace(u8_local_address(local_m02_w01), local_m02.getDirToItem(local_m04), 0, 1);
+				class_057C_turnToFace(u8_local_address(local_m04_w01), local_m04.getDirToItem(local_m02), 0, 1);
+				class_057C_realDoAnim(u8_local_address(local_m04_w01), 5, local_m04.getDir());
+			}
+		}
+	}
+	process
+	{
+		if somebodyTalking
+		{
+			class_057C_realDoAnim(u8_local_address(local_m04_w01), 5, local_m04.getDir());
+			wait(200);
+			class_057C_realDoAnim(u8_local_address(local_m04_w01), 6, local_m04.getDir());
+			continue; // X: reconstructed process-phase latch transfer.
+		}
+		if (not local_m04) or (not local_m02)
+		{
+			if not local_m04
+			{
+				local_m02.cSetActivity(0);
+			}
+			else
+			{
+				local_m04.cSetActivity(0);
+			}
+			return;
+		}
+		wait(60);
+		local_m0A++;
+		if local_m0A = 1
+		{
+			local_m04.bark("All right, one more time... ");
+			local_m04.bark("Where were you last night? ");
+			local_m02.bark("Really, I was at home with my poor, sick mother. ");
+		}
+		else if local_m0A = 2
+		{
+			local_m04.bark("Why have you not paid your taxes? ");
+			local_m02.bark("Please sir, I have no more money. ");
+		}
+		else if local_m0A = 3
+		{
+			local_m04.bark("I should throw you in the dungeon! ");
+			local_m02.bark("But-but who will feed my children? ");
+		}
+		else if local_m0A = 4
+		{
+			local_m04.bark("I know that you were in on it! ");
+			local_m04.bark("Confess, and I shall not torture you! ");
+			class_057C_realDoAnim(u8_local_address(local_m04_w01), 6, local_m04.getDir());
+			local_m02.bark("I beg of you, sir! ");
+			local_m02.bark("Please let me go! ");
+			class_057C_realDoAnim(u8_local_address(local_m04_w01), 5, local_m04.getDir());
+			local_m04.bark("Right, I shall torture you then! ");
+		}
+		else if local_m0A = 6
+		{
+			local_m02.bark("I swear on my mother's grave that I had no part in that. ");
+			local_m04.bark("Really? ");
+			local_m04.bark("I thought you said your mother was sick...? ");
+			local_m02.bark("Well... ");
+			local_m02.bark("She...she is sick. Very sick. ");
+			local_m02.bark("She will be dead soon... ");
+		}
+		else if local_m0A = 7
+		{
+			class_057C_realDoAnim(u8_local_address(local_m04_w01), 6, local_m04.getDir());
+			local_m04.bark("Tell me what I need to know! ");
+			local_m04.bark("I grow tired of your lies... ");
+			class_057C_realDoAnim(u8_local_address(local_m04_w01), 5, local_m04.getDir());
+		}
+		else if local_m0A = 8
+		{
+			local_m02.bark("Please, I beg mercy in the name of the Tempest! ");
+			local_m04.bark("You know Mordea never shows mercy! ");
+			local_m04.bark("She may feed you to the Lurker rather than put you in the dungeon! ");
+			local_m02.bark("Please, I beg of you, have mercy on me! ");
+			local_m0A = 0;
+		}
+	}
+}
+
+// Derived: routine 0x08CA, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIGHT::fight_leave_fast_area_reset_fight_state_and_stop_process()
+{
+	Egg_setEggId(0, this);
+	killProcess(referent, 539);
+}
+

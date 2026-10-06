@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x004C
+// FLEX slot: 78
+// Original offset: 0x0009F93A
+// Naming evidence: E, exact object-1 linker name `KITH`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/KITH.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass KITH inherits Item
+{
+	process kith_look_bark_kith();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KITH::kith_look_bark_kith()
+{
+	bark("kith ");
+}
+

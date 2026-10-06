@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x004A
+// FLEX slot: 76
+// Original offset: 0x0002E20F
+// Naming evidence: E, exact object-1 linker name `BIGUGLY`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BIGUGLY.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass BIGUGLY inherits Item
+{
+	process bigugly_look_bark_tree();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BIGUGLY::bigugly_look_bark_tree()
+{
+	bark("tree ");
+}
+

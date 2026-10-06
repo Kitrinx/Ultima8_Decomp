@@ -1,0 +1,888 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x041D
+// FLEX slot: 1055
+// Original offset: 0x000172AD
+// Naming evidence: E, exact object-1 linker name `BANE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BANE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+globalflag baneWarned:2;
+
+npcclass BANE inherits Npc
+{
+	process bane_cast_forward_to_spell_combat(arg_04:U8Word);
+	process bane_avatar_stole_something_warn_then_target_thief(arg_04:U8Word);
+	process bane_look_bark_living_or_dead_identity();
+	process bane_schedule_update_period_schedule_and_safe_teleport();
+	process bane_enter_fast_area_restore_enclave_items_and_target_avatar();
+	process bane_leave_fast_area_stop_active_process();
+	process bane_use_run_acolyte_dialogue();
+	process [[PT_DEFAULT, referent]] bane_recruit_disciple();
+	process bane_request_first_acolyte_role();
+}
+
+// Derived: routine 0x0080, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process BANE::bane_cast_forward_to_spell_combat(arg_04:U8Word)
+{
+	baneMad = 3;
+	class_0574_spelcmbt_run_spell_combat(this, arg_04);
+}
+
+// Derived: routine 0x00A7, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process BANE::bane_avatar_stole_something_warn_then_target_thief(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	if not arg_04
+	{
+		return;
+	}
+	if (baneJoined = 1) or (sponsorTest = 1) or (keyOfTheAcolyte = 1)
+	{
+		return;
+	}
+	killProcess(referent, PT_ACTIVITY);
+	turnToFace(getDirToItem(Avatar:Referent), 0, 5);
+	foreach recursive local_m02 within container 1 {
+		if local_m02 = arg_04
+		{
+			setAvatarInStasis(1);
+			bark("I see you are a thief. Then perish as one. ");
+			setTarget(1);
+			setAvatarInStasis(0);
+			return;
+		}
+	}
+	if not baneWarned
+	{
+		baneWarned = 1 + baneWarned;
+		bark("Leave that alone. ");
+	}
+	else if baneWarned = 1
+	{
+		baneWarned = 1 + baneWarned;
+		bark("Will you leave my things alone? ");
+	}
+	else if baneWarned = 2
+	{
+		baneWarned = 1 + baneWarned;
+		bark("You are close to death my foolish friend. ");
+	}
+	else
+	{
+		setAvatarInStasis(1);
+		bark("Your death is your own doing. ");
+		setTarget(1);
+		setAvatarInStasis(0);
+		return;
+	}
+	bane_enter_fast_area_restore_enclave_items_and_target_avatar();
+}
+
+// Derived: routine 0x02C8, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BANE::bane_look_bark_living_or_dead_identity()
+{
+	if baneName and baneJob
+	{
+		if isDead()
+		{
+			bark("Bane the dead Sorcerer ");
+		}
+		else
+		{
+			bark("Bane the Sorcerer ");
+		}
+	}
+	else if baneName
+	{
+		if isDead()
+		{
+			bark("the deceased Bane ");
+		}
+		else
+		{
+			bark("Bane");
+		}
+	}
+	else if baneJob
+	{
+		if isDead()
+		{
+			bark("dead Sorcerer ");
+		}
+		else
+		{
+			bark("Sorcerer ");
+		}
+	}
+	else if isDead()
+	{
+		bark("dead mage ");
+	}
+	else
+	{
+		bark("mage ");
+	}
+}
+
+// Derived: routine 0x0449, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BANE::bane_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	if isDead()
+	{
+		return;
+	}
+	else if not inDaemonScene
+	{
+		if (acolyteKilled = 2) and (goToInnerSanctum = 1)
+		{
+			local_m05_w02 = 16415;
+			local_m03 = 16031;
+			local_m01 = 40;
+			if class_057C_canSafeTeleport(this, local_m05, 12)
+			{
+				class_057C_safeTeleport(this, local_m05, 12);
+			}
+		}
+		else
+		{
+			local_m05_w02 = 18431;
+			local_m03 = 15999;
+			local_m01 = 40;
+			if class_057C_canSafeTeleport(this, local_m05, 12)
+			{
+				class_057C_safeTeleport(this, local_m05, 12);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x050A, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BANE::bane_enter_fast_area_restore_enclave_items_and_target_avatar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Item;
+	foreach local_m02 where ((type = 124) and (frame = 4)) within 20 cells of referent {
+		local_m04 = local_m02;
+	}
+	u8goto label_0626 if not (acolyteKilled);
+	if local_m04
+	{
+		u8_search_begin(local_m02, 2, 10 * 32, local_m04, <<66, u8_search_word(634), u8_search_word(313), 36>>);
+		while u8_search_condition()
+		{
+			local_m02.destroy();
+			u8_search_advance();
+		}
+		u8_search_end();
+		foreach local_m02 where (type = 400) within 7 cells of local_m04 {
+			if (local_m02.getX() <= local_m04.getX()) and (local_m02.getX() <= local_m04.getX())
+			{
+				local_m02.destroy();
+			}
+		}
+	}
+	if acolyteKilled = 1
+	{
+		setFrame(129);
+		if goToInnerSanctum
+		{
+			teleport(0, 0, 0, 0);
+			return;
+		}
+		return;
+	}
+	else if ((sponsorTest = 0) or (keyOfTheAcolyte = 1)) and (inDaemonScene = 0)
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057B_move_return_to_idle_marker(this) -> return;
+	}
+	return;
+	u8label label_0626:
+	if isDead()
+	{
+		return;
+	}
+	else if avatarMasterSorcerer
+	{
+		setTarget(1);
+	}
+	else
+	{
+		if ((sponsorTest = 0) or (keyOfTheAcolyte = 1)) and (inDaemonScene = 0)
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_057B_move_return_to_idle_marker(this) -> return;
+		}
+	}
+}
+
+// Derived: routine 0x0673, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BANE::bane_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x068E, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BANE::bane_use_run_acolyte_dialogue()
+{
+	if isDead()
+	{
+		return;
+	}
+	enterConvo();
+	if not Malchir.isDead()
+	{
+		class_0595_bane2_greet_avatar(this);
+	}
+	if baneMad
+	{
+		class_0595_bane2_handle_avatar_apology(this);
+	}
+	else if Malchir.isDead()
+	{
+		bane_request_first_acolyte_role();
+	}
+	else if keyOfTheAcolyte
+	{
+		class_058A_daemscen_refuse_first_acolyte_conversation(this);
+	}
+	else if acolyteKilled
+	{
+		class_058A_daemscen_run_sorcery_training_conversation(this);
+	}
+	else if baneJoined
+	{
+		class_0595_bane2_ask_vardion_truename(this);
+	}
+	else
+	{
+		bane_recruit_disciple();
+	}
+	exitConvo();
+}
+
+// Derived: routine 0x0782, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] BANE::bane_recruit_disciple()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String List;
+	local_m08:String List;
+	local_m0A:U8Word;
+	local_m0B:U8Byte;
+	local_m0C:U8Byte;
+	local_m0D:U8Byte;
+	local_m0E:U8Byte;
+	local_m0F:U8Byte;
+	local_m10:U8Byte;
+	local_m11:U8Byte;
+	local_m12:U8Byte;
+	local_m13:U8Byte;
+	local_m14:U8Byte;
+	local_m15:U8Byte;
+	local_m16:U8Byte;
+	local_m17:U8Byte;
+	local_m18:U8Byte;
+	local_m19:U8Byte;
+	local_m0B = 0;
+	local_m0C = 0;
+	local_m0D = 0;
+	local_m0E = 0;
+	local_m0F = 0;
+	local_m10 = 0;
+	local_m11 = 0;
+	local_m12 = 0;
+	local_m13 = 0;
+	local_m14 = 0;
+	local_m15 = 0;
+	local_m16 = 0;
+	local_m17 = 0;
+	local_m18 = 0;
+	local_m19 = 0;
+	if not baneHasAsked
+	{
+		local_m06 = <<"Tell me of the Enclave and Morgaelin. ">>;
+		if not baneName
+		{
+			local_m06 ^= <<"What is a Truename? ">>;
+		}
+		if not baneJob
+		{
+			local_m06 ^= <<"Tell me of the Elder Tongue. ">>;
+		}
+		local_m06 = class_0581_free_append_list_line("Farewell. ", local_m06);
+	}
+	else
+	{
+		local_m06 = <<"I agree to your terms. ", "What else can you offer? ", "I will not be your spy, lady. ", "I do not trust -your- motives. ", "Let me think on it. ">>;
+	}
+	while local_m04 != "Farewell. "
+	{
+		if class_0581_countStrList(local_m06) <= 1
+		{
+			bark("Is there anything else that you would wish to discuss? ");
+			local_m06 = <<"Tell me of the Enclave and Morgaelin. ">>;
+			if not baneName
+			{
+				local_m06 ^= <<"What is a Truename? ">>;
+			}
+			if not baneJob
+			{
+				local_m06 ^= <<"Tell me of the Elder Tongue. ">>;
+			}
+			local_m06 = class_0581_free_append_list_line("Farewell. ", local_m06);
+		}
+		else if not baneHasAsked
+		{
+			local_m06 = class_0581_free_append_list_line("Farewell. ", local_m06);
+		}
+		local_m04 = ask(local_m06);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "Tell me of the Enclave and Morgaelin. "
+			{
+				bark("The Sorcerer's Enclave sits in the arms of Daemon's Crag, over-topped by Mount Morgaelin. The volcano is the namesake of the island. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m0D
+				{
+					local_m06 ^= <<"Tell me about Sorcerers. ">>;
+				}
+				local_m06 ^= <<"Why is the crag named after Daemons? ", "Does Morgaelin have a meaning? ">>;
+			}
+			case "What is a Truename? "
+			{
+				bark("I see by your question that you are unlearned in the ways of Sorcery, and Sorcerers for that matter. A Truename is the name given a Sorcerer when she begins her training. The names you chose later or were given before have no power. I am called Bane, although that is not my Truename. ");
+				local_m06 = <<"What is your Truename? ", "Farewell. ">>;
+				if not local_m0E
+				{
+					local_m06 ^= <<"What is Sorcery? ">>;
+				}
+				if not local_m0D
+				{
+					local_m06 ^= <<"Tell me about Sorcerers. ">>;
+				}
+				if not local_m0F
+				{
+					local_m06 ^= <<"Power over what? ">>;
+				}
+				local_m0B = 1;
+				baneName = 1;
+			}
+			case "Tell me of the Elder Tongue. "
+			{
+				bark("That is my speciality, for I am an avid student of the language and all languages for that matter. The Elder Tongue allows Sorcerers such as myself to unleash or bind Fire. All Acolytes must learn it to create the enchanted tools of our trade. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m0D
+				{
+					local_m06 ^= <<"Tell me about Sorcerers. ">>;
+				}
+				if not local_m10
+				{
+					local_m06 ^= <<"What do you mean by Fire? ">>;
+				}
+				if not local_m11
+				{
+					local_m06 ^= <<"What is an Acolyte? ">>;
+				}
+				local_m06 ^= <<"Enchanted tools? ">>;
+				local_m0C = 1;
+				baneJob = 1;
+			}
+			case "Tell me about Sorcerers. "
+			{
+				bark("If you wish, but know this: the real power of the Truename will only be given to one initiated in our ways. Would you know about the current Sorcerers, or perhaps some of those that went before? ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m0B
+				{
+					local_m06 ^= <<"What is a Truename? ">>;
+				}
+				local_m06 ^= <<"Current. ", "Those that went before. ">>;
+				if not local_m0F
+				{
+					local_m06 ^= <<"Power over what? ">>;
+				}
+				local_m0D = 1;
+			}
+			case "Why is the crag named after Daemons? "
+			{
+				bark("Long ago, this was the place where the first Daemon appeared. Would you care to hear the tale? ");
+				local_m0A = askYesNo(2);
+				if local_m0A = 1
+				{
+					bark("A man and his only daughter, Arianna, were pursued up this crag by Zealans who wished to take his life... and more from his daughter. ");
+					bark("The Zealans cornered the man and his child upon the cliffs overlooking the fiery river of lava. ");
+					bark("At last seeing all hope of escape vanish, the man decided that he would rather his daughter go to a quick, if painful death, than go to the fate the brutish Zealans had in store for her. ");
+					bark("Tears in his eyes, he threw his lovely daughter into the lava and turned to face the Zealans. ");
+					bark("Just as they were about to finish off the badly wounded man, a hideous, redish beast leaped out of the lava and slew them to a man. ");
+					bark("The beast turned upon the wounded man. As it was almost upon him, he yelled out,*`In the name of my beloved Arianna, please leave me be.` ");
+					bark("At the dying man's last word, the Daemon vanished in a cloud of brimstone. As fortune would have it, the man lived a while yet to tell his tale. ");
+				}
+				else if local_m0A = 0
+				{
+					bark("Very well, it is truly a tale of woe. ");
+				}
+				else
+				{
+					local_m04 = "";
+				}
+				local_m06 -= <<"Why is the crag named after Daemons? ">>;
+			}
+			case "Does Morgaelin have a meaning? "
+			{
+				bark("Yes, indeed it does. It means Dark Jewel in the tongue of the Elders. You are a curious sort, aren't you? ");
+				local_m06 -= <<"Does Morgaelin have a meaning? ">>;
+				if not local_m0C
+				{
+					local_m06 ^= <<"Tell me of the Elder Tongue. ">>;
+				}
+			}
+			case "What is Sorcery? "
+			{
+				bark("Sorcery is the art of manipulating Fire. It is not an easy path to take as you can see by the scars that mark those of my Sorcerous kind, however, it does have its rewards. ");
+				local_m06 -= <<"What is Sorcery? ">>;
+				local_m0E = 1;
+			}
+			case "Power over what? "
+			{
+				bark("Why, over the Fire of course. The Truename of the Sorcerer is melded to the spell to give it meaning. The Truename of the Daemon binds it to the Sorcerer's will. Even the most powerful Daemon, the Lord of Flame himself, may be commanded so... if one also has the Tongue of Fire. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m10
+				{
+					local_m06 ^= <<"What do you mean by Fire? ">>;
+				}
+				local_m06 ^= <<"What exactly is a Daemon? ">>;
+				if not local_m13
+				{
+					local_m06 ^= <<"Tell me about this Lord of Flame. ">>;
+				}
+				local_m06 ^= <<"What is the Tongue of Fire? ">>;
+				local_m0F = 1;
+			}
+			case "What is your Truename? "
+			{
+				bark("Not so quickly, Daemion. Perhaps when we have grown accustomed to each other more, I shall reveal that to you. Until that time, it shall remain mine, and mine only. ");
+				local_m06 -= <<"What is your Truename? ">>;
+			}
+			case "What do you mean by Fire? "
+			{
+				bark("Fire is the most powerful and destructive of the Elements, as the Lord of Flame is the most potent of the Titans. ");
+				local_m06 = <<"Tell me of the Elements? ", "Farewell. ">>;
+				if not local_m13
+				{
+					local_m06 ^= <<"Tell me about this Lord of Flame. ">>;
+				}
+				if not local_m14
+				{
+					local_m06 ^= <<"What is a Titan? ">>;
+				}
+				local_m06 ^= <<"What do you know of the Titans? ">>;
+				local_m10 = 1;
+			}
+			case "What is an Acolyte? "
+			{
+				bark("I for one am an Acolyte Sorcerer. Acolytes, are the group of Sorcerers that the Master calls upon to aid him in the performance of his Sorcery. ");
+				local_m06 -= <<"What is an Acolyte? ">>;
+				if not local_m16
+				{
+					local_m06 ^= <<"Tell me of your Master. ">>;
+				}
+				local_m11 = 1;
+			}
+			case "Enchanted tools? "
+			{
+				bark("Wands, rods, staves and other unperishable metal paraphernalia are the trappings of a Sorcerer. ");
+				local_m06 -= <<"Enchanted tools? ">>;
+			}
+			case "Current. "
+			{
+				bark("The living Sorcerers of the Cabal are divided into two groups: the body and the will. The body is made up of all the Acolytes and the will is that of the Master. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m11
+				{
+					local_m06 ^= <<"What is the Cabal? ">>;
+				}
+				if not local_m11
+				{
+					local_m06 ^= <<"What is an Acolyte? ">>;
+				}
+				local_m06 ^= <<"Who are the Acolytes? ">>;
+				if not local_m16
+				{
+					local_m06 ^= <<"Tell me of your Master. ">>;
+				}
+			}
+			case "Those that went before. "
+			{
+				bark("The history of Sorcerers is not a subject I am too familiar with. Those who spend their time delving into the greatness of long dead mages cannot become great themselves. ");
+				bark("However, I do know that a powerful man, called Maedron by some, had the foresight and wisdom to overthrow the tyrannical leadership of the dullard Corodin. ");
+				bark("Corodin was the first, but not the best, leader of the Cabal. Maedron set the precedent for The Calling by challenging Corodin to a Sorcerous duel, and defeating him by wit and might. ");
+				local_m06 = <<"Do you know more about Maedron? ", "Tell me more of Corodin. ", "Farewell. ">>;
+				if not local_m11
+				{
+					local_m06 ^= <<"What is the Cabal? ">>;
+				}
+				if not local_m18
+				{
+					local_m06 ^= <<"The Calling? ">>;
+				}
+			}
+			case "What exactly is a Daemon? "
+			{
+				bark("A Daemon is the essence of a man or woman who has been vanquished by flame. It is almost mindless and filled with a destructive rage that consumes all it sees. ");
+				bark("It owes allegiance to the Lord of Flame, and can be made a servant by a Sorcerer with the knowledge and power to control it. ");
+				local_m06 -= <<"What exactly is a Daemon? ">>;
+				if not local_m13
+				{
+					local_m06 ^= <<"Tell me about this Lord of Flame. ">>;
+				}
+			}
+			case "Tell me about this Lord of Flame. "
+			{
+				bark("The Lord of Flame is none other than the Titan of the Element of Fire. He was bound to the will of the Sorcerers, long ago, and remains bound to this very day. It is by his chained might that we control our Sorcery. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m14
+				{
+					local_m06 ^= <<"What is a Titan? ">>;
+				}
+				if not local_m10
+				{
+					local_m06 ^= <<"What do you mean by Fire? ">>;
+				}
+				if not local_m0E
+				{
+					local_m06 ^= <<"What is Sorcery? ">>;
+				}
+				local_m13 = 1;
+			}
+			case "What is the Tongue of Fire? "
+			{
+				bark("I know very little about it save that it is the focus of the Sorcerer's ability to control the Lord of Flame. ");
+				local_m06 -= <<"What is the Tongue of Fire? ">>;
+			}
+			case "Tell me of the Elements? "
+			{
+				bark("I have never met an outlander before, but you must be from far away to not know of the Elements. Far away indeed. Nonetheless, be welcome for I will tell of them if you wish it. Do you? ");
+				local_m0A = askYesNo(2);
+				if local_m0A = 1
+				{
+					bark("The first is Earth: a base and slow Element, its power is over death and the land. It mixes well with Fire, but I mislike the feel of it, personally. ");
+					bark("Water is next: it is, of course, unloved by those who follow the Sorcerous path. But I cannot in good faith call it a weak Element, for its bailiwick extends throughout the deep seas and the Air is a fond cohort of it in the storms. ");
+					bark("The Air follows: Water and Fire use it as they will, while Earth all but ignores it. Do not take it lightly, however, for life is its power and none can exist without it. ");
+					bark("Fire is last, but also the greatest: as a Sorcerer, I know well the caress of the flame. Its power is in the undoing of all that exists, but it also has the ability to create. Does not a blacksmith use it to forge a better steel? Does not a baker use it to make the bread that feeds him? ");
+				}
+				else if local_m0A = 0
+				{
+					bark("Good. To expound upon things of this nature gives one a pedantic and scholarly aire. I am neither of these things, as I prefer to be considered a woman of deeds. ");
+				}
+				else
+				{
+					local_m04 = "";
+				}
+				local_m06 -= <<"Tell me of the Elements? ">>;
+			}
+			case "What is a Titan? "
+			{
+				bark("I -- What? Do you mean to tell me you know not what the Titans are? ");
+				local_m0A = askYesNo(2);
+				if local_m0A = 1
+				{
+					bark("Well, it's simple enough. They are only the most powerful beings in all of Pagan. Were they not bound by or in contract with the people, as in times before, they would be gods to us. ");
+				}
+				else if local_m0A = 0
+				{
+					bark("It is good that you do know, for I did not think that one could come from so far as to be ignorant of the Titans. ");
+				}
+				else
+				{
+					local_m04 = "";
+				}
+				local_m06 -= <<"What is a Titan? ">>;
+				local_m14 = 1;
+			}
+			case "What do you know of the Titans? "
+			{
+				bark("I know the names and titles by which the people adress them, and the Elements they have reign over. Other than this I cannot... or will not tell you... at least, not yet. ");
+				local_m06 -= <<"What do you know of the Titans? ">>;
+			}
+			case "What is the Cabal? "
+			{
+				bark("The Cabal is simply the term we Sorcerers use to mean our kind, collectively. It is made up of one Master, one First Acolyte, three other Acolytes, and various other Disciples. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m16
+				{
+					local_m06 ^= <<"Tell me of your Master. ">>;
+				}
+				if not local_m17
+				{
+					local_m06 ^= <<"What do you mean by First Acolyte? ">>;
+				}
+				if not local_m11
+				{
+					local_m06 ^= <<"What is an Acolyte? ">>;
+				}
+				local_m06 ^= <<"What is a Disciple? ">>;
+				local_m15 = 1;
+			}
+			case "Who are the Acolytes? "
+			{
+				bark("The Acolytes are poorly led by the First Acolyte who is more beast than man. His name is Vardion, and you would do well to avoid him, as his odor can be most offensive. ");
+				bark("I, of course, am also one of the Acolytes, then there is Gorgrond. Sometimes a bit slow of wit, and easily led astray by those that he thinks are of greater importance. ");
+				bark("Lastly, there is Beren. A man to be trusted. He is as good as his word, and his word is beyond reproach. You could do worse than to take his advice in all things. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m17
+				{
+					local_m06 ^= <<"What do you mean by First Acolyte? ">>;
+				}
+				local_m06 ^= <<"Tell me more of Vardion. ", "Do you know more about Gorgrond? ", "What else can you say of Beren. ">>;
+				local_m12 = 1;
+			}
+			case "Tell me of your Master. "
+			{
+				bark("Malchir is a wily one, but his self-interest is counter to my own outgoing nature. He should become more concerned with the other Sorcerers instead of always hiding himself away. ");
+				bark("Nonetheless, he makes a fine and powerful Master otherwise. Other Acolytes malicious comments are unwarranted and you should take no heed of them. ");
+				local_m06 -= <<"Tell me of your Master. ">>;
+				local_m06 ^= <<"Malicious comments? ">>;
+				local_m16 = 1;
+			}
+			case "Tell me more of Corodin. "
+			{
+				bark("Truly, I know little else of the man. He died ages ago and before that he did little to recommend him to memory. ");
+				local_m06 -= <<"Tell me more of Corodin. ">>;
+			}
+			case "Do you know more about Maedron? "
+			{
+				bark("He was a great Sorcerer, quite possibly the greatest. It was his insight that brought about the magical formulae we use in our Sorcery. ");
+				bark("He created the Elder Tongue to aid in the manipulation of Fire and our modern spellcraft. In truth, I wish I could have been one of his contemporaries, for there is no telling what great mysteries were lost upon his death. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m0E
+				{
+					local_m06 ^= <<"What is Sorcery? ">>;
+				}
+				if not local_m0C
+				{
+					local_m06 ^= <<"Tell me of the Elder Tongue. ">>;
+				}
+				if not local_m10
+				{
+					local_m06 ^= <<"What do you mean by Fire? ">>;
+				}
+			}
+			case "The Calling? "
+			{
+				bark("The Calling is a challenge from one Sorcerer to another, and invariably ends in the death of one of the participants. No other form of arbitration is allowed, save as the Master deems fitting. It is the way by which we keep peace amongst ourselves. ");
+				bark("The rules of issuing a Call are as follows: No Sorcerer may Call upon another without the permission of the Master, except when the Master Calls or is Called. Only an Acolyte may Call upon the Master. ");
+				bark("A Sorcerer who breaks these simple rules can usually number his remaining days upon one hand. ");
+				local_m06 -= <<"The Calling? ">>;
+				local_m18 = 1;
+			}
+			case "What do you mean by First Acolyte? "
+			{
+				bark("The First Acolyte is chosen to be the Master's second in command, and tends to the daily affairs of running the Enclave. ");
+				bark("The Master needs someone who understands people. Someone with a vision for the future. ");
+				if not baneOffer
+				{
+					local_m02 = "Vardion,";
+					if not local_m12
+					{
+						local_m02 += " our current First Acolyte, ";
+					}
+					local_m02 += " is not this someone. Far to the contrary. He lingers in the past. ";
+					bark(u8_string_local_address(local_m02));
+					bark("Observing out-dated traditions for tradition's sake... but I digress.*Perhaps you grow bored with this line of conversation? ");
+					local_m06 -= <<"What do you mean by First Acolyte? ">>;
+					if not local_m19
+					{
+						local_m06 ^= <<"Tell me more of Vardion. ">>;
+					}
+					local_m08 = local_m06;
+					local_m06 = <<"No, please go on. ", "Can we change the subject? ", "Yes, I'm sorry, I have. ", "Not bored, just disinterested. ", "Farewell. ">>;
+					baneOffer = 1;
+				}
+				else if not baneJoined
+				{
+					bark("Are you still wary of discussing this further? ");
+					local_m06 -= <<"What do you mean by First Acolyte? ">>;
+					local_m08 = local_m06;
+					local_m06 = <<"No, please go on. ", "Can we change the subject? ", "Farewell. ">>;
+				}
+				else
+				{
+					bark("Perhaps you are this someone. ");
+					local_m06 -= <<"What do you mean by First Acolyte? ">>;
+				}
+				local_m17 = 1;
+			}
+			case "What is a Disciple? "
+			{
+				bark("A Disciple is a Sorcerer, and therefore a full member of the Cabal, but they have not been inducted into the select group called Acolytes. ");
+				bark("Not to champion my own meager abilities, but only the most powerful and... or skilled Disciples are allowed to join into our ranks. ");
+				local_m06 -= <<"What is a Disciple? ">>;
+			}
+			case "Tell me more of Vardion. "
+			{
+				bark("Not to put too fine a point on it, he is a brutish, overbearing, pompous lout. In other words, I find his presence intolerable and if Master Malchir were not so engrossed in his own affairs, I feel sure that he would allow me to issue The Calling to Vardion, even if he is the First Acolyte. ");
+				local_m06 = <<"Farewell. ">>;
+				if not local_m16
+				{
+					local_m06 ^= <<"Tell me of your Master. ">>;
+				}
+				if not local_m18
+				{
+					local_m06 ^= <<"The Calling? ">>;
+				}
+				if not local_m17
+				{
+					local_m06 ^= <<"What do you mean by First Acolyte? ">>;
+				}
+			}
+			case "Do you know more about Gorgrond? "
+			{
+				bark("He is as simple-minded as he is magically powerful... in a raw, and unskilled fashion. He is the perfect tool, which is why, I believe, he was made an Acolyte. Certainly, he is useful to those in a position to manipulate him. ");
+				local_m06 -= <<"Do you know more about Gorgrond? ">>;
+			}
+			case "What else can you say of Beren. "
+			{
+				bark("Naught but good. His mind is quick, his body a finely crafted work, his magical skill and power are only slightly beneath my own. Taken altogether, quite a remarkable fellow. I would trust him with my life, were I you. ");
+				local_m06 -= <<"What else can you say of Beren. ">>;
+			}
+			case "Malicious comments? "
+			{
+				bark("It would only perpetuate these comments to give them voice, therefore I shall refrain. ");
+				local_m06 -= <<"Malicious comments? ">>;
+			}
+			case "No, please go on. "
+			{
+				bark("I will entrust to you further knowledge of our predicament. I have reason to believe that Vardion is preparing to assassinate the Master. ");
+				bark("He thinks that Malchir breaks with too many of the old traditions but fears his power. Should he kill Malchir and become Master, he will return the Enclave to the days when Sorcerers were shunned by the rest of the island's populace. ");
+				bark("To get to the point at hand, I must ask a favor of you. I need someone to enter into the confidences of the First Acolyte and acquire from him his Truename. This will aid me in performing a scrying to know Vardion's motives. ");
+				bark("Will you do this?*If so, I can offer you a position as a Disciple... or even Acolyte, should Vardion's intentions be murderous. ");
+				local_m06 = <<"I agree to your terms. ", "What else can you offer? ", "I will not be your spy, lady. ", "I do not trust -your- motives. ", "Let me think on it. ">>;
+				baneHasAsked = 1;
+			}
+			case "Can we change the subject? "
+			{
+				bark("Of course. I am truly sorry to embroil you in the affairs of what must be, to you, a strange people indeed. Please forgive my temporary indiscretion. ");
+				local_m06 = local_m08;
+			}
+			case "Yes, I'm sorry, I have. "
+			{
+				bark("Please... let me bore you no further. ");
+				baneMad = 1;
+			}
+			case "Not bored, just disinterested. "
+			{
+				bark("As your interest wanes, so does my civility. Please go before I say something you might regret. ");
+				baneMad = 1;
+			}
+			case "I agree to your terms. "
+			{
+				bark("Good. You are perceptive and wise, my Daemion. Firstly, in order to become a Disciple Sorcerer, you must have an Acolyte for a sponsor. I shall be that for you. Secondly, as your sponsor, I will give you a Truename... ");
+				bark("Daemion you are to me, and Daemion you shall be to the Fire. My inner sight judged your name correctly it would seem. I have always had that ability. To lend power to your Truename, I must reveal mine to you. Sabriane it is, and it means Well of Stars. ");
+				bark("Now your first task as my Disciple is to enter into the confidences of our illustrious First Acolyte and get from him his Truename. I care not how you do this, just get it. ");
+				baneJoined = 1;
+				local_m04 = "Farewell. ";
+			}
+			case "What else can you offer? "
+			{
+				bark("I have made a far greater offer than you apparently are capable of understanding. To become a Sorcerer is to become one with power. Take that as you will, as you take leave of these premises. ");
+				baneMad = 1;
+			}
+			case "I will not be your spy, lady. "
+			{
+				bark("That is your choice, my ignorant friend. My offer still stands, but perhaps you are not the one I should give it to. ");
+				baneMad = 1;
+			}
+			case "I do not trust -your- motives. "
+			{
+				bark("It is not my motives that should be in question. You are the stranger here. And if I wished it, I could have you thrown out! ");
+				baneMad = 1;
+			}
+			case "Let me think on it. "
+			{
+				bark("I apologize for placing this pressure on you, but it is of dire consequence. I will await your answer. ");
+				local_m04 = "Farewell. ";
+			}
+			case "Farewell. "
+			{
+				class_0595_bane2_say_farewell(this);
+			}
+			case ""
+			{
+				class_0595_bane2_handle_silent_avatar(this);
+				local_m04 = "Farewell. ";
+			}
+			default
+			{
+				bark("I can't understand you. What did you say? ");
+			}
+		}
+		if baneMad
+		{
+			local_m04 = "Farewell. ";
+		}
+	}
+}
+
+// Derived: routine 0x5614, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process BANE::bane_request_first_acolyte_role()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, referent]];
+	realDoAnim(49, getDir());
+	if not baneGroveled
+	{
+		bark("If it would not be too much to ask, Master, I would like to become your First Acolyte. I can learn the duties involved very quickly, and I promise you will not find my abilities wanting. Will you accept me? ");
+		local_m02 = class_0581_askYesNo(0x00000000);
+		if local_m02 = 1
+		{
+			bark("Thank you, Master! You won't regret this decision. ");
+		}
+		else
+		{
+			bark("I understand, Master. I won't take any more of your time. Whatever I have is, of course, yours to take. ");
+		}
+		baneGroveled = 1;
+	}
+	else
+	{
+		bark("I hope I am performing my duties to your satisfaction. But I will attempt to improve them further. I must go now to return to my studies. ");
+	}
+	wait(100);
+	realDoAnim(50, getDir());
+}
+

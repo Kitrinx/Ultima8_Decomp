@@ -1,0 +1,163 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x057A
+// FLEX slot: 1404
+// Original offset: 0x000EA3C0
+// Naming evidence: E, exact object-1 linker name `SCROLL1`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SCROLL1.unk`.
+// u8label/u8goto remain invented where emitted.
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_shopping_list()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("~Shopping list~~Torax ribs~Kith filet~Cheese~Fish~Blue Mushrooms~Butter~Salt"), this);
+}
+
+// Derived: routine 0x00EE, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_i_can_go_no_further_these()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("I can go no further. These blasted magical walls have taken my strength, and I am afraid, my life. ~Too late have I discovered a way to detect the walls without cost to myself.~These humble mushrooms that litter the floor awake the wall's power when tossed at them! ~Alas, I can only eat these mushrooms. Perhaps they may bring me strength to escape this cavern..."), this);
+	return;
+}
+
+// Derived: routine 0x027F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_bryans_final_note()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("I lie here awaiting the end. I know now that I will never see Lithos, curse these frail bones of mine. My strength is not great enough to withstand these tests. My only hope is that my twin brother will make it though without me. My hopes and spirit rest with him... ~Should anyone find this note, please tell him of my passing. ~          Thank you,~            Bryan"), this);
+	return;
+}
+
+// Derived: routine 0x0414, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_bruces_final_note()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("I lie here awaiting the end. I know now that I will never see Lithos, curse these frail bones of mine. My strength is not great enough to withstand these tests. My only hope is that my twin brother will make it though without me. My hopes and spirit rest with him... ~Should anyone find this note, please tell him of my passing. ~          Thank you,~Bruce"), this);
+	return;
+}
+
+// Derived: routine 0x059D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_have_trust_in_things_you_cannot()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("Have trust in things you cannot see~ For in the smallest you must believe.~~ Cast stone into flame and you shall find~ All your doubts left behind~~ Cross the impossible to the great beyond~ And only 'til then can you carry on.~"), this);
+}
+
+// Derived: routine 0x06A3, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_this_scroll_while_in_possession_of()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("This Scroll, while in possession of one (1) Toliver P. Barkley, and only for the period between the first (1st) day of the second (2nd) month of the year, to the third (3rd) week of the seventh (7th) month of the year, for two (2) years, (and two years only) marks the ownership of one (1) medium sized, three (3) year old, four (4) footed, six (6) foot long, single-minded, smelly torax, that is known in these parts as George.~"), this);
+}
+
+// Derived: routine 0x0872, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_sysaphus_floor_complaint_copy_a()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("Dear Sir-~ It has come to my attention that the floors of your bloody catacombs have proven to be rather faulty if not downright dangerous. Why, when I was there just two days past, visiting my one and only beautiful daughter, who lies interred there, my lovely wife, Forencia, fell through the floor to her death! I can only recommend that you close the catacombs until the floors can be made safer, for I truly would have to hunt you down and indeed cease your beating heart should another of my kin fall to their death.~~ Yours Truly,~ Sysaphus~"), this);
+}
+
+// Derived: routine 0x0AB8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_sysaphus_floor_complaint_copy_b()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("Dear Sir-~ It has come to my attention that the floors of your bloody catacombs have proven to be rather faulty if not downright dangerous. Why, when I was there just two days past, visiting my one and only beautiful daughter, who lies interred there, my lovely wife, Forencia, fell through the floor to her death! I can only recommend that you close the catacombs until the floors can be made safer, for I truly would have to hunt you down and indeed cease your beating heart should another of my kin fall to their death.~~ Yours Truly,~ Sysaphus~"), this);
+}
+
+// Derived: routine 0x0CFE, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_mental_note_fix_floors_those_water()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("Mental note:~ Fix floors (those water puddles weaken mortar)~ Clean cobwebs~ Remove all trash (have Pedert take all food out)~ Have Jaynela write letter to Sysaphus~ Talk to Vugrinec about bandage wearing in public.~"), this);
+}
+
+// Derived: routine 0x0DF8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_from_my_experiments_i_have_found()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("From my experiments I have found that potions act in the following manner: ~Yellow: Heals, but only in small measures. ~Red: Also heals, but beware! Its strength will do damage to those not in need of its power. ~Orange: restores Mana in times of need. ~Green: Its taste is quite revolting! ~Blue: Provides restful slumber. ~Purple: Provides protection in combat. Very useful against undead. ~Black: Causes drinker to be invisible."), this);
+}
+
+// Derived: routine 0x0FC9, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_most_honorable_lady_mordea_i_have()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("Most Honorable Lady Mordea,~ I have heard that the Skull of Quakes has been removed from the Upper Catacombs. I had believed that it would be safe within the Catacombs, for it is the only place it is used. Pray tell me, my Lady, what do you suggest I do about this situation? I have heard rumors that it presently may be within the Shrine, but I have grave doubts about it. I await your swift answer and am assured of your graciousness in this matter. ~~%Lieutenant Vittek"), this);
+}
+
+// Derived: routine 0x11C3, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_lieutenant_vittek_see_that_you_meet()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("Lieutenant Vittek-~ See that you meet me at the Docks as soon as you can. I have a solution to the missing Skull of Quakes dilemma.~ -Mordea"), this);
+}
+
+// Derived: routine 0x1271, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_graners_armor_note()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("...I have barely the strength to write, my heart pounds and my legs can no longer hold me. I fear the desire to possess such wonderous magic has consumed my very soul for I have pursued it until I have not the strength to stand. Even now, as I lay here gasping my final breath, the armor taunts me, coming just close enough for me to see its beauty and then dancing away from my grasp.If I only had a magical way to capture this armor, like how the Theurgists use their magic to move items from afar! A way in which one might retrieve it using hands of magic rather than flesh. To the finder of this note, I wish you luck, for the treasure which shines before you has been naught but a curse of death for me.~%% Graner the Warrior"), this);
+}
+
+// Derived: routine 0x156D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_my_time_above_this_ground_draws()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("My time above this ground draws nigh. My dearest lord, the Mountain King calls me, and I must go. Soon I shall shed this mortal coil and join Lithos for life ever lasting. Yet before I go I must fulfill my final charge as Necromancer. ~My final duty is this, my spell. The spell which shall by my addition to the magic of the Earthen Power, may Lithos be praised. For time immorial, students of the power of Earth shall this spell learn. From my undead lips shall they hear how to coax the Lord of all Earth to shake His mighty body and make all fall before the user of Earthen Magic. ~To call Quakes; combine the sacred reagents of bone, wood, dirt, and blackmoor. Invoke the power of magic upon these reagents when enclosed within a bag. Then will you be enabled to call upon the power of Lithos. ~This then is my final act as Necromancer. I await the call of the Mountain King. ~Lothian, Necromancer."), this);
+}
+
+// Derived: routine 0x1916, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] scroll1_read_trecaste_i_have_read_yradan_s()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Scroll_read(u8_string_address("Trecaste, ~~%I have read Yradan's book at your suggestion and agree -- some of those shrines must still exist, at least in part. The others and I believe this quest is of enough importance to warrant immediate attention.  What lies buried within the shrines could be the key to freedom. Go quickly, and worry not for expenses. I have sent with this message what should be enough obsidian to pay for any costs you incur. ~%Be warned to travel with caution and discretion. The agents of the Titans, both human and otherwise, are numerous. Do not make your mission known. Good luck, my friend. ~~%%Drokar"), this);
+}
+

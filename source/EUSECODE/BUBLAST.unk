@@ -1,0 +1,70 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x01E3
+// FLEX slot: 485
+// Original offset: 0x00045631
+// Naming evidence: E, exact object-1 linker name `BUBLAST`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BUBLAST.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass BUBLAST inherits Item
+{
+	process bublast_anim_spawn_fire_bursts_and_damage_overlaps();
+}
+
+// Derived: routine 0x0080, event mask 0x00000004.
+// R: `anim` identifies event 02; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BUBLAST::bublast_anim_spawn_fire_bursts_and_damage_overlaps()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m02_w01:U8Bytes1;
+	local_m04:U8Word;
+	local_m06:Item List;
+	local_m07:U8Byte;
+	local_m0C:U8Bytes5;
+	local_m08:U8Byte;
+	local_m0A:U8Word;
+	local_m0C_w02:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		setFrame(1);
+		local_m07 = 1;
+		local_m0C_w02 = getX();
+		local_m0A = getY();
+		local_m08 = getZ();
+	}
+	process
+	{
+		wait(class_0581_randRange(100, 500));
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m0C) -> return;
+		foreach local_m02 within 4 cells of referent {
+			if Item_overlaps(referent, u8_local_address(local_m02_w01))
+			{
+				local_m06 += <<local_m02>>;
+			}
+		}
+		foreach local_m02 in local_m06 {
+			if local_m02.getType() = 96
+			{
+				local_m07 = 0;
+			}
+			foreach local_m04 where (type = 703) within 2 cells of local_m02 {
+				local_m07 = 0;
+			}
+			if local_m07
+			{
+				class_057C_receiveHit(class_0581_randRange(1, 5), Item_getDirFromCoords(getY(), getX(), u8_local_address(local_m02_w01)), referent, u8_local_address(local_m02_w01));
+			}
+		}
+		return;
+	}
+}
+

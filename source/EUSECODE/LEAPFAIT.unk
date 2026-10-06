@@ -1,0 +1,47 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x048F
+// FLEX slot: 1169
+// Original offset: 0x000A77FF
+// Naming evidence: E, exact object-1 linker name `LEAPFAIT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LEAPFAIT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass LEAPFAIT inherits Egg
+{
+	process leapfait_hatch_run_air_walk_leap_test();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LEAPFAIT::leapfait_hatch_run_air_walk_leap_test()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m02 = Egg_getEggId(this);
+	if local_m02 = 0
+	{
+		if stratosMet
+		{
+			Avatar.setAirWalkEnabled(0);
+			setQuality(2);
+			return;
+		}
+		else if permissionToAirWalk
+		{
+			Avatar.setAirWalkEnabled(1);
+		}
+	}
+	u8goto label_010D if not (local_m02 = 1);
+	foreach local_m04 where (type = 587) within 5 cells of Avatar {
+		return;
+	}
+	Avatar.setAirWalkEnabled(0);
+	u8label label_010D:
+}
+

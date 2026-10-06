@@ -1,0 +1,299 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00B4
+// FLEX slot: 182
+// Original offset: 0x00040D31
+// Naming evidence: E, exact object-1 linker name `BOTTLE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BOTTLE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass BOTTLE inherits Item
+{
+	process bottle_look_bark_description_by_frame();
+	process bottle_use_drink_contents_by_frame();
+	process [[PT_DEFAULT, referent]] bottle_apply_drunk_behavior();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BOTTLE::bottle_look_bark_description_by_frame()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getFrame();
+	if local_m02 = 5
+	{
+		bark("Blackwine ");
+	}
+	else if local_m02 = 6
+	{
+		bark("Hurricane ");
+	}
+	else if local_m02 = 7
+	{
+		bark("Breath o' Spirit ");
+	}
+	else if local_m02 = 8
+	{
+		bark("Cloven Hoof ");
+	}
+	else if local_m02 = 9
+	{
+		bark("Tenebraen Ale ");
+	}
+	else
+	{
+		bark("bottle ");
+	}
+}
+
+// Derived: routine 0x0199, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BOTTLE::bottle_use_drink_contents_by_frame()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getFrame();
+	if Item_getQ(this) = 0
+	{
+		Item_setQ(1, this);
+		Item_bark(u8_string_address("Burp... "), u8_stack_ref(1));
+		if local_m02 = 5
+		{
+			FeedAvatar(2);
+		}
+		else if local_m02 = 6
+		{
+			FeedAvatar(3);
+		}
+		else if local_m02 = 7
+		{
+			FeedAvatar(6);
+		}
+		else if local_m02 = 8
+		{
+			FeedAvatar(8);
+		}
+		else if local_m02 = 9
+		{
+			FeedAvatar(10);
+		}
+		else
+		{
+			FeedAvatar(1);
+			return;
+		}
+		if not gettingDrunk
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_00B4_bottle_apply_drunk_behavior(this) -> return;
+			return;
+		}
+		if gettingDrunk = 1
+		{
+			gettingDrunk = 2;
+			return;
+		}
+		if gettingDrunk = 2
+		{
+			gettingDrunk = 3;
+			return;
+		}
+		if gettingDrunk = 3
+		{
+			resetRef(0, PT_ANIM_UNK);
+			[[PT_ANIM_UNK, NULL_REF]];
+			resetRef(1, PT_BARK);
+			setAvatarInStasis(1);
+			gettingDrunk = 0;
+			Avatar.realDoAnim(14, Avatar.getDir());
+			wait(100);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("Zzzzz... "), u8_stack_ref(1)) -> return;
+			wait(500);
+			Avatar.realDoAnim(AS_GET_UP, Avatar.getDir());
+			Avatar.realDoAnim(49, Avatar.getDir());
+			Avatar.realDoAnim(50, Avatar.getDir());
+			Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+			Avatar.turnToFace(3, 0, 10);
+			Avatar.realDoAnim(32, Avatar.getDir());
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0581_safePlaySFX(0x00000000, 200, 146) -> return;
+			Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+			Avatar.realDoAnim(33, Avatar.getDir());
+			Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+			Avatar.realDoAnim(32, Avatar.getDir());
+			Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+			Avatar.realDoAnim(33, Avatar.getDir());
+			Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+			Avatar.realDoAnim(32, Avatar.getDir());
+			Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+			setAvatarInStasis(0);
+			return;
+		}
+	}
+	else
+	{
+		Item_bark(u8_string_address("It's empty... "), u8_stack_ref(1));
+	}
+}
+
+// Derived: routine 0x0562, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] BOTTLE::bottle_apply_drunk_behavior()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Bytes2; // X: untouched.
+	local_m04:U8Word;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ANIM_UNK, NULL_REF]];
+		gettingDrunk = 1;
+		wait(30);
+		resetRef(1, PT_BARK);
+	}
+	process
+	{
+		if somebodyTalking
+		{
+			return;
+		}
+		if urandom(100) > 50
+		{
+			class_057C_timedBark(1, 40, u8_string_address("hic... "));
+		}
+		if somebodyTalking
+		{
+			return;
+		}
+		wait(120);
+		local_m04++;
+		if somebodyTalking
+		{
+			return;
+		}
+		if local_m04 > 10
+		{
+			if gettingDrunk = 3
+			{
+				gettingDrunk = 2;
+				local_m04 = 0;
+			}
+			else if gettingDrunk = 2
+			{
+				gettingDrunk = 1;
+				local_m04 = 0;
+			}
+			else
+			{
+				if gettingDrunk = 1
+				{
+					local_m04 = 0;
+					gettingDrunk = 0;
+					resetRef(1, PT_BARK);
+					Item_bark(u8_string_address("Burp... "), u8_stack_ref(1));
+					return;
+				}
+				else
+				{
+				}
+			}
+		}
+		local_m06 = Avatar.getDir() + (urandom(2) - 1);
+		if local_m06 > 7
+		{
+			local_m06 = 6;
+		}
+		else
+		{
+			if local_m06 < 0
+			{
+				local_m06 = 1;
+				u8goto label_06BD;
+			}
+		}
+		u8label label_06BD:
+		if somebodyTalking
+		{
+			return;
+		}
+		setAvatarInStasis(1);
+		u8label label_06CF:
+		u8goto label_06F7 if not (Avatar.isBusy());
+		wait(1);
+		u8goto label_06CF;
+		u8label label_06F7:
+		if Npc_getLastAnimSet(u8_stack_ref(1)) = 0
+		{
+			if urandom(100) < 60
+			{
+				Avatar.realDoAnim(AS_WALK, local_m06);
+			}
+			else
+			{
+				Avatar.realDoAnim(49, local_m06);
+				Avatar.realDoAnim(50, local_m06);
+				Avatar.realDoAnim(AS_STAND, local_m06);
+			}
+		}
+		else if Npc_getLastAnimSet(u8_stack_ref(1)) = 1
+		{
+			if urandom(100) > 60
+			{
+				Avatar.realDoAnim(AS_RUN, local_m06);
+			}
+			else
+			{
+				Avatar.realDoAnim(49, local_m06);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 200, 146) -> return;
+				Avatar.realDoAnim(50, local_m06);
+				Avatar.realDoAnim(AS_STAND, local_m06);
+			}
+		}
+		else
+		{
+			if Npc_getLastAnimSet(u8_stack_ref(1)) = 2
+			{
+				Avatar.realDoAnim(AS_STAND, local_m06);
+				if gettingDrunk = 1
+				{
+					Avatar.realDoAnim(12, local_m06);
+					Avatar.realDoAnim(AS_STAND, local_m06);
+				}
+				else if urandom(100) > 50
+				{
+					Avatar.realDoAnim(49, local_m06);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0581_safePlaySFX(0x00000000, 200, 50) -> return;
+					Avatar.realDoAnim(50, local_m06);
+					Avatar.realDoAnim(AS_STAND, local_m06);
+				}
+				else
+				{
+					Avatar.realDoAnim(49, local_m06);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0581_safePlaySFX(0x00000000, 200, 52) -> return;
+					Avatar.realDoAnim(50, local_m06);
+					Avatar.realDoAnim(AS_STAND, local_m06);
+				}
+				u8goto label_094E;
+			}
+		}
+		u8label label_094E:
+		if not somebodyTalking
+		{
+			setAvatarInStasis(0);
+		}
+	}
+}
+

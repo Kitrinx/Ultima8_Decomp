@@ -1,0 +1,43 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04A0
+// FLEX slot: 1186
+// Original offset: 0x00103AA0
+// Naming evidence: E, exact object-1 linker name `STMEGG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/STMEGG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass STMEGG inherits Egg
+{
+	process stmegg_hatch_raise_stalagmites_and_destroy_egg();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process STMEGG::stmegg_hatch_raise_stalagmites_and_destroy_egg()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m02_w01:U8Bytes1;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	Camera_startQuake(4);
+	playSFX(49);
+	foreach local_m02 where (type = 771) within 20 cells of referent {
+		local_m04 = Item_getQ(u8_local_address(local_m02_w01));
+		local_m06 = Item_getMapArray(this) & 31;
+		if local_m04 = local_m06
+		{
+			class_0303_stmite_animate_stalagmite_emergence(u8_local_address(local_m02_w01));
+		}
+	}
+	wait(150);
+	Camera_stopQuake();
+	destroy();
+}
+

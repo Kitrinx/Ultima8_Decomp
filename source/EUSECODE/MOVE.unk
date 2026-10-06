@@ -1,0 +1,68 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x057B
+// FLEX slot: 1405
+// Original offset: 0x000B8B02
+// Naming evidence: E, exact object-1 linker name `MOVE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MOVE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process move_return_to_idle_marker()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Number;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		[[PT_ACTIVITY, referent]];
+		local_m06 = 0;
+	}
+	process
+	{
+		if class_0581_getCellDist(1, referent) <= 30
+		{
+			foreach local_m04 where ((type = TypePathMarker) and (frame = 0)) within 40 cells of referent {
+				local_m06 = local_m04;
+			}
+			if local_m06
+			{
+				if getDistance(referent, local_m06) > 64
+				{
+					[[PT_ACTIVITY, NULL_REF]];
+					killProcess(referent, PT_ACTIVITY);
+					killProcess(referent, PT_PATHFIND);
+					[[PT_ACTIVITY, referent]];
+					if (referent = 57) and (arcadionMet = 0)
+					{
+						class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 7);
+						bark("Greetings Disciple. ");
+						pathfind(local_m06, 4);
+					}
+					else
+					{
+						pathfind(local_m06, 40);
+					}
+				}
+			}
+			local_m02 = class_0581_randRange(250, 500);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_057C_wander(this) -> return;
+			wait(local_m02);
+		}
+		else
+		{
+			wait(30);
+		}
+	}
+}
+

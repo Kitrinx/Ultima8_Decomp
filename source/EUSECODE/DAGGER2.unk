@@ -1,0 +1,109 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x01A2
+// FLEX slot: 420
+// Original offset: 0x0005A9DA
+// Naming evidence: E, exact object-1 linker name `DAGGER2`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/DAGGER2.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass DAGGER2 inherits Item
+{
+	process dagger2_look_bark_dagger();
+	process dagger2_use_apply_to_reachable_target();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DAGGER2::dagger2_look_bark_dagger()
+{
+	bark("dagger ");
+}
+
+// Derived: routine 0x00AA, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DAGGER2::dagger2_use_apply_to_reachable_target()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Referent;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0D:U8Bytes5;
+	local_m09:U8Byte;
+	local_m0B:U8Word;
+	local_m0D_w02:U8Word;
+	local_m0F:U8Word;
+	local_m11:U8Word;
+	local_m13:U8Word;
+	local_m04 = target();
+	if local_m04 = 0
+	{
+		return;
+	}
+	if Item_canReach(128, local_m04, u8_stack_ref(1)) = 0
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn local_m04.bark("can't reach  ") -> return;
+	}
+	else
+	{
+		local_m06 = 0;
+		local_m08 = 0;
+		local_m0D_w02 = local_m04.getX();
+		local_m0B = local_m04.getY();
+		local_m09 = local_m04.getZ();
+		local_m0F = local_m04.getType();
+		if local_m0F = 75
+		{
+			local_m06 = 395;
+			local_m08 = 19;
+		}
+		else if local_m0F = 57
+		{
+			local_m06 = 395;
+			local_m08 = 8;
+		}
+		else if local_m0F = 199
+		{
+			local_m06 = 395;
+			local_m08 = 8;
+		}
+		else if local_m0F = 650
+		{
+			local_m04.use();
+		}
+		else if local_m0F = 649
+		{
+			local_m04.use();
+		}
+		else if local_m0F = 466
+		{
+			local_m04.use();
+		}
+		if local_m06 > 0
+		{
+			local_m11 = 0;
+			foreach recursive local_m13 where (type = local_m06) within 5 cells of referent {
+				local_m11++;
+			}
+			if local_m11 < 5
+			{
+				local_m02 = class_0581_createNear(local_m0D, local_m06, local_m08, 0, 1);
+				if local_m02
+				{
+					local_m04 = local_m02;
+					local_m04.orStatus(128);
+					local_m04.setQuantity(1);
+					local_m04.fall();
+				}
+			}
+		}
+	}
+}
+

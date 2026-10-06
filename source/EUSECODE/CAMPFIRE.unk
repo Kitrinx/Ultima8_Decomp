@@ -1,0 +1,118 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x010B
+// FLEX slot: 269
+// Original offset: 0x000466AF
+// Naming evidence: E, exact object-1 linker name `CAMPFIRE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/CAMPFIRE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass CAMPFIRE inherits Item
+{
+	process campfire_look_bark_campfire();
+	process campfire_enter_fast_area_start_ambient_sound();
+	process campfire_leave_fast_area_stop_ambient_sound();
+	process campfire_got_hit_forward_to_campfire_apply_burn_until_clear(arg_04:U8Word);
+	process campfire_apply_burn_until_clear(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process CAMPFIRE::campfire_look_bark_campfire()
+{
+	bark("campfire ");
+}
+
+// Derived: routine 0x00AC, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process CAMPFIRE::campfire_enter_fast_area_start_ambient_sound()
+{
+	playAmbientSFX(134, 50, referent);
+}
+
+// Derived: routine 0x00C8, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process CAMPFIRE::campfire_leave_fast_area_stop_ambient_sound()
+{
+	stopSFX(134, referent);
+}
+
+// Derived: routine 0x00E2, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process CAMPFIRE::campfire_got_hit_forward_to_campfire_apply_burn_until_clear(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Word;
+	if arg_04
+	{
+		local_m02 = arg_04;
+		if local_m02.isNpc()
+		{
+			local_m04 = local_m02;
+			local_m04.receiveHit(referent, local_m04.getDirToItem(referent), urandom(4) + 2, 8);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_010B_campfire_apply_burn_until_clear(this, arg_04) -> return;
+		}
+		else
+		{
+			local_m06 = local_m02.getType();
+			if local_m06 = 579
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn local_m02.use() -> return;
+			}
+			else if local_m06 = 592
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn local_m02.use() -> return;
+			}
+			else
+			{
+				if Item_isExplosive(u8_local_address(local_m02_w01))
+				{
+					Item_explode(u8_local_address(local_m02_w01));
+				}
+			}
+		}
+	}
+}
+
+// Derived: routine 0x018C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process CAMPFIRE::campfire_apply_burn_until_clear(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+	}
+	process
+	{
+		wait(64 + urandom(64));
+		if Item_overlaps(arg_04, this)
+		{
+			local_m02 = arg_04;
+			local_m02.receiveHit(referent, local_m02.getDirToItem(referent), urandom(2) + 1, 8);
+		}
+		else
+		{
+			return;
+		}
+	}
+}
+

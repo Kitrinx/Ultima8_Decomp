@@ -1,0 +1,69 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x048A
+// FLEX slot: 1164
+// Original offset: 0x000444EC
+// Naming evidence: E, exact object-1 linker name `BRKWIND`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BRKWIND.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass BRKWIND inherits Egg
+{
+	process brkwind_hatch_start_high_altitude_wind_monitor();
+	process brkwind_monitor_high_altitude_wind();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BRKWIND::brkwind_hatch_start_high_altitude_wind_monitor()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Bytes2; // X: untouched.
+	local_m02 = 0;
+	wait(60);
+	if (not breakWind) and (Avatar.getZ() >= 112)
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_048A_brkwind_monitor_high_altitude_wind(this) -> return;
+	}
+}
+
+// Derived: routine 0x00CA, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process BRKWIND::brkwind_monitor_high_altitude_wind()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+	}
+	process
+	{
+		if Avatar.getZ() >= 112
+		{
+			breakWind = 1;
+		}
+		else
+		{
+			breakWind = 0;
+			return;
+		}
+		if urandom(10) > 5
+		{
+			playSFX(115, 100);
+		}
+		else
+		{
+			playSFX(116, 100);
+			wait(urandom(150) + 120);
+		}
+	}
+}
+

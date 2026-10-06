@@ -1,0 +1,80 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0572
+// FLEX slot: 1396
+// Original offset: 0x0010113B
+// Naming evidence: E, exact object-1 linker name `STEVBOOK`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/STEVBOOK.unk`.
+// u8label/u8goto remain invented where emitted.
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] stevbook_read_honor_lost_by_meltzars_the_troll()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("Honor Lost ~by Meltzars the Troll ~~ The state of my people leaves me distraught.  Even the name Troll is an insult humans hurl at each other, while in my time the name Troll was noble and respected.  What factors led my people down this path of twisted barbarisim I will endeavour to discover.  Since I was laid low by the sleeping disease contracted in my studies of the arcane,  there were no efforts to revive me, and now I see why. All trolls with any mystic skills are gone!~Indeed it seems that only the ignorant buffoons remain, and are breeding our society into mindless brutes.  After I awakened,  I was shocked to see Trolls dressed in no more than rags, and even more suprised at the garbled, vile insults they hurled at me.  After they drove me from their shelter (imagine Trolls living in caves like beasts) I encountered a group of our old allies, the Humans.  Upon sighting me, they drew weapons and charged!  My suprise was equalled by theirs when I turned and ran, believing these to be bandits or raiders.  It seems that a Troll who thinks of self preservation is alien to them.~My own clothes are torn and tattered, and it shames me to wear them, but it seems Trolls no longer harvest the silk of the kith.  If only I had learned to use the loom in my youth I would spin my own cloth.  I also hunger for fine wine and breads, but it seems my fellows have resorted to stealing toraxes from humans and eating them raw.  One of the Trolls I currently reside with brought in a Human child, and was going to eat her!  I would stand for no more, and blasted the Troll with a spell of light.  The others huddled away from me and stared with fear and hatred.~I will carry the injured child back to the gates of the human city. When the guards see my act of goodwill, they will hear me out, and perhaps I will find allies among them. "), this);
+}
+
+// Derived: routine 0x07D7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] stevbook_read_expedition_journal_book_ii_day_seventeen()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("Expedition Journal, Book II~Day Seventeen... It's been about four days since Salem received the fatal blow, and some strange events have happened. Three children entered the camp before midnight, claiming to be childhood friends of his.  When she saw them, Iane let out a fearsome scream and collapsed, and the little strangers made a hasty retreat into the night. How could children be childhood friends of a man in his late thirties?~Day Eighteen... This morning around breakfast, Iane explained that the childhood companions were only illusions that Salem used to create to entertain himself, and if the illusions still existed, then Salem must still be alive.  We will seek advice when we return to Tenebrae.~Day Nineteen... After a rugged day of travel yesterday, we all expected a much needed and well deserved rest in Tenebrae, but it was not to be.  As soon as the door to our leased cabin was opened, those three children were lurking about inside. Still they pleaded for us to rescue Salem, and we had decided to let them stay with us and investigate their claims in the morning. The fact that they knew our destination before we did unnerves me to no end. There was no sleep to be had with the mournful gaze of the oldest child (who calls himself Collin) watching me all night.~Day Twenty... Today we went on a wild chase with the fire brigade as they attempted to douse several fires that started simultaneously around Tenebrae when a shower of flaming stones rained from the sky. Ianes skirts caught fire, and she raised quite a stir when she lept into the Tempest's fountain to douse them, and discovered it was stocked with snapping eels!~Day Twenty-One... We have spent the day on the road, following the directions of Collin. He has offered no information about Salem's condition other than he needs help.  After what I saw happen to him, there is no way he could be alive. What kind of help does a dead person need?  I guess we will find out tomorrow.~Day Twenty-Two... The black shadow of the keep still falls over us as the sun rises on the other side.  The silence and cold here is not natural, and Warwick is convinced we are being watched from the twisted spires. I am going to carry my speaking stone into the place, and it will recognize Salem without error. "), this);
+}
+
+// Derived: routine 0x10E5, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] stevbook_read_de_venoming_the_kith_by_ioria()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" De-venoming the Kith ~By Ioria ~Removing the venom sacs from a kith should only be done to an animal between the ages of four to six days.  Sedate the kith by allowing it to inhale the vapors of boiling kalas leaves and mushroom spores. Do not breathe these vapors or intense headaches and dizzyness will occur. Once the animal is sedated, roll it over onto its back and locate the bony plate at the base of the mandible.~ Insert a wedge or pick into the seam at the base of this plate, and press firmly until the plate begins to slide. It will still be attached to the abdomen by several fiberous bands.  Lay the plate back over the abdomen and locate a pale membrane near the base of the mandible. Make an incision diagonally across the membrane and wedge it open. Inside there is a purple muscle. Slide this muscle towards the Kith's head, and underneath is a green or yellow gland with two tubes leading into the throat.~ Wrap the gland in a heavy cloth, and clamp off the larger of the tubes as close to the gland as possible. Cut the tube just behind the clamp, and firmly squeeze the gland until any venom in it has been forced down the remaining tube. Cut the second tube and lift out the empty gland.  Now stitch together the ends of the tubes, and fill the cavity with the boiled kalas leaves. Slide the muscle back in place, and stitch the membrane closed. Repeat the process at the base of the second mandible. When both glands have been removed, lay the plate back over the exposed area, and bind to the kiths's body with cord or bandages until it re-attaches.~Note: Some kith have no venom sac on the right side of the head. If the gland is not visible after opening the cavity, it may be one of these animals, but search the area throughly before closing the cavity. "), this);
+}
+
+// Derived: routine 0x17FE, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] stevbook_read_the_beauty_of_rhian_by_toran()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" The Beauty of Rhian ~By Toran ~~~Her luminous candle guides my way in the darkness, warm and soft, my heart sings when bathed in her light. The gentle whisper of love calls out a name, Rhian. And my heart answers it.~Melody is her voice, whispering softly to my soul, a gentle chime of love. While I live, Rhian is my life. "), this);
+}
+
+// Derived: routine 0x1965, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] stevbook_read_the_voices_of_mary_by_salem()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" The Voices of Mary ~By Salem ~I wake in the night and the rooms are all dead, I follow a dream; she still echoes in my head, The new girl is twitching, asleep on the floor, I move through dark rooms, and pass through the door, Out in the chill, I follow the walk, The spirits aren't speaking, so there's no need to talk, The moon has arisen, to flower over the world, While tendrils of mist snake out, and slowly unfurl,~There's a sign by the sea that doesn't make sense, And out past the jetty wait sirens, horny and tense, Briefly, through windows in the pale glass waves, I see lost faces, ruined heroes in watery graves, I know what comes next, because I've read all my lines, I've been over my part, millions of times,~As the waters roll in and I'm swallowed by sea, I can hear Mary whisper, calling to me, 'Come on, baby,' from somewhere she cries, 'I want you to love me like spiders love flies'"), this);
+}
+
+// Derived: routine 0x1D0E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] stevbook_read_eye_of_the_boulder_the_runes()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" Eye of the Boulder, ~the Runes of the Myth Drainer ~My love, my life, my doom! I began my search for the Eye shortly after my nineteenth year, while still in training with the Necromancers. Had I known at that young age what would befall me upon the completion of my undertaking, I would have spent my days differently, seeking companionship over mystic power; warm love rather than cold stone. But my desire for the Eye was all consuming.~It is said to have been found at the heart of an otherworldly chunk of rock ,perhaps a part of some ancient tool or weapon, that fell from the sky during a time when godlike beings fought for dominance of this world and the worlds beyond. The Eye was later sundered into half a dozen finely chiseled runestones by the Leechlord, referred to in some texts as 'the Drainer of Myths'. The subsequent details concerning the runestones and their uses became the events of legend, as Tempests and heroes fought for possession of the pieces of the Eye.~ Though it took many years, it was I who finally managed to collect all the pieces. And with each part of the Eye that I added to my collection, my power grew, enabling me to recover successive pieces with greater ease. Obsessively, I laid the groundwork during those years of searching, preparing for the time when I could finally reintegrate the six disc-like pieces of the Eye.~ On the day of completion, once I had enacted the last of the rituals, my primary apprentice and I fitted the Eye directly into the freshly carved socket at the base of my skull, linking the mystic stone's energies with those of my own nervous system. Only then did I learn that the Eye's sorcerous operations were antithetical to my own. Immediately, its dire effects became apparent. My memory and other mental faculties grew weaker, the images I beheld lost resolution, and the sounds around me began to seem like bland reproductions. I left my hidden tower, staggering forward at a gruelling pace, one step at a time. And since then, the events of my days have seemed the tired tellings of a poor storyteller, and all I have wanted is release.~I am ashamed to have wasted so much time and so many of my resources upon such a disappointing thing. I sought nothing less than the Ultimate, but instead received only a pale reflection, a hint of what could have been. "), this);
+}
+
+// Derived: routine 0x2650, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] stevbook_read_captains_report()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("Captains report. ~ I recomend the new young guard Grommet for a commendation for bravery.  As a troll, larger than most, marched directly and purposefully toward our station, we prepared to destroy it from a safe distance with firegems. Before we attacked, Grommet saw that it carried in it's arms a little girl.  We hesitated in our attack, and he charged out and met the beast with his sword drawn.~In the ensuing  battle the troll was driven to it's knees, and as it begged for it's life, Grommet slew the creature. Some of Grommets blows flew a little awry, and the little girl was mortally injured by one of them. She was only a peasant  however, and of no import. Grommet will make a fine addition to the officers ranks. ~Captain Stovan "), this);
+}
+

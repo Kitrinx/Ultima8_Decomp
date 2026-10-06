@@ -1,0 +1,95 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02C2
+// FLEX slot: 708
+// Original offset: 0x000B4F61
+// Naming evidence: E, exact object-1 linker name `MISTRAPE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MISTRAPE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass MISTRAPE inherits Item
+{
+	process mistrape_enter_fast_area_start_x_axis_fire_missile();
+	process mistrape_leave_fast_area_stop_fire_missile_process();
+	process mistrape_spawn_x_axis_fire_missile();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MISTRAPE::mistrape_enter_fast_area_start_x_axis_fire_missile()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_02C2_mistrape_spawn_x_axis_fire_missile(this) -> return;
+}
+
+// Derived: routine 0x0098, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MISTRAPE::mistrape_leave_fast_area_stop_fire_missile_process()
+{
+	killProcess(referent, PT_DEFAULT);
+}
+
+// Derived: routine 0x00B2, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process MISTRAPE::mistrape_spawn_x_axis_fire_missile()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:Item;
+	local_m05:U8Byte;
+	local_m07:U8Word;
+	local_m09:U8Word;
+	local_m09_w01:U8Bytes1;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+	}
+	process
+	{
+		local_m02 = getFrame();
+		if (local_m02 = 0) or (local_m02 = 5)
+		{
+			wait(urandom(100) + 40);
+		}
+		local_m02 = local_m02 + 1;
+		if (local_m02 = 5) or (local_m02 = 10)
+		{
+			if local_m02 = 5
+			{
+				local_m02 = 0;
+			}
+			else if local_m02 = 10
+			{
+				local_m02 = 5;
+			}
+			if local_m04.legal_create(697, 3, getX() + 64, getY() - 32, getZ())
+			{
+				local_m04.orStatus(128);
+				playSFX(9, 100, referent);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn local_m04.hurl(64, 0, 0, 1) -> return;
+			}
+			else
+			{
+				Item_create(0, 697, u8_local_address(local_m04_w01));
+				local_m04.orStatus(128);
+				playSFX(9, 100, referent);
+				local_m04.pop(getX(), getY() - 32, getZ());
+				local_m09 = getX() + 64;
+				local_m07 = getY() - 32;
+				local_m05 = getZ();
+				local_m04.legal_move(u8_local_address(local_m09_w01), 0, 0);
+			}
+		}
+		setFrame(local_m02);
+	}
+}
+

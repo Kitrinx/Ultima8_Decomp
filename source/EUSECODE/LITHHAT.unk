@@ -1,0 +1,36 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0486
+// FLEX slot: 1160
+// Original offset: 0x000A8BE1
+// Naming evidence: E, exact object-1 linker name `LITHHAT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LITHHAT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass LITHHAT inherits Egg
+{
+	process lithhat_hatch_activate_lithos_item_once();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LITHHAT::lithhat_hatch_activate_lithos_item_once()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m04 = Item_getMapArray(this);
+	if local_m04 & 128
+	{
+		return;
+	}
+	Item_setMapArray(local_m04 | 128, this);
+	foreach local_m02 where (type = 433) within 112 cells of referent {
+		local_m02.use();
+	}
+}
+

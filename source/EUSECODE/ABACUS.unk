@@ -1,0 +1,50 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0177
+// FLEX slot: 377
+// Original offset: 0x00004E63
+// Naming evidence: E, exact object-1 linker name `ABACUS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ABACUS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass ABACUS inherits Item
+{
+	process abacus_look_bark_abacus();
+	process abacus_use_report_obsidian_coin_count();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ABACUS::abacus_look_bark_abacus()
+{
+	bark("abacus ");
+}
+
+// Derived: routine 0x00AA, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ABACUS::abacus_use_report_obsidian_coin_count()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:Item;
+	local_m08:String;
+	local_m02 = 0;
+	local_m04 = Avatar.getEquip(6);
+	foreach recursive local_m06 where (type = 143) within container local_m04 {
+		local_m02 += local_m06.getQuantity();
+	}
+	local_m08 = "You have " + numToStr(local_m02);
+	local_m08 += " obsidian coin";
+	if local_m02 != 1
+	{
+		local_m08 += "s ";
+	}
+	Item_bark(u8_string_local_address(local_m08), u8_stack_ref(1));
+}
+

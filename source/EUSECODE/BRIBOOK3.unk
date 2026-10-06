@@ -1,0 +1,20 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x058F
+// FLEX slot: 1425
+// Original offset: 0x00042AFD
+// Naming evidence: E, exact object-1 linker name `BRIBOOK3`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BRIBOOK3.unk`.
+// u8label/u8goto remain invented where emitted.
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bribook3_read_if_ye_have_found_me_then()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("If ye have found me then first ye must have found my brother. Well ye have done to come this far but farther ye must go. Now that ye have heard the call of the Slayer ye can not resist its siren song. Many have been mastered by the Slayer's awesome might, but none ever master the Slayer completely. So, clever must ye be to hold the Slayer as thine ally. Strength alone shan't bind it to thy will. And just when ye think ye have the thing mastered, it fools ye again. Leaving ye twisting in the dark\x09grasping for thy wits. Up ahead ye shall find diverging path. In one branch will ye find another in my family tree. In the other branch will ye find a hard road empty of all but pain. Remember what we have told ye of wisdom, most especially if ye choose the wrong branch."), this);
+}
+

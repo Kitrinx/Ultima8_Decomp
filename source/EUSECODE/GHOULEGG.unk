@@ -1,0 +1,58 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04AC
+// FLEX slot: 1198
+// Original offset: 0x0007C051
+// Naming evidence: E, exact object-1 linker name `GHOULEGG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GHOULEGG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass GHOULEGG inherits Egg
+{
+	process ghoulegg_leave_fast_area_decrement_egg_state();
+	process ghoulegg_hatch_spawn_hostile_ghoul();
+}
+
+// Derived: routine 0x0080, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GHOULEGG::ghoulegg_leave_fast_area_decrement_egg_state()
+{
+	if Egg_getEggId(this) >= 100
+	{
+		Egg_setEggId(Egg_getEggId(this) - 100, this);
+	}
+}
+
+// Derived: routine 0x00B0, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GHOULEGG::ghoulegg_hatch_spawn_hostile_ghoul()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Npc;
+	local_m02_w01:U8Bytes1;
+	if Egg_getEggId(this) >= 100
+	{
+		return;
+	}
+	if Egg_getEggId(this) != 1
+	{
+		if urandom(10) <= 8
+		{
+			return;
+		}
+	}
+	Egg_setEggId(100, this);
+	Npc_create(8, 142, u8_local_address(local_m02_w01));
+	local_m02.orStatus(128);
+	local_m02.pop(getX(), getY(), getZ());
+	class_057C_realDoAnim(u8_local_address(local_m02_w01), 4, urandom(1) * 2);
+	local_m02.setTarget(1);
+	local_m02.setAlignment(64);
+	local_m02.setInCombat();
+}
+

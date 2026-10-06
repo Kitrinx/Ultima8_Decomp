@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02B2
+// FLEX slot: 692
+// Original offset: 0x000C5BE4
+// Naming evidence: E, exact object-1 linker name `NSLAMPTP`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/NSLAMPTP.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass NSLAMPTP inherits Item
+{
+	process nslamptp_look_describe_lamp();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process NSLAMPTP::nslamptp_look_describe_lamp()
+{
+	bark("lamp ");
+}
+

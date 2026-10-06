@@ -1,0 +1,75 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04AD
+// FLEX slot: 1199
+// Original offset: 0x000F5B66
+// Naming evidence: E, exact object-1 linker name `SKELEGG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SKELEGG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass SKELEGG inherits Egg
+{
+	process skelegg_leave_fast_area_decrement_egg_state();
+	process skelegg_hatch_raise_skeletons_from_bones();
+}
+
+// Derived: routine 0x0080, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SKELEGG::skelegg_leave_fast_area_decrement_egg_state()
+{
+	if Egg_getEggId(this) >= 100
+	{
+		Egg_setEggId(Egg_getEggId(this) - 100, this);
+	}
+}
+
+// Derived: routine 0x00B0, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SKELEGG::skelegg_hatch_raise_skeletons_from_bones()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Npc;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	if Egg_getEggId(this) >= 100
+	{
+		return;
+	}
+	if Egg_getEggId(this) != 1
+	{
+		if urandom(10) <= 8
+		{
+			return;
+		}
+	}
+	Egg_setEggId(Egg_getEggId(this) + 100, this);
+	foreach local_m02 where (type = 119) within 20 cells of referent {
+		if (local_m02.isNpc() = 1) or (local_m0C = 2)
+		{
+			return;
+		}
+		else
+		{
+			local_m0C++;
+			Npc_create(local_m02.getFrame(), 119, u8_local_address(local_m04_w01));
+			local_m04.orStatus(128);
+			local_m06 = local_m02.getX();
+			local_m08 = local_m02.getY();
+			local_m0A = local_m02.getZ();
+			local_m02.destroy();
+			local_m04.pop(local_m06, local_m08, local_m0A);
+			local_m04.setInCombat();
+			local_m04.setTarget(1);
+			local_m04.setAlignment(64);
+		}
+	}
+}
+

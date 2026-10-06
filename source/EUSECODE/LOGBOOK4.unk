@@ -1,0 +1,392 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x057E
+// FLEX slot: 1408
+// Original offset: 0x000AD38A
+// Naming evidence: E, exact object-1 linker name `LOGBOOK4`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LOGBOOK4.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] logbook4_play_mordea_devon_duel()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m06:U8Bytes6; // X: untouched.
+	local_m08:U8Word;
+	local_m09:U8Byte;
+	local_m0B:U8Word;
+	local_m0D:Item;
+	local_m0F:Item;
+	local_m11:Item;
+	local_m13:Item;
+	local_m15:Item;
+	local_m17:Item;
+	local_m19:Item;
+	local_m1B:Item;
+	local_m1D:Item;
+	[[519, 1]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m08 = 3;
+	local_m09 = 48;
+	playMusic(54);
+	wait(120);
+	Item_bark(u8_string_address("There will be only one Tempest! "), u8_stack_ref(7));
+	Item_bark(u8_string_address("Then let it be so! "), u8_stack_ref(2));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(7, 0, 27) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 6) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Die, Devon! "), u8_stack_ref(7)) -> return;
+	LightningBolt();
+	wait(120);
+	killProcess(7, PT_ANIM);
+	Mordea.realDoAnim(29, 0);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 54) -> return;
+	Item_create(10, 587, u8_local_address(local_m0D_w01));
+	LightningBolt();
+	local_m0D.pop(Mordea.getX() - 10, Mordea.getY() - 10, Mordea.getZ() + 40);
+	wait(30);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(2, 4, 27) -> return;
+	Mordea.realDoAnim(29, 0);
+	wait(30);
+	Mordea.realDoAnim(29, 0);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057E_logbook4_play_falling_fire_impact(this, Item_getZ(u8_stack_ref(2)), Item_getY(u8_stack_ref(2)), Item_getX(u8_stack_ref(2)) + 100) -> return;
+	wait(60);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057E_logbook4_play_falling_fire_impact(this, Item_getZ(u8_stack_ref(2)), Item_getY(u8_stack_ref(2)), Item_getX(u8_stack_ref(2)) - 100) -> return;
+	wait(60);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057E_logbook4_play_falling_fire_impact(this, Item_getZ(u8_stack_ref(2)), Item_getY(u8_stack_ref(2)) - 100, Item_getX(u8_stack_ref(2))) -> return;
+	killProcess(2, PT_ANIM);
+	killProcess(7, PT_BARK);
+	class_057C_realDoAnim(2, 28, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Your evil must end, Mordea! "), u8_stack_ref(2)) -> return;
+	wait(60);
+	local_m0D.destroy();
+	class_057C_realDoAnim(2, 27, 4);
+	class_057C_realDoAnim(2, 29, 4);
+	wait(60);
+	class_057C_realDoAnim(2, 29, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+	Item_create(0, 587, u8_local_address(local_m0F_w01));
+	local_m0F.pop(Item_getX(u8_stack_ref(2)) - 10, Item_getY(u8_stack_ref(2)) - 10, Item_getZ(u8_stack_ref(2)) + 40);
+	class_057C_realDoAnim(2, 29, 4);
+	class_057C_realDoAnim(2, 29, 4);
+	killProcess(2, PT_BARK);
+	wait(60);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("I will kill you! "), u8_stack_ref(7)) -> return;
+	Mordea.realDoAnim(29, 0);
+	Mordea.realDoAnim(29, 0);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 6) -> return;
+	LightningBolt();
+	class_057C_realDoAnim(2, 29, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 6) -> return;
+	LightningBolt();
+	class_057C_realDoAnim(2, 29, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 6) -> return;
+	killProcess(7, PT_BARK);
+	killProcess(7, PT_ANIM);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057E_logbook4_play_lightning_impact(this, 48, 6640, 11628) -> return;
+	wait(10);
+	class_057C_realDoAnim(2, 29, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057E_logbook4_play_lightning_impact(this, 48, 6640, 11978) -> return;
+	wait(10);
+	class_057C_realDoAnim(2, 29, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057E_logbook4_play_lightning_impact(this, 48, 6570, 11724) -> return;
+	wait(10);
+	class_057C_realDoAnim(2, 29, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057E_logbook4_play_lightning_impact(this, 48, 6570, 11878) -> return;
+	wait(10);
+	foreach local_m11 where (type = 582) within 20 cells of Avatar {
+		local_m11.destroy();
+	}
+	wait(30);
+	killProcess(7, PT_ANIM);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 187) -> return;
+	Mordea.realDoAnim(14, 0);
+	playMusic(55);
+	local_m0F.destroy();
+	class_057C_realDoAnim(2, 28, 4);
+	wait(300);
+	Item_create(0, 81, u8_local_address(local_m11_w01));
+	local_m11.pop(11807, 6879, 0);
+	for local_m0B = 1 to 14
+	{
+		if local_m0B = 4
+		{
+			playSFX(63, 200);
+		}
+		local_m11.setFrame(local_m0B);
+		wait(15);
+	}
+	local_m11.destroy();
+	Item_bark(u8_string_address("May the Lurker welcome you... as she has your victims. "), u8_stack_ref(2));
+	wait(120);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Oh, my head! "), u8_stack_ref(1)) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(2, 10, 0, 0) -> return;
+	Avatar.realDoAnim(AS_GET_UP, 4);
+	Avatar.realDoAnim(AS_STAND, 4);
+	Avatar.realDoAnim(32, 4);
+	Avatar.realDoAnim(AS_STAND, 4);
+	Avatar.realDoAnim(33, 4);
+	Avatar.realDoAnim(AS_STAND, 4);
+	Avatar.realDoAnim(32, 4);
+	Avatar.realDoAnim(AS_STAND, 4);
+	Avatar.realDoAnim(33, 4);
+	Avatar.realDoAnim(AS_STAND, 4);
+	Avatar.realDoAnim(32, 4);
+	Avatar.realDoAnim(AS_STAND, 4);
+	Avatar.realDoAnim(33, 4);
+	Avatar.realDoAnim(AS_STAND, 4);
+	wait(30);
+	Avatar.realDoAnim(AS_STAND, 3);
+	Avatar.realDoAnim(AS_WALK, 3);
+	Avatar.realDoAnim(AS_WALK, 4);
+	Avatar.realDoAnim(AS_STAND, 4);
+	class_057C_realDoAnim(2, 2, 0);
+	Item_bark(u8_string_address("Avatar! At long last Mordea's tyranical rule is over! "), u8_stack_ref(2));
+	Item_bark(u8_string_address("Now, I must be the Tempest. "), u8_stack_ref(2));
+	Item_bark(u8_string_address("I must use my powers to undo the evils of Mordea's reign. "), u8_stack_ref(2));
+	Item_bark(u8_string_address("I make it my duty to bring prosperity to all of Tenebrae. "), u8_stack_ref(2));
+	Item_bark(u8_string_address("Thanks to your efforts our fair city is free from her oppression. "), u8_stack_ref(2));
+	Item_bark(u8_string_address("Though I know your destiny lies elsewhere, you will always be welcome here in Tenebrae. "), u8_stack_ref(2));
+	class_057C_turnToFace(2, 4, 0, 20);
+	Item_bark(u8_string_address("Now I must leave. I need time away from Tenebrae to contemplate all of the recent events. "), u8_stack_ref(2));
+	Item_bark(u8_string_address("I will return when the time is right and take my place as the Tempest. "), u8_stack_ref(2));
+	Item_bark(u8_string_address("Goodbye, my friend. May our paths cross again. "), u8_stack_ref(2));
+	scrollTo(Item_getX(u8_stack_ref(2)), Item_getY(u8_stack_ref(2)) + 200, Item_getZ(u8_stack_ref(2)), 10);
+	class_057C_realDoAnim(2, 0, 4);
+	class_057C_realDoAnim(2, 27, 4);
+	LightningBolt();
+	safePlaySFX(6, 100);
+	class_057C_realDoAnim(2, 28, 4);
+	Item_create(23, 35, u8_local_address(local_m13_w01));
+	local_m13.pop(11871, 6783, 8);
+	Item_create(23, 35, u8_local_address(local_m15_w01));
+	local_m15.pop(11871, 6911, 8);
+	Item_create(23, 35, u8_local_address(local_m17_w01));
+	local_m17.pop(11871, 7039, 8);
+	Item_create(23, 35, u8_local_address(local_m19_w01));
+	local_m19.pop(11871, 7167, 8);
+	Item_create(23, 35, u8_local_address(local_m1B_w01));
+	local_m1B.pop(11871, 7295, 8);
+	Item_create(23, 35, u8_local_address(local_m1D_w01));
+	local_m1D.pop(11871, 7423, 8);
+	class_057C_realDoAnim(2, 0, 4);
+	class_057C_realDoAnim(2, 0, 4);
+	createSprite(580, 40, 79, 79, 1, 1, Item_getX(u8_stack_ref(2)) + 160, Item_getY(u8_stack_ref(2)) + 160, Item_getZ(u8_stack_ref(2)));
+	playSFX(77, 200);
+	class_057C_realDoAnim(2, 0, 4);
+	class_057C_realDoAnim(2, 0, 4);
+	class_057C_realDoAnim(2, 0, 4);
+	class_057C_realDoAnim(2, 0, 4);
+	class_057C_realDoAnim(2, 0, 4);
+	class_057C_realDoAnim(2, 0, 4);
+	Npc_teleport(Avatar.getMap(), 0, 100, 100, u8_stack_ref(2));
+	scrollBack(10);
+	local_m13.destroy();
+	local_m15.destroy();
+	local_m17.destroy();
+	local_m19.destroy();
+	local_m1B.destroy();
+	local_m1D.destroy();
+	Mordea.setDead();
+	devonsPower = 1;
+	devonInRule = 1;
+	Item_enterFastArea(u8_stack_ref(5));
+	if Npc_isDead(u8_stack_ref(19)) = 0
+	{
+		Item_enterFastArea(u8_stack_ref(19));
+	}
+	setAvatarInStasis(0);
+	if not benticCacked
+	{
+		benticCacked = 1;
+		Bentic.teleport(getX(), getY(), getZ(), 0);
+		Bentic.setDead();
+	}
+	devonJailed = 0;
+	secondexecution = 0;
+	playMusic(52);
+	wait(100);
+}
+
+// Derived: routine 0x10DD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] logbook4_animate_avatar_struggle()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		setAvatarInStasis(1);
+		wait(15);
+	}
+	process
+	{
+		local_m02++;
+		if local_m02 > 8
+		{
+			wait(5);
+		}
+		if local_m02 < 13
+		{
+			Avatar.realDoAnim(AS_WALK, 4);
+			wait(20);
+		}
+		else
+		{
+			Avatar.realDoAnim(AS_STAND, 4);
+			setAvatarInStasis(1);
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x1196, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] logbook4_animate_actor(arg_04:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m04_w01:U8Bytes1;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		local_m04 = arg_04;
+	}
+	process
+	{
+		local_m02++;
+		if local_m02 < 17
+		{
+			class_057C_realDoAnim(u8_local_address(local_m04_w01), 0, 4);
+		}
+		else
+		{
+			class_057C_realDoAnim(u8_local_address(local_m04_w01), 2, 4);
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x11F2, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] logbook4_play_magic_flash(arg_04:U8Word, arg_06:U8Word, arg_08:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m06:U8Bytes4; // X: untouched.
+	local_m08:U8Word;
+	[[PT_DEFAULT, referent]];
+	Item_create(0, 511, u8_local_address(local_m02_w01));
+	local_m02.pop(arg_04, arg_06, arg_08);
+	playSFX(27, 200);
+	for local_m08 = 0 to 4
+	{
+		local_m02.setFrame(local_m08);
+		wait(2);
+	}
+	local_m02.destroy();
+}
+
+// Derived: routine 0x126A, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] logbook4_play_lightning_impact(arg_04:U8Word, arg_06:U8Word, arg_08:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Bytes2; // X: untouched.
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m0A = (250 - arg_08) * 4;
+	playSFX(6, 200);
+	Item_create(0, 511, u8_local_address(local_m02_w01));
+	local_m02.pop(arg_04 + local_m0A, arg_06 + local_m0A, 250);
+	for local_m08 = 0 to 4
+	{
+		local_m02.setFrame(local_m08);
+		wait(5);
+	}
+	playSFX(27, 200);
+	Item_create(0, 480, u8_local_address(local_m04_w01));
+	local_m02.destroy();
+	local_m04.pop(arg_04 + local_m0A, arg_06 + local_m0A, 249);
+	for local_m08 = 0 to 9
+	{
+		local_m04.setFrame(local_m08);
+		wait(7);
+	}
+	local_m04.destroy();
+}
+
+// Derived: routine 0x1360, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] logbook4_play_falling_fire_impact(arg_04:U8Word, arg_06:U8Word, arg_08:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Bytes2; // X: untouched.
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m0A = (250 - arg_08) * 4;
+	playSFX(6, 200);
+	Item_create(0, 511, u8_local_address(local_m02_w01));
+	local_m02.pop(arg_04 + local_m0A, arg_06 + local_m0A, 250);
+	for local_m08 = 0 to 4
+	{
+		local_m02.setFrame(local_m08);
+		wait(2);
+	}
+	playSFX(158, 200);
+	Item_create(0, 166, u8_local_address(local_m04_w01));
+	local_m02.destroy();
+	local_m04.pop(arg_04 - 10, arg_06 - 10, arg_08);
+	wait(40);
+	local_m04.destroy();
+}
+

@@ -1,0 +1,681 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0265
+// FLEX slot: 615
+// Original offset: 0x0001EC13
+// Naming evidence: E, exact object-1 linker name `BASEBOOK`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BASEBOOK.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass BASEBOOK inherits Item
+{
+	process basebook_look_describe_by_quality();
+	process basebook_use_dispatch_book_reader_by_quality();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BASEBOOK::basebook_look_describe_by_quality()
+{
+	if getQuality() = 0
+	{
+		bark("WHAT THE FISH TELL ME ");
+	}
+	else if getQuality() = 1
+	{
+		bark("diary ");
+	}
+	else if getQuality() = 2
+	{
+		bark("journal ");
+	}
+	else if getQuality() = 3
+	{
+		bark("cheesy book ");
+	}
+	else if getQuality() = 4
+	{
+		bark("The History of Necromancy Vol. I ");
+	}
+	else if getQuality() = 5
+	{
+		bark("The History of Necromancy Vol. II ");
+	}
+	else if getQuality() = 6
+	{
+		bark("On Sorcerous Ways ");
+	}
+	else if getQuality() = 7
+	{
+		bark("The Art of Flame ");
+	}
+	else if getQuality() = 8
+	{
+		bark("The Tongue of Flame ");
+	}
+	else if getQuality() = 10
+	{
+		bark("Ignite spellbook ");
+	}
+	else if getQuality() = 11
+	{
+		bark("Extinguish spellbook ");
+	}
+	else if getQuality() = 12
+	{
+		bark("Flash spellbook ");
+	}
+	else if getQuality() = 13
+	{
+		bark("Flame Bolt spellbook ");
+	}
+	else if getQuality() = 14
+	{
+		bark("Endure Heat spellbook ");
+	}
+	else if getQuality() = 15
+	{
+		bark("Fire Shield spellbook ");
+	}
+	else if getQuality() = 16
+	{
+		bark("Armor of Flames spellbook ");
+	}
+	else if getQuality() = 17
+	{
+		bark("Create Fire spellbook ");
+	}
+	else if getQuality() = 18
+	{
+		bark("Explosion spellbook ");
+	}
+	else if getQuality() = 19
+	{
+		bark("Summon Daemon spellbook ");
+	}
+	else if getQuality() = 20
+	{
+		bark("Banish Daemon spellbook ");
+	}
+	else if getQuality() = 21
+	{
+		bark("Conflagration spellbook ");
+	}
+	else if getQuality() = 25
+	{
+		bark("The Destruction of the Temple ");
+	}
+	else if getQuality() = 22
+	{
+		bark("Earthen Magic ");
+	}
+	else if getQuality() = 30
+	{
+		bark("Honor Lost ");
+	}
+	else if getQuality() = 31
+	{
+		bark("Journal ");
+	}
+	else if getQuality() = 32
+	{
+		bark("Kith Venom ");
+	}
+	else if getQuality() = 33
+	{
+		bark("Rhian ");
+	}
+	else if getQuality() = 34
+	{
+		bark("Voices ");
+	}
+	else if getQuality() = 35
+	{
+		bark("The Eye ");
+	}
+	else if getQuality() = 36
+	{
+		bark("captains journal ");
+	}
+	else if getQuality() = 41
+	{
+		bark("Book ");
+	}
+	else if getQuality() = 46
+	{
+		bark("the Grim Book ");
+	}
+	else if getQuality() = 27
+	{
+		bark("Journeys through Hell ");
+	}
+	else if getQuality() = 28
+	{
+		bark("Ancient Book ");
+	}
+	else if getQuality() = 29
+	{
+		bark("My Rival, My Love : A Shadowy Jester Book ");
+	}
+	else if getQuality() = 70
+	{
+		bark("Moriens: Necromancer, Prophet, Hero. ");
+	}
+	else if getQuality() = 71
+	{
+		bark("Read me. ");
+	}
+	else if getQuality() = 72
+	{
+		bark("Read me. ");
+	}
+	else if getQuality() = 73
+	{
+		bark("Read me. ");
+	}
+	else if getQuality() = 74
+	{
+		bark("Read me. ");
+	}
+	else if getQuality() = 75
+	{
+		bark("Dispelling Myths: The Truth About Magic. ");
+	}
+	else if getQuality() = 90
+	{
+		bark("Saga of Bone Crusher ");
+	}
+	else if getQuality() = 91
+	{
+		bark("Enemies of Tenebrae ");
+	}
+	else if getQuality() = 92
+	{
+		bark("What the Fish Tell Me ");
+	}
+	else if getQuality() = 93
+	{
+		bark("Divination ");
+	}
+	else if getQuality() = 94
+	{
+		bark("Healing Touch ");
+	}
+	else if getQuality() = 95
+	{
+		bark("Aerial Servant ");
+	}
+	else if getQuality() = 96
+	{
+		bark("Reveal ");
+	}
+	else if getQuality() = 97
+	{
+		bark("Restoration ");
+	}
+	else if getQuality() = 98
+	{
+		bark("Fade From Sight ");
+	}
+	else if getQuality() = 99
+	{
+		bark("Air Walk ");
+	}
+	else if getQuality() = 100
+	{
+		bark("Hear Truth ");
+	}
+	else if getQuality() = 101
+	{
+		bark("Intervention ");
+	}
+	else if getQuality() = 102
+	{
+		bark("Resurrection ");
+	}
+	else if getQuality() = 103
+	{
+		bark("Journal of Veras the Healer ");
+	}
+	else if getQuality() = 104
+	{
+		bark("Chronicle of Pagan ");
+	}
+	else if getQuality() = 81
+	{
+		bark("Confusion Blast ");
+	}
+	else if getQuality() = 82
+	{
+		bark("Meteor Shower ");
+	}
+	else if getQuality() = 83
+	{
+		bark("Summon Creature ");
+	}
+	else if getQuality() = 84
+	{
+		bark("Call Destruction ");
+	}
+	else if getQuality() = 85
+	{
+		bark("Devastation ");
+	}
+	else if getQuality() = 86
+	{
+		bark("Ethereal Travel ");
+	}
+	else if getQuality() = 87
+	{
+		bark("Reagents of Thaumaturgy ");
+	}
+	else if getQuality() = 88
+	{
+		bark("The Mythology of the Zealan Deities ");
+	}
+	else if getQuality() = 89
+	{
+		bark("The Final Sunlight ");
+	}
+	else if getQuality() = 105
+	{
+		bark("The Objective History of Pagan ");
+	}
+	else if getQuality() = 110
+	{
+		bark("The Mysteries of Lithos ");
+	}
+	else if getQuality() = 111
+	{
+		bark("Raising Your Children Correctly ");
+	}
+	else if getQuality() = 112
+	{
+		bark("Finding the Wisdom of Stratos ");
+	}
+	else if getQuality() = 113
+	{
+		bark("Parables from the Teachings of Stratos, Vol I ");
+	}
+	else if getQuality() = 114
+	{
+		bark("Parables from the Teachings of Stratos, Vol II ");
+	}
+	else if getQuality() = 115
+	{
+		bark("A Letter to New Acolytes ");
+	}
+	else if getQuality() = 116
+	{
+		bark("The Warrior and the Acolyte ");
+	}
+	else
+	{
+		bark("book ");
+	}
+}
+
+// Derived: routine 0x1197, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BASEBOOK::basebook_use_dispatch_book_reader_by_quality()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m02_w01:U8Bytes1;
+	local_m02 = referent;
+	AccumulateIntelligence(15);
+	if getQuality() = 0
+	{
+		class_0593_book1_read_what_the_fish_tell_me_by(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 1
+	{
+		class_0593_book1_read_there_once_was_a_story_bout(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 2
+	{
+		class_0593_book1_no_op_entry(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 3
+	{
+		class_0593_book1_read_one_day_a_man_named_jely(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 4
+	{
+		class_0593_book1_read_long_ago_before_the_time_in(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 5
+	{
+		class_0593_book1_read_so_that_none_may_forget_the(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 6
+	{
+		class_0593_book1_read_on_sorcerous_ways(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 7
+	{
+		class_0593_book1_read_the_art_of_flame_by_maedron(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 8
+	{
+		class_0593_book1_read_the_tongue_of_flame_this_object(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 11
+	{
+		class_0593_book1_read_extinguish_by_use_of_this_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 10
+	{
+		class_0593_book1_read_ignite_this_invocation_brings_fire_into(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 14
+	{
+		class_0593_book1_read_endure_heat_this_spell_creates_a(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 12
+	{
+		class_0593_book1_read_flash_by_means_of_this_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 13
+	{
+		class_0593_book1_read_flame_bolt_a_bolt_of_flame(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 15
+	{
+		class_0593_book1_read_fire_shield_flames_circle_the_sorcerer(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 17
+	{
+		class_0593_book1_read_create_fire_fire_erupts_at_the(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 16
+	{
+		class_0593_book1_read_armor_of_flames_the_sorcerer_is(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 18
+	{
+		class_0593_book1_read_explosion_a_bolt_of_flame_is(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 19
+	{
+		class_0593_book1_read_summon_daemon_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 20
+	{
+		class_0593_book1_read_banish_daemon_this_spell_attempts_to(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 21
+	{
+		class_0593_book1_read_conflagration_this_summoning_will_temporarily_bring(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 25
+	{
+		class_0593_book1_read_the_destruction_of_the_temple_by(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 22
+	{
+		class_0588_earthmag_read_beware_unto_any_who_may_read(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 30
+	{
+		class_0572_stevbook_read_honor_lost_by_meltzars_the_troll(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 31
+	{
+		class_0572_stevbook_read_expedition_journal_book_ii_day_seventeen(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 32
+	{
+		class_0572_stevbook_read_de_venoming_the_kith_by_ioria(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 33
+	{
+		class_0572_stevbook_read_the_beauty_of_rhian_by_toran(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 34
+	{
+		class_0572_stevbook_read_the_voices_of_mary_by_salem(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 35
+	{
+		class_0572_stevbook_read_eye_of_the_boulder_the_runes(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 36
+	{
+		class_0572_stevbook_read_captains_report(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 40
+	{
+		class_0592_bookmark_read_killer_jokes_by_trixter_welcome_reader(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 41
+	{
+		class_0592_bookmark_read_ear_of_arricorn_vol_iii_by(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 42
+	{
+		class_0592_bookmark_read_ear_of_arricorn_vol_iv_by(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 43
+	{
+		class_0592_bookmark_read_ear_of_arricorn_vol_vi_by(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 44
+	{
+		class_0592_bookmark_read_the_big_book_of_adventure_by(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 45
+	{
+		class_0592_bookmark_read_brogdan_s_helpful_guide_to_mushrooms(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 46
+	{
+		class_0592_bookmark_read_stories_to_make_children_sleep_by(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 47
+	{
+		class_0592_bookmark_read_adventure_quarterly_vol_ix_dear_adventurer(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 48
+	{
+		class_0592_bookmark_read_adventure_quarterly_volume_xii(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 49
+	{
+		class_0592_bookmark_read_the_official_logbook_of_crimes_and(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 50
+	{
+		class_0592_bookmark_read_guard_log_bloodwatch_nothing_to_report(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 51
+	{
+		class_0592_bookmark_read_guard_log_flogging_and_fight_day(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 52
+	{
+		class_0592_bookmark_read_guard_log_bloodwatch_ate_doughnuts_stale(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 53
+	{
+		class_0592_bookmark_read_guard_log_bloodwatch_guard_changed_firstebb(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 27
+	{
+		class_057D_melbook_read_this_journal_belongs_to_robin_dudley(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 28
+	{
+		class_057D_melbook_read_gold_valuable_commodity_or_worthless_trash(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 29
+	{
+		class_057D_melbook_read_my_rival_my_love_part_i(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 70
+	{
+		class_0591_bribook_read_let_none_doubt_that_no_greater(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 71
+	{
+		class_0590_bribook2_read_if_ye_be_strong_of_arm(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 72
+	{
+		class_058F_bribook3_read_if_ye_have_found_me_then(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 73
+	{
+		class_058E_bribook4_read_slayer_location_clue(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 74
+	{
+		class_058D_bribook5_read_well_have_ye_done_to_reach(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 75
+	{
+		class_058C_bribook6_read_many_are_the_rumors_of_the(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 90
+	{
+		class_0577_sgbook_read_saga_of_bone_crusher(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 91
+	{
+		class_0577_sgbook_read_enemies_of_tenebrae(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 92
+	{
+		class_0577_sgbook_read_what_the_fish_tell_me(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 93
+	{
+		class_0577_sgbook_read_divination_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 94
+	{
+		class_0577_sgbook_read_healing_touch_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 95
+	{
+		class_0577_sgbook_read_aerial_servant_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 96
+	{
+		class_0577_sgbook_read_reveal_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 97
+	{
+		class_0577_sgbook_read_restoration_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 98
+	{
+		class_0577_sgbook_read_the_spell_of_fade_from_sight(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 99
+	{
+		class_0577_sgbook_read_air_walk_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 100
+	{
+		class_0577_sgbook_read_hear_truth_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 101
+	{
+		class_0577_sgbook_read_intervention_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 102
+	{
+		class_0577_sgbook_read_intervention_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 102
+	{
+		class_0577_sgbook_read_resurrection_spell(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 103
+	{
+		class_0577_sgbook_read_letter_to_prevan(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 104
+	{
+		class_0577_sgbook_read_chronicle_of_pagan(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 81
+	{
+		class_0593_book1_read_confusion_blast_in_quas_wis_with(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 82
+	{
+		class_0593_book1_read_meteor_shower_kal_des_flam_ylem(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 83
+	{
+		class_0593_book1_read_summon_creature_kal_xen_speaking_these(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 84
+	{
+		class_0593_book1_read_call_destruction_kal_vas_grav_por(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 85
+	{
+		class_0593_book1_read_devastation_in_vas_ort_corp_warning(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 86
+	{
+		class_0593_book1_read_ethereal_travel_ort_grav_por_invoking(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 87
+	{
+		class_0593_book1_read_the_reagents_of_thaumaturgy_by_mythran(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 88
+	{
+		class_0593_book1_read_the_mythology_of_the_zealan_deities(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 89
+	{
+		class_0593_book1_read_the_final_sunlight(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 105
+	{
+		class_0593_book1_read_the_objective_history_of_pagan_by(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 110
+	{
+		class_0593_book1_read_the_mysteries_of_lithos_the_mysteries(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 111
+	{
+		class_0593_book1_read_it_is_important_to_keep_in(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 112
+	{
+		class_0593_book1_read_the_wisdom_of_stratos_is_not(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 113
+	{
+		class_0593_book1_read_the_way_of_stratos_is_the(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 114
+	{
+		class_0593_book1_read_the_way_of_stratos_is_never(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 115
+	{
+		class_0593_book1_read_dear_new_acolyte_it_is_with(u8_local_address(local_m02_w01));
+	}
+	else if getQuality() = 116
+	{
+		class_0593_book1_read_good_reader_i_wish_to_tell(u8_local_address(local_m02_w01));
+	}
+	else
+	{
+		class_0593_book1_read_what_the_fish_tell_me_by(u8_local_address(local_m02_w01));
+	}
+}
+

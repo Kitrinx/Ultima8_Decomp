@@ -1,0 +1,409 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x018D
+// FLEX slot: 399
+// Original offset: 0x00072149
+// Naming evidence: E, exact object-1 linker name `FIREITEM`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FIREITEM.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass FIREITEM inherits Item
+{
+	routine fireitem_find_outermost_container(arg_00:U8Word);
+	process fireitem_look_bark_quantity_description();
+	process fireitem_use_invoke_fire_focus_by_quality();
+	process fireitem_enter_fast_area_animate_focus_frames();
+	process fireitem_leave_fast_area_stop_focus_animation();
+}
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine FIREITEM::fireitem_find_outermost_container(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	local_m02 = arg_00;
+	if local_m02.getStatus() & 8
+	{
+		while local_m02.getStatus() & 8
+		{
+			local_m02 = local_m02.getContainer();
+		}
+		return local_m02;
+	}
+	return 0;
+}
+
+// Derived: routine 0x00C0, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREITEM::fireitem_look_bark_quantity_description()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m03:U8Byte;
+	local_m05:U8Word;
+	local_m03 = 0;
+	local_m05 = getQuality();
+	local_m05 = u8_shift_right_word(local_m05, 8);
+	local_m05 = 255 & local_m05;
+	if local_m05 > 0
+	{
+		local_m03 = 1;
+	}
+	if ((getFrame() >= 0) and (getFrame() <= 2)) or (getFrame() = 15)
+	{
+		local_m02 = "wand ";
+	}
+	else if ((getFrame() >= 3) and (getFrame() <= 5)) or (getFrame() = 16)
+	{
+		local_m02 = "rod ";
+	}
+	else if ((getFrame() >= 6) and (getFrame() <= 8)) or (getFrame() = 17)
+	{
+		local_m02 = "staff ";
+	}
+	else if ((getFrame() >= 9) and (getFrame() <= 11)) or (getFrame() = 18)
+	{
+		local_m02 = "talisman ";
+	}
+	else if ((getFrame() >= 12) and (getFrame() <= 14)) or (getFrame() = 19) or (getFrame() = 20)
+	{
+		local_m02 = "symbol ";
+	}
+	if local_m03 = 1
+	{
+		if baneJoined or vardionJoined
+		{
+			local_m02 += "of ";
+			if local_m05 = 1
+			{
+				local_m02 += "ignite ";
+			}
+			else if local_m05 = 2
+			{
+				local_m02 += "extinguish ";
+			}
+			else if local_m05 = 3
+			{
+				local_m02 += "flash ";
+			}
+			else if local_m05 = 4
+			{
+				local_m02 += "flame bolt ";
+			}
+			else if local_m05 = 5
+			{
+				local_m02 += "endure heat ";
+			}
+			else if local_m05 = 6
+			{
+				local_m02 += "fire shield ";
+			}
+			else if local_m05 = 7
+			{
+				local_m02 += "armor of flames ";
+			}
+			else if local_m05 = 8
+			{
+				local_m02 += "create fire ";
+			}
+			else if local_m05 = 9
+			{
+				local_m02 += "explosion ";
+			}
+			else if local_m05 = 10
+			{
+				local_m02 += "summon daemon ";
+			}
+			else if local_m05 = 11
+			{
+				local_m02 += "banish daemon ";
+			}
+			else if local_m05 = 12
+			{
+				local_m02 += "conflagration ";
+			}
+			if (keyOfTheAcolyte = 1) and (getFrame() != 20)
+			{
+				local_m05 = getQuality();
+				local_m05 = 255 & local_m05;
+				local_m02 += "with " + numToStr(local_m05);
+				if local_m05 = 1
+				{
+					local_m02 += " use";
+				}
+				else
+				{
+					local_m02 += " uses";
+				}
+				local_m02 += " remaining";
+			}
+		}
+	}
+	bark(u8_string_local_address(local_m02));
+}
+
+// Derived: routine 0x0472, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREITEM::fireitem_use_invoke_fire_focus_by_quality()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m0B:U8Bytes5;
+	local_m0D:U8Bytes2; // X: untouched.
+	local_m06 = getQuality();
+	local_m06 = u8_shift_right_word(local_m06, 8);
+	local_m06 = 255 & local_m06;
+	local_m02 = 0;
+	if local_m06 = 0
+	{
+		return;
+	}
+	if (vardionJoined = 0) and (baneJoined = 0)
+	{
+		if not random(3)
+		{
+			Item_bark(u8_string_address("I wonder what this is supposed to do. "), u8_stack_ref(1));
+		}
+		return;
+	}
+	if class_018D_fireitem_find_outermost_container(referent) != 1
+	{
+		Item_bark(u8_string_address("The focus must be held to invoke its power. "), u8_stack_ref(1));
+		return;
+	}
+	else
+	{
+		class_0581_unkCloseAllGumps();
+	}
+	if getFrame() = 20
+	{
+		if random(100) <= 14
+		{
+			createSprite(578, 0, 17, 2, Avatar.getX() + 336, Avatar.getY() + 336, Avatar.getZ() + 56);
+			playSFX(158, 100, 1);
+			class_057C_receiveHit(1, class_0581_randRange(5, 10), random(8), referent, u8_stack_address(-6));
+			setQuality(0);
+			return;
+		}
+	}
+	if local_m06 = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_ignite(1, local_m02) -> return;
+	}
+	else if local_m06 = 2
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_extinguish(1, local_m02) -> return;
+	}
+	else if local_m06 = 3
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_flash(1, local_m0B) -> return;
+	}
+	else if local_m06 = 4
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_flameBolt(1, local_m02) -> return;
+	}
+	else if local_m06 = 5
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_endureHeat(1) -> return;
+	}
+	else if local_m06 = 6
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_fireShield(1) -> return;
+	}
+	else if local_m06 = 7
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_armorOfFlames(1) -> return;
+	}
+	else if local_m06 = 8
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_createFire(1, local_m02) -> return;
+	}
+	else if local_m06 = 9
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_explosion(1, local_m02) -> return;
+	}
+	else if local_m06 = 10
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0589_summonDaemon(1, local_m02) -> return;
+	}
+	else if local_m06 = 11
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0589_banishDaemon(1, local_m02) -> return;
+	}
+	else if local_m06 = 12
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0589_conflagration(1) -> return;
+	}
+	AccumulateIntelligence(local_m06 + 10 + random(11));
+	if getFrame() != 20
+	{
+		setQuality(getQuality() - 1);
+	}
+	if (getQuality() & 255) = 0
+	{
+		local_m04 = getFrame();
+		if (local_m04 >= 0) and (local_m04 <= 2)
+		{
+			local_m04 = 15;
+		}
+		if (local_m04 >= 3) and (local_m04 <= 5)
+		{
+			local_m04 = 16;
+		}
+		if (local_m04 >= 6) and (local_m04 <= 8)
+		{
+			local_m04 = 17;
+		}
+		if (local_m04 >= 9) and (local_m04 <= 11)
+		{
+			local_m04 = 18;
+		}
+		if (local_m04 >= 12) and (local_m04 <= 14)
+		{
+			local_m04 = 19;
+		}
+		setFrame(local_m04);
+		setQuality(0);
+		killProcess(referent, 539);
+	}
+}
+
+// Derived: routine 0x0817, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREITEM::fireitem_enter_fast_area_animate_focus_frames()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m03:U8Byte;
+	local_m04:U8Byte;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m02 = getFrame();
+		local_m03 = 0;
+		local_m04 = 0;
+		if (getQuality() & 255) = 0
+		{
+			if (local_m02 >= 0) and (local_m02 <= 2)
+			{
+				local_m02 = 15;
+			}
+			if (local_m02 >= 3) and (local_m02 <= 5)
+			{
+				local_m02 = 16;
+			}
+			if (local_m02 >= 6) and (local_m02 <= 8)
+			{
+				local_m02 = 17;
+			}
+			if (local_m02 >= 9) and (local_m02 <= 11)
+			{
+				local_m02 = 18;
+			}
+			if (local_m02 >= 12) and (local_m02 <= 14)
+			{
+				local_m02 = 19;
+			}
+			setFrame(local_m02);
+			return;
+		}
+		else
+		{
+			if ((local_m02 >= 0) and (local_m02 <= 2)) or ((local_m02 >= 0) and (local_m02 <= 2))
+			{
+				local_m06 = 5;
+			}
+			if (local_m02 >= 3) and (local_m02 <= 5)
+			{
+				local_m06 = 10;
+			}
+			if (local_m02 >= 6) and (local_m02 <= 11)
+			{
+				local_m06 = 7;
+			}
+		}
+	}
+	process
+	{
+		if (local_m02 = 0) or (local_m02 = 3) or (local_m02 = 6) or (local_m02 = 9) or (local_m02 = 12)
+		{
+			local_m02++;
+			local_m03 = 1;
+		}
+		else if (local_m02 = 1) or (local_m02 = 4) or (local_m02 = 7) or (local_m02 = 10) or (local_m02 = 13)
+		{
+			if local_m03
+			{
+				local_m02++;
+			}
+			else
+			{
+				local_m02--;
+			}
+		}
+		else if local_m02 = 2
+		{
+			local_m02 = 0;
+		}
+		else if (local_m02 = 5) or (local_m02 = 8) or (local_m02 = 11) or (local_m02 = 14)
+		{
+			local_m02--;
+			local_m03 = 0;
+		}
+		if (local_m03 = 1) and (local_m02 = 13)
+		{
+			wait(190);
+		}
+		else if (local_m03 = 1) and (local_m02 = 4)
+		{
+			wait(45);
+		}
+		else if (local_m03 = 1) and (local_m02 = 7)
+		{
+			wait(120);
+		}
+		else if (local_m03 = 1) and (local_m02 = 10)
+		{
+			wait(90);
+		}
+		else
+		{
+			wait(local_m06);
+		}
+		setFrame(local_m02);
+	}
+}
+
+// Derived: routine 0x0A5A, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREITEM::fireitem_leave_fast_area_stop_focus_animation()
+{
+	killProcess(referent, 539);
+}
+

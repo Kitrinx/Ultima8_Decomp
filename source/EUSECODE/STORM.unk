@@ -1,0 +1,193 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0571
+// FLEX slot: 1395
+// Original offset: 0x00103D87
+// Naming evidence: E, exact object-1 linker name `STORM`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/STORM.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process storm_run_rain_storm()
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[547, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+		rainStormActive = 1;
+		if (fireStormActive = 0) and (stormsActive = 1)
+		{
+			FadeToPalette(3, 0);
+		}
+	}
+	process
+	{
+		wait(urandom(1600) + 80);
+		if stormsActive
+		{
+			LightningBolt();
+			wait(urandom(20) + 10);
+			local_m02 = urandom(4);
+			if local_m02 = 0
+			{
+				playSFX(91, 100);
+			}
+			else if local_m02 = 1
+			{
+				playSFX(89, 100);
+			}
+			else if local_m02 = 2
+			{
+				playSFX(94, 100);
+			}
+			else if local_m02 = 3
+			{
+				playSFX(96, 100);
+			}
+		}
+		if urandom(8) = 0
+		{
+			wait(urandom(1600) + 80);
+			rainStormActive = 0;
+			if stormsActive
+			{
+				if fireStormActive
+				{
+					FadeToPalette(4, 0);
+				}
+				else
+				{
+					FadeToPalette(0, 0);
+				}
+			}
+			wait(urandom(4000) + 8000);
+			rainStormActive = 1;
+			if stormsActive
+			{
+				if not fireStormActive
+				{
+					FadeToPalette(3, 0);
+				}
+			}
+		}
+	}
+}
+
+// Derived: routine 0x021E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process storm_run_fire_storm()
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[548, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+		fireStormActive = 1;
+		if stormsActive
+		{
+			FadeToPalette(4, 0);
+		}
+	}
+	process
+	{
+		wait(urandom(128));
+		if stormsActive
+		{
+			if local_m02.legal_create(166, 0, (Avatar.getX() + urandom(400)) - 200, (Avatar.getY() + urandom(400)) - 200, 250)
+			{
+				playSFX(142, 100);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn local_m02.hurl(urandom(64) - 32, urandom(64) - 32, 0, 4) -> return;
+			}
+		}
+		if urandom(64) = 0
+		{
+			fireStormActive = 0;
+			if stormsActive
+			{
+				if rainStormActive
+				{
+					FadeToPalette(3, 0);
+				}
+				else
+				{
+					FadeToPalette(0, 0);
+				}
+			}
+			wait(urandom(4000) + 8000);
+			fireStormActive = 1;
+			if stormsActive
+			{
+				FadeToPalette(4, 0);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0372, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine storm_start_rain_storm()
+{
+	if not rainStorm
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0571_storm_run_rain_storm(0x00000000) -> return;
+		rainStorm = 1;
+	}
+}
+
+// Derived: routine 0x0392, event mask 0x00000000.
+// R: behavior-derived callable name.
+unkroutine storm_stop_rain_storm()
+{
+	if rainStorm
+	{
+		if stormsActive
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn FadeToPalette(0, 0) -> return;
+		}
+		killProcess(1, 547);
+		rainStorm = 0;
+	}
+}
+
+// Derived: routine 0x03C2, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine storm_start_fire_storm()
+{
+	if not fireStorm
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0571_storm_run_fire_storm(0x00000000) -> return;
+		fireStorm = 1;
+	}
+}
+
+// Derived: routine 0x03E2, event mask 0x00000000.
+// R: behavior-derived callable name.
+unkroutine storm_stop_fire_storm()
+{
+	if fireStorm
+	{
+		if stormsActive
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn FadeToPalette(0, 0) -> return;
+		}
+		killProcess(1, 548);
+		fireStorm = 0;
+	}
+}
+

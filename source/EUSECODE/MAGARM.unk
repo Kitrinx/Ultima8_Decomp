@@ -1,0 +1,220 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0349
+// FLEX slot: 843
+// Original offset: 0x000AF055
+// Naming evidence: E, exact object-1 linker name `MAGARM`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MAGARM.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass MAGARM inherits Item
+{
+	process magarm_look_describe_magic_armor();
+	process magarm_enter_fast_area_start_hovering_armor_movement();
+	process magarm_leave_fast_area_stop_hovering_armor_movement();
+	process magarm_move_hovering_armor_near_avatar();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MAGARM::magarm_look_describe_magic_armor()
+{
+	bark("magic armor ");
+}
+
+// Derived: routine 0x00AF, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MAGARM::magarm_enter_fast_area_start_hovering_armor_movement()
+{
+	if (getStatus() & 4) = 0
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0349_magarm_move_hovering_armor_near_avatar(this) -> return;
+	}
+}
+
+// Derived: routine 0x00D9, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MAGARM::magarm_leave_fast_area_stop_hovering_armor_movement()
+{
+	killProcess(referent, PT_ANIM);
+}
+
+// Derived: routine 0x00F4, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process MAGARM::magarm_move_hovering_armor_near_avatar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0D:U8Byte;
+	local_m0F:U8Word;
+	local_m11:U8Word;
+	local_m11_w01:U8Bytes1;
+	local_m13:U8Word;
+	local_m15:U8Word;
+	local_m17:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ANIM, referent]];
+		local_m02 = 0;
+		local_m04 = 0;
+		local_m06 = 0;
+		local_m08 = 0;
+		local_m0A = 0;
+	}
+	process
+	{
+		Item_andStatus(~4, this);
+		local_m0C = Item_getRange(1, this);
+		if local_m0C <= 128
+		{
+			local_m13 = getCX() - Avatar.getCX();
+			local_m15 = getCY() - Avatar.getCY();
+			if (getStatus() & 8) != 0
+			{
+				local_m13 = urandom(16) - urandom(16);
+				local_m15 = urandom(16) - urandom(16);
+			}
+			if class_0581_abs(local_m13) < class_0581_abs(local_m15)
+			{
+				local_m15 -= urandom(1);
+				if local_m15 < 0
+				{
+					local_m15 = (local_m0C - 128) - 64;
+				}
+				else
+				{
+					local_m15 = (128 - local_m0C) + 64;
+				}
+			}
+			else
+			{
+				local_m13 -= urandom(1);
+				if local_m13 < 0
+				{
+					local_m13 = (local_m0C - 128) - 64;
+				}
+				else
+				{
+					local_m13 = (128 - local_m0C) + 64;
+				}
+			}
+			if local_m13 > 64
+			{
+				local_m13 = 64;
+			}
+			if local_m13 < -64
+			{
+				local_m13 = -64;
+			}
+			if local_m15 > 64
+			{
+				local_m15 = 64;
+			}
+			if local_m15 < -64
+			{
+				local_m15 = -64;
+			}
+			local_m11 = getX() + local_m13;
+			local_m0F = getY() + local_m15;
+			local_m0D = getZ();
+			if not legal_move(u8_local_address(local_m11_w01), 1, 0)
+			{
+				local_m17 = local_m13;
+				local_m13 = 0 - local_m15;
+				local_m15 = local_m17;
+				local_m11 = getX() + local_m13;
+				local_m0F = getY() + local_m15;
+				if not legal_move(u8_local_address(local_m11_w01), 1, 0)
+				{
+					hurl(0 - (local_m15 / 2), local_m13 / 2, 24, 4);
+				}
+			}
+			local_m04 = local_m13 / 2;
+			local_m06 = local_m15 / 2;
+			if local_m04 > 0
+			{
+				local_m08 = -16;
+			}
+			else
+			{
+				local_m08 = 16;
+			}
+			if local_m06 > 0
+			{
+				local_m0A = -16;
+			}
+			else
+			{
+				local_m0A = 16;
+			}
+		}
+		else if (local_m04 != 0) or (local_m06 != 0)
+		{
+			local_m11 = getX() + local_m04;
+			local_m0F = getY() + local_m06;
+			local_m0D = getZ();
+			legal_move(u8_local_address(local_m11_w01), 1, 0);
+			local_m04 += local_m08;
+			if local_m02 > 0
+			{
+				local_m02--;
+				if local_m02 = 0
+				{
+					local_m08 = 0 - local_m08;
+					local_m0A = 0 - local_m0A;
+				}
+			}
+			else
+			{
+				if (local_m04 > 0) and (local_m08 > 0)
+				{
+					local_m04 = 0;
+				}
+				else if (local_m04 < 0) and (local_m08 < 0)
+				{
+					local_m04 = 0;
+				}
+				local_m06 += local_m0A;
+				if (local_m06 > 0) and (local_m0A > 0)
+				{
+					local_m06 = 0;
+				}
+				else if (local_m06 < 0) and (local_m0A < 0)
+				{
+					local_m06 = 0;
+				}
+			}
+		}
+		else if (local_m0C < (128 * 2)) and (urandom(16) = 13)
+		{
+			local_m13 = urandom(32) - urandom(32);
+			local_m15 = urandom(32) - urandom(32);
+			hurl(local_m13, local_m15, 12, 4);
+		}
+		else if urandom(local_m0C / 8) = 0
+		{
+			local_m08 = urandom(16) - urandom(16);
+			local_m04 = local_m08;
+			local_m0A = urandom(16) - urandom(16);
+			local_m06 = local_m0A;
+			local_m02 = 5;
+		}
+		wait(5);
+	}
+}
+

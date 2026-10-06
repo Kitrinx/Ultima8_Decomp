@@ -1,0 +1,412 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00C5
+// FLEX slot: 199
+// Original offset: 0x00081861
+// Naming evidence: E, exact object-1 linker name `GRAVE_NS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GRAVE_NS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass GRAVE_NS inherits Item
+{
+	process grave_ns_look_bark_gravestone();
+	process grave_ns_use_forward_to_grave_ns_use_grave_by_quality();
+	process [[PT_DEFAULT, referent]] grave_ns_use_grave_by_quality();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GRAVE_NS::grave_ns_look_bark_gravestone()
+{
+	bark("gravestone ");
+}
+
+// Derived: routine 0x00AE, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GRAVE_NS::grave_ns_use_forward_to_grave_ns_use_grave_by_quality()
+{
+	grave_ns_use_grave_by_quality();
+}
+
+// Derived: routine 0x00CB, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] GRAVE_NS::grave_ns_use_grave_by_quality()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:Item;
+	local_m06_w01:U8Bytes1;
+	local_m08:Item;
+	local_m02 = getQuality();
+	local_m04 = 27;
+	if local_m02 = 1
+	{
+		Grave_read(u8_string_address("SIVLE*THE MINSTREL*WANDERS NO MORE"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 2
+	{
+		Grave_read(u8_string_address("HERE LIES FRED*IN A QUARRY*HE WAS FOUND*DEAD"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 3
+	{
+		Grave_read(u8_string_address("JUSTIN*HIS MURDER*WAS BETTER*LEFT UNSOLVED"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 4
+	{
+		Grave_read(u8_string_address("SHERRI'S*LAST PLOT"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 5
+	{
+		Grave_read(u8_string_address("STUPIDITY IS*ITS OWN REWARD"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 6
+	{
+		Grave_read(u8_string_address("CORODIN*FIRST MASTER*OF THE CABAL"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 7
+	{
+		Grave_read(u8_string_address("MAEDRON*SORCERER AND*THE BANE OF*CORODIN"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 8
+	{
+		Grave_read(u8_string_address("A STUPID PAGAN*LIES HERE DEAD*IN HIS RELIGION*HE WAS MISLED"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 9
+	{
+		Grave_read(u8_string_address("HERE LIES*BEVERLY*DIED IN*REVELRY"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 10
+	{
+		Grave_read(u8_string_address("ENTOMBED IS KAI*TRUSTY AND WISE*TOILS AT WORK*THEN DIES"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 11
+	{
+		Grave_read(u8_string_address("SIR TODD*I'M NOT DEAD YET*I'M GETTING*BETTER"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 12
+	{
+		Grave_read(u8_string_address("SIR DEE*TWAS JUST A*FLESH WOUND"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 13
+	{
+		Grave_read(u8_string_address("MEL*HAS RETURNED*TO HELL"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 14
+	{
+		Grave_read(u8_string_address("SIR ROBERT*TRIED TO FLY*FOUND GRAVITY A*UNFORGIVING FOE"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 15
+	{
+		Grave_read(u8_string_address("SHELTON*MY BODY LIES*BUT STILL*I ROAM"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 16
+	{
+		Grave_read(u8_string_address("OH NO*NOT AGAIN"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 17
+	{
+		Grave_read(u8_string_address("SAD BUT TRUE*HERE LIES PRIEST*PRACTICED ART*AND NOW DECEASED"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 18
+	{
+		Grave_read(u8_string_address("HERE LIES CHEL*SOME SAY SHE*WAS A*LOVELY BELLE"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 19
+	{
+		Grave_read(u8_string_address("HERE UNDERGROUND*LIES EDDIE*TOOK A KNIFE*NOW HE'S DEADIE"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 20
+	{
+		Grave_read(u8_string_address("HERE LIES BRIAN*FELLED BY A*KILLER SPIDER"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 21
+	{
+		Grave_read(u8_string_address("PAMELA*SHE WORKED*TOO HARD"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 22
+	{
+		Grave_read(u8_string_address("STEVE*CRUNCHED*TO DEATH"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 23
+	{
+		Grave_read(u8_string_address("WITH HIS HEAD*ASHAVE HE WAS*SO VERY BRAVE*STARR"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 24
+	{
+		Grave_read(u8_string_address("PERRY*JUST WENT*UP IN SMOKE"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 25
+	{
+		Grave_read(u8_string_address("SIR DON*COULDNT SLING A*SWORD AS FAST*AS HIS DRINK"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 26
+	{
+		Grave_read(u8_string_address("DO NOT*DRINK OUT OF*OTHERS GOBLETS*"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 27
+	{
+		Grave_read(u8_string_address("UNDERPAID*UNDER FED*UNDERGROUND"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 28
+	{
+		Grave_read(u8_string_address("ARNOLD*HASTA LAVISTA*BABY"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 29
+	{
+		Grave_read(u8_string_address("R I P*SWORDPROOF*VITTEK"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 30
+	{
+		Grave_read(u8_string_address("ALWAYS*FULLY*COOK*SEAFOOD"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 31
+	{
+		Grave_read(u8_string_address("TEE*TOOK ONE*IN THE*DOME"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 32
+	{
+		Grave_read(u8_string_address("BETTY*BLAH-BLAH*KILLED BY*TOO MANY WORDS"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 33
+	{
+		Grave_read(u8_string_address("GLAD I AM GONE*DONE AND PAST*MARRIED 6 TIMES*PEACE AT LAST"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 34
+	{
+		Grave_read(u8_string_address("MISS JONES*HAS NO MOANS*AND ALL ALONE*IS MR. JONES"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 35
+	{
+		Grave_read(u8_string_address("TIP YOUR LID*TO SIRE FOX*TAKEN AWAY*BY THE POX"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 36
+	{
+		Grave_read(u8_string_address("HERE LIES*BURKE*LOST HIS LIFE*DODGING WORK"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 37
+	{
+		Grave_read(u8_string_address("OFF THE DOCK*DOVE SIR JIM*THEN HE FOUND*HE COULDN'T SWIM"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 38
+	{
+		Grave_read(u8_string_address("SIR LOUDER*BLOWN APART*BY BLASTING*POWDER"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 39
+	{
+		Grave_read(u8_string_address("ASHES TO ASHES*DUST TO DUST*HYDROS REFUSED*SO LITHOS MUST"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 40
+	{
+		Grave_read(u8_string_address("NO ONE IS HERE*NOT A POUND*LOST AT SEA*NEVER FOUND"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 41
+	{
+		Grave_read(u8_string_address("GET*OFF*MY*GRAVE"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 42
+	{
+		Grave_read(u8_string_address("WHEN YOU PASS*SHED A TEAR*LITTLE EVA*IS BURIED HERE"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 43
+	{
+		Grave_read(u8_string_address("GOOD-BYE FREDY*NOW GONE*WE REMEMBER*YOU IN SONG"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 44
+	{
+		Grave_read(u8_string_address("WHY DO THINGS*ALWAYS HAPPEN*TO ME*DONNER"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 45
+	{
+		Grave_read(u8_string_address("POOR GEORGE*TRIPPED AND FELL*INTO KINDRIC'S*FORGE"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 46
+	{
+		Grave_read(u8_string_address("DIED WHILE*RUNNING*WITH TOOTHBRUSH*IN MOUTH"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 47
+	{
+		Grave_read(u8_string_address("HERE LIES*MOORE*GHOUL SLAYER*JUST FOUR"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 48
+	{
+		Grave_read(u8_string_address("HERE LIES*CHRICHTON*ATTACK BY TORAX*THEIR ONE VICTIM"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 49
+	{
+		Grave_read(u8_string_address("GLEN*WILL BE MISSED*BUT NOT*BY MANY"), local_m04, this);
+		return;
+	}
+	else if local_m02 = 50
+	{
+		Grave_read(u8_string_address("SIR RICHARD*DIED OF FRIGHT*PLUNGED FROM*A GREAT HEIGHT"), local_m04, this);
+		return;
+	}
+	else
+	{
+		if local_m02 = 51
+		{
+			Grave_read(u8_string_address("ELAINA*HER MOTHERS*GREATEST*TREASURE"), local_m04, this);
+			if toldAboutKey and (not readGravestone)
+			{
+				setAvatarInStasis(1);
+				Avatar.turnToFace(4, 0, 10);
+				Npc_create(35, 411, u8_local_address(local_m06_w01));
+				local_m06.pop(getX(), getY() + 25, getZ() + 30);
+				class_057C_realDoAnim(u8_local_address(local_m06_w01), 4, 4);
+				class_057C_realDoAnim(u8_local_address(local_m06_w01), 2, 4);
+				class_057C_realDoAnim(u8_local_address(local_m06_w01), 2, 4);
+				Item_create(3, 82, u8_local_address(local_m08_w01));
+				local_m08.setQuality(39);
+				local_m08.pop(local_m06.getX(), local_m06.getY() + 30, local_m06.getZ() + 30);
+				local_m08.hurl(0, 20, 5, 4);
+				class_057C_realDoAnim(u8_local_address(local_m06_w01), 2, 4);
+				class_057C_realDoAnim(u8_local_address(local_m06_w01), 2, 4);
+				class_057C_realDoAnim(u8_local_address(local_m06_w01), 14, 4);
+				readGravestone = 1;
+				setAvatarInStasis(0);
+			}
+			return;
+		}
+		if local_m02 = 52
+		{
+			Grave_read(u8_string_address("HERE LIES HOFFMAN*KILLED BY BUGS"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 53
+		{
+			Grave_read(u8_string_address("HERE LIES LIZ*WIDOW OF PAGAN"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 54
+		{
+			Grave_read(u8_string_address("HERE LIES SEAN*BY THE SHORE*SAID TO DEATH*JUST ONE MORE!"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 55
+		{
+			Grave_read(u8_string_address("HERE LIES RYAN*CRUSHED*BY JOHNSON"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 56
+		{
+			Grave_read(u8_string_address("B BILLS*THREE STRIKES*AND YOU'RE OUT"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 57
+		{
+			Grave_read(u8_string_address("GLANVILLE*CHEAP TRASH*LONG GONE"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 58
+		{
+			Grave_read(u8_string_address("TARMONA*DONT KISS*AND TELL"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 59
+		{
+			Grave_read(u8_string_address("DBEYER*LOVED HIS CUBS*THEN GOT*MAULED"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 60
+		{
+			Grave_read(u8_string_address("MONTANA THOUGHT*TO BE IMMORTAL*WRONG AGAIN"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 61
+		{
+			Grave_read(u8_string_address("HERE IS FONTES*MAULED*BY BEARS"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 62
+		{
+			Grave_read(u8_string_address("ROB IS NOW DEAD*HE SHOULD NOT*HAVE GONE*TO LEGAS"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 63
+		{
+			Grave_read(u8_string_address("BRENDAN WAS*KILLED FOR*LAUGHING TOO*LOUDLY"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 64
+		{
+			Grave_read(u8_string_address("ALEXIS*HER SPIRIT*TO LITHOS*I GIVE"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 65
+		{
+			Grave_read(u8_string_address("BURIED WITHIN*THE VERY BREAST*OF LITHOS*IS THE HEART"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 66
+		{
+			Grave_read(u8_string_address("AMREZHAR*BY THE*ANCIENT ONES*HE IS MET"), local_m04, this);
+			return;
+		}
+		else if local_m02 = 99
+		{
+			Grave_read(u8_string_address(""), local_m04, this);
+			return;
+		}
+		else
+		{
+			Grave_read(u8_string_address("R I P*UNKNOWN"), local_m04, this);
+			return;
+		}
+	}
+}
+

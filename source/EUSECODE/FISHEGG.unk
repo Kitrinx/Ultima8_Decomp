@@ -1,0 +1,89 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04A4
+// FLEX slot: 1190
+// Original offset: 0x00076C4B
+// Naming evidence: E, exact object-1 linker name `FISHEGG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FISHEGG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass FISHEGG inherits Egg
+{
+	process fishegg_hatch_start_random_fish_effect();
+	process fishegg_leave_fast_area_reset_fish_egg_state();
+	process fishegg_play_random_fish_effect();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FISHEGG::fishegg_hatch_start_random_fish_effect()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Bytes2; // X: untouched.
+	local_m02 = Egg_getEggId(this);
+	if local_m02 = 0
+	{
+		Egg_setEggId(1, this);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_04A4_fishegg_play_random_fish_effect(this) -> return;
+	}
+}
+
+// Derived: routine 0x00B5, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FISHEGG::fishegg_leave_fast_area_reset_fish_egg_state()
+{
+	Egg_setEggId(0, this);
+}
+
+// Derived: routine 0x00CC, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process FISHEGG::fishegg_play_random_fish_effect()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:Item;
+	[[PT_ACTIVITY, referent]];
+	wait(60);
+	if urandom(100) > 50
+	{
+		Item_create(0, 81, u8_local_address(local_m04_w01));
+		local_m04.pop(getX(), getY(), getZ());
+		for local_m02 = 0 to 14
+		{
+			if local_m02 = 4
+			{
+				playSFX(63, 200, local_m04);
+			}
+			local_m04.setFrame(local_m02);
+			wait(8);
+		}
+		local_m04.destroy();
+		return;
+	}
+	else
+	{
+		Item_create(15, 81, u8_local_address(local_m04_w01));
+		local_m04.pop(getX(), getY(), getZ());
+		for local_m02 = 15 to 23
+		{
+			if local_m02 = 17
+			{
+				playSFX(77, 200, referent);
+			}
+			local_m04.setFrame(local_m02);
+			wait(10);
+		}
+		local_m04.destroy();
+		return;
+	}
+}
+

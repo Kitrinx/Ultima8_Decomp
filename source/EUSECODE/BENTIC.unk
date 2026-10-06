@@ -1,0 +1,564 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x040C
+// FLEX slot: 1038
+// Original offset: 0x00021B1B
+// Naming evidence: E, exact object-1 linker name `BENTIC`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/BENTIC.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "flags";
+uses "free";
+uses "npc";
+
+npcclass Bentic inherits Npc
+{
+	process look();
+	process schedule(currentTime:Long);
+	process enterFastArea();
+	process leaveFastArea();
+	process AvatarStoleSomething(ref:Referent);
+	process cast(ref:Referent);
+	process use();
+	process readBook();
+	process randomWisdom();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Bentic::look()
+{
+	if isDead()
+	{
+		bark("Bentic the dead librarian ");
+		return;
+	}
+	if benticName and benticJob
+	{
+		bark("Bentic the Librarian ");
+		return;
+	}
+	else if benticName
+	{
+		bark("Bentic");
+	}
+	else if benticJob
+	{
+		bark("librarian ");
+	}
+	else
+	{
+		bark("man ");
+	}
+}
+
+// Derived: routine 0x0173, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Bentic::schedule(currentTime:Long)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	point:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	map:MapNum;
+	if isDead()
+	{
+		return;
+	}
+	map = 41;
+	if (class_0581_getPeriod() = 3) or (class_0581_getPeriod() = 2)
+	{
+		local_m05_w02 = 13407;
+		local_m03 = 2623;
+		local_m01 = 48;
+	}
+	if (class_0581_getPeriod() = 1) or (class_0581_getPeriod() = 4)
+	{
+		local_m05_w02 = 14431;
+		local_m03 = 2015;
+		local_m01 = 48;
+	}
+	if (class_0581_getPeriod() = 5) or (class_0581_getPeriod() = 0)
+	{
+		local_m05_w02 = 15199;
+		local_m03 = 2047;
+		local_m01 = 96;
+	}
+	class_057C_safeTeleport(this, point, map);
+}
+
+// Derived: routine 0x0216, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Bentic::enterFastArea()
+{
+	if isDead()
+	{
+		return;
+	}
+	killProcess(referent, PT_ACTIVITY);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_040C_readBook(this) -> return;
+}
+
+// Derived: routine 0x024B, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Bentic::leaveFastArea()
+{
+	killProcess(referent, PT_ACTIVITY);
+	if isDead()
+	{
+		teleport(urandom(1000), urandom(1000), 0, 0);
+	}
+}
+
+// Derived: routine 0x0292, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Bentic::AvatarStoleSomething(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	item = ref;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn realDoAnim(AS_CLIMB_2, getDir()) -> return;
+	if (item.getType() = 613) or (item.getType() = 288)
+	{
+		resetRef(referent, PT_BARK);
+		resetRef(referent, PT_ACTIVITY);
+		bark("Please return that within two weeks! ");
+		enterFastArea();
+		return;
+	}
+}
+
+// Derived: routine 0x0341, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Bentic::cast(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	count:Number;
+	count = 10;
+	while (not Npc_getTarget(this)) and count
+	{
+		wait(1);
+		count--;
+	}
+	ref = Npc_getTarget(this);
+	if ref = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn callTheGuards(NULL_REF) -> return;
+		if urandom(100) > 50
+		{
+			bark("I am attacked! Help! ");
+		}
+		else
+		{
+			bark("Help! Sorcerer! ");
+		}
+	}
+}
+
+// Derived: routine 0x0408, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Bentic::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	answer:String;
+	sentence:String;
+	nameStr:String;
+	askList:String List;
+	mentionedPagan = 0;
+	if not benticMet
+	{
+		Item_bark(u8_string_address("Greetings! "), u8_stack_ref(1));
+	}
+	else
+	{
+		Item_bark(u8_string_address("Greetings, Bentic! "), u8_stack_ref(1));
+	}
+	enterConvo2();
+	nameStr = "My name is " + getName() + ".";
+	if benticMet
+	{
+		if haveAvaName
+		{
+			bark("Hello, hello, " + getName() + ".");
+		}
+		else
+		{
+			bark("Hello! I am glad to see you again.");
+		}
+		askList = <<"How are you? ", "What do you do? ", "bye ">>;
+	}
+	else
+	{
+		bark("Greetings, stranger. ");
+		askList ^= <<"What is your name? ", "What do you do? ", "bye ">>;
+	}
+	while answer != "bye "
+	{
+		askList -= <<"bye ">>;
+		askList += <<"bye ">>;
+		answer = ask(askList);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch answer
+		{
+			case "What do you do? "
+			{
+				benticJob = 1;
+				bark("By trade, I am the librarian of this city, however, I prefer to think of myself as a student of life. One who spends his time observing all facets of life. I am a great studier of people. You would be amazed at the things you may learn by simply observing your neighbors in their everyday life. ");
+				askList = <<"Tell me of the library. ", "Tell me of the people. ", "Tell me of your neighbors. ">>;
+				if benticStoryTold
+				{
+					askList ^= <<"Orlok says you have a treasure map. ">>;
+				}
+			}
+			case "What is your name? "
+			{
+				benticMet = 1;
+				benticName = 1;
+				bark("My name is Bentic. It is a word of Pagan derivation. I think it originally meant 'he who toils hard', but that is not for certain. I have found a number of references to 'Ventac' in several older texts and feel that this may be the root of the name 'Bentic.' And what is your name, friend? ");
+				askList -= <<"What is your name? ", "How are you? ">>;
+				askList ^= <<"What is 'Pagan'? ", nameStr>>;
+				if not benticGivenBook
+				{
+					askList += <<"What are you reading? ">>;
+				}
+			}
+			case "How are you? "
+			{
+				if haveAvaName
+				{
+					bark("I am quite well. You know, since I saw you last I have done a little more reading into the meaning of various names. I am more certain now that my name does stem from the ancient 'Ventac' as I also found one very old reference where it was spelled 'Bentac'. ");
+					bark("Now, the interesting point is that I did some research on your name and found that, in one case, it actually comes from the very old Pagan word for 'champion' or, a better translation, 'avatar'. ");
+					askList -= <<"What is your name? ", "How are you? ">>;
+				}
+				else
+				{
+					bark("I'm so glad you asked. I'm actually doing quite well. Since I last spoke to you, I've done a little more research into names. I did, indeed, find a very old reference to 'Ventac' and I intend to do a little more research in the origin of names. I would love to do some research on your name. What is your name, friend? ");
+					askList -= <<"What is your name? ", "How are you? ">>;
+					askList ^= <<"What is 'Pagan'? ", nameStr>>;
+				}
+				if not benticGivenBook
+				{
+					askList += <<"What are you reading? ">>;
+				}
+			}
+			case nameStr
+			{
+				haveAvaName = 1;
+				bark("Well met, " + getName() + ". I am pleased to meet you.");
+				askList -= <<nameStr>>;
+			}
+			case "What are you reading? "
+			{
+				bark("Ah, I am so glad you asked. This is a treatise on the world of Pagan. It covers the idiosyncrasies of the various lands and people of our world. From the first chapter it takes an in depth look at what motivates the people of this world, and challenges the reader to make up his own mind about the condition of this world in which we live. Perhaps you would like to read it. ");
+				askList -= <<"What are you reading? ">>;
+				askList ^= <<"Yes, thank you. ", "No, thank you. ", "Who is the author? ">>;
+			}
+			case "Yes, thank you. "
+			{
+				bark("Ah, I knew you were a well read person who appreciates fine literature. Perhaps after you have read it, we could get together and discuss your opinion of it. ");
+				askList -= <<"Yes, thank you. ", "No, thank you. ">>;
+				if class_0581_give(1, 613, 2, 104, 1)
+				{
+					bark("I hope you enjoy it! ");
+					benticGivenBook = 1;
+				}
+				else
+				{
+					bark("Oh my, you are carrying a lot of things. I'll just keep this 'til you have more room. ");
+				}
+			}
+			case "No, thank you. "
+			{
+				bark("Well, perhaps when you have more time. ");
+				askList -= <<"Yes, thank you. ", "No, thank you. ", "Who is the author? ">>;
+			}
+			case "Who is the author? "
+			{
+				bark("Well ... ummm, you see ... well, I am. ");
+				askList -= <<"Who is the author? ">>;
+			}
+			case "Tell me of the library. "
+			{
+				bark("The library is my joy. It is where I spend all my time, studying the words left by our predecessors. You can not believe what is in these books. They contain the wisdom of many ages in them. Too many people overlook the knowledge of our past generations, because of this, we are doomed to repeat the same mistakes over and over again.");
+				askList -= <<"Tell me of the library. ">>;
+				askList += <<"Tell me of the books. ">>;
+			}
+			case "Tell me of the people. "
+			{
+				bark("Ah, are you a student of life as well? I do so enjoy finding someone who shares the same passions as I do. The people here in Tenebrae are a varied and fascinating lot. They go about their daily toils, laboring under the yoke of a somewhat ... restrictive government and yet still find the time to enjoy themselves occasionally.");
+				askList -= <<"Tell me of the people. ">>;
+				askList += <<"A restrictive government? ">>;
+			}
+			case "Tell me of your neighbors. "
+			{
+				bark("I think the one I like to spend the most time with is Devon. He is such a sharp fellow. I think he has far more potential than even he realizes. ");
+				askList -= <<"Tell me of your neighbors. ">>;
+				askList += <<"Devon has potential? ">>;
+				if devonSaidBentic
+				{
+					askList ^= <<"I've met Devon. ">>;
+				}
+			}
+			case "I've met Devon. "
+			{
+				bark("Have you? Oh, he is such a nice fellow. We've spent hours in conversation here. He is really quite sharp. Loves books almost as much as I do. In some ways he knows more about Pagan than I. ");
+				askList -= <<"I've met Devon. ">>;
+				if not mentionedPagan
+				{
+					askList ^= <<"Does he know how I may leave Pagan? ">>;
+				}
+			}
+			case "Devon has potential? "
+			{
+				bark("Yes, I can't put my finger on it, but there is something there. Call it a hunch, if you will. I just seem to feel that there is something about him that suggests great things. He does love to read. Maybe he is destined to be a great scholar. ");
+				if not mentionedPagan
+				{
+					askList ^= <<"Does he know how I may leave Pagan? ">>;
+				}
+				askList -= <<"Devon has potential? ">>;
+			}
+			case "Tell me of the books. "
+			{
+				bark("My library is full of many books. Are you a scholar as well? Oh, I am so happy to have met you. Please feel free to make use of my library and books. We shall have many interesting discussions, I am sure. ");
+				askList -= <<"Tell me of the books. ">>;
+			}
+			case "A restrictive government? "
+			{
+				bark("Hmmm, it is not quite the safe thing to discuss here. Even my interest in knowledge and books can not protect me from Lady Mordea. You might say she has a rather...short temper. Why, just recently her guards confiscated my personal diary, though I don't have any idea why. ");
+				askList -= <<"A restrictive government? ">>;
+			}
+			case "I wish to leave Pagan. ", "Does he know how I may leave Pagan? "
+			{
+				mentionedPagan = 1;
+				bark("Leave Pagan? My goodness, I don't think I've ever had anyone ask for that, but then again, you don't act, talk or dress like anyone I've ever seen before. Let's see, I can only suggest you speak to someone with more magic abilities than I. Mythran could help you or, though I dread to suggest it, perhaps the Necromancer could help you. ");
+				askList -= <<"I wish to leave Pagan. ", "Does he know how I may leave Pagan? ">>;
+				askList += <<"Who is Mythran? ", "Necromancer? ">>;
+				benticSaidMythran = 1;
+			}
+			case "Necromancer? "
+			{
+				bark("Oh, they're not as bad as many of the people in this city make out. Their magic is a little macabre, I suppose, but they do have quite a bit of magic at their call. They serve Lithos, you know. ");
+				askList -= <<"Necromancer? ">>;
+				askList += <<"Who is Lithos? ", "How many are there? ">>;
+			}
+			case "How many are there? "
+			{
+				bark("There used to be many, but, the sentiment here in Tenebrae is against them so they have very few new recruits. I believe there are only one or two of them left. It's too bad, really. Their magic is so very different from the Tempest. ");
+				askList -= <<"How many are there? ">>;
+				askList += <<"How is the magic different? ">>;
+			}
+			case "How is the magic different? "
+			{
+				bark("The magic of the Tempest is hereditary, while the magic of the Necromancers may be learned and gained through tests and trials. Not that everyone can be a Necromancer, mind you. Not everyone has the stomach for it. ");
+				askList -= <<"How is the magic different? ">>;
+			}
+			case "Who is Mythran? "
+			{
+				bark("Mythran lives in a small house on the Plateau. He has been known to dabble in the various magical arts and is a scholar. He often makes magical scrolls and things and sells them. ");
+				askList -= <<"Who is Mythran? ">>;
+				askList = <<"Mythran practices magical arts? ", "Mythran is a scholar? ", "Where is the Plateau? ">>;
+				mythranScrolls = 1;
+			}
+			case "Where is the Plateau? "
+			{
+				bark("From the palace in the center of Tenebrae, head north out of the city. Follow the path through the Valley to a cave entrance. Go through the cave. It opens on the other side of the mountain on the Plateau. ");
+				askList -= <<"Where is the Plateau? ">>;
+			}
+			case "Mythran practices magical arts? "
+			{
+				bark("Yes, though I'm not sure what school he follows. ");
+				askList -= <<"Mythran practices magical arts? ">>;
+				askList += <<"What schools? ">>;
+			}
+			case "What schools? "
+			{
+				bark("Why the four elemental schools, of course. There are those who follow Lithos and practice his magic. These spells are mostly earth-based spells. They require long hours of study and practice to cast correctly, or so I've read. The Tempestual magics of Hydros are only available through heredity and so are unavailable to the majority. Now the magics of Pyros, the fire elemental are quite spectacular to watch, but very dangerous to the caster. Stratos, on the other hand provides healing magics, although she requires strict obedience to her tenets.");
+				askList -= <<"What schools? ">>;
+			}
+			case "Mythran is a scholar? "
+			{
+				bark("Well, of sorts. He enjoys studying and reading books as I do, but he will form an opinion and tout it as perfect. He will even cite his own writings as examples of perfect creative thinking. This makes talking to him a bit ... tedious. But he is a good source of information.");
+				askList -= <<"Mythran is a scholar? ">>;
+			}
+			case "Who is Lithos? "
+			{
+				bark("The Earth Titan, or Mountain King as he is sometimes called. He is a very powerful Titan, has the ability to make the very ground shake. The Necromancers still serve him, though I understand they have very few applicants to be an apprentice these days. ");
+				askList -= <<"Who is Lithos? ">>;
+			}
+			case "What is 'Pagan'? "
+			{
+				bark("Pagan? Why, that is the name of this place. ");
+				askList -= <<"What is 'Pagan'? ">>;
+				askList += <<"I thought this place was 'Tenebrae'. ">>;
+			}
+			case "I thought this place was 'Tenebrae'. "
+			{
+				bark("No, no. That is the name of this city. 'Pagan' is the name of this land, this all encompassing world upon which we all live out our meager lives. ");
+				askList -= <<"I thought this place was 'Tenebrae'. ">>;
+				askList += <<"I wish to leave Pagan. ", "Your meager lives? ">>;
+			}
+			case "Your meager lives? "
+			{
+				bark("When you take into consideration the scope of this world and its history, anything we do or accomplish becomes virtually meaningless. We are but a fraction of the blink of an eye in the history of Pagan. ");
+				askList -= <<"Your meager lives? ">>;
+			}
+			case "Orlok says you have a treasure map. "
+			{
+				bark("A treasure map? ");
+				askList -= <<"Orlok says you have a treasure map. ">>;
+				askList += <<"Yes, tattooed on your chest. ">>;
+			}
+			case "Yes, tattooed on your chest. "
+			{
+				bark("What?! Oh, that is so silly. Of course I don't have a map tattooed on my chest! I don't know why he'd even say such a thing. Oh well, I will have to go straightened that out. No, no I don't have a map tattooed on my chest. Now, tattoos are another interesting subject. ");
+				askList -= <<"Yes, tattooed on your chest. ">>;
+				askList += <<"Tell me of tattoos. ", "Do you know of any treasure maps? ">>;
+			}
+			case "Tell me of tattoos. "
+			{
+				bark("Well, you know where they come from, don't you? They were sailors' method of identifying themselves. If a sailor was washed overboard, it might be days or weeks before anyone found his body. When they did find it, it would be very likely any nonpermanent form of identification would be gone. So tattoos became popular as a permanent method of identificaion. While tattoos have never been my style, a great number of people find them very attractive and adorn themselves with all sorts of pictures. ");
+				askList -= <<"Tell me of tattoos. ">>;
+				askList += <<"What sort of pictures? ">>;
+			}
+			case "What sort of pictures? "
+			{
+				bark("While many choose the traditional anchor or skull and dagger, there are others who prefer more unusual things such as bats or intricate knotwork. ");
+				askList -= <<"What sort of pictures? ">>;
+				askList ^= <<"Bats? ", "Intricate knotwork? ">>;
+			}
+			case "Bats "
+			{
+				bark("In some cultures, the bat tattoo is a symbol of royalty. However, it is normally worn in a place that is covered by clothing, so that the monarch may go in disguise if necessary. ");
+				askList -= <<"Bats? ">>;
+			}
+			case "Intricate knotwork? "
+			{
+				bark("This sort of tattoo can usually be found around the top of the bicep or around the ankle. The ankle is the area preferred by women, the bicep by men. ");
+				askList -= <<"Intricate knotwork? ">>;
+			}
+			case "Do you know of any treasure maps? "
+			{
+				bark("No, no maps. Wait a minute, now I do recall a story about a magical hammer named 'Bone Crusher.' Had something to do with the undead skeletons. Hmmmm, perhaps you might find it if you looked through some of the books here in my library. ");
+				askList -= <<"Do you know of any treasure maps? ">>;
+			}
+			case "bye "
+			{
+				if haveAvaName
+				{
+					bark("Come back anytime, " + getName() + ". I so love a good conversation!");
+				}
+				else
+				{
+					bark("Thank you for dropping by, and come visit me any time.");
+				}
+				exitConvo();
+				return;
+			}
+			default
+			{
+				bark("Yes, well, I guess I'll get back to my research now. ");
+				exitConvo();
+				return;
+			}
+		}
+	}
+	exitConvo();
+}
+
+// Derived: routine 0x3A25, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Bentic::readBook()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	counter:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		counter = 0;
+	}
+	process
+	{
+		realDoAnim(AS_CLIMB_2, 2);
+		wait(60 + urandom(100));
+		randomWisdom();
+		wait(60 + urandom(100));
+	}
+}
+
+// Derived: routine 0x3AA1, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Bentic::randomWisdom()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = urandom(10);
+	if ran = 1
+	{
+		realDoAnim(AS_FIDGET, 2);
+		bark("I never knew that! ");
+		return;
+	}
+	if ran = 2
+	{
+		bark("Ah, yes... ");
+		realDoAnim(AS_FIDGET, 2);
+		return;
+	}
+	if ran = 3
+	{
+		bark("Fascinating! ");
+		return;
+	}
+	if ran = 4
+	{
+		bark("Very interesting. ");
+		realDoAnim(AS_FIDGET, 2);
+		return;
+	}
+	if ran = 5
+	{
+		bark("Such a good book. ");
+		return;
+	}
+	if ran = 6
+	{
+		bark("hummm... ");
+		realDoAnim(AS_FIDGET, 2);
+		return;
+	}
+	if ran = 7
+	{
+		bark("I must make a note of this. ");
+		realDoAnim(AS_FIDGET, 2);
+		return;
+	}
+	if ran = 8
+	{
+		bark("I wonder if Devon knows this? ");
+		wait(100);
+		return;
+	}
+	else
+	{
+		realDoAnim(AS_FIDGET, 2);
+		bark("I will have to read more on this. ");
+		return;
+	}
+}
+

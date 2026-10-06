@@ -1,0 +1,65 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02F9
+// FLEX slot: 763
+// Original offset: 0x000EA249
+// Naming evidence: E, exact object-1 linker name `SCREAMER`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SCREAMER.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass SCREAMER inherits Item
+{
+	process screamer_look_describe_screamer();
+	process screamer_got_hit_damage_attacker_and_destroy_dead_screamer(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SCREAMER::screamer_look_describe_screamer()
+{
+	bark("screamer");
+}
+
+// Derived: routine 0x00AB, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process SCREAMER::screamer_got_hit_damage_attacker_and_destroy_dead_screamer(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Npc;
+	u8goto label_0169 if not (arg_04);
+	local_m02 = arg_04;
+	if local_m02.isNpc()
+	{
+		local_m04 = arg_04;
+		if local_m04 = 1
+		{
+			playSFX(92, 200);
+			Avatar.receiveHit(0, 0, Avatar.getHp(), 128);
+			Kernel::resetRef(local_m04, PT_ANIM);
+			return;
+		}
+		else
+		{
+			local_m04.teleport(urandom(10000), urandom(10000), 0, 0);
+			local_m04.setDead();
+			killProcess(local_m04, PT_BARK);
+			killProcess(local_m04, PT_ANIM);
+			killProcess(local_m04, PT_ACTIVITY);
+			return;
+		}
+	}
+	else
+	{
+		local_m02.destroy();
+	}
+	u8label label_0169:
+}
+

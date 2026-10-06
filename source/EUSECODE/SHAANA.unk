@@ -1,0 +1,756 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0413
+// FLEX slot: 1045
+// Original offset: 0x000F0916
+// Naming evidence: E, exact object-1 linker name `SHAANA`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SHAANA.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+globalflag shaanaBored;
+
+npcclass SHAANA inherits Npc
+{
+	process shaana_look_bark_living_or_dead_identity();
+	process shaana_schedule_update_period_schedule_and_safe_teleport();
+	process shaana_enter_fast_area_start_pain_or_training_schedule();
+	process shaana_leave_fast_area_stop_active_process();
+	process shaana_run_training_schedule();
+	process shaana_practice_combat();
+	process shaana_use_run_conversation();
+	process shaana_play_pain_bark();
+	process [[PT_DEFAULT, referent]] shaana_talk_first_meeting();
+	process [[PT_DEFAULT, referent]] shaana_talk_followup();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SHAANA::shaana_look_bark_living_or_dead_identity()
+{
+	if isDead()
+	{
+		bark("The late executioner Shaana ");
+	}
+	else if shaanaName
+	{
+		bark("Shaana ");
+	}
+	else if shaanaJob
+	{
+		bark("executioner ");
+	}
+	else
+	{
+		bark("woman ");
+	}
+}
+
+// Derived: routine 0x013D, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SHAANA::shaana_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	local_m09:U8Word;
+	if (not toranDead) or (isDead() = 1) or secondexecution
+	{
+		return;
+	}
+	if class_0581_getPeriod() != 3
+	{
+		local_m05_w02 = 17343;
+		local_m03 = 16895;
+		local_m01 = 48;
+		local_m07 = 39;
+		local_m09 = 1;
+	}
+	else if class_0581_getPeriod() = 3
+	{
+		local_m05_w02 = 1727;
+		local_m03 = 1183;
+		local_m01 = 48;
+		local_m07 = 8;
+		local_m09 = 2;
+	}
+	if class_057C_canSafeTeleport(this, local_m05, local_m07)
+	{
+		shaanaSchedule = local_m09;
+		class_057C_safeTeleport(this, local_m05, local_m07);
+	}
+}
+
+// Derived: routine 0x01EA, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SHAANA::shaana_enter_fast_area_start_pain_or_training_schedule()
+{
+	if (isDead() = 1) or ((getMap() = 3) and (devonInRule = 0))
+	{
+		return;
+	}
+	if (getMap() = 3) and (devonInRule = 1)
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0413_shaana_play_pain_bark(this) -> return;
+	}
+	else if 1
+	{
+		killProcess(referent, PT_ACTIVITY);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0413_shaana_run_training_schedule(this) -> return;
+	}
+	else
+	{
+		killProcess(referent, PT_ACTIVITY);
+		cSetActivity(0);
+	}
+}
+
+// Derived: routine 0x0283, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SHAANA::shaana_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x029E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process SHAANA::shaana_run_training_schedule()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+	}
+	process
+	{
+		for local_m04 = 0 to 7
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = local_m04)) within 30 cells of 19 {
+				if pathfind(local_m02, 20)
+				{
+					if (local_m04 = 1) or (local_m04 = 3)
+					{
+						shaana_practice_combat();
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+					}
+				}
+				else
+				{
+					wait(500);
+					realDoAnim(AS_FIDGET, getDir());
+				}
+			}
+		}
+		wait(200);
+		realDoAnim(AS_FIDGET, getDir());
+	}
+}
+
+// Derived: routine 0x03B0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process SHAANA::shaana_practice_combat()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_ACTIVITY, referent]];
+	foreach local_m02 where (type = TypeDummy) within 6 cells of 19 {
+		turnToFace(getDirToItem(local_m02), 0, 10);
+		realDoAnim(AS_WALK, getDir());
+		realDoAnim(AS_DRAW_WEAPON, getDir());
+		if urandom(100) > 50
+		{
+			bark("En guard! ");
+		}
+		else
+		{
+			bark("Watch this! ");
+		}
+		realDoAnim(AS_SWING_WEAPON, getDir());
+		wait(20);
+		killProcess(referent, PT_BARK);
+		if urandom(10) > 6
+		{
+			realDoAnim(AS_SHEATH_WEAPON, getDir());
+			turnToFace(8 - getDirToItem(local_m02), 0, 15);
+			wait(60);
+			turnToFace(getDirToItem(local_m02), 0, 5);
+			realDoAnim(AS_DRAW_WEAPON, getDir());
+			realDoAnim(AS_SWING_WEAPON, getDir());
+		}
+		realDoAnim(AS_SHEATH_WEAPON, getDir());
+	}
+}
+
+// Derived: routine 0x05AB, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SHAANA::shaana_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:U8Word;
+	local_m07:U8Bytes1; // X: untouched.
+	local_m09:U8Word;
+	if not toranDead
+	{
+		return;
+	}
+	local_m06 = 0;
+	if getMap() = 3
+	{
+		if not devonInRule
+		{
+			enterConvo();
+			realDoAnim(AS_DRAW_WEAPON, getDir());
+			bark("I am much too busy to talk to you now. Out of my way! ");
+			realDoAnim(AS_SHEATH_WEAPON, getDir());
+			exitConvo();
+			cSetActivity(0);
+			return;
+		}
+		if urandom(10) > 5
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Aaagh... ") -> return;
+			return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Ooooo... ") -> return;
+			exitConvo();
+			return;
+		}
+	}
+	local_m09 = 0;
+	if hydrosFree
+	{
+		local_m09++;
+	}
+	if hasHeart
+	{
+		local_m09++;
+	}
+	if pyrosFree
+	{
+		local_m09++;
+	}
+	if local_m09 > 1
+	{
+		bark("You fool! I have no time for conversation. The Titans are angry. You had best find permanent cover! ");
+		return;
+	}
+	else if hasHeart
+	{
+		bark("I speak to no one when the living dead walk the streets. If you are dead, then return to where you once rested. And if you are alive, you had best find shelter from the rampaging ghouls and the quaking ground! ");
+		return;
+	}
+	if shaanaMet
+	{
+		shaana_talk_followup();
+	}
+	else
+	{
+		shaana_talk_first_meeting();
+	}
+}
+
+// Derived: routine 0x08CD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process SHAANA::shaana_play_pain_bark()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		wait(200 + urandom(200));
+	}
+	process
+	{
+		wait(300 + urandom(200));
+		if urandom(10) > 5
+		{
+			bark("ooouuu...");
+		}
+		else
+		{
+			bark("auuggh...");
+		}
+	}
+}
+
+// Derived: routine 0x0973, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] SHAANA::shaana_talk_first_meeting()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:U8Word;
+	local_m07:U8Byte;
+	local_m08:U8Byte;
+	local_m09:U8Byte;
+	local_m0A:U8Byte;
+	local_m0C:String List;
+	local_m06 = 0;
+	Item_bark(u8_string_address("Pardon me... "), u8_stack_ref(1));
+	enterConvo();
+	if getMap() = 8
+	{
+		local_m0C += <<"Why are you here? ">>;
+	}
+	bark("Good day, stranger. ");
+	local_m0C += <<"Who are you? ", "Nice axe. ">>;
+	u8label label_0A38:
+	u8goto label_29FE if not (local_m02 != "Goodbye. ");
+	shaanaMet = 1;
+	if (local_m08 = 0) and (local_m09 = 0)
+	{
+		local_m0C -= <<"Goodbye. ">>;
+		local_m0C += <<"Goodbye. ">>;
+	}
+	local_m02 = ask(local_m0C);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m02
+	{
+		case "Who are you? "
+		{
+			bark("Not that it is any of your concern, stranger, I am called Shaana. ");
+			shaanaName = 1;
+			local_m06++;
+			local_m0C -= <<"Who are you? ">>;
+			if local_m06 = 2
+			{
+				local_m0C = <<"What do you do? ", "Who was the man I saw you kill? ">>;
+			}
+		}
+		case "Nice axe. "
+		{
+			bark("Yes, stranger, it is. ");
+			local_m06++;
+			local_m0C -= <<"Nice axe. ">>;
+			if local_m06 = 2
+			{
+				local_m0C = <<"What do you do? ", "Who was the man I saw you kill? ", "Goodbye. ">>;
+			}
+		}
+		case ""
+		{
+			if local_m0A = 0
+			{
+				bark("I would advise you to listen when I speak, lest I I tire of being ignored. ");
+				local_m0A = 1;
+			}
+			else
+			{
+				bark("I do not waste time with mindless toraxen! ");
+				shaanaBored = 1;
+				exitConvo();
+				return;
+			}
+		}
+		case "Who was the man I saw you kill? "
+		{
+			bark("The man I just killed? You must be an imbecile to think that I have any knowledge -- or desire for the knowledge -- of whom I execute. Even were I interested, there are too many to remember. Why are you so concerned about me and my victims? ");
+			local_m0C -= <<"What do you do? ", "Who was the man I saw you kill? ">>;
+			local_m0C ^= <<"I am not. ", "I am simply curious. ">>;
+		}
+		case "What do you do? "
+		{
+			bark("I assume you are speaking in jest, for it is obvious by my executioner's blade that I... remove heads to earn my keep. Why are you so concerned about my name and occupation? ");
+			local_m0C -= <<"What do you do? ", "Who was the man I saw you kill? ">>;
+			local_m0C ^= <<"I am not. ", "I am simply curious. ">>;
+		}
+		case "I am not. "
+		{
+			bark("Then by all means stop wasting my time. One would think you were employed by the scholar, the way you waste time with useless banter. ");
+			local_m0C -= <<"I am not. ", "I am simply curious. ">>;
+			local_m0C += <<"Who is the scholar? ", "I am not wasting time. ">>;
+		}
+		case "I am simply curious. "
+		{
+			bark("I am not here to satisfy an idle curiosity, stranger. One would think you were employed by the scholar, the way you waste time with useless banter. ");
+			local_m0C -= <<"I am not. ", "I am simply curious. ">>;
+			local_m0C += <<"Who is the scholar? ", "I am not wasting time. ">>;
+		}
+		case "I am not wasting time. "
+		{
+			bark("You are wrong, stranger. You are wasting mine. Farewell. ");
+			exitConvo();
+			return;
+		}
+		case "Who is the scholar? "
+		{
+			bark("If I am to be a source of information, I do not expect this to occupy too much of my time. The scholar, Bentic, is a rather long-winded individual who spends his days and nights buried in the pages of the many books he maintains. In fact, stranger, perhaps you should speak with him. His work -is- knowledge, after all, and I doubt the rest of us have time for this prattle. Then again, you seem the sort to be more interested in hearing rumors in a darkened tavern than the ramblings of a learned man. ");
+			local_m0C -= <<"Who is the scholar? ", "I am not wasting time. ">>;
+			local_m0C += <<"Where is the scholar? ", "Where is the tavern? ">>;
+		}
+		case "Where is the scholar? "
+		{
+			bark("So it -is- the knowledge you seek. Then you may find Bentic in the northeastern part of town. He is wise and knows much, and he will impart that which you wish and more. I will tell you this, stranger: if he cannot answer your query then only one other might. But I am loath to tell you who for fear you would waste his precious time like you have mine. ");
+			local_m0C -= <<"Where is the scholar? ">>;
+			local_m0C ^= <<"Who is this other? ">>;
+		}
+		case "Who is this other? "
+		{
+			bark("Swear to me you will not disturb his study without due cause and I will name him. Agreed? ");
+			local_m08 = 1;
+			local_m0C -= <<"Who is this other? ">>;
+			local_m0C = <<"Aye, I swear. ", "I swear nothing. ">>;
+		}
+		case "I swear nothing. "
+		{
+			bark("Then I tell nothing. ");
+			local_m0C -= <<"Aye, I swear. ", "I swear nothing. ">>;
+			local_m08 = 0;
+			local_m0C = <<"I apologize. I swear. ">>;
+		}
+		case "Aye, I swear. "
+		{
+			bark("Very well. His name is Mythran. You may find him outside the city walls. His wisdom is great, but I warn you not to visit him for idle prattle such as this. I swear myself that you do not wish to see me angered. ");
+			local_m08 = 0;
+			local_m0C ^= <<"Goodbye. ">>;
+			local_m0C -= <<"Aye, I swear. ", "I swear nothing. ">>;
+		}
+		case "I apologize. I swear. "
+		{
+			bark("I hope for your sake you speak the truth. I swear myself that you do not wish to see me angered. Very well. His name is Mythran. You may find him outside the city walls. His wisdom is great, but I warn you not to visit him for idle prattle such as this. ");
+			local_m0C -= <<"I apologize. I swear. ">>;
+		}
+		case "Where is the tavern? "
+		{
+			bark("The Shattered Skull is the large building in the center of town. Orlok is the man you seek. I am certain his tales of seafaring will amuse you to no end. ");
+			local_m0C -= <<"Where is the tavern? ">>;
+		}
+		case "What pact? "
+		{
+			bark("You know very little of our culture, stranger. I suggest that change. The pact is one forged ages ago between Lithos and our people. Our duty from the covenant is to send our dead to Lithos. Yet Lady Mordea elects to give them to her patron, Hydros. 'Tis only a matter of time before the dead rise up and avenge the Mountain King. ");
+			local_m0C -= <<"What pact? ">>;
+			local_m0C += <<"Dead rising up? ", "The Mountain King? ">>;
+		}
+		case "The Mountain King? "
+		{
+			bark("'Tis the earned title for Lithos, He who resides in the great Hall within the mountains. However, few have ever been there. ");
+			local_m0C -= <<"The Mountain King? ", "Dead rising up? ">>;
+			local_m0C += <<"Which few? ">>;
+		}
+		case "Dead rising up? "
+		{
+			bark("Aye, so the story goes. When he is angry, Lithos will set upon us our long lost kindred which he has willed to live again. Well, 'tis hardly living, but legend holds that they walk and fight like men. I have seen such wander about inside the confines of the cemetery, though even -I- have not dared to enter within. ");
+			local_m0C += <<"Why do you avoid the cemetery? ">>;
+			local_m0C -= <<"Dead rising up? ", "The Mountain King? ">>;
+		}
+		case "Which few? "
+		{
+			bark("The Necromancers. ");
+			local_m0C -= <<"Which few? ">>;
+			local_m0C += <<"Who are the Necromancers? ">>;
+		}
+		case "Who are the Necromancers? "
+		{
+			bark("I tire of these questions. They are common to all Tenebraeans, yet to me do you pose them. The Necromancers are the line of mages who carry out our half of the pact with Lithos. Their duties are quite distasteful, but they are necessary. If you are truly interested in them, why not speak to them yourself. ");
+			local_m0C -= <<"Who are the Necromancers? ">>;
+			local_m0C += <<"Are they in the cemetery? ">>;
+		}
+		case "Are they in the cemetery? "
+		{
+			bark("Do not tell me you are so much a fool as to take me seriously! I will grant you this, stranger, you are indeed brave if not equally senseless! Aye, the Necromancers reside in the graveyard. Beware where you tread. ");
+			local_m0C -= <<"Are they in the cemetery? ">>;
+		}
+		case "Why do you avoid the cemetery? "
+		{
+			bark("An odd question, stranger. I do not wish audience with the dead. That is the realm of the Necromancers. ");
+			local_m0C -= <<"Why do you avoid the cemetery? ">>;
+			local_m0C += <<"Who are the Necromancers? ">>;
+		}
+		case "What do you study? "
+		{
+			if local_m07
+			{
+				bark("My dear stranger, if I have not yet made it perfectly clear that my business is none of your concern, let me do so now. My business, -is- none of your concern. ");
+				exitConvo();
+				return;
+			}
+			else
+			{
+				bark("My dear stranger, if I have not yet made it perfectly clear that my business is none of your concern, let me do so now. As far as you need know, I am but an executioner. Nothing more, but nothing less. ");
+				local_m0C = <<"Yet you study other pursuits. ">>;
+			}
+		}
+		case "Why was Bentic killed? "
+		{
+			bark("'Tis not mine to judge the condemned. I simply carry out The Lady's commands. If you have issue with that, I suggest you speak with her. Goodbye. ");
+			exitConvo();
+			return;
+		}
+		case "Why are you here? "
+		{
+			bark("'Twould be best for you, stranger, to ignore such things.\x09Tell no one of seeing me here... or you, yourself, shall feel my axe upon your scrawny neck. ");
+			sawShaana = 1;
+			exitConvo();
+			return;
+		}
+		case "Goodbye. ", "No, sorry. Goodbye. "
+		{
+			local_m0C -= <<"Goodbye. ", "No, sorry. Goodbye. ">>;
+			exitConvo();
+			return;
+		}
+	}
+	u8goto label_0A38;
+	u8label label_29FE:
+	exitConvo();
+}
+
+// Derived: routine 0x2A16, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] SHAANA::shaana_talk_followup()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:U8Word;
+	local_m07:U8Byte;
+	local_m08:U8Byte;
+	local_m09:U8Byte;
+	local_m0A:U8Byte;
+	local_m0C:String List;
+	local_m06 = 0;
+	if shaanaName
+	{
+		Item_bark(u8_string_address("Hello again, Shaana. "), u8_stack_ref(1));
+	}
+	else
+	{
+		Item_bark(u8_string_address("Hello again. "), u8_stack_ref(1));
+	}
+	enterConvo();
+	local_m0C = <<"May we speak? ">>;
+	if not shaanaName
+	{
+		local_m0C += <<"Who are you? ">>;
+	}
+	if getMap() = 8
+	{
+		local_m0C += <<"Why are you here? ">>;
+	}
+	while local_m02 != "Goodbye. "
+	{
+		shaanaMet = 1;
+		if (local_m09 = 0) and (local_m08 = 0)
+		{
+			local_m0C -= <<"Goodbye. ">>;
+			local_m0C += <<"Goodbye. ">>;
+		}
+		local_m02 = ask(local_m0C);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "Who are you? "
+			{
+				bark("Not that it is any of your concern, stranger, I am called Shaana. ");
+				shaanaName = 1;
+				local_m06++;
+				local_m0C -= <<"Who are you? ">>;
+			}
+			case ""
+			{
+				if local_m0A = 0
+				{
+					bark("I would advise you to listen when I speak, lest I I tire of being ignored. ");
+					local_m0A = 1;
+				}
+				else
+				{
+					bark("I do not waste time with mindless toraxen! ");
+					shaanaBored = 1;
+					exitConvo();
+					return;
+				}
+			}
+			case "May we speak? "
+			{
+				if not shaanaBored
+				{
+					bark("Greetings again, stranger. I suppose you wish more of my time? ");
+					local_m08 = 1;
+					local_m0C = <<"No, sorry. Goodbye. ", "Only a moment. ">>;
+				}
+				else
+				{
+					bark("You display considerable courage speaking to me after wasting my time when we last spoke. Too much courage. I am still not impressed. Perhaps another time I will be more inclined to hear your words. ");
+					shaanaBored = 0;
+					exitConvo();
+					return;
+				}
+			}
+			case "Only a moment. "
+			{
+				if shaanaMad = 3
+				{
+					if Bentic.isDead()
+					{
+						bark("Enough of this, fool! I am not here to act as your source for information. If you feel the need for idle gossip, go and listen to Orlok's grand stories. ");
+					}
+					else
+					{
+						bark("Enough of this, fool! I am not here to act as your source for information. If your question needs answering, find the scholar and disturb him! ");
+					}
+					exitConvo();
+					return;
+				}
+				else if shaanaMad = 2
+				{
+					bark("Have you nothing more to do than have me answer your questions?\x09Do you not think I have work elsewhere to do? ");
+				}
+				else
+				{
+					bark("Very well, stranger. You have a moment. What is it that you want? And I assume it is not to beg me away from an appointed task. ");
+				}
+				local_m0C = <<"What is your task? ", "Goodbye. ">>;
+				if metDevonInJail
+				{
+					local_m0C += <<"Why was Bentic killed? ">>;
+				}
+				shaanaMad = 1 + shaanaMad;
+				local_m08 = 0;
+			}
+			case "What is your task? "
+			{
+				bark("I think that you need not know such things. But let me assure you that not all of my life revolves around death. Most times there are far more interesting things to study than a decapitated body. ");
+				local_m0C = <<"Only most of the time? ", "What do you study? ", "Goodbye. ">>;
+			}
+			case "Only most of the time? ", "Yet you study other pursuits. "
+			{
+				local_m07 = 1;
+				bark("I have warned you not to pry into my affairs. Do not fool yourself into thinking that I am incapable of performing the duties of my position -- even when the victims are not bound. I have -no- qualms about slaying someone who deserves to die. ");
+				turnToFace((getDir() + 2) modulo 8, 0, 15);
+				bark("Though I do not necessarily agree with the Lady's methods. ");
+				local_m0C -= <<"Only most of the time? ", "Yet you study other pursuits. ">>;
+				local_m0C += <<"With what do you disagree? ">>;
+			}
+			case "With what do you disagree? "
+			{
+				if devonInRule
+				{
+					bark("'Tis a moot point, considering she is no longer alive, but it was not right to let the body fall to The Lurker. It violated the pact, something which Lithos was not likely to tolerate much longer. ");
+				}
+				else
+				{
+					bark("'Tis not right to let the body fall to The Lurker. It violates the pact, something for which Lithos will not likely stand much longer. ");
+				}
+				local_m0C -= <<"With what do you disagree? ">>;
+				if not lithosHis
+				{
+					local_m0C += <<"Who is Lithos? ", "What pact? ">>;
+				}
+			}
+			case "Who is Lithos? "
+			{
+				bark("I know not from where you hail, stranger, but I wonder about a man who does not know of the Titans. Speak to the scholar.  He will show you the answer to your question. I assume you -do- know how to read. ");
+				lithosHis = 1;
+				local_m0C -= <<"Who is Lithos? ">>;
+			}
+			case "What pact? "
+			{
+				bark("You know very little of our culture, stranger. I suggest that change. The pact is one forged ages ago between Lithos and our people.\x09Our duty from the covenant is to send our dead to Lithos. Yet Lady Mordea elects to give them to her patron, Hydros. 'Tis only a matter of time before the dead rise up and avenge the Mountain King. ");
+				lithosHis = 1;
+				local_m0C -= <<"What pact? ">>;
+				local_m0C += <<"Dead rising up? ", "The Mountain King? ">>;
+			}
+			case "The Mountain King? "
+			{
+				bark("'Tis the earned title for Lithos, He who resides in the great Hall within the mountains. However, few have ever been there. ");
+				local_m0C -= <<"The Mountain King? ", "Dead rising up? ">>;
+				local_m0C += <<"Which few? ">>;
+			}
+			case "Dead rising up? "
+			{
+				bark("Aye, so the story goes. When he is angry, Lithos will set upon us our long lost kindred which he has willed to live again. Well, 'tis hardly living, but legend holds that they walk and fight like men. I have seen such wander about inside the confines of the cemetery, though even -I- have not dared to enter within. ");
+				local_m0C += <<"Why do you avoid the cemetery? ">>;
+				local_m0C -= <<"Dead rising up? ", "The Mountain King? ">>;
+			}
+			case "Which few? "
+			{
+				bark("The Necromancers. ");
+				local_m0C -= <<"Which few? ">>;
+				local_m0C += <<"Who are the Necromancers? ">>;
+			}
+			case "Who are the Necromancers? "
+			{
+				bark("I tire of these questions. They are common to all Tenebraeans, yet to me do you pose them. The Necromancers are the line of mages who carry out our half of the pact with Lithos. Their duties are quite distasteful, but they are necessary. If you are truly interested in them, why not speak to them yourself. ");
+				local_m0C -= <<"Who are the Necromancers? ">>;
+				local_m0C += <<"Are they in the cemetery? ">>;
+			}
+			case "Are they in the cemetery? "
+			{
+				bark("Do not tell me you are so much a fool as to take me seriously! I will grant you this, stranger, you are indeed brave if not equally senseless! Aye, the Necromancers reside in the graveyard. Beware where you tread. ");
+				local_m0C -= <<"Are they in the cemetery? ">>;
+			}
+			case "Why do you avoid the cemetery? "
+			{
+				bark("An odd question, stranger. I do not wish audience with the dead. That is the realm of the Necromancers. ");
+				local_m0C -= <<"Why do you avoid the cemetery? ">>;
+				local_m0C += <<"Who are the Necromancers? ">>;
+			}
+			case "What do you study? "
+			{
+				if local_m07
+				{
+					bark("My dear stranger, if I have not yet made it perfectly clear that my business is none of your concern, let me do so now. My business, -is- none of your concern. ");
+					exitConvo();
+					return;
+				}
+				else
+				{
+					bark("My dear stranger, if I have not yet made it perfectly clear that my business is none of your concern, let me do so now. As far as you need know, I am but an executioner. Nothing more, but nothing less. ");
+					local_m0C = <<"Yet you study other pursuits. ", "Goodbye. ">>;
+				}
+			}
+			case "Why was Bentic killed? "
+			{
+				bark("'Tis not mine to judge the condemned. I simply carry out The Lady's commands. If you have issue with that, I suggest you speak with her. Goodbye. ");
+				exitConvo();
+				return;
+			}
+			case "Why are you here? "
+			{
+				bark("'Twould be best for you, stranger, to ignore such things.\x09Tell no one of seeing me here... or you, yourself, shall feel my axe upon your scrawny neck. ");
+				sawShaana = 1;
+				exitConvo();
+				return;
+			}
+			case "Goodbye. ", "No, sorry. Goodbye. "
+			{
+				local_m0C -= <<"Goodbye. ", "No, sorry. Goodbye. ">>;
+				exitConvo();
+				return;
+			}
+		}
+	}
+}
+

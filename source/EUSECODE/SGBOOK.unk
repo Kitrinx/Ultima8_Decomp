@@ -1,0 +1,160 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0577
+// FLEX slot: 1401
+// Original offset: 0x000ED716
+// Naming evidence: E, exact object-1 linker name `SGBOOK`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SGBOOK.unk`.
+// u8label/u8goto remain invented where emitted.
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_saga_of_bone_crusher()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("THE SAGA OF BONE CRUSHER~~%And so it was in the early days of Pagan that the Titan of Earth, Lithos, declared that all who lived upon his lands should pay homage to him. With his mighty earthquakes, he demanded that the people of Tenebrae bow to him, lest he shake their houses down around them.~~%'But mighty Lithos,'said the Lord Elsmil, the Tempest, 'we are under the guidance of Hydros. From her we receive the rain for the crops and the fish for our table. We can not bow to you.' This greatly angered Lithos and to punish the people of Tenebrae, he sent a great army of undead skeletons to slaughter them. Lord Elsmil, went to Hydros. ~~%'Please,' he begged her. 'The people of your city are being slain by the minions of your brother, Lithos. We must have your help.' ~~Hydros heard the plea of her Tempest and gave to him a mighty hammer. 'You shall have this weapon called Bone Crusher and with it defeat the minions of Lithos.' she said. When Lord Elsmil arrived back at the battle, it was going poorly for the Tenebraens. They were fighting bravely, but were outnumbered two to one by the undead. Lord Elsmil let out a mighty roar and waded into the carnage wielding the mighty Bone Crusher. The skeletons fell before him like trees and the tide of the battle was turned. By evening the last of the skeletons were being hunted down in the woods and the town of Tenebrae was saved. ~~%However, Lord Elsmil was missing. The Tenebraens began to look for him. They finally found his crushed body on the battle field, but the wonderous Bone Crusher was nowhere to bee seen.They looked for it for many days and nights, but did not find it. Though several of the searchers found the prints of bony feet in the soft dirt of the western forest. By the looks of the prints, they said, the skeletons were dragging something heavy behind them.  A few of the searchers even say they caught a glimpse of bony white and the glint of light off something gold. ~~%To this day, intrepid treasure hunters continue to look for the hammer called Bone Crusher."), this);
+}
+
+// Derived: routine 0x08A3, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_enemies_of_tenebrae()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("Enemies of Tenebrae~ compiled by The Royal Seneschal,~ His Eminence, Salkind The following is a list of those citizens and former citizens of Tenebrae who are suspected to be involved in dealings or activities that may be construed to be dangerous or otherwise damaging to the City/State of Tenebrae. ~~% Aramina ~% Darion ~% Devon ~% Kilandra ~% Korick ~% Orlok ~% Rhian ~% Gwilliam ~% Corinth ~% Torwin ~% Cyrrus ~~These people are to be considered dangerous and will be constantly watched for suspicious activity."), this);
+}
+
+// Derived: routine 0x0AC9, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_what_the_fish_tell_me()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("WHAT THE FISH TELL ME ~by Kilandra ~Oh the fish tell me all sorts of things, ~like when there's sun and when there's rain, ~They are so nice and very smart, ~and bubbles come up when they fart. ~Oh the fish tell me all sorts of things, ~I like to listen to them sing. ~They sing of life beneath the sea ~But never mention if they pee. ~Oh the fish tell me all sorts of things, ~Like where they are and where they've been. ~I guess it all just goes to prove ~You can have your friends and eat them too!"), this);
+}
+
+// Derived: routine 0x0CE0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_divination_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The Spell of Divination ~~The divination spell is a most practical spell. It allows the caster to know his exact location, the time of day, the day of the week, and the current month. The Focus necessary for casting this spell resembles a sextant. The spell also has a vocal aspect. The words that must be uttered at the moment of casting are 'In Wis.'"), this);
+}
+
+// Derived: routine 0x0E62, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_healing_touch_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The Spell of Healing Touch~~This is the least powerful of the healing spells of Stratos and one of the first usually learned by Adepts. The Focus necessary to cast this spell represents a pointing hand. The words that must be uttered at the moment of casting are 'In Mani.'"), this);
+}
+
+// Derived: routine 0x0F95, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_aerial_servant_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The spell of Aerial Servant~~One of the more impressive of the Theurgic spells, Aerial Servant is also one of the most versatile. Upon casting of the Aerial Servant spell, a whirling being of Air is called into existance. This being will accept the Theurgist's directives to manipulate or move any object. One of the more interesting aspects of this spell is that the Aerial Servant is able to move objects through another solid object, such as a door or wall. The Focus used to represent this spell represents an Arm Band and the casting words are 'Kal Ort Xen.'"), this);
+}
+
+// Derived: routine 0x11EA, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_reveal_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The Spell of Reveal~~This spell is a dissipation spell, meaning that it will actually dispell another type of magic, specifically the spell of invisibility. When the Theurgist casts this spell, a wave of energy moves away from the caster in ever increasing concentric circles. These energy waves will dispell all forms of invisibility. The Focus used for this spell is an open eye and the casting words are 'Ort Lor.'"), this);
+}
+
+// Derived: routine 0x13AD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_restoration_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The Spell of Restoration~~One of the most powerful spells available to the Theurgist, this spell restores the recipient to full health, providing the recipient is still alive upon the beginning of the casting. It will eliminate wounds and maimings and will cure disease. This spell is one that the Theurgist will find in great demand. The Focus for this spell resembles an open hand. The words which must be uttered upon casting the spell are 'Vas In Mani.'"), this);
+}
+
+// Derived: routine 0x1598, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_the_spell_of_fade_from_sight()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The Spell of Fade From Sight~~This spell is another very versatile spell as it allows the caster to become invisible to the sight of nearly all mortal beings. The Focus representing this spell is a closed eye. The words to be spoken during the casting are 'Quas An Lor.'"), this);
+}
+
+// Derived: routine 0x16C8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_air_walk_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The spell of Air Walk~~The Air Walk spell is the most highly valued spell a Theurgist can learn, for it is only through the use of this spell that a Theurgist can reach Stratos and hear the Mystic Voice. When this spell is cast, the Theurgist is capable of jumping quite a great distance with the aid of the surrounding air. It is interesting to note, that the first time a Theurgist experiences this spell is when he has completed the Tests and seeks Stratos for the first time. If Stratos is pleased with the Theurgist, then she will grant the spell without the use of a Focus. From that point on, however, the Theurgist must have the Focus representing wings to cast this spell. Words of power must also be spoken. For this spell those words are 'Vas Hur Por.'"), this);
+}
+
+// Derived: routine 0x19E5, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_hear_truth_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The Spell of Hear Truth~~A useful spell for any number of reasons. This spell allows the Theurgist to hear both what the speaker is saying and what the truth is. If the speaker is, indeed, speaking untruthfully, the truth will come to the caster as if carried on a breeze. The Focus for this spell resembles a chain. The words spoken upon casting are 'An Quas Lor.'"), this);
+}
+
+// Derived: routine 0x1B74, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_intervention_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The spell of Intervention~~A powerful spell, upon casting the spell of Intervention, the Theurgist calls into being a wall of Air that blocks all damaging forces. While this spell will protect the caster from all blows and striking attacks, it will not protect the caster from immersion in lava or drowning in Water. The Focus for this spell resembles a fist and the words used are 'In Sanct An Jux.'"), this);
+}
+
+// Derived: routine 0x1D26, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_resurrection_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The Spell of Resurrection~~As told to Cyrrus by Stellos~~ In all my time as the leader of the Theurgists on Argentrock Isle, I hold dearest to my heart the time I received the Spell of Resurrection from the Mystic Voice that is our dear Stratos.%I was no more than 60 when Kalen brought the body of his beloved to me. She had been dead for a number of days, and I knew there was not much I could do. However, I saw the love that burned in Kalen's eyes and knew I had to try. I took the body of the woman to Windy Point and begged Stratos to return the spirit to the body. Stratos told me that the price would be high. I agreed to it, without hesitation. At that point began the journey I will never forget.~% My spirit left my body and I began to fly. Oh, the glorious freedom, to fly above the clouds and soar the open skies. As I flew higher, the winds became stronger, soon it was a battle just to continue, but I struggled onward.~% Suddenly, before my eyes there was a shimmering cloud. It was on the edge of the sky and the Ethereal Void. Undaunted, I flew into the cloud, and what did I behold but a brilliant ball of fire and light. Stratos whispered to me that I beheld what hadn't been seen by a Pagan in years...something called the sun.~% At that moment, my body back on the ground opened its mouth and breathed the Breath of Life into the body of Keldan's betrothed.~% The next thing I new, I was surrounded by darkness and back in my body. I asked what had happened and why it was so dark. At that, Keldan began to weep. It was then I knew that in viewing this wonderful sun, I had lost my sight. But I know it was a small price to pay, for Keldan's betrothed put her soft hand in mine and thanked me for returning her to Keldan. This is a price I would ask no other to pay and therefore, there is no focus or words of power for it."), this);
+}
+
+// Derived: routine 0x247E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_letter_to_prevan()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("My dearest Prevan,~~%I regret to tell you that I will not be home from this visit as soon as I had thought. My healing services will be needed here for some time as a terrible thing has happened to this small village. Two nights ago, as I had just finished my evening rituals, I heard a horrible commotion from the town square. I ran out to see what the trouble was, only to find the town overrun by trolls. ~~%The trolls had come in search of their favorite meal, human children. From house to house they went, ripping doors off and brushing aside the men as if they were no more than flies. Mothers wailed as babes were torn from their breasts and fathers cried in anguish as one by one their children were eaten alive. The bloody procession went on and on, and I fear the screams and sobs will ring in my darkest dreams forever.~~%And then, a miracle occured. From the final house, came not a cry of torment, but one of victory. We raced down the street to the house. We found the inside strewn with the bodies of the trolls and there in the middle stood Nehdra, a young woman who had just given birth a few days before. She had her newborn clutched in one arm, in the other was a magnificent silver sword. She told us thatas the trolls burst in, she had grabbed the only weapon she had, a knitting needle, and had cried out to Stratos to protect her child. Instantly, in answer to her plea, the great Stratos turned the needle into a magnificent sword. She said the sword fairly danced in her hand, slaying the trolls left and right until none were left alive.~~%While I can find some solace in the miracle Stratos performed, I am afraid the task ahead of me is almost overwhelming. I do what I can to ease the hurts, but wounds of the mind Stratos gives no power to heal. I will stay until I have done all I can, then I will carry the sword, now called 'Protector' to Argentrock Isle. There I will prepare a small shrine for it in the catacombs beneath the monastery.~~%I do miss you, my love, and ask that you watch over our dear little Stellos until I can return. It is sad his mother must be away from him so soon after his birth, but I must serve where I am needed. I am sure you understand.~~ All my love,~ Veras"), this);
+}
+
+// Derived: routine 0x2D4E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process [[PT_DEFAULT, referent]] sgbook_read_chronicle_of_pagan()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("THE CHRONICLE OF PAGAN~~A treatise on the Glorious History of this Foremost Society~~There is little in the world more refreshing to me than knowledge. I remember in my youth hearing tales of legendary times, unexplored places and fantastic beasts. I constantly pestered my parents and instructors with an endless number of questions. How does this work? Why did they act in such a manner? Where can I find these plants? My thirst for information was -- nay, still is -- insatiable. I spent hours at a time investigating all I could about my surroundings. ~~Unfortunately, as I realized early in life, I lacked much in the way of physical prowess, making exploration difficult. Imagine my pleasure when I discovered that not only did life itself teach me things great and wonderous, but the myriad ancient tomes could offer nearly as much. It was then that I elected to dedicate this humble life to filling my mind and library with all the knowledge I could. Thus, I humbly add these words to the collection of wisdom that already fills the multitude of bookshelves throughout the land. I hope my work may someday imbue curiosity into the hearts of others."), this);
+}
+

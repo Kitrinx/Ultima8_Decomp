@@ -1,0 +1,35 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0266
+// FLEX slot: 616
+// Original offset: 0x000D9A11
+// Naming evidence: E, exact object-1 linker name `PLAQUEEW`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/PLAQUEEW.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass PLAQUEEW inherits Item
+{
+	process plaqueew_look_describe_plaque();
+	process plaqueew_use_forward_to_read_plaque();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PLAQUEEW::plaqueew_look_describe_plaque()
+{
+	bark("plaque ");
+}
+
+// Derived: routine 0x00AA, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PLAQUEEW::plaqueew_use_forward_to_read_plaque()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0257_readPlaque(this) -> return;
+}
+

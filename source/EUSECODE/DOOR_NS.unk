@@ -1,0 +1,606 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0044
+// FLEX slot: 70
+// Original offset: 0x00067992
+// Naming evidence: E, exact object-1 linker name `DOOR_NS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/DOOR_NS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass DOOR_NS inherits Item
+{
+	process door_ns_look_forward_to_door_ns_describe_door();
+	process door_ns_use_forward_to_door_ns_toggle_open_closed();
+	process door_ns_got_hit_forward_to_door_ns_open_on_avatar_collision(arg_04:U8Word);
+	process door_ns_describe_door();
+	routine door_ns_test_swing_clearance(arg_00:U8DWord);
+	process door_ns_animate_open_close();
+	routine door_ns_find_connected_panel(arg_00:U8DWord);
+	routine door_ns_is_locked(arg_00:U8DWord);
+	process door_ns_toggle_open_closed(arg_04:U8Word);
+	process door_ns_open_on_avatar_collision(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DOOR_NS::door_ns_look_forward_to_door_ns_describe_door()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0044_door_ns_describe_door(this) -> return;
+}
+
+// Derived: routine 0x0098, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DOOR_NS::door_ns_use_forward_to_door_ns_toggle_open_closed()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0044_door_ns_toggle_open_closed(this, 1) -> return;
+}
+
+// Derived: routine 0x00B4, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process DOOR_NS::door_ns_got_hit_forward_to_door_ns_open_on_avatar_collision(arg_04:U8Word)
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0044_door_ns_open_on_avatar_collision(this, arg_04) -> return;
+}
+
+// Derived: routine 0x00D0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process DOOR_NS::door_ns_describe_door()
+{
+	[[PT_LOOK, referent]];
+	if getQuality() & 1024
+	{
+		bark("Locked Door ");
+	}
+	else if (getType() = 68) or (getType() = 69)
+	{
+		bark("door ");
+	}
+	else
+	{
+		bark("tower door ");
+	}
+}
+
+// Derived: routine 0x016C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine DOOR_NS::door_ns_test_swing_clearance(arg_00:U8DWord)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0E:U8Word;
+	local_m10:U8Word;
+	local_m12:U8Word;
+	local_m14:U8Word;
+	local_m15:U8Byte;
+	local_m16:U8Byte;
+	local_m02 = 114;
+	local_m04 = Item_getFrame(arg_00);
+	local_m08 = Item_getFrame(arg_00);
+	local_m0C = Item_getType(arg_00);
+	local_m10 = Item_getX(arg_00);
+	local_m14 = Item_getY(arg_00);
+	local_m16 = Item_getZ(arg_00);
+	local_m0E = Item_getX(arg_00);
+	local_m12 = Item_getY(arg_00);
+	local_m15 = Item_getZ(arg_00);
+	if (Item_getType(arg_00) = 68) or (Item_getType(arg_00) = 340)
+	{
+		if (Item_getQuality(arg_00) & 512) and (Item_getQuality(arg_00) & 256)
+		{
+			local_m0A = 1;
+			local_m06 = 0;
+			local_m10 += 96;
+		}
+		else
+		{
+			local_m0A = -1;
+			if (not (Item_getQuality(arg_00) & 512)) and (not (Item_getQuality(arg_00) & 256))
+			{
+				local_m06 = 1;
+			}
+			else
+			{
+				local_m06 = 2;
+			}
+		}
+	}
+	else if (Item_getQuality(arg_00) & 512) and (not (Item_getQuality(arg_00) & 256))
+	{
+		local_m0A = -1;
+		local_m06 = 0;
+	}
+	else
+	{
+		local_m0A = 1;
+		if (not (Item_getQuality(arg_00) & 512)) and (Item_getQuality(arg_00) & 256)
+		{
+			local_m06 = 1;
+			local_m14 += 96;
+		}
+		else
+		{
+			local_m06 = 2;
+		}
+	}
+	local_m08 = u8_shift_right_word(local_m08, 1);
+	local_m08 = local_m08 * 9;
+	local_m06 = local_m06 * 3;
+	local_m06 += local_m08;
+	if local_m0A < 0
+	{
+		local_m06 += 2;
+	}
+	if (Item_getType(arg_00) = 340) or (Item_getType(arg_00) = 342)
+	{
+		local_m02 = 341;
+	}
+	if class_0581_legal_setType(u8_load(arg_00, 2), local_m02, local_m06, local_m10, local_m14, local_m16)
+	{
+		class_0581_legal_setType(u8_load(arg_00, 2), local_m0C, local_m04, local_m0E, local_m12, local_m15);
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+// Derived: routine 0x0340, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process DOOR_NS::door_ns_animate_open_close()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m0A:U8Bytes5;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	local_m0A_w02:U8Word;
+	local_m0F:U8Bytes5;
+	local_m0B:U8Byte;
+	local_m0D:U8Word;
+	local_m0F_w02:U8Word;
+	local_m11:U8Word;
+	local_m13:U8Word;
+	local_m15:U8Word;
+	local_m17:U8Word;
+	local_m19:U8Word;
+	local_m1B:U8Word;
+	local_m1D:U8Word;
+	local_m1F:U8Word;
+	local_m21:U8Word;
+	local_m23:U8Word;
+	local_m25:U8Word;
+	[[PT_ANIM_UNK, referent]];
+	local_m05_w02 = getX();
+	local_m03 = getY();
+	local_m01 = getZ();
+	local_m0A = local_m05;
+	local_m0F = local_m05;
+	local_m11 = getType();
+	local_m15 = 114;
+	local_m17 = getFrame();
+	local_m1D = local_m17;
+	local_m19 = local_m17;
+	local_m1F = getQuality();
+	local_m23 = 10;
+	local_m25 = 2;
+	if (local_m11 = 68) or (local_m11 = 340)
+	{
+		if local_m11 = 68
+		{
+			local_m13 = 69;
+		}
+		else
+		{
+			local_m13 = 342;
+		}
+		if ((getQuality() & 512) and (not (local_m1F & 256))) or ((not (getQuality() & 512)) and (getQuality() & 256))
+		{
+			local_m19 = local_m19 + 1;
+		}
+		if (local_m1F & 512) and (local_m1F & 256)
+		{
+			local_m21 = 1;
+			local_m1B = 0;
+			local_m0F_w02 += 96;
+			local_m0A_w02 += 96;
+		}
+		else
+		{
+			local_m21 = -1;
+			if (not (local_m1F & 512)) and (not (local_m1F & 256))
+			{
+				local_m1B = 1;
+				local_m08 -= 96;
+			}
+			else
+			{
+				local_m1B = 2;
+			}
+		}
+	}
+	else
+	{
+		if local_m11 = 69
+		{
+			local_m13 = 68;
+		}
+		else
+		{
+			local_m13 = 340;
+		}
+		if ((local_m1F & 512) and (local_m1F & 256)) or ((not (local_m1F & 512)) and (not (local_m1F & 256)))
+		{
+			local_m19 += -1;
+		}
+		if (local_m1F & 512) and (not (local_m1F & 256))
+		{
+			local_m21 = -1;
+			local_m1B = 0;
+			local_m0A_w02 -= 96;
+		}
+		else
+		{
+			local_m21 = 1;
+			if (not (local_m1F & 512)) and (local_m1F & 256)
+			{
+				local_m1B = 1;
+				local_m0D += 96;
+				local_m08 += 96;
+			}
+			else
+			{
+				local_m1B = 2;
+			}
+		}
+	}
+	local_m1D = u8_shift_right_word(local_m1D, 1);
+	local_m1D = local_m1D * 9;
+	local_m1B = local_m1B * 3;
+	local_m1B += local_m1D;
+	if local_m21 < 0
+	{
+		local_m1B += 2;
+	}
+	if (getType() = 340) or (getType() = 342)
+	{
+		local_m15 = 341;
+	}
+	class_0581_legal_setType(referent, local_m15, local_m1B, local_m0F_w02, local_m0D, local_m0B);
+	wait(local_m23);
+	u8label label_0565:
+	suspend;
+	u8goto label_05A0 if not (local_m25);
+	local_m25--;
+	local_m1B += local_m21;
+	setFrame(local_m1B);
+	wait(local_m23);
+	u8goto label_0565;
+	u8goto label_05DF;
+	u8label label_05A0:
+	class_0581_legal_setType(referent, local_m13, local_m19, local_m0A_w02, local_m08, local_m06);
+	if local_m1F & 256
+	{
+		local_m1F = (~256) & local_m1F;
+	}
+	else
+	{
+		local_m1F = 256 | local_m1F;
+	}
+	setQuality(local_m1F);
+	return;
+	u8label label_05DF:
+	u8goto label_0565;
+}
+
+// Derived: routine 0x05E4, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine DOOR_NS::door_ns_find_connected_panel(arg_00:U8DWord)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m04 = 0;
+	foreach local_m02 where (type = Item_getType(arg_00)) within 9 cells of u8_load(arg_00, 2) {
+		local_m04++;
+		u8goto label_0878 if not (local_m02 != u8_load(arg_00, 2));
+		u8goto label_0749 if not ((Item_getQuality(arg_00) & 256) and (local_m02.getQuality() & 256));
+		u8goto label_06C0 if not ((Item_getType(arg_00) = 68) or (Item_getType(arg_00) = 340));
+		if Item_getY(arg_00) = local_m02.getY()
+		{
+			if (not (Item_getQuality(arg_00) & 512)) and (local_m02.getQuality() & 512)
+			{
+				return local_m02;
+			}
+			else if (Item_getQuality(arg_00) & 512) and (not (local_m02.getQuality() & 512))
+			{
+				return local_m02;
+			}
+		}
+		u8goto label_0746;
+		u8label label_06C0:
+		u8goto label_0746 if not ((Item_getType(arg_00) = 69) or (Item_getType(arg_00) = 342));
+		if Item_getX(arg_00) = local_m02.getX()
+		{
+			if (not (Item_getQuality(arg_00) & 512)) and (local_m02.getQuality() & 512)
+			{
+				return local_m02;
+			}
+			else if (Item_getQuality(arg_00) & 512) and (not (local_m02.getQuality() & 512))
+			{
+				return local_m02;
+			}
+		}
+		u8goto label_0746;
+		u8label label_0746:
+		u8goto label_0878;
+		u8label label_0749:
+		u8goto label_0878 if not ((not (Item_getQuality(arg_00) & 256)) and (not (local_m02.getQuality() & 256)));
+		u8goto label_07EF if not ((Item_getType(arg_00) = 68) or (Item_getType(arg_00) = 340));
+		if Item_getX(arg_00) = local_m02.getX()
+		{
+			if (not (Item_getQuality(arg_00) & 512)) and (local_m02.getQuality() & 512)
+			{
+				return local_m02;
+			}
+			else if (Item_getQuality(arg_00) & 512) and (not (local_m02.getQuality() & 512))
+			{
+				return local_m02;
+			}
+		}
+		u8goto label_0875;
+		u8label label_07EF:
+		u8goto label_0875 if not ((Item_getType(arg_00) = 69) or (Item_getType(arg_00) = 342));
+		if Item_getY(arg_00) = local_m02.getY()
+		{
+			if (not (Item_getQuality(arg_00) & 512)) and (local_m02.getQuality() & 512)
+			{
+				return local_m02;
+			}
+			else if (Item_getQuality(arg_00) & 512) and (not (local_m02.getQuality() & 512))
+			{
+				return local_m02;
+			}
+		}
+		u8goto label_0875;
+		u8label label_0875:
+		u8goto label_0878;
+		u8label label_0878:
+	}
+	return 0;
+}
+
+// Derived: routine 0x0886, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine DOOR_NS::door_ns_is_locked(arg_00:U8DWord)
+{
+	if not u8_load(arg_00, 2)
+	{
+		return 0;
+	}
+	if Item_getQuality(arg_00) & 1024
+	{
+		return 1;
+	}
+	return 0;
+}
+
+// Derived: routine 0x08B4, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process DOOR_NS::door_ns_toggle_open_closed(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m01:U8Byte;
+	local_m02:U8Byte;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0B:U8Byte;
+	local_m0D:Item;
+	local_m0D_w01:U8Bytes1;
+	[[519, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m01 = 0;
+	local_m02 = 0;
+	local_m04 = 0;
+	local_m08 = Avatar.getX();
+	local_m0A = Avatar.getY();
+	local_m0B = Avatar.getZ();
+	local_m0D = class_0044_door_ns_find_connected_panel(this);
+	if class_0044_door_ns_is_locked(this)
+	{
+		if arg_04 = 1
+		{
+			bark("Locked Door ");
+		}
+		return;
+	}
+	if local_m0D
+	{
+		if class_0044_door_ns_is_locked(u8_local_address(local_m0D_w01))
+		{
+			if arg_04 = 1
+			{
+				local_m0D.bark("Locked Door ");
+			}
+			return;
+		}
+	}
+	u8goto label_0BE1 if not (not (getQuality() & 256));
+	Avatar.push();
+	if not class_0044_door_ns_test_swing_clearance(this)
+	{
+		Avatar.pop();
+		if arg_04 = 1
+		{
+			bark("blocked ");
+		}
+		return;
+	}
+	else
+	{
+		Avatar.pop();
+		if not class_0044_door_ns_test_swing_clearance(this)
+		{
+			local_m01 = 1;
+		}
+	}
+	if local_m0D
+	{
+		Avatar.push();
+		if not class_0044_door_ns_test_swing_clearance(u8_local_address(local_m0D_w01))
+		{
+			Avatar.pop();
+			if arg_04 = 1
+			{
+				local_m0D.bark("blocked ");
+			}
+			return;
+		}
+		else
+		{
+			Avatar.pop();
+			if not class_0044_door_ns_test_swing_clearance(u8_local_address(local_m0D_w01))
+			{
+				local_m01 = 1;
+			}
+		}
+	}
+	if local_m01
+	{
+		if Npc_getLastAnimSet(u8_stack_ref(1)) = 58
+		{
+			return;
+		}
+		if not getAvatarInStasis()
+		{
+			setAvatarInStasis(1);
+		}
+		if (getType() = 68) or (getType() = 340)
+		{
+			local_m06 = 6;
+			local_m08 -= 64;
+			while (canExistAt(1, local_m08, local_m0A, local_m0B, 1, 0, 0) = 1) and (local_m08 >= (getX() - 192))
+			{
+				local_m08 -= 64;
+				local_m04++;
+			}
+		}
+		else if (getType() = 69) or (getType() = 342)
+		{
+			local_m06 = 0;
+			local_m0A -= 64;
+			while (canExistAt(1, local_m08, local_m0A, local_m0B, 1, 0, 0) = 1) and (local_m0A >= (getY() - 192))
+			{
+				local_m0A -= 64;
+				local_m04++;
+			}
+		}
+		if local_m04
+		{
+			local_m04--;
+			if not local_m04
+			{
+				local_m04 = 1;
+			}
+			Avatar.turnToFace(local_m06, 0, 0);
+			while local_m04
+			{
+				Avatar.realDoAnim(AS_WALK, local_m06);
+				local_m04--;
+			}
+			Avatar.turnToFace((local_m06 + 4) modulo 8, 0, 0);
+		}
+		if getAvatarInStasis()
+		{
+			setAvatarInStasis(0);
+		}
+	}
+	u8label label_0BE1:
+	if not class_0044_door_ns_test_swing_clearance(this)
+	{
+		if arg_04 = 1
+		{
+			bark("blocked ");
+		}
+	}
+	else
+	{
+		if local_m0D
+		{
+			if not class_0044_door_ns_test_swing_clearance(u8_local_address(local_m0D_w01))
+			{
+				if arg_04 = 1
+				{
+					bark("blocked ");
+				}
+				return;
+			}
+		}
+		playSFX(79, 50, referent);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0044_door_ns_animate_open_close(this) -> return;
+		if local_m0D
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0044_door_ns_animate_open_close(u8_local_address(local_m0D_w01)) -> return;
+		}
+		return;
+	}
+}
+
+// Derived: routine 0x0C82, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process DOOR_NS::door_ns_open_on_avatar_collision(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Npc;
+	[[524, arg_04]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m02 = arg_04;
+	if arg_04 = 1
+	{
+		if class_0044_door_ns_is_locked(this) = 0
+		{
+			if Npc_getLastAnimSet(u8_local_address(local_m02_w01)) = 58
+			{
+				if not (getQuality() & 256)
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0044_door_ns_toggle_open_closed(this, 0) -> return;
+				}
+			}
+		}
+	}
+}
+

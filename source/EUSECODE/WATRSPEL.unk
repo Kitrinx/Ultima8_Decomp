@@ -1,0 +1,77 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x056D
+// FLEX slot: 1391
+// Original offset: 0x00124307
+// Naming evidence: E, exact object-1 linker name `WATRSPEL`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/WATRSPEL.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process watrspel_hurl_target_away_from_avatar(arg_00:U8DWord)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m02:Item;
+	local_m02_w01:U8Bytes1;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	[[544, u8_load(arg_00, 2)]]; // R/X: process type name unproved; numeric VM expression retained.
+	[[544, 1]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m04 = 0;
+	local_m06 = 0;
+	local_m02 = target();
+	if local_m02 = 0
+	{
+		safePlaySFX(124, 100);
+	}
+	else
+	{
+		local_m08 = Avatar.getDirToItem(local_m02);
+		if local_m08 = 0
+		{
+			local_m06 = 10;
+		}
+		else if local_m08 = 1
+		{
+			local_m04 = -7;
+			local_m06 = 7;
+		}
+		else if local_m08 = 2
+		{
+			local_m04 = -10;
+		}
+		else if local_m08 = 3
+		{
+			local_m04 = -7;
+			local_m06 = -7;
+		}
+		else if local_m08 = 4
+		{
+			local_m06 = -10;
+		}
+		else if local_m08 = 5
+		{
+			local_m04 = 7;
+			local_m06 = -7;
+		}
+		else if local_m08 = 6
+		{
+			local_m04 = 10;
+		}
+		else if local_m08 = 7
+		{
+			local_m04 = 7;
+			local_m06 = 7;
+		}
+		local_m02.hurl(local_m04, local_m06, 12, 2);
+		class_057C_receiveHit(1, local_m08, 1, u8_local_address(local_m02_w01));
+	}
+}
+

@@ -1,0 +1,137 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x031B
+// FLEX slot: 797
+// Original offset: 0x000FA07E
+// Naming evidence: E, exact object-1 linker name `SPITTER`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SPITTER.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass SPITTER inherits Item
+{
+	process spitter_look_describe_spitter();
+	process spitter_enter_fast_area_start_repeating_firebomb_attack();
+	process spitter_leave_fast_area_stop_repeating_firebomb_attack();
+	process spitter_repeat_firebomb_attack();
+	process spitter_shoot_firebomb_at_avatar();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SPITTER::spitter_look_describe_spitter()
+{
+	bark("spitter ");
+}
+
+// Derived: routine 0x00AB, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SPITTER::spitter_enter_fast_area_start_repeating_firebomb_attack()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_031B_spitter_repeat_firebomb_attack(this) -> return;
+}
+
+// Derived: routine 0x00C3, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SPITTER::spitter_leave_fast_area_stop_repeating_firebomb_attack()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x00DE, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process SPITTER::spitter_repeat_firebomb_attack()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+	}
+	process
+	{
+		wait(200 + urandom(200));
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_031B_spitter_shoot_firebomb_at_avatar(this) -> return;
+	}
+}
+
+// Derived: routine 0x011C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process SPITTER::spitter_shoot_firebomb_at_avatar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m09:U8Byte;
+	local_m0B:U8Word;
+	local_m02 = referent;
+	[[PT_ACTIVITY, referent]];
+	local_m04 = 1;
+	local_m09 = getDirToItem(Avatar:Referent);
+	if local_m09 = 0
+	{
+		local_m06 = 0;
+		local_m08 = -1;
+	}
+	else if local_m09 = 1
+	{
+		local_m06 = 1;
+		local_m08 = -1;
+	}
+	else if local_m09 = 2
+	{
+		local_m06 = 1;
+		local_m08 = 0;
+	}
+	else if local_m09 = 3
+	{
+		local_m06 = 1;
+		local_m08 = 1;
+	}
+	else if local_m09 = 4
+	{
+		local_m06 = 0;
+		local_m08 = 1;
+	}
+	else if local_m09 = 5
+	{
+		local_m06 = -1;
+		local_m08 = 1;
+	}
+	else if local_m09 = 6
+	{
+		local_m06 = -1;
+		local_m08 = 0;
+	}
+	else if local_m09 = 7
+	{
+		local_m06 = -1;
+		local_m08 = -1;
+	}
+	if local_m06 != 0
+	{
+		local_m06 = (20 + urandom(20)) * local_m06;
+	}
+	if local_m08 != 0
+	{
+		local_m08 = (20 + urandom(20)) * local_m08;
+	}
+	Item_create(0, 804, u8_local_address(local_m0B_w01));
+	local_m0B.orStatus(2);
+	playSFX(11, 100, local_m02);
+	pop(getX() - 11, getY() - 11, getZ() + 24);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn local_m0B.hurl(local_m06, local_m08, 30 + urandom(15), 1) -> return;
+}
+

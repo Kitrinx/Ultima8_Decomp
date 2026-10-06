@@ -1,0 +1,144 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0341
+// FLEX slot: 835
+// Original offset: 0x000E0C4C
+// Naming evidence: E, exact object-1 linker name `RECALL`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/RECALL.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass RECALL inherits Item
+{
+	process recall_look_describe_recall_item();
+	process recall_use_prompt_destination_and_teleport_avatar();
+	process recall_teleport_avatar_to_destination(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process RECALL::recall_look_describe_recall_item()
+{
+	bark("recall item ");
+}
+
+// Derived: routine 0x00AF, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process RECALL::recall_use_prompt_destination_and_teleport_avatar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String List;
+	local_m04:String;
+	local_m06:U8Word;
+	if (Avatar.getMap() = 14) or (Avatar.getMap() = 44) or (Avatar.getMap() = 47) or (Avatar.getMap() = 45) or (Avatar.getMap() = 46) or (Avatar.getMap() = 62) or (Avatar.getMap() = 43)
+	{
+		if not isSFXPlaying(124)
+		{
+			playSFX(124, 100);
+		}
+	}
+	else
+	{
+		class_0581_unkCloseAllGumps();
+		if sawCentralTenebraeTeleporter or sawPlateauTeleporter or sawUpperCatacombsTeleporter or sawMountainKingTeleporter or sawArgentrockIsleTeleporter or sawCarthaxLakeTeleporter or sawDaemonsCragTeleporter
+		{
+			bark("What is your destination? ");
+			if sawCentralTenebraeTeleporter
+			{
+				local_m02 += <<"Central Tenebrae ">>;
+			}
+			if sawPlateauTeleporter
+			{
+				local_m02 += <<"Plateau ">>;
+			}
+			if sawUpperCatacombsTeleporter
+			{
+				local_m02 += <<"Upper Catacombs ">>;
+			}
+			if sawMountainKingTeleporter
+			{
+				local_m02 += <<"Hall of the Mountain King ">>;
+			}
+			if sawArgentrockIsleTeleporter
+			{
+				local_m02 += <<"Argentrock Isle ">>;
+			}
+			if sawCarthaxLakeTeleporter
+			{
+				local_m02 += <<"Carthax Lake ">>;
+			}
+			if sawDaemonsCragTeleporter
+			{
+				local_m02 += <<"Daemon's Crag ">>;
+			}
+			local_m02 += <<"Nowhere ">>;
+			local_m04 = ask(local_m02);
+			local_m06 = 0;
+			if local_m04 = "Central Tenebrae "
+			{
+				local_m06 = 40;
+			}
+			if local_m04 = "Plateau "
+			{
+				local_m06 = 8;
+			}
+			if local_m04 = "Upper Catacombs "
+			{
+				local_m06 = 50;
+			}
+			if local_m04 = "Hall of the Mountain King "
+			{
+				local_m06 = 31;
+			}
+			if local_m04 = "Argentrock Isle "
+			{
+				local_m06 = 37;
+			}
+			if local_m04 = "Carthax Lake "
+			{
+				if hydrosFree
+				{
+					local_m06 = 26;
+				}
+				else
+				{
+					local_m06 = 16;
+				}
+			}
+			if local_m04 = "Daemon's Crag "
+			{
+				local_m06 = 12;
+			}
+			if local_m06 != 0
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0341_recall_teleport_avatar_to_destination(this, local_m06) -> return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x03C8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RECALL::recall_teleport_avatar_to_destination(arg_04:U8Word)
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, NULL_REF]];
+	}
+	process
+	{
+		playSFX(58, 100);
+		teleportToEgg(arg_04, 30, 1);
+		usedRecall = 1;
+		return;
+	}
+}
+

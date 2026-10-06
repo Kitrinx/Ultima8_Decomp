@@ -1,0 +1,106 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04BA
+// FLEX slot: 1212
+// Original offset: 0x000AA10A
+// Naming evidence: E, exact object-1 linker name `LOCKDOOR`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LOCKDOOR.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass LOCKDOOR inherits Egg
+{
+	process lockdoor_enter_fast_area_update_linked_door_locks();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LOCKDOOR::lockdoor_enter_fast_area_update_linked_door_locks()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:Number;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0A_w01:U8Bytes1;
+	[[PT_DEFAULT, NULL_REF]];
+	local_m04 = Egg_getEggId(this);
+	local_m06 = urandom(100);
+	u8_search_begin(local_m02, 2, 10 * 32, referent, <<66, u8_search_word(69), u8_search_word(68), 36>>);
+	while u8_search_condition()
+	{
+		local_m08 = local_m02.getQuality();
+		local_m0A = local_m02;
+		if local_m08 & 256
+		{
+			if local_m0A != 0
+			{
+				class_0044_door_ns_toggle_open_closed(u8_local_address(local_m0A_w01), 0);
+			}
+		}
+		if local_m04 = 1
+		{
+			if local_m06 > 50
+			{
+				local_m08 = (~1024) & local_m08;
+			}
+			else
+			{
+				local_m08 = 1024 | local_m08;
+			}
+		}
+		if local_m04 = 2
+		{
+			if rhianSchedule = 1
+			{
+				local_m08 = (~1024) & local_m08;
+			}
+			else
+			{
+				local_m08 = 1024 | local_m08;
+			}
+		}
+		if local_m04 = 3
+		{
+			if araminaSchedule = 1
+			{
+				local_m08 = (~1024) & local_m08;
+			}
+			else
+			{
+				local_m08 = 1024 | local_m08;
+			}
+		}
+		if local_m04 = 5
+		{
+			if (korickSchedule = 1) or (korickSchedule = 3)
+			{
+				local_m08 = (~1024) & local_m08;
+			}
+			else
+			{
+				local_m08 = 1024 | local_m08;
+			}
+		}
+		if local_m04 = 10
+		{
+			if (acolyteKilled > 0) and (goToInnerSanctum = 1)
+			{
+				local_m08 = 1024 | local_m08;
+				class_057C_toggleStatus(128, this);
+			}
+			else
+			{
+				local_m08 = (~1024) & local_m08;
+			}
+		}
+		local_m02.setQuality(local_m08);
+		u8_search_advance();
+	}
+	u8_search_end();
+}
+

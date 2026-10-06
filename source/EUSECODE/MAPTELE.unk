@@ -1,0 +1,222 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0480
+// FLEX slot: 1154
+// Original offset: 0x000B099C
+// Naming evidence: E, exact object-1 linker name `MAPTELE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MAPTELE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass MAPTELE inherits Egg
+{
+	process maptele_hatch_run_map_teleport_sequence();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MAPTELE::maptele_hatch_run_map_teleport_sequence()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m07:U8Bytes5;
+	local_m03:U8Byte;
+	local_m05:U8Word;
+	local_m07_w02:U8Word;
+	local_m08:U8Byte;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0E:Item;
+	local_m10:U8Word;
+	local_m12:U8Word;
+	local_m14:U8Word;
+	local_m15:U8Byte;
+	u8goto label_04C7 if not (not justTeleported);
+	local_m08 = 0;
+	local_m02 = 0;
+	local_m0A = Avatar.getMap();
+	local_m0E = referent;
+	local_m12 = local_m0E.getX();
+	local_m14 = local_m0E.getY();
+	local_m15 = local_m0E.getZ();
+	u8goto label_0200 if not (local_m0A = 14);
+	u8goto label_011C if not ((local_m12 = 8959) and (local_m14 = 2303) and (local_m15 = 24));
+	if MalchirTest < 6
+	{
+		justTeleported = 0;
+		return;
+	}
+	else
+	{
+		local_m08 = 1;
+		local_m12 = 13567;
+		local_m14 = 2303;
+		local_m15 = 24;
+		local_m0C = local_m0A;
+	}
+	u8goto label_01FD;
+	u8label label_011C:
+	u8goto label_018C if not ((local_m12 = 13567) and (local_m14 = 2303) and (local_m15 = 24));
+	if goToInnerSanctum
+	{
+		local_m08 = 1;
+		local_m12 = 8959;
+		local_m14 = 2303;
+		local_m15 = 24;
+		local_m0C = local_m0A;
+		u8goto label_0189;
+	}
+	if gotTheSymbols
+	{
+		justTeleported = 0;
+		return;
+	}
+	else if not arcadionMet
+	{
+		return;
+	}
+	else
+	{
+		local_m08 = 1;
+		local_m12 = 15615;
+		local_m14 = 16639;
+		local_m15 = 88;
+		local_m0C = local_m0A;
+	}
+	u8label label_0189:
+	u8goto label_01FD;
+	u8label label_018C:
+	if (local_m12 = 15615) and (local_m14 = 16639) and (local_m15 = 88)
+	{
+		foreach recursive local_m10 where ((type = 397) and (frame = 20)) within container 1 {
+			local_m02++;
+		}
+		if local_m02 < 4
+		{
+			return;
+		}
+		gotTheSymbols = 1;
+		local_m08 = 1;
+		local_m12 = 13567;
+		local_m14 = 2303;
+		local_m15 = 24;
+		local_m0C = local_m0A;
+	}
+	else
+	{
+		return;
+	}
+	u8label label_01FD:
+	u8goto label_02B1;
+	u8label label_0200:
+	if (local_m0A = 24) or (local_m0A = 25)
+	{
+		if (local_m12 = 20287) and (local_m14 = 23807) and (local_m15 = 64)
+		{
+			local_m0C = 49;
+			local_m12 = 27367;
+			local_m14 = 19719;
+			local_m15 = 48;
+		}
+		else if (local_m12 = 19263) and (local_m14 = 31487) and (local_m15 = 64)
+		{
+			local_m0C = 12;
+			local_m12 = 20275;
+			local_m14 = 13904;
+			local_m15 = 64;
+		}
+		else
+		{
+			return;
+		}
+	}
+	else
+	{
+		if hydrosFree
+		{
+			local_m0C = 25;
+		}
+		else
+		{
+			local_m0C = 24;
+		}
+		if local_m0A = 49
+		{
+			local_m12 = 20287;
+			local_m14 = 24191;
+			local_m15 = 64;
+		}
+		else if local_m0A = 12
+		{
+			local_m12 = 19263;
+			local_m14 = 31103;
+			local_m15 = 64;
+		}
+		else
+		{
+			return;
+		}
+	}
+	u8label label_02B1:
+	if not getAvatarInStasis()
+	{
+		setAvatarInStasis(1);
+	}
+	while Avatar.isBusy()
+	{
+		wait(1);
+	}
+	if local_m08
+	{
+		local_m07_w02 = Avatar.getX() + 96;
+		local_m05 = Avatar.getY() + 96;
+		local_m03 = Avatar.getZ() + 8;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m07) -> return;
+		wait(20);
+		class_057C_toggleStatus(1, 16, u8_stack_address(-2));
+		wait(45);
+		Camera::setCenterOn(0);
+		[[527, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+		Avatar.teleport(0, 0, 0, Avatar.getMap());
+		justTeleported = 1;
+		FadeToBlack();
+		Camera::move_to(local_m12, local_m14, local_m15 + 20, local_m0C);
+		FadeFromBlack();
+		local_m07_w02 = local_m12 + 96;
+		local_m05 = local_m14 + 96;
+		local_m03 = local_m15 + 8;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m07) -> return;
+		wait(20);
+		Avatar.teleport(local_m12, local_m14, local_m15, local_m0C);
+		Camera::setCenterOn(1);
+		wait(15);
+		class_057C_toggleStatus(1, 16, u8_stack_address(-2));
+		wait(30);
+		Avatar.touch();
+		if goToInnerSanctum
+		{
+			Npc_teleport(Npc_getMap(u8_stack_ref(57)), 0, 0, 0, u8_stack_ref(57));
+		}
+	}
+	else
+	{
+		FadeToBlack();
+		[[527, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+		Avatar.teleport(local_m12, local_m14, local_m15, local_m0C);
+		FadeFromBlack();
+	}
+	if getAvatarInStasis()
+	{
+		setAvatarInStasis(0);
+	}
+	return;
+	u8label label_04C7:
+	justTeleported = 0;
+}
+

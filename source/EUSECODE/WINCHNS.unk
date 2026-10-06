@@ -1,0 +1,69 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0116
+// FLEX slot: 280
+// Original offset: 0x00124849
+// Naming evidence: E, exact object-1 linker name `WINCHNS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/WINCHNS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass WINCHNS inherits Item
+{
+	process winchns_look_bark_winch();
+	process winchns_use_bark_locked_or_animate_crank();
+	process winchns_animate_crank();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process WINCHNS::winchns_look_bark_winch()
+{
+	bark("winch ");
+}
+
+// Derived: routine 0x00A9, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process WINCHNS::winchns_use_bark_locked_or_animate_crank()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getQuality();
+	if local_m02 = 0
+	{
+		playSFX(90, 100, referent);
+		bark("locked ");
+	}
+	else
+	{
+		killProcess(referent, PT_ACTIVITY);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0116_winchns_animate_crank(this) -> return;
+	}
+}
+
+// Derived: routine 0x0110, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process WINCHNS::winchns_animate_crank()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	[[PT_ACTIVITY, referent]];
+	for local_m02 = 0 to 2
+	{
+		playSFX(140, 100, referent);
+		for local_m04 = 0 to 3
+		{
+			setFrame(local_m04);
+			wait(5);
+		}
+	}
+}
+

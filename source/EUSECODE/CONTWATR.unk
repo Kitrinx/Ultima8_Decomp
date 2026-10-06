@@ -1,0 +1,175 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04C9
+// FLEX slot: 1227
+// Original offset: 0x000493BA
+// Naming evidence: E, exact object-1 linker name `CONTWATR`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/CONTWATR.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+globalflag reStartedFall;
+globalflag doneKeepFallEnd;
+
+eggclass CONTWATR inherits Egg
+{
+	process contwatr_enter_fast_area_restart_waterfall_animations();
+	process contwatr_leave_fast_area_stop_waterfall_music_and_process();
+	process contwatr_animate_lower_waterfall(arg_00:U8Word);
+	process contwatr_animate_upper_waterfall(arg_00:U8Word);
+	process contwatr_restart_waterfall_animations();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process CONTWATR::contwatr_enter_fast_area_restart_waterfall_animations()
+{
+	if hydrosFree
+	{
+		if reStartedFall = 0
+		{
+			reStartedFall = 1;
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_04C9_contwatr_restart_waterfall_animations(this) -> return;
+			return;
+		}
+		else
+		{
+			return;
+		}
+	}
+	else
+	{
+		return;
+	}
+}
+
+// Derived: routine 0x00BE, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process CONTWATR::contwatr_leave_fast_area_stop_waterfall_music_and_process()
+{
+	reStartedFall = 0;
+	playMusic(102);
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x00E7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process CONTWATR::contwatr_animate_lower_waterfall(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:Item;
+	local_m08:Item;
+	local_m0A:Item;
+	local_m0B:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, arg_00]];
+		local_m02 = arg_00;
+		if local_m0B = 0
+		{
+			// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+			foreach local_m0A where (type = 737) within 1024 units of 1 {
+				local_m0B = 1;
+				local_m0A.destroy();
+			}
+		}
+		Item_create(0, 737, u8_local_address(local_m04_w01));
+		local_m04.pop(local_m02.getX() + 350, local_m02.getY() + 140, local_m02.getZ());
+	}
+	process
+	{
+		if local_m04.getFrame() = 9
+		{
+			if not doneKeepFallEnd
+			{
+				doneKeepFallEnd = 1;
+				Item_create(0, 439, u8_local_address(local_m06_w01));
+				Item_create(0, 439, u8_local_address(local_m08_w01));
+				local_m06.pop(local_m04.getX() + 350, local_m04.getY() + 200, local_m04.getZ());
+				local_m08.pop(local_m04.getX() + 330, local_m04.getY() + 240, local_m04.getZ());
+			}
+			wait(2);
+			local_m04.setFrame(5);
+		}
+		if local_m04.getFrame() != 10
+		{
+			wait(2);
+			local_m04.setFrame(local_m04.getFrame() + 1);
+		}
+	}
+}
+
+// Derived: routine 0x0249, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process CONTWATR::contwatr_animate_upper_waterfall(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m01:U8Byte;
+	local_m03:Item;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, arg_00]];
+		local_m03 = arg_00;
+	}
+	process
+	{
+		if local_m03.getFrame() = 14
+		{
+			if not local_m01
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_04C9_contwatr_animate_lower_waterfall(0x00000000, arg_00) -> return;
+				local_m01 = 1;
+			}
+			local_m03.setFrame(12);
+		}
+		if local_m03.getFrame() != 15
+		{
+			wait(2);
+			local_m03.setFrame(local_m03.getFrame() + 1);
+		}
+	}
+}
+
+// Derived: routine 0x02C9, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process CONTWATR::contwatr_restart_waterfall_animations()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Bytes2; // X: untouched.
+	local_m04:Item;
+	local_m06:Item;
+	local_m08:U8Bytes2; // X: untouched.
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0D:U8Byte;
+	[[PT_DEFAULT, referent]];
+	// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+	foreach local_m04 where (type = 736) within 1024 units of 1 {
+		local_m0A = local_m04.getX();
+		local_m0C = local_m04.getY();
+		local_m0D = local_m04.getZ();
+		local_m04.destroy();
+		Item_create(0, 736, u8_local_address(local_m06_w01));
+		local_m06.pop(local_m0A, local_m0C, local_m0D);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_04C9_contwatr_animate_upper_waterfall(0x00000000, local_m06) -> return;
+		return;
+	}
+}
+

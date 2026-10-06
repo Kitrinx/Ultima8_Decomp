@@ -1,0 +1,22 @@
+LIBRARY AILXMI
+EXPORTS
+	_XMI_describe_driver
+	_XMI_detect_device
+	_XMI_init_driver
+	_XMI_shutdown_driver
+	XMI_SERVE_DRIVER
+	_XMI_state_table_size
+	_XMI_register_sequence
+	_XMI_release_sequence_handle
+	_XMI_start_sequence
+	_XMI_stop_sequence
+	_XMI_resume_sequence
+	_XMI_sequence_status
+	_XMI_set_relative_volume
+	_XMI_set_relative_tempo
+	_XMI_measure_count
+	_XMI_branch_index
+	_XMI_default_timbre_cache_size
+	_XMI_define_timbre_cache
+	_XMI_timbre_request
+	_XMI_install_timbre

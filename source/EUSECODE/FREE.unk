@@ -1,0 +1,2444 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0581
+// FLEX slot: 1411
+// Original offset: 0x00077EE0
+// Naming evidence: E, exact object-1 linker name `FREE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/FREE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process free_choose_sorcery_spell()
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:String List;
+	local_m04:String;
+	[[PT_DEFAULT, NULL_REF]];
+	local_m02 = <<"Empower offensive spell", "Empower defensive spell", "Empower other spell", "Invoke Pentagram", "Nevermind">>;
+	local_m04 = "";
+	while local_m04 = ""
+	{
+		local_m04 = Item_ask(local_m02, u8_stack_ref(1));
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "Empower offensive spell"
+			{
+				local_m02 = <<"Flame Bolt", "Create Fire", "Explosion ", "Summon Daemon ", "Conflagration ", "Nevermind ">>;
+			}
+			case "Empower defensive spell"
+			{
+				local_m02 = <<"Endure Heat", "Fire Shield", "Armor Of Flames", "Banish Daemon", "Nevermind">>;
+			}
+			case "Empower other spell"
+			{
+				local_m02 = <<"Ignite", "Extinguish", "Flash", "Nevermind">>;
+			}
+			case "Invoke Pentagram", "Nevermind"
+			{
+				return ((local_m04) : DWord);
+			}
+		}
+	}
+	local_m04 = "";
+	while local_m04 = ""
+	{
+		local_m04 = Item_ask(local_m02, u8_stack_ref(1));
+	}
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "Ignite"
+		{
+			local_m04 = "In Flam!";
+		}
+		case "Extinguish"
+		{
+			local_m04 = "An Flam!";
+		}
+		case "Flash"
+		{
+			local_m04 = "Flam Por!";
+		}
+		case "Flame Bolt"
+		{
+			local_m04 = "In Ort Flam!";
+		}
+		case "Endure Heat"
+		{
+			local_m04 = "Sanct Flam!";
+		}
+		case "Fire Shield"
+		{
+			local_m04 = "In Flam An Por!";
+		}
+		case "Armor Of Flames"
+		{
+			local_m04 = "Vas Sanct Flam!";
+		}
+		case "Create Fire"
+		{
+			local_m04 = "In Flam Ylem!";
+		}
+		case "Explosion"
+		{
+			local_m04 = "Vas Ort Flam!";
+		}
+		case "Summon Daemon"
+		{
+			local_m04 = "Kal Flam Corp Xen!";
+		}
+		case "Banish Daemon"
+		{
+			local_m04 = "An Flam Corp Xen!";
+		}
+		case "Conflagration "
+		{
+			local_m04 = "Kal Vas Flam Corp Xen!";
+		}
+	}
+	return ((local_m04) : DWord);
+}
+
+// Derived: routine 0x0512, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine free_get_sorcery_spell_mana_cost(arg_00:String)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Number;
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch arg_00
+	{
+		case "In Flam!"
+		{
+			local_m02 = class_0581_randRange(2, 3);
+		}
+		case "An Flam!"
+		{
+			local_m02 = class_0581_randRange(2, 3);
+		}
+		case "Flam Por!"
+		{
+			local_m02 = class_0581_randRange(3, 5);
+		}
+		case "In Ort Flam!"
+		{
+			local_m02 = class_0581_randRange(4, 6);
+		}
+		case "Sanct Flam!"
+		{
+			local_m02 = class_0581_randRange(3, 5);
+		}
+		case "In Flam An Por!"
+		{
+			local_m02 = class_0581_randRange(4, 6);
+		}
+		case "Vas Sanct Flam!"
+		{
+			local_m02 = class_0581_randRange(5, 8);
+		}
+		case "In Flam Ylem!"
+		{
+			local_m02 = class_0581_randRange(6, 9);
+		}
+		case "Vas Ort Flam!"
+		{
+			local_m02 = class_0581_randRange(7, 10);
+		}
+		case "Kal Flam Corp Xen!"
+		{
+			local_m02 = class_0581_randRange(8, 13);
+		}
+		case "An Flam Corp Xen!"
+		{
+			local_m02 = class_0581_randRange(8, 13);
+		}
+		case "Kal Vas Flam Corp Xen!"
+		{
+			local_m02 = class_0581_randRange(10, 15);
+		}
+		default
+		{
+			local_m02 = 0;
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("Ooops."), u8_stack_ref(1)) -> return;
+		}
+	}
+	return local_m02;
+}
+
+// Derived: routine 0x071E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine free_get_sorcery_spell_index(arg_00:String)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch arg_00
+	{
+		case "In Flam!"
+		{
+			local_m02 = 1;
+		}
+		case "An Flam!"
+		{
+			local_m02 = 2;
+		}
+		case "Flam Por!"
+		{
+			local_m02 = 3;
+		}
+		case "In Ort Flam!"
+		{
+			local_m02 = 4;
+		}
+		case "Sanct Flam!"
+		{
+			local_m02 = 5;
+		}
+		case "In Flam An Por!"
+		{
+			local_m02 = 6;
+		}
+		case "Vas Sanct Flam!"
+		{
+			local_m02 = 7;
+		}
+		case "In Flam Ylem!"
+		{
+			local_m02 = 8;
+		}
+		case "Vas Ort Flam!"
+		{
+			local_m02 = 9;
+		}
+		case "Kal Flam Corp Xen!"
+		{
+			local_m02 = 10;
+		}
+		case "An Flam Corp Xen!"
+		{
+			local_m02 = 11;
+		}
+		case "Kal Vas Flam Corp Xen!"
+		{
+			local_m02 = 12;
+		}
+	}
+	return local_m02;
+}
+
+// Derived: routine 0x0895, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine free_split_item_stack_near_target(arg_00:Item, arg_02:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	if arg_00.getQuantity() > 1
+	{
+		arg_00.setQuantity(arg_00.getQuantity() - 1);
+		Item_create(arg_00.getFrame(), arg_00.getType(), u8_local_address(local_m02_w01));
+	}
+	else
+	{
+		local_m02 = arg_00;
+		local_m02.push();
+	}
+	local_m02.setQuantity(1);
+	local_m02.pop(arg_02.getX() + 8, arg_02.getY() + 8, arg_02.getZ());
+	return local_m02;
+}
+
+// Derived: routine 0x091E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine free_validate_sorcery_spell_supplies(arg_00:String, arg_02:U8List, arg_04:U8List, arg_06:U8List)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	local_m03:U8Byte;
+	local_m04:U8Byte;
+	local_m05:U8Byte;
+	local_m06:U8Byte;
+	local_m07:U8Byte;
+	local_m08:U8Bytes1; // X: untouched.
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0E:U8Word;
+	local_m10:U8Word;
+	local_m12:U8Word;
+	local_m14:U8Word;
+	local_m16:U8Word;
+	local_m18:U8Word;
+	local_m19:U8Byte;
+	local_m1A:U8Byte;
+	local_m1B:U8Byte;
+	local_m1C:U8Byte;
+	local_m1D:U8Byte;
+	local_m1E:U8Byte;
+	local_m1F:U8Byte;
+	local_m20:U8Byte;
+	local_m21:U8Byte;
+	local_m03 = 0;
+	local_m04 = 0;
+	local_m05 = 0;
+	local_m06 = 0;
+	local_m07 = 0;
+	foreach local_m02 in arg_02 {
+		if local_m02.getFrame() = 19
+		{
+			local_m03 = 1;
+		}
+		else if local_m02.getFrame() = 15
+		{
+			local_m04 = 1;
+		}
+		else if local_m02.getFrame() = 16
+		{
+			local_m05 = 1;
+		}
+		else if local_m02.getFrame() = 17
+		{
+			local_m06 = 1;
+		}
+		else if local_m02.getFrame() = 18
+		{
+			local_m07 = 1;
+		}
+	}
+	local_m0A = 0;
+	local_m0C = 0;
+	foreach local_m02 in arg_04 {
+		if local_m02.getFrame() = 8
+		{
+			local_m0A++;
+		}
+		else
+		{
+			local_m0C++;
+		}
+	}
+	local_m0E = 0;
+	local_m10 = 0;
+	local_m12 = 0;
+	local_m14 = 0;
+	local_m16 = 0;
+	local_m18 = 0;
+	foreach local_m02 in arg_06 {
+		if class_007C_pent_is_reagent_category(0, local_m02)
+		{
+			local_m0E += local_m02.getQuantity();
+		}
+		else if class_007C_pent_is_reagent_category(1, local_m02)
+		{
+			local_m10 += local_m02.getQuantity();
+		}
+		else if class_007C_pent_is_reagent_category(2, local_m02)
+		{
+			local_m12 += local_m02.getQuantity();
+		}
+		else if class_007C_pent_is_reagent_category(3, local_m02)
+		{
+			local_m14 += local_m02.getQuantity();
+		}
+		else if class_007C_pent_is_reagent_category(4, local_m02)
+		{
+			local_m16 += local_m02.getQuantity();
+		}
+		else if class_007C_pent_is_reagent_category(5, local_m02)
+		{
+			local_m18 += local_m02.getQuantity();
+		}
+	}
+	local_m19 = 0;
+	local_m1A = 0;
+	local_m1B = 0;
+	local_m1C = 0;
+	local_m1D = 0;
+	local_m1E = 0;
+	local_m1F = 0;
+	local_m20 = 0;
+	local_m21 = 0;
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch arg_00
+	{
+		case "Ignite"
+		{
+			if (local_m03 = 0) and (local_m04 = 0) and (local_m05 = 0) and (local_m06 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 1
+			{
+				local_m1B = 1;
+			}
+			if local_m0A < 4
+			{
+				local_m1A = 1;
+			}
+			if local_m0E < 1
+			{
+				local_m1C = 1;
+			}
+			if local_m10 < 2
+			{
+				local_m1D = 1;
+			}
+		}
+		case "Extinguish"
+		{
+			if (local_m03 = 0) and (local_m04 = 0) and (local_m05 = 0) and (local_m06 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0A < 5
+			{
+				local_m1A = 1;
+			}
+			if local_m10 < 3
+			{
+				local_m1D = 1;
+			}
+		}
+		case "Flash"
+		{
+			if (local_m03 = 0) and (local_m04 = 0) and (local_m05 = 0) and (local_m06 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 3
+			{
+				local_m1B = 1;
+			}
+			if local_m0A < 2
+			{
+				local_m1A = 1;
+			}
+			if local_m0E < 2
+			{
+				local_m1C = 1;
+			}
+			if local_m10 < 1
+			{
+				local_m1D = 1;
+			}
+		}
+		case "Flame Bolt"
+		{
+			if (local_m03 = 0) and (local_m04 = 0) and (local_m05 = 0) and (local_m06 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 3
+			{
+				local_m1B = 1;
+			}
+			if local_m0A < 2
+			{
+				local_m1A = 1;
+			}
+			if local_m0E < 1
+			{
+				local_m1C = 1;
+			}
+			if local_m10 < 1
+			{
+				local_m1D = 1;
+			}
+			if local_m14 < 1
+			{
+				local_m1F = 1;
+			}
+		}
+		case "Endure Heat"
+		{
+			if (local_m03 = 0) and (local_m05 = 0) and (local_m06 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 2
+			{
+				local_m1B = 1;
+			}
+			if local_m0A < 3
+			{
+				local_m1A = 1;
+			}
+			if local_m12 < 2
+			{
+				local_m1E = 1;
+			}
+			if local_m14 < 1
+			{
+				local_m1F = 1;
+			}
+		}
+		case "Fire Shield"
+		{
+			if (local_m03 = 0) and (local_m05 = 0) and (local_m06 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 3
+			{
+				local_m1B = 1;
+			}
+			if local_m0A < 2
+			{
+				local_m1A = 1;
+			}
+			if local_m0E < 1
+			{
+				local_m1C = 1;
+			}
+			if local_m12 < 2
+			{
+				local_m1E = 1;
+			}
+			if local_m14 < 1
+			{
+				local_m1F = 1;
+			}
+		}
+		case "Armor Of Flames"
+		{
+			if (local_m03 = 0) and (local_m05 = 0) and (local_m06 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 3
+			{
+				local_m1B = 1;
+			}
+			if local_m0A < 2
+			{
+				local_m1A = 1;
+			}
+			if local_m0E < 1
+			{
+				local_m1C = 1;
+			}
+			if local_m12 < 2
+			{
+				local_m1E = 1;
+			}
+			if local_m14 < 1
+			{
+				local_m1F = 1;
+			}
+			if local_m16 < 1
+			{
+				local_m20 = 1;
+			}
+		}
+		case "Create Fire"
+		{
+			if (local_m03 = 0) and (local_m06 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 2
+			{
+				local_m1B = 1;
+			}
+			if local_m0A < 3
+			{
+				local_m1A = 1;
+			}
+			if local_m0E < 2
+			{
+				local_m1C = 1;
+			}
+			if local_m12 < 1
+			{
+				local_m1E = 1;
+			}
+			if local_m10 < 1
+			{
+				local_m1D = 1;
+			}
+		}
+		case "Explosion"
+		{
+			if (local_m03 = 0) and (local_m06 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 3
+			{
+				local_m1B = 1;
+			}
+			if local_m0A < 2
+			{
+				local_m1A = 1;
+			}
+			if local_m0E < 1
+			{
+				local_m1C = 1;
+			}
+			if local_m10 < 1
+			{
+				local_m1D = 1;
+			}
+			if local_m14 < 1
+			{
+				local_m1F = 1;
+			}
+			if local_m16 < 1
+			{
+				local_m20 = 1;
+			}
+		}
+		case "Summon Daemon"
+		{
+			if (local_m03 = 0) and (local_m07 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 4
+			{
+				local_m1B = 1;
+			}
+			if local_m0A < 1
+			{
+				local_m1A = 1;
+			}
+			if local_m0E < 1
+			{
+				local_m1C = 1;
+			}
+			if local_m10 < 1
+			{
+				local_m1D = 1;
+			}
+			if local_m12 < 2
+			{
+				local_m1E = 1;
+			}
+			if local_m18 < 1
+			{
+				local_m21 = 1;
+			}
+		}
+		case "Banish Daemon"
+		{
+			if (local_m03 = 0) and (local_m07 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 4
+			{
+				local_m1B = 1;
+			}
+			if local_m0A < 1
+			{
+				local_m1A = 1;
+			}
+			if local_m0E < 1
+			{
+				local_m1C = 1;
+			}
+			if local_m10 < 1
+			{
+				local_m1D = 1;
+			}
+			if local_m14 < 2
+			{
+				local_m1F = 1;
+			}
+			if local_m18 < 1
+			{
+				local_m21 = 1;
+			}
+		}
+		case "Conflagration"
+		{
+			if (local_m03 = 0) and (local_m07 = 0)
+			{
+				local_m19 = 1;
+			}
+			if local_m0C < 5
+			{
+				local_m1B = 1;
+			}
+			if local_m0E < 1
+			{
+				local_m1C = 1;
+			}
+			if local_m10 < 1
+			{
+				local_m1D = 1;
+			}
+			if local_m12 < 1
+			{
+				local_m1E = 1;
+			}
+			if local_m14 < 1
+			{
+				local_m1F = 1;
+			}
+			if local_m16 < 1
+			{
+				local_m20 = 1;
+			}
+			if local_m18 < 3
+			{
+				local_m21 = 1;
+			}
+		}
+	}
+	if local_m19
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I don't have an unenchanted focus to place the spell within. "), u8_stack_ref(1)) -> return;
+		return 0;
+	}
+	if local_m1A
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I need more black candles. "), u8_stack_ref(1)) -> return;
+		return 0;
+	}
+	if local_m1B
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I need more red candles. "), u8_stack_ref(1)) -> return;
+		return 0;
+	}
+	if local_m1C
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I need more ash. "), u8_stack_ref(1)) -> return;
+		return 0;
+	}
+	if local_m1D
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I need more pumice. "), u8_stack_ref(1)) -> return;
+		return 0;
+	}
+	if local_m1E
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I need more obsidian. "), u8_stack_ref(1)) -> return;
+		return 0;
+	}
+	if local_m1F
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I need more iron. "), u8_stack_ref(1)) -> return;
+		return 0;
+	}
+	if local_m20
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I need more brimstone. "), u8_stack_ref(1)) -> return;
+		return 0;
+	}
+	if local_m21
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I need more daemon bone. "), u8_stack_ref(1)) -> return;
+		return 0;
+	}
+	return 1;
+}
+
+// Derived: routine 0x11F9, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine free_count_list_items(arg_00:U8List)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m04 = 0;
+	foreach local_m02 in arg_00 {
+		local_m04++;
+	}
+	return local_m04;
+}
+
+// Derived: routine 0x121C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process free_empower_sorcery_focus(arg_00:U8Word, arg_02:String, arg_04:U8Word, arg_06:U8Word, arg_08:Item, arg_0A:U8List)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m03:U8Byte;
+	local_m05:U8Word;
+	local_m07:U8Word;
+	local_m09:U8Word;
+	[[PT_DEFAULT, arg_00]];
+	local_m03 = 1;
+	local_m05 = arg_04;
+	foreach local_m02 in arg_0A {
+		class_007C_pent_burn_consumed_component(0x00000000, local_m02);
+	}
+	wait(25);
+	local_m02 = arg_00;
+	if Avatar.getMana() < arg_06
+	{
+		Avatar.setMana(0);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(1, Avatar.getDir(), 14) -> return;
+		arg_06 = 0;
+		local_m03 = 0;
+	}
+	if not class_007C_pent_apply_reagent_side_effect(0x00000000, arg_08, local_m02)
+	{
+		class_007C_pent_play_spell_burst(0x00000000, local_m02);
+		local_m07 = arg_04;
+		if arg_06
+		{
+			if class_0581_getCharges(arg_08, local_m05, Avatar.getMana())
+			{
+				if sponsorTest
+				{
+					local_m09 = 0;
+					if (local_m07 = 3) and (spell1 = 0)
+					{
+						spell1 = 1;
+						spellsCast = 1 + spellsCast;
+						local_m09 = 1;
+					}
+					if (local_m07 = 4) and (spell2 = 0)
+					{
+						spell2 = 1;
+						spellsCast = 1 + spellsCast;
+						local_m09 = 1;
+					}
+					if (local_m07 = 5) and (spell3 = 0)
+					{
+						spell3 = 1;
+						spellsCast = 1 + spellsCast;
+						local_m09 = 1;
+					}
+					if local_m09
+					{
+						local_m09 = 0;
+						if spellsCast = 1
+						{
+							arg_02 = "Good. ";
+							local_m09 = 1;
+						}
+						else if spellsCast = 2
+						{
+							arg_02 = "Excellent! ";
+							local_m09 = 1;
+						}
+						if local_m09
+						{
+							if acolyteKilled = 1
+							{
+								// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+								spawn Item_bark(u8_string_local_address(arg_02), u8_stack_ref(28)) -> return;
+							}
+							else
+							{
+								// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+								spawn Item_bark(u8_string_local_address(arg_02), u8_stack_ref(29)) -> return;
+							}
+						}
+					}
+				}
+				arg_04 = u8_shift_left_word(arg_04, 8);
+				arg_04 += class_0581_getCharges(arg_08, local_m05, Avatar.getMana());
+				arg_08.setQuality(arg_04);
+				arg_08.setFrame(class_0581_activeFrame(arg_08));
+				Avatar.setMana(Avatar.getMana() - arg_06);
+				AccumulateIntelligence((local_m07 * 3) + class_0581_randRange(5, 10));
+			}
+			killProcess(arg_08, 539);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn arg_08.enterFastArea() -> return;
+		}
+	}
+	return ((local_m03) : DWord);
+}
+
+// Derived: routine 0x148D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process free_wait(arg_00:Item)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	[[PT_DEFAULT, NULL_REF]];
+	if arg_00 = 1
+	{
+		local_m05_w02 = arg_00.getX() + 96;
+		local_m03 = arg_00.getY() + 96;
+	}
+	else
+	{
+		local_m05_w02 = arg_00.getX() + 64;
+		local_m03 = arg_00.getY() + 64;
+	}
+	local_m01 = arg_00.getZ() + 8;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m05) -> return;
+	wait(35);
+}
+
+// Derived: routine 0x1511, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process free_consume_tongue_of_flame_to_free_pyros(arg_00:Item, arg_02:U8Word)
+{
+	[[PT_FX, arg_00]];
+	wait(75);
+	pyrosFree = 1;
+	arg_00.push();
+	arg_00.pop(arg_02.getX() - 256, arg_02.getY() - 256, arg_02.getZ() + 1);
+}
+
+// Derived: routine 0x156E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process free_expire_pyros_release_particle(arg_00:U8Word, arg_02:Item)
+{
+	[[PT_FX, NULL_REF]];
+	safePlaySFX(arg_00, 100, arg_02);
+	arg_02.destroy();
+}
+
+// Derived: routine 0x159B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process free_play_pyros_release_effects(arg_00:Item)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m02:Item;
+	local_m02_w01:U8Bytes1;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0B:U8Byte;
+	local_m0D:U8Word;
+	local_m0F:U8Word;
+	local_m11:U8Word;
+	local_m13:U8Word;
+	local_m14:U8Byte;
+	[[PT_FX, arg_00]];
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_wait(0x00000000, 25) ->
+	spawn class_0581_safePlaySFX(0x00000000, 60, 200, 64) -> return;
+	local_m04 = 1000;
+	local_m06 = 3;
+	local_m0F = arg_00.getX() - 256;
+	local_m0D = arg_00.getY() - 256;
+	local_m0B = arg_00.getZ() + 20;
+	while local_m06
+	{
+		while local_m04
+		{
+			if local_m04 = 1000
+			{
+				local_m11 = local_m0F;
+				local_m13 = local_m0D;
+				local_m14 = local_m0B;
+				local_m04 = 1;
+			}
+			else
+			{
+				if urandom(2)
+				{
+					local_m11 = local_m0F + class_0581_randRange(local_m08, local_m0A);
+				}
+				else
+				{
+					local_m11 = local_m0F - class_0581_randRange(local_m08, local_m0A);
+				}
+				if urandom(2)
+				{
+					local_m13 = local_m0D + class_0581_randRange(local_m08, local_m0A);
+				}
+				else
+				{
+					local_m13 = local_m0D - class_0581_randRange(local_m08, local_m0A);
+				}
+			}
+			Item_create(0, 261, u8_local_address(local_m02_w01));
+			class_057C_toggleStatus(16, u8_local_address(local_m02_w01));
+			local_m02.pop(local_m11, local_m13, local_m14);
+			class_057C_toggleStatus(1, u8_local_address(local_m02_w01));
+			if random(2)
+			{
+				createSprite(578, 0, 17, 2, local_m11 + 336, local_m13 + 336, local_m14 + 56);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_free_expire_pyros_release_particle(0x00000000, local_m02, 158) -> return;
+			}
+			else
+			{
+				createSprite(578, 40, 65, 2, local_m11 + 336, local_m13 + 336, local_m14 + 56);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_free_expire_pyros_release_particle(0x00000000, local_m02, 31) -> return;
+			}
+			wait(class_0581_randRange(15, 30));
+			local_m04--;
+		}
+		local_m06--;
+		if local_m06 = 2
+		{
+			local_m04 = 6;
+			local_m08 = 64;
+			local_m0A = 192;
+		}
+		else if local_m06 = 1
+		{
+			local_m04 = 12;
+			local_m08 = 128;
+			local_m0A = 320;
+		}
+	}
+	safePlaySFX(65, 200, 100);
+	wait(60);
+}
+
+// Derived: routine 0x17D0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine free_is_point_near_coordinates(arg_00:U8Word, arg_02:U8Word, arg_04:U8Word, arg_06:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m02 = 24;
+	if (arg_04 <= (arg_00 + local_m02)) and (arg_04 >= (arg_00 - local_m02)) and (arg_06 <= (arg_02 + local_m02)) and (arg_06 >= (arg_02 - local_m02))
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+// Derived: routine 0x180D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process free_warn_excess_sorcery_reagent(arg_00:U8Word, arg_02:U8Word)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	frame_p00:U8Word;
+	local_m02:Npc;
+	local_m02_w01:U8Bytes1;
+	[[PT_DEFAULT, arg_00]];
+	if acolyteKilled = 1
+	{
+		local_m02 = frame_p00;
+	}
+	else
+	{
+		local_m02 = frame_p00;
+	}
+	class_057C_turnToFace(u8_local_address(local_m02_w01), local_m02.getDirToItem(arg_00), 0, 5);
+	class_057C_realDoAnim(u8_local_address(local_m02_w01), 27, local_m02.getDir());
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(u8_local_address(local_m02_w01), local_m02.getDir(), 31) -> return;
+	class_057C_timedBark(u8_local_address(local_m02_w01), 40, u8_string_address("An Flam Ort!"));
+	class_057C_realDoAnim(u8_local_address(local_m02_w01), 31, local_m02.getDir());
+	class_057C_realDoAnim(u8_local_address(local_m02_w01), 28, local_m02.getDir());
+	class_057C_realDoAnim(u8_local_address(local_m02_w01), 2, local_m02.getDir());
+	class_057C_turnToFace(u8_local_address(local_m02_w01), local_m02.getDirToItem(Avatar:Referent), 0, 5);
+	local_m02.bark("Fool! Had I not been here, you could have killed yourself, and that would have displeased the Master. ");
+	if arg_02 = 5
+	{
+		local_m02.bark("Never use more Daemon Bone than your spell calls for. ");
+	}
+	else
+	{
+		local_m02.bark("Never use more Brimstone than your spell calls for. ");
+	}
+	local_m02.bark("Now, continue your test. I tire of your bumbling. ");
+}
+
+// Derived: routine 0x1A85, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine random(x:Number)
+{
+	return urandom(x);
+}
+
+// Derived: routine 0x1A96, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine randRange(a:Number, b:Number):Number
+{
+	// X: BP-bound neutral body storage views.
+	c:Number;
+	ran:Number;
+	if a > b
+	{
+		c = b;
+		b = a;
+		a = c;
+	}
+	c = (b - a) + 1;
+	ran = urandom(c);
+	ran += a;
+	return ran;
+}
+
+// Derived: routine 0x1AD0, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process askYesNo()
+{
+	// X: BP-bound neutral body storage views.
+	key:String;
+	keyList:String List;
+	[[PT_BARK, 1]];
+	keyList = <<"Yes. ", "No. ">>;
+	key = Item_ask(keyList, u8_stack_ref(1));
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch key
+	{
+		case "Yes. "
+		{
+			return ((1) : DWord);
+		}
+		case "No. "
+		{
+			return ((0) : DWord);
+		}
+		default
+		{
+			return ((-1) : DWord);
+		}
+	}
+}
+
+// Derived: routine 0x1B49, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process askYesNo(duration:Number):Number
+{
+	// X: BP-bound neutral body storage views.
+	count:Number;
+	key:String;
+	keyList:String List;
+	[[PT_BARK, 1]];
+	count = 0;
+	while count != duration
+	{
+		keyList = <<"Yes. ", "No. ">>;
+		key = Item_ask(keyList, u8_stack_ref(1));
+		if key = "Yes. "
+		{
+			return ((1) : DWord);
+		}
+		else if key = "No. "
+		{
+			return ((0) : DWord);
+		}
+		else
+		{
+			count++;
+		}
+	}
+	return ((-1) : DWord);
+}
+
+// Derived: routine 0x1BD8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// O/E: the target ABI profile proves this callable kind.
+routine free_start_timer(arg_00:U8DWord, arg_04:U8DWord)
+{
+	u8_store(arg_00 + 0x00000004, arg_04, 4);
+	u8_store(arg_00, getCurrentTimerTick(), 4);
+}
+
+// Derived: routine 0x1BF1, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine Timer::isDone():Boolean
+{
+	if getCurrentTimerTick() >= (u8_load(this, 4) + u8_load(this + 0x00000004, 4))
+	{
+		return 1;
+	}
+	return 0;
+}
+
+// Derived: routine 0x1C19, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process wait(time:Number)
+{
+	// X: BP-bound neutral body storage views.
+	timer:Timer;
+	local_m08:U8Bytes1;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, NULL_REF]];
+		class_0581_free_start_timer(((time) : DWord), u8_local_address(local_m08));
+		if class_0581_isDone(u8_local_address(local_m08))
+		{
+			return;
+		}
+	}
+	process
+	{
+		if class_0581_isDone(u8_local_address(local_m08))
+		{
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x1C52, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine abs(x:Number)
+{
+	if x > 0
+	{
+		return x;
+	}
+	return (-1 * x);
+}
+
+// Derived: routine 0x1C6D, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process scrollTo(destX:Coord, destY:Coord, destZ:Alti, vel:Number)
+{
+	[[PT_DEFAULT, 1]];
+	Camera::scrollTo(destX, destY, destZ, 6);
+}
+
+// Derived: routine 0x1C8B, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process scrollBack(vel:Number)
+{
+	// X: BP-bound neutral body storage views.
+	x:Coord;
+	y:Coord;
+	z:Alti;
+	[[PT_DEFAULT, 1]];
+	x = Avatar.getX();
+	y = Avatar.getY();
+	z = Avatar.getZ();
+	scrollTo(x, y, z + 20, vel);
+	Camera::setCenterOn(1);
+}
+
+// Derived: routine 0x1CE3, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views; overlapping names alias bytes.
+// O/E: the target ABI profile proves this callable kind.
+routine free_get_point_distance(arg_00:U8Bytes5, arg_00_w02:U8Word, arg_02:U8Word, arg_04:U8Byte, arg_05:U8Bytes5, arg_05_w02:U8Word, arg_07:U8Word, arg_09:U8Byte)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m02 = arg_00_w02 - arg_05_w02;
+	local_m04 = arg_02 - arg_07;
+	local_m06 = arg_04 - arg_09;
+	local_m02 = class_0581_abs(local_m02);
+	local_m04 = class_0581_abs(local_m04);
+	local_m06 = class_0581_abs(local_m06);
+	if (local_m02 > local_m04) and (local_m02 > local_m06)
+	{
+		return local_m02;
+	}
+	if (local_m04 > local_m02) and (local_m04 > local_m06)
+	{
+		return local_m04;
+	}
+	if (local_m06 > local_m02) and (local_m06 > local_m04)
+	{
+		return local_m06;
+	}
+	return local_m02;
+}
+
+// Derived: routine 0x1D62, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine getDistance(r1:Referent, r2:Referent):Number
+{
+	// X: BP-bound neutral body storage views.
+	item1:Item;
+	item2:Item;
+	avatarMap:MapNum;
+	npc1:Npc;
+	npc2:Npc;
+	x:Number;
+	y:Number;
+	z:Number;
+	item1 = r1;
+	item2 = r2;
+	avatarMap = Avatar.getMap();
+	if item1.isNpc()
+	{
+		npc1 = item1;
+		if npc1.getMap() != avatarMap
+		{
+			return -1;
+		}
+	}
+	if item2.isNpc()
+	{
+		npc2 = item2;
+		if npc2.getMap() != avatarMap
+		{
+			return -1;
+		}
+	}
+	x = item1.getX() - item2.getX();
+	y = item1.getY() - item2.getY();
+	z = item1.getZ() - item2.getZ();
+	x = class_0581_abs(x);
+	y = class_0581_abs(y);
+	z = class_0581_abs(z);
+	if (x > y) and (x > z)
+	{
+		return x;
+	}
+	if (y > x) and (y > z)
+	{
+		return y;
+	}
+	if (z > x) and (z > y)
+	{
+		return z;
+	}
+	return x;
+}
+
+// Derived: routine 0x1E6A, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine getCellDist(ref1:Referent, ref2:Referent)
+{
+	// X: BP-bound neutral body storage views.
+	dist:Number;
+	dist = getDistance(ref1, ref2);
+	dist = dist / 32;
+	return dist;
+}
+
+// Derived: routine 0x1E89, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine findNearest(range:Number, t:Type, f:Frame)
+{
+	// X: BP-bound neutral body storage views.
+	item:Item;
+	closestItem:Item;
+	closest:Number;
+	dist:Number;
+	closest = 32000;
+	closestItem = 0;
+	foreach item where ((type = t) and (frame = f)) within range cells of Avatar {
+		dist = getDistance(Avatar:Referent, item);
+		if dist < closest
+		{
+			closest = dist;
+			closestItem = item;
+		}
+	}
+	return closestItem;
+}
+
+// Derived: routine 0x1EE2, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine give(r:Referent, t:Type, f:Frame, qual:Quality, quan:Quantity):Boolean
+{
+	// X: BP-bound neutral body storage views.
+	item:Item;
+	lastItem:Item;
+	backpack:Item;
+	itemList:Item List;
+	item = r;
+	if item.getFamily() != 6
+	{
+		return 0;
+	}
+	if r = 1
+	{
+		backpack = Avatar.getEquip(6);
+		if not backpack
+		{
+			Item_create(0, 529, u8_local_address(local_m06_w01));
+			backpack.popToEnd(1);
+			Avatar.setEquip(6, backpack);
+		}
+		r = backpack;
+	}
+	if not item.legal_create(t, f, r, 1)
+	{
+		return 0;
+	}
+	else
+	{
+		itemList = <<item>>;
+		if (item.getFamily() = 2) or (item.getFamily() = 9)
+		{
+			while quan > 666
+			{
+				item.setQuantity(666);
+				class_0581_quanFrame(item);
+				quan -= 666;
+				if item.legal_create(t, f, r, 1)
+				{
+					itemList += <<item>>;
+				}
+				else
+				{
+					foreach item in itemList {
+						item.destroy();
+					}
+					return 0;
+				}
+			}
+			if quan
+			{
+				item.setQuantity(quan);
+				if not (item.getFamily() = 9)
+				{
+					class_0581_combine(item);
+				}
+			}
+		}
+		else
+		{
+			quan--;
+			while quan
+			{
+				if item.legal_create(t, f, r, 1)
+				{
+					itemList += <<item>>;
+					quan--;
+				}
+				else
+				{
+					foreach item in itemList {
+						item.destroy();
+					}
+					return 0;
+				}
+			}
+		}
+		if item.getFamily() = 1
+		{
+			foreach item in itemList {
+				item.setQuality(qual);
+			}
+		}
+		foreach item in itemList {
+			item.orStatus(4);
+		}
+	}
+	return 1;
+}
+
+// Derived: routine 0x20B8, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine take(r:Referent, t:Type, f:Frame, qual:Quality, quan:Quantity):Boolean
+{
+	// X: BP-bound neutral body storage views.
+	item:Item;
+	itemList:Item List;
+	deadList:Item List;
+	element:Number;
+	remainder:Quantity;
+	myQual:Quality;
+	element = 1;
+	item = r;
+	if item.getFamily() != 6
+	{
+		return 0;
+	}
+	if t = -1
+	{
+		foreach recursive item within container r {
+			myQual = item.getQuality();
+			if (item.getFamily() = 2) or (item.getFamily() = 9)
+			{
+				itemList += <<item>>;
+			}
+			else if item.getFamily() != 1
+			{
+				if f = -1
+				{
+					if qual = -1
+					{
+						itemList += <<item>>;
+					}
+					else if myQual = qual
+					{
+						itemList += <<item>>;
+					}
+				}
+				else if qual = -1
+				{
+					itemList += <<item>>;
+				}
+				else if myQual = qual
+				{
+					itemList += <<item>>;
+				}
+			}
+			else if f = -1
+			{
+				itemList += <<item>>;
+			}
+			else if item.getFrame() = f
+			{
+				itemList += <<item>>;
+			}
+		}
+	}
+	else
+	{
+		foreach recursive item where (type = t) within container r {
+			myQual = item.getQuality();
+			if (item.getFamily() = 2) or (item.getFamily() = 9)
+			{
+				itemList += <<item>>;
+			}
+			else if item.getFamily() != 1
+			{
+				if f = -1
+				{
+					if qual = -1
+					{
+						itemList += <<item>>;
+					}
+					else if myQual = qual
+					{
+						itemList += <<item>>;
+					}
+				}
+				else if qual = -1
+				{
+					itemList += <<item>>;
+				}
+				else if myQual = qual
+				{
+					itemList += <<item>>;
+				}
+			}
+			else if f = -1
+			{
+				itemList += <<item>>;
+			}
+			else if item.getFrame() = f
+			{
+				itemList += <<item>>;
+			}
+		}
+	}
+	item = itemList[element];
+	if item
+	{
+		if (item.getFamily() = 2) or (item.getFamily() = 9)
+		{
+			while quan and item
+			{
+				if quan <= item.getQuantity()
+				{
+					if quan = item.getQuantity()
+					{
+						deadList += <<item>>;
+					}
+					else
+					{
+						remainder = item.getQuantity();
+						remainder -= quan;
+						item.setQuantity(remainder);
+						class_0581_combine(item);
+					}
+					quan -= quan;
+				}
+				else
+				{
+					quan -= item.getQuantity();
+					deadList += <<item>>;
+					element++;
+					item = itemList[element];
+				}
+			}
+		}
+		else
+		{
+			while quan and item
+			{
+				quan--;
+				deadList += <<item>>;
+				element++;
+				item = itemList[element];
+			}
+		}
+	}
+	if quan
+	{
+		return 0;
+	}
+	else
+	{
+		if deadList[1]
+		{
+			foreach item in deadList {
+				item.destroy();
+			}
+		}
+		return 1;
+	}
+}
+
+// Derived: routine 0x2411, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine legal_setType(r:Referent, t:Type, f:Frame, x:Coord, y:Coord, z:Coord)
+{
+	// X: BP-bound neutral body storage views.
+	ref:Item;
+	item:Item;
+	ref = r;
+	if getFamilyOfType(t) = ref.getFamily()
+	{
+		ref.push();
+		ref.touch();
+		if item.legal_create(t, f, x, y, z)
+		{
+			item.destroy();
+			ref.setType(t);
+			ref.setFrame(f);
+			ref.pop(x, y, z);
+			ref.touch();
+			return 1;
+		}
+		else
+		{
+			ref.pop();
+			return 0;
+		}
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+// Derived: routine 0x24A7, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine createNear(p:WorldPoint, t:Type, f:Frame, qual:Quality, quan:Quantity):Referent
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	item:Item;
+	local_m02_w01:U8Bytes1;
+	deadList:Item List;
+	howMany:Quantity;
+	howMany = 0;
+	if (getFamilyOfType(t) = 2) or (getFamilyOfType(t) = 9)
+	{
+		while quan > 666
+		{
+			howMany++;
+			quan -= 666;
+		}
+	}
+	else
+	{
+		howMany = quan;
+		quan = 0;
+	}
+	while howMany
+	{
+		item = class_0581_findGoodSpot(qual, f, t, p);
+		class_057C_toggleStatus(4, u8_local_address(local_m02_w01));
+		item.fall();
+		if not item
+		{
+			foreach item in deadList {
+				item.destroy();
+			}
+			return 0;
+		}
+		else
+		{
+			if (getFamilyOfType(t) = 2) or (getFamilyOfType(t) = 9)
+			{
+				item.setQuantity(666);
+				class_0581_quanFrame(item);
+			}
+			deadList += <<item>>;
+			howMany--;
+		}
+	}
+	if quan
+	{
+		item = class_0581_findGoodSpot(qual, f, t, p);
+		class_057C_toggleStatus(4, u8_local_address(local_m02_w01));
+		item.fall();
+		if not item
+		{
+			foreach item in deadList {
+				item.destroy();
+			}
+			return 0;
+		}
+		item.setQuantity(quan);
+		class_0581_quanFrame(item);
+	}
+	return item;
+}
+
+// Derived: routine 0x25F0, event mask 0x00000000.
+// O: recovered callable name.
+// X: BP-bound neutral argument storage views; overlapping names alias bytes.
+// O: external source-declaration metadata proves this callable kind.
+routine findGoodSpot(arg_00:U8Bytes5, arg_00_w02:U8Word, arg_02:U8Word, arg_04:U8Byte, arg_05:U8Word, arg_07:U8Word, arg_09:U8Word):Referent
+{
+	// X: BP-bound neutral body storage views.
+	item:Item;
+	x:Coord;
+	y:Coord;
+	z:Alti;
+	done:Boolean;
+	dir:Number;
+	stage:Number;
+	limit:Number;
+	count:Number;
+	x = arg_00_w02;
+	y = arg_02;
+	z = arg_04;
+	done = 0;
+	dir = 1;
+	stage = 1;
+	limit = 8;
+	count = limit / 4;
+	while (done = 0) and (limit <= 120)
+	{
+		while (dir <= limit) and (done = 0)
+		{
+			if dir = 1
+			{
+				if limit = 8
+				{
+					y -= 16;
+				}
+				else
+				{
+					x += 16;
+				}
+				x += 16;
+				y -= 16;
+			}
+			else if (stage = 1) and (count != 0)
+			{
+				y += 16;
+				count--;
+			}
+			else if (stage = 2) and (count != 0)
+			{
+				x -= 16;
+				count--;
+			}
+			else if (stage = 3) and (count != 0)
+			{
+				y -= 16;
+				count--;
+			}
+			else if (stage = 4) and (count != 0)
+			{
+				x += 16;
+				count--;
+			}
+			if dir <= limit
+			{
+				if item.legal_create(arg_05, arg_07, x, y, z)
+				{
+					done = 1;
+				}
+				else
+				{
+					if not count
+					{
+						count = limit / 4;
+						stage++;
+					}
+				}
+			}
+			dir++;
+		}
+		limit += 8;
+		dir = 1;
+		stage = 1;
+		count = limit / 4;
+	}
+	if done
+	{
+		if item.getFamily() = 1
+		{
+			item.setQuality(arg_09);
+		}
+		return item;
+	}
+	return 0;
+}
+
+// Derived: routine 0x2767, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine combine(i:Item)
+{
+	// X: BP-bound neutral body storage views.
+	item:Item;
+	ref:Item;
+	cont:Item;
+	itemList:Item List;
+	element:Number;
+	tempQuan:Quantity;
+	quan:Quantity;
+	element = 1;
+	ref = i;
+	quan = ref.getQuantity();
+	cont = ref.getContainer();
+	if (ref.getFamily() = 2) or (ref.getFamily() = 9)
+	{
+		if cont
+		{
+			foreach item where (type = ref.getType()) within container cont {
+				if (item != i) and ((ref.getFamily() = 2) or (ref.getFrame() = item.getFrame()))
+				{
+					itemList += <<item>>;
+				}
+			}
+			while quan and itemList[element]
+			{
+				item = itemList[element];
+				tempQuan = item.getQuantity() + ref.getQuantity();
+				if (tempQuan != 0) and (tempQuan <= 666)
+				{
+					item.setQuantity(tempQuan);
+					class_0581_quanFrame(item);
+					ref.destroy();
+					quan -= quan;
+				}
+				element++;
+			}
+		}
+		if quan
+		{
+			class_0581_quanFrame(i);
+		}
+	}
+}
+
+// Derived: routine 0x2879, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine quanFrame(i:Item)
+{
+	// X: BP-bound neutral body storage views.
+	f:Frame;
+	q:Quantity;
+	q = i.getQuantity();
+	if i.getFamily() = 2
+	{
+		if q = 0
+		{
+			f = 0;
+		}
+		else if q <= 8
+		{
+			f = q - 1;
+		}
+		else
+		{
+			f = 7;
+		}
+		class_0581_popFrame(i, f);
+	}
+}
+
+// Derived: routine 0x28C7, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine popFrame(i:Item, f:Frame)
+{
+	i.push();
+	i.setFrame(f);
+	i.pop();
+}
+
+// Derived: routine 0x28E5, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine getHour():Number
+{
+	// X: BP-bound neutral body storage views.
+	hour:Number;
+	hour = TimeInGameHours() modulo 24;
+	return hour;
+}
+
+// Derived: routine 0x28F9, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine getPeriod():Number
+{
+	// X: BP-bound neutral body storage views.
+	hour:Number;
+	hour = class_0581_getHour() / 4;
+	return hour;
+}
+
+// Derived: routine 0x290E, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine setHour(newHour:Number)
+{
+	// X: BP-bound neutral body storage views.
+	hour:Number;
+	hour = TimeInGameHours() modulo 24;
+	if newHour > hour
+	{
+		SetTimeInGameHours(hour + newHour + TimeInGameHours());
+	}
+	else
+	{
+		SetTimeInGameHours((23 - hour) + newHour + TimeInGameHours());
+	}
+}
+
+// Derived: routine 0x294C, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine setPeriod(newPeriod:Number)
+{
+	// X: BP-bound neutral body storage views.
+	period:Number;
+	period = class_0581_getHour() / 4;
+	if newPeriod > period
+	{
+		SetTimeInGameHours(((period + newPeriod) * 4) + TimeInGameHours());
+	}
+	else
+	{
+		SetTimeInGameHours((((5 - period) + newPeriod) * 4) + TimeInGameHours());
+	}
+}
+
+// Derived: routine 0x2991, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine countNumList(list:Number List)
+{
+	// X: BP-bound neutral body storage views.
+	member:Number;
+	count:Number;
+	count = 0;
+	foreach member in list {
+		count++;
+	}
+	return count;
+}
+
+// Derived: routine 0x29B4, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine countStrList(list:String List)
+{
+	// X: BP-bound neutral body storage views.
+	member:String;
+	count:Number;
+	count = 0;
+	foreach member in list {
+		count++;
+	}
+	return count;
+}
+
+// Derived: routine 0x29D8, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process safePlaySFX(soundNum:Number, priority:Number)
+{
+	[[PT_FX, NULL_REF]];
+	playSFX(soundNum, priority);
+	while isSFXPlaying(soundNum)
+	{
+		wait(1);
+	}
+}
+
+// Derived: routine 0x2A12, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process safePlaySFX(soundNum:Number, priority:Number, volume:Number)
+{
+	[[PT_FX, NULL_REF]];
+	playSFX(soundNum, priority);
+	setVolumeSFX(soundNum, volume);
+	while isSFXPlaying(soundNum)
+	{
+		wait(1);
+	}
+}
+
+// Derived: routine 0x2A56, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine killProcess(r:Referent, ptype:Word)
+{
+	Kernel::resetRef(r, ptype);
+}
+
+// Derived: routine 0x2A64, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// O/E: the target ABI profile proves this callable kind.
+routine free_set_ref(arg_00:U8Word, arg_02:U8Word, arg_04:U8Word)
+{
+	[[PT_DEFAULT, NULL_REF]];
+	setRef(arg_00, arg_02, arg_04);
+}
+
+// Derived: routine 0x2A79, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine getCharges(focus:Item, spell:Number, mana:Number):Number
+{
+	// X: BP-bound neutral body storage views.
+	charge:Number;
+	charge = 0;
+	if spell = 1
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = class_0581_randRange(5, 10);
+			charge += Avatar.getMana() / 5;
+		}
+		else if ((focus.getFrame() >= 0) and (focus.getFrame() <= 2)) or (focus.getFrame() = 15)
+		{
+			charge = class_0581_randRange(5, 10);
+			charge += Avatar.getMana() / 6;
+		}
+		else if ((focus.getFrame() >= 3) and (focus.getFrame() <= 5)) or (focus.getFrame() = 16)
+		{
+			charge = class_0581_randRange(6, 12);
+			charge += Avatar.getMana() / 5;
+		}
+		else if ((focus.getFrame() >= 6) and (focus.getFrame() <= 8)) or (focus.getFrame() = 17)
+		{
+			charge = class_0581_randRange(10, 20);
+			charge += Avatar.getMana() / 4;
+		}
+	}
+	else if spell = 2
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = class_0581_randRange(5, 10);
+			charge += Avatar.getMana() / 5;
+		}
+		else if ((focus.getFrame() >= 0) and (focus.getFrame() <= 2)) or (focus.getFrame() = 15)
+		{
+			charge = class_0581_randRange(5, 10);
+			charge += Avatar.getMana() / 6;
+		}
+		else if ((focus.getFrame() >= 3) and (focus.getFrame() <= 5)) or (focus.getFrame() = 16)
+		{
+			charge = class_0581_randRange(6, 12);
+			charge += Avatar.getMana() / 5;
+		}
+		else if ((focus.getFrame() >= 6) and (focus.getFrame() <= 8)) or (focus.getFrame() = 17)
+		{
+			charge = class_0581_randRange(10, 20);
+			charge += Avatar.getMana() / 4;
+		}
+	}
+	else if spell = 3
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 0) and (focus.getFrame() <= 2)) or (focus.getFrame() = 15)
+		{
+			charge = class_0581_randRange(5, 10);
+			charge += Avatar.getMana() / 6;
+		}
+		else if ((focus.getFrame() >= 3) and (focus.getFrame() <= 5)) or (focus.getFrame() = 16)
+		{
+			charge = class_0581_randRange(6, 12);
+			charge += Avatar.getMana() / 5;
+		}
+		else if ((focus.getFrame() >= 6) and (focus.getFrame() <= 8)) or (focus.getFrame() = 17)
+		{
+			charge = class_0581_randRange(10, 20);
+			charge += Avatar.getMana() / 4;
+		}
+	}
+	else if spell = 4
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 0) and (focus.getFrame() <= 2)) or (focus.getFrame() = 15)
+		{
+			charge = class_0581_randRange(4, 9);
+			charge += Avatar.getMana() / 7;
+		}
+		else if ((focus.getFrame() >= 3) and (focus.getFrame() <= 5)) or (focus.getFrame() = 16)
+		{
+			charge = class_0581_randRange(6, 12);
+			charge += Avatar.getMana() / 5;
+		}
+		else if ((focus.getFrame() >= 6) and (focus.getFrame() <= 8)) or (focus.getFrame() = 17)
+		{
+			charge = class_0581_randRange(10, 20);
+			charge += Avatar.getMana() / 4;
+		}
+	}
+	else if spell = 5
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 3) and (focus.getFrame() <= 5)) or (focus.getFrame() = 16)
+		{
+			charge = class_0581_randRange(5, 10);
+			charge += Avatar.getMana() / 5;
+		}
+		else if ((focus.getFrame() >= 6) and (focus.getFrame() <= 8)) or (focus.getFrame() = 17)
+		{
+			charge = class_0581_randRange(7, 14);
+			charge += Avatar.getMana() / 5;
+		}
+	}
+	else if spell = 6
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 3) and (focus.getFrame() <= 5)) or (focus.getFrame() = 16)
+		{
+			charge = class_0581_randRange(4, 8);
+			charge += Avatar.getMana() / 7;
+		}
+		else if ((focus.getFrame() >= 6) and (focus.getFrame() <= 8)) or (focus.getFrame() = 17)
+		{
+			charge = class_0581_randRange(5, 10);
+			charge += Avatar.getMana() / 5;
+		}
+	}
+	else if spell = 7
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 3) and (focus.getFrame() <= 5)) or (focus.getFrame() = 16)
+		{
+			charge = class_0581_randRange(3, 6);
+			charge += Avatar.getMana() / 10;
+		}
+		else if ((focus.getFrame() >= 6) and (focus.getFrame() <= 8)) or (focus.getFrame() = 17)
+		{
+			charge = class_0581_randRange(4, 8);
+			charge += Avatar.getMana() / 7;
+		}
+	}
+	else if spell = 8
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 6) and (focus.getFrame() <= 8)) or (focus.getFrame() = 17)
+		{
+			charge = class_0581_randRange(4, 8);
+			charge += Avatar.getMana() / 7;
+		}
+	}
+	else if spell = 9
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 6) and (focus.getFrame() <= 8)) or (focus.getFrame() = 17)
+		{
+			charge = class_0581_randRange(3, 6);
+			charge += Avatar.getMana() / 10;
+		}
+	}
+	else if spell = 10
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 9) and (focus.getFrame() <= 11)) or (focus.getFrame() = 18)
+		{
+			charge = class_0581_randRange(3, 6);
+			charge += Avatar.getMana() / 10;
+		}
+	}
+	else if spell = 11
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 9) and (focus.getFrame() <= 11)) or (focus.getFrame() = 18)
+		{
+			charge = class_0581_randRange(3, 6);
+			charge += Avatar.getMana() / 10;
+		}
+	}
+	else if spell = 12
+	{
+		if focus.getFrame() = 20
+		{
+			charge = 1;
+		}
+		if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+		{
+			charge = 1;
+		}
+		else if ((focus.getFrame() >= 9) and (focus.getFrame() <= 11)) or (focus.getFrame() = 18)
+		{
+			charge = 1;
+			if Avatar.getMana() >= 25
+			{
+				charge++;
+			}
+		}
+	}
+	return charge;
+}
+
+// Derived: routine 0x3552, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine activeFrame(focus:Item):Frame
+{
+	if ((focus.getFrame() >= 12) and (focus.getFrame() <= 14)) or (focus.getFrame() = 19)
+	{
+		return 12;
+	}
+	else if ((focus.getFrame() >= 0) and (focus.getFrame() <= 2)) or (focus.getFrame() = 15)
+	{
+		return 0;
+	}
+	else if ((focus.getFrame() >= 3) and (focus.getFrame() <= 5)) or (focus.getFrame() = 16)
+	{
+		return 3;
+	}
+	else if ((focus.getFrame() >= 6) and (focus.getFrame() <= 8)) or (focus.getFrame() = 17)
+	{
+		return 6;
+	}
+	else if ((focus.getFrame() >= 9) and (focus.getFrame() <= 11)) or (focus.getFrame() = 18)
+	{
+		return 9;
+	}
+}
+
+// Derived: routine 0x3650, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// O/E: the target ABI profile proves this callable kind.
+routine free_prepend_list_line(arg_00:String List, arg_02:String)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:String List;
+	local_m02 = arg_00;
+	arg_00 = <<arg_02>>;
+	arg_00 += local_m02;
+	return arg_00;
+}
+
+// Derived: routine 0x3674, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// O/E: the target ABI profile proves this callable kind.
+routine free_prepend_list_lines(arg_00:String List, arg_02:String List)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:String List;
+	local_m02 = arg_00;
+	arg_00 = arg_02;
+	arg_00 += local_m02;
+	return arg_00;
+}
+
+// Derived: routine 0x3695, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// O/E: the target ABI profile proves this callable kind.
+routine free_append_list_line(arg_00:String List, arg_02:String)
+{
+	arg_00 -= <<arg_02>>;
+	arg_00 += <<arg_02>>;
+	return arg_00;
+}
+
+// Derived: routine 0x36B8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// O/E: the target ABI profile proves this callable kind.
+routine free_append_list_lines(arg_00:String List, arg_02:String List)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:String;
+	foreach local_m02 in arg_02 {
+		arg_00 -= <<local_m02>>;
+	}
+	arg_00 += arg_02;
+	return arg_00;
+}
+
+// Derived: routine 0x36E7, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine unkCloseAllGumps():Boolean
+{
+	// X: BP-bound neutral body storage views.
+	closedGump:Boolean;
+	item:Item;
+	closedGump = 0;
+	foreach recursive item where (family = 6) within 30 cells of Avatar {
+		if item.getStatus() & 256
+		{
+			if item.isNpc()
+			{
+				item.closeGump();
+			}
+			else
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn item.use() -> return;
+			}
+			closedGump = 1;
+		}
+	}
+	if Avatar.getStatus() & 256
+	{
+		Avatar.closeGump();
+		closedGump = 1;
+	}
+	return closedGump;
+}
+
+// Derived: routine 0x3768, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views; overlapping names alias bytes.
+// O/E: the target ABI profile proves this callable kind.
+process free_teleport_npc_on_schedule(arg_00:Npc, arg_00_w01:U8Bytes1, arg_02:U8Word, arg_04:U8Word, arg_06:U8Byte)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	[[PT_DEFAULT, NULL_REF]];
+	Malchir.realDoAnim(AS_ENTER_CAST, Malchir.getDir());
+	Malchir.realDoAnim(31, Malchir.getDir());
+	local_m05_w02 = arg_00.getX() + 96;
+	local_m03 = arg_00.getY() + 96;
+	local_m01 = arg_00.getZ() + 8;
+	killProcess(arg_00, PT_ANIM);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m05) -> return;
+	wait(25);
+	class_057C_toggleStatus(16, u8_local_address(arg_00_w01));
+	class_057C_toggleStatus(4, u8_local_address(arg_00_w01));
+	wait(35);
+	arg_00.teleport(arg_02, arg_04, arg_06, 12);
+	class_057C_toggleStatus(16, u8_local_address(arg_00_w01));
+	class_057C_toggleStatus(4, u8_local_address(arg_00_w01));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn arg_00.schedule((TimeInGameHours()) : DWord) -> return;
+	Malchir.realDoAnim(31, Malchir.getDir());
+	Malchir.realDoAnim(AS_EXIT_CAST, Malchir.getDir());
+}
+

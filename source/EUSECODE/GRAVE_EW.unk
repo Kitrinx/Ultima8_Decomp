@@ -1,0 +1,34 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x015E
+// FLEX slot: 352
+// Original offset: 0x0008178A
+// Naming evidence: E, exact object-1 linker name `GRAVE_EW`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GRAVE_EW.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass GRAVE_EW inherits Item
+{
+	process grave_ew_look_bark_gravestone();
+	process grave_ew_use_forward_to_grave_ns_use_grave_by_quality();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GRAVE_EW::grave_ew_look_bark_gravestone()
+{
+	bark("gravestone ");
+}
+
+// Derived: routine 0x00AE, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GRAVE_EW::grave_ew_use_forward_to_grave_ns_use_grave_by_quality()
+{
+	class_00C5_grave_ns_use_grave_by_quality(this);
+}
+

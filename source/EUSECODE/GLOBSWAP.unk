@@ -1,0 +1,93 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04B0
+// FLEX slot: 1202
+// Original offset: 0x0007C3DF
+// Naming evidence: E, exact object-1 linker name `GLOBSWAP`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GLOBSWAP.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass GLOBSWAP inherits Egg
+{
+	process globswap_enter_fast_area_replace_matching_region_items();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GLOBSWAP::globswap_enter_fast_area_replace_matching_region_items()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:Item;
+	local_m06:Item;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0E:U8Word;
+	local_m10:U8Word;
+	local_m12:U8Word;
+	local_m13:U8Byte;
+	local_m08 = getX() & 32256;
+	local_m0A = getY() & 32256;
+	foreach local_m04 within 16 cells of referent {
+		local_m0C = local_m04.getX() & 32256;
+		local_m0E = local_m04.getY() & 32256;
+		if (not (local_m04.getStatus() & 128)) and (local_m0C = local_m08) and (local_m0E = local_m0A)
+		{
+			if (local_m04.getType() != 73) and (local_m04.getType() != 2)
+			{
+				local_m04.destroy();
+			}
+		}
+	}
+	local_m13 = 0;
+	if postEarthQuake = 0
+	{
+		foreach local_m02 where (type = 73) within 1023 cells of referent {
+			if (local_m02.getUnkEggType() = 47) and (Egg_getEggId(u8_local_address(local_m02_w01)) = Egg_getEggId(this))
+			{
+				local_m0C = local_m02.getX() & 32256;
+				local_m0E = local_m02.getY() & 32256;
+				local_m13 = 1;
+				local_m04 = local_m02;
+			}
+		}
+	}
+	else if postEarthQuake = 1
+	{
+		foreach local_m02 where (type = 73) within 1023 cells of referent {
+			if (local_m02.getUnkEggType() = 48) and (Egg_getEggId(u8_local_address(local_m02_w01)) = Egg_getEggId(this))
+			{
+				local_m0C = local_m02.getX() & 32256;
+				local_m0E = local_m02.getY() & 32256;
+				local_m13 = 1;
+				local_m04 = local_m02;
+			}
+		}
+	}
+	if local_m13 = 0
+	{
+		return;
+	}
+	local_m02 = local_m04;
+	foreach local_m04 within 16 cells of local_m02 {
+		local_m10 = local_m04.getX() & 32256;
+		local_m12 = local_m04.getY() & 32256;
+		if (not (local_m04.getStatus() & 128)) and (local_m10 = local_m0C) and (local_m12 = local_m0E)
+		{
+			if local_m04.getType() != 73
+			{
+				local_m10 = (local_m04.getX() & 511) | local_m08;
+				local_m12 = (local_m04.getY() & 511) | local_m0A;
+				Item_create(local_m04.getFrame(), local_m04.getType(), u8_local_address(local_m06_w01));
+				local_m06.pop(local_m10, local_m12, getZ() + local_m04.getZ());
+				local_m06.orStatus(128);
+			}
+		}
+	}
+}
+

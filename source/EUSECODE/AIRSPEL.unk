@@ -1,0 +1,1277 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0596
+// FLEX slot: 1432
+// Original offset: 0x000056BC
+// Naming evidence: E, exact object-1 linker name `AIRSPEL`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/AIRSPEL.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "snddefs";
+uses "free";
+uses "flags";
+uses "door";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine airspel_find_breath_focus()
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	foreach recursive local_m02 within container 1 {
+		if ((local_m02.getFrame() = 3) and (local_m02.getType() = 442)) or (local_m02.getType() = 793)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+// Derived: routine 0x00CF, event mask 0x00000000.
+// R: behavior-derived callable name.
+// O/E: the target ABI profile proves this callable kind.
+process airspel_cast_divination()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:U8Word;
+	local_m04:String;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m02 = Avatar.getMap();
+	class_0581_unkCloseAllGumps();
+	if (Avatar.getMana() - 3) < 0
+	{
+		class_057C_realDoAnim(this, 27, getDir());
+		safePlaySFX(124, 100);
+		class_057C_realDoAnim(this, 28, getDir());
+	}
+	else
+	{
+		if hasBreath
+		{
+			if class_0596_airspel_find_breath_focus() = 0
+			{
+				class_057C_realDoAnim(this, 27, getDir());
+				safePlaySFX(124, 100);
+				class_057C_realDoAnim(this, 28, getDir());
+				return;
+			}
+		}
+		Avatar.setMana(Avatar.getMana() - 3);
+		class_057C_realDoAnim(this, 27, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(this, getDir(), 29) -> return;
+		class_057C_timedBark(this, 100, u8_string_address("In Wis"));
+		AccumulateIntelligence(20);
+		class_057C_realDoAnim(this, 28, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 100, 116) -> return;
+		local_m04 = "The focus reads that I am ";
+		if local_m02 = 1
+		{
+			local_m04 += "at Programmer's Playland! ";
+		}
+		else if local_m02 = 3
+		{
+			local_m04 += "by the docks of Tenebrae. ";
+		}
+		else if local_m02 = 4
+		{
+			local_m04 += "near Fishermans Reef. ";
+		}
+		else if local_m02 = 7
+		{
+			local_m04 += "at north of Tenebrae in the Valley. ";
+		}
+		else if local_m02 = 5
+		{
+			local_m04 += "on the East Road outside of Tenebrae. ";
+		}
+		else if local_m02 = 8
+		{
+			local_m04 += "on the Plateau. ";
+		}
+		else if local_m02 = 12
+		{
+			local_m04 += "at the Daemon's Crag. ";
+		}
+		else if local_m02 = 13
+		{
+			local_m04 += "at the Brimstone Cliffs. ";
+		}
+		else if local_m02 = 24
+		{
+			local_m04 += "at the Lava River. ";
+		}
+		else if local_m02 = 25
+		{
+			local_m04 += "at the Lava River. ";
+		}
+		else if local_m02 = 16
+		{
+			local_m04 += "at Carthax Lake. ";
+		}
+		else if local_m02 = 15
+		{
+			local_m04 += "at Treasure Cove. ";
+		}
+		else if local_m02 = 21
+		{
+			local_m04 += "at Stone Cove. ";
+		}
+		else if local_m02 = 14
+		{
+			local_m04 += "in the Obsidian Fortress. ";
+		}
+		else if local_m02 = 26
+		{
+			local_m04 += "at Carthax Lake. ";
+		}
+		else if local_m02 = 28
+		{
+			local_m04 += "at Carthax Lake. ";
+		}
+		else if local_m02 = 31
+		{
+			local_m04 += "in the Hall of the Mountain King. ";
+		}
+		else if local_m02 = 37
+		{
+			local_m04 += "on Argentrock Isle. ";
+		}
+		else if local_m02 = 39
+		{
+			local_m04 += "in West Tenebrae. ";
+		}
+		else if local_m02 = 40
+		{
+			local_m04 += "in central Tenebrae. ";
+		}
+		else if local_m02 = 41
+		{
+			local_m04 += "in east Tenebrae. ";
+		}
+		else if local_m02 = 44
+		{
+			local_m04 += "on the Plain of Fire. ";
+		}
+		else if local_m02 = 45
+		{
+			local_m04 += "on the Plain of Water. ";
+		}
+		else if local_m02 = 46
+		{
+			local_m04 += "on the Plain of Air. ";
+		}
+		else if local_m02 = 47
+		{
+			local_m04 += "on the Plain of Earth. ";
+		}
+		else if local_m02 = 49
+		{
+			local_m04 += "in the Upper Catacombs. ";
+		}
+		else if local_m02 = 50
+		{
+			local_m04 += "in the Upper Catacombs. ";
+		}
+		else if local_m02 = 62
+		{
+			local_m04 += "in the Upper Catacombs. ";
+		}
+		else if local_m02 = 51
+		{
+			local_m04 += "in the Lower Catacombs. ";
+		}
+		else if local_m02 = 57
+		{
+			local_m04 += "in the Pit of the Dead. ";
+		}
+		else if local_m02 = 54
+		{
+			local_m04 += "in the Shrine of the Ancient Ones. ";
+		}
+		else
+		{
+			local_m04 += "totally lost! ";
+		}
+		bark(u8_string_local_address(local_m04));
+		local_m04 = "Also it reads that the hour is currently ";
+		if class_0581_getPeriod() = 0
+		{
+			local_m04 += " Bloodwatch, ";
+		}
+		else if class_0581_getPeriod() = 1
+		{
+			local_m04 += " Firstebb, ";
+		}
+		else if class_0581_getPeriod() = 2
+		{
+			local_m04 += " Daytide, ";
+		}
+		else if class_0581_getPeriod() = 3
+		{
+			local_m04 += " Threemoons, ";
+		}
+		else if class_0581_getPeriod() = 4
+		{
+			local_m04 += " Lastebb, ";
+		}
+		else if class_0581_getPeriod() = 5
+		{
+			local_m04 += " Eventide, ";
+		}
+		else
+		{
+			local_m04 += " very late, ";
+		}
+		local_m06 = TimeInGameHours() / 24;
+		local_m08 = local_m06 modulo 6;
+		local_m04 += " the day is ";
+		if local_m08 = 0
+		{
+			local_m04 += " Guarday, ";
+		}
+		else if local_m08 = 1
+		{
+			local_m04 += " Earthday, ";
+		}
+		else if local_m08 = 2
+		{
+			local_m04 += " Waterday, ";
+		}
+		else if local_m08 = 3
+		{
+			local_m04 += " Airday, ";
+		}
+		else if local_m08 = 4
+		{
+			local_m04 += " Fireday, ";
+		}
+		else if local_m08 = 5
+		{
+			local_m04 += " Blackday, ";
+		}
+		else
+		{
+			local_m04 += " GuardDay, ";
+		}
+		local_m0A = (local_m06 modulo 45) + 1;
+		local_m04 += "the " + numToStr(local_m0A) + " day of the month of ";
+		local_m0C = (local_m06 / 45) modulo 6;
+		if local_m0C = 0
+		{
+			local_m04 += "Stonemark. ";
+		}
+		else if local_m0C = 1
+		{
+			local_m04 += "Skyrock. ";
+		}
+		else if local_m0C = 2
+		{
+			local_m04 += "Windbreak. ";
+		}
+		else if local_m0C = 3
+		{
+			local_m04 += "Stormpeak. ";
+		}
+		else if local_m0C = 4
+		{
+			local_m04 += "Firefall. ";
+		}
+		else if local_m0C = 5
+		{
+			local_m04 += "DarkFlame. ";
+		}
+		else
+		{
+			local_m04 += "StoneMark. ";
+		}
+		bark(u8_string_local_address(local_m04));
+		if local_m06 > 1
+		{
+			bark("I have been in Pagan for roughly " + numToStr(local_m06) + " days.");
+		}
+	}
+}
+
+// Derived: routine 0x0BEB, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::healingTouch(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	magic:Item;
+	magic2:Item;
+	n:Npc;
+	num:Number;
+	heal:Number;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if not ref
+	{
+		return;
+	}
+	class_0581_unkCloseAllGumps();
+	if referent = 1
+	{
+		if (Avatar.getMana() - 5) < 0
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		if hasBreath
+		{
+			if class_0596_airspel_find_breath_focus() = 0
+			{
+				class_057C_realDoAnim(this, 27, getDir());
+				safePlaySFX(124, 100);
+				class_057C_realDoAnim(this, 28, getDir());
+				return;
+			}
+		}
+		[[PT_DEFAULT, NULL_REF]];
+		item = target();
+		if item = 0
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		if item != 1
+		{
+			Avatar.turnToFace(Avatar.getDirToItem(item), 0, 5);
+		}
+	}
+	else
+	{
+		item = ref;
+	}
+	setMana(Avatar.getMana() - 5);
+	class_057C_realDoAnim(this, 27, getDir());
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(this, getDir(), 29) -> return;
+	class_057C_timedBark(this, 100, u8_string_address("In Mani"));
+	AccumulateIntelligence(20);
+	if (item.getType() = 209) and (item.getFrame() < 3)
+	{
+		if getDistance(Avatar:Referent, item) > 550
+		{
+			Item_bark(u8_string_address("The animal must be closer! "), u8_stack_ref(1));
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		Item_create(0, 587, u8_local_address(local_m04_w01));
+		magic.pop(item.getX() + 10, item.getY() + 10, item.getZ() + 30);
+		for num = 6 to 11
+		{
+			item.setFrame(num);
+			if num = 10
+			{
+				safePlaySFX(69, 200);
+			}
+			wait(25);
+		}
+		magic.destroy();
+		for num = 0 to 5
+		{
+			item.setFrame(12);
+			wait(20);
+			item.setFrame(11);
+			wait(15);
+		}
+		safePlaySFX(7, 200);
+		Item_create(0, 202, u8_local_address(local_m06_w01));
+		magic2.pop(item.getX() + 110, item.getY() + 110, item.getZ() + 5);
+		for num = 0 to 13
+		{
+			magic2.setFrame(num);
+			wait(10);
+			if num = 5
+			{
+				item.destroy();
+			}
+		}
+		if Avatar.getMap() = 37
+		{
+			passedThirdTest = 1;
+		}
+		magic2.destroy();
+	}
+	else
+	{
+		if item.isNpc()
+		{
+			n = item;
+			heal = urandom(8) + 8;
+			if (heal + n.getHp()) > (n.getStr() * 2)
+			{
+				n.setHp(n.getStr() * 2);
+			}
+			else
+			{
+				n.setHp(heal + n.getHp());
+			}
+			Item_create(0, 587, u8_local_address(local_m04_w01));
+			magic.pop(item.getX() + 5, item.getY() + 10, item.getZ() + 30);
+			for num = 0 to 9
+			{
+				magic.setFrame(num);
+				wait(3);
+			}
+			for num = 0 to 9
+			{
+				magic.setFrame(num);
+				wait(3);
+			}
+			magic.destroy();
+		}
+		else
+		{
+			safePlaySFX(57, 200);
+		}
+		class_057C_realDoAnim(this, 28, getDir());
+		safePlaySFX(116, 100);
+	}
+}
+
+// Derived: routine 0x11AA, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::aerialServant()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:Item;
+	local_m06_w01:U8Bytes1;
+	local_m08:Item;
+	local_m0E:U8Bytes6; // X: untouched.
+	local_m10:U8Word;
+	local_m10_w01:U8Bytes1;
+	local_m12:U8Word;
+	local_m14:U8Word;
+	local_m16:U8Word;
+	local_m18:U8Word;
+	local_m1A:U8Word;
+	local_m1A_w01:U8Bytes1;
+	local_m1B:U8Bytes1; // X: untouched.
+	local_m1C:U8Bytes1;
+	local_m1D:U8Bytes1; // X: untouched.
+	local_m1E:U8Bytes1;
+	local_m20:U8Word;
+	local_m20_w01:U8Bytes1;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_0581_unkCloseAllGumps();
+	if (Avatar.getMana() - 5) < 0
+	{
+		class_057C_realDoAnim(this, 27, getDir());
+		safePlaySFX(124, 100);
+		class_057C_realDoAnim(this, 28, getDir());
+		return;
+	}
+	if hasBreath
+	{
+		if class_0596_airspel_find_breath_focus() = 0
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+	}
+	Avatar.setMana(Avatar.getMana() - 5);
+	[[PT_DEFAULT, NULL_REF]];
+	local_m02 = target();
+	if local_m02 = 0
+	{
+		class_057C_realDoAnim(this, 27, getDir());
+		safePlaySFX(124, 100);
+		class_057C_realDoAnim(this, 28, getDir());
+		return;
+	}
+	Avatar.turnToFace(getDirToCoords(local_m02.getX(), local_m02.getY()), 0, 10);
+	Avatar.realDoAnim(AS_ENTER_CAST, getDir());
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 54) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(this, getDir(), 30) -> return;
+	class_057C_timedBark(this, 100, u8_string_address("Kal Ort Xen"));
+	AccumulateIntelligence(20);
+	if local_m02.getType() = 841
+	{
+		killProcess(local_m02, PT_ANIM);
+		orStatus(4);
+	}
+	if (local_m02.getType() = 68) or (local_m02.getType() = 69) or (local_m02.getType() = 340) or (local_m02.getType() = 342) or (local_m02.getType() = 672) or (local_m02.getType() = 505) or (local_m02.getType() = 115)
+	{
+		Item_create(0, 481, u8_local_address(local_m06_w01));
+		class_057C_realDoAnim(this, 30, getDir());
+		local_m06.pop(Avatar.getX(), Avatar.getY(), Avatar.getZ() + 45);
+		levitateAvatar = 1;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn local_m06.look() -> return;
+		class_057C_moveItemTo(u8_local_address(local_m06_w01), local_m02.getX(), local_m02.getY(), local_m02.getZ() + 10, 10);
+		Item_create(20, 587, u8_local_address(local_m08_w01));
+		local_m08.pop(local_m02.getX(), local_m02.getY(), local_m02.getZ() + 20);
+		wait(45);
+		if (local_m02.getType() = 68) or (local_m02.getType() = 69) or (local_m02.getType() = 340) or (local_m02.getType() = 342)
+		{
+			local_m10 = local_m02;
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0044_door_ns_toggle_open_closed(u8_local_address(local_m10_w01), referent) -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m02.use() -> return;
+		}
+		wait(45);
+		levitateAvatar = 0;
+		local_m08.destroy();
+		wait(35);
+		local_m06.destroy();
+		Avatar.realDoAnim(AS_EXIT_CAST, getDir());
+		safePlaySFX(116, 100);
+		return;
+	}
+	local_m12 = local_m02.getWeight();
+	if ((local_m02.getType() = 397) and (local_m02.getFrame() = 20)) or (local_m12 = 0)
+	{
+		safePlaySFX(124, 100);
+		class_057C_realDoAnim(this, 28, getDir());
+		safePlaySFX(116, 100);
+		return;
+	}
+	u8goto label_1DF7 if not ((not local_m02.isNpc()) and (not local_m02.getTypeFlag(0)));
+	class_057C_realDoAnim(this, 29, getDir());
+	playSFX(54, 200);
+	Item_create(0, 481, u8_local_address(local_m06_w01));
+	local_m06.pop(Avatar.getX(), Avatar.getY(), Avatar.getZ() + 45);
+	levitateAvatar = 1;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn local_m06.look() -> return;
+	class_057C_moveItemTo(u8_local_address(local_m06_w01), local_m02.getX(), local_m02.getY(), local_m02.getZ() + 10, 10);
+	Item_create(0, 587, u8_local_address(local_m08_w01));
+	local_m08.pop(local_m02.getX(), local_m02.getY(), local_m02.getZ() + 30);
+	local_m04 = target();
+	if local_m04 = 0
+	{
+		local_m04 = local_m02;
+	}
+	if (local_m02 = local_m04) and (local_m02.getFamily() = 6)
+	{
+		local_m08.setFrame(local_m08.getFrame() + 20);
+		wait(45);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn local_m02.use() -> return;
+		levitateAvatar = 0;
+		local_m08.destroy();
+		wait(35);
+		local_m06.destroy();
+		Avatar.realDoAnim(AS_EXIT_CAST, getDir());
+		safePlaySFX(116, 100);
+		return;
+	}
+	u8goto label_1B07 if not (local_m04 = 1);
+	local_m14 = local_m04.getX();
+	local_m16 = local_m04.getY();
+	local_m18 = local_m04.getZ();
+	local_m1A = Avatar.getEquip(6);
+	if local_m1A
+	{
+		if local_m02.legal_move(u8_local_address(local_m1A_w01), 0)
+		{
+			local_m04.move(local_m14, local_m16, local_m18);
+			safePlaySFX(58, 200);
+			Avatar.realDoAnim(AS_EXIT_CAST, getDir());
+			Avatar.realDoAnim(AS_ENTER_CAST, getDir());
+			local_m08.destroy();
+			local_m04.legal_move(u8_local_address(local_m1A_w01), 0);
+			class_057C_moveItemTo(u8_local_address(local_m06_w01), Avatar.getX(), Avatar.getY(), Avatar.getZ() + 10, 10);
+			Item_create(0, 587, u8_local_address(local_m08_w01));
+			local_m08.pop(local_m04.getX(), local_m04.getY(), local_m04.getZ() + 30);
+			wait(30);
+			safePlaySFX(57, 200);
+			wait(45);
+			levitateAvatar = 0;
+			local_m08.destroy();
+			wait(35);
+			local_m06.destroy();
+			Avatar.realDoAnim(AS_EXIT_CAST, getDir());
+			safePlaySFX(116, 100);
+			return;
+		}
+		else
+		{
+			safePlaySFX(124, 100);
+			local_m08.destroy();
+			local_m06.destroy();
+			levitateAvatar = 0;
+			class_057C_realDoAnim(this, 28, getDir());
+			safePlaySFX(116, 100);
+			Item_bark(u8_string_address("I am carrying too much! "), u8_stack_ref(1));
+			return;
+		}
+	}
+	else
+	{
+		safePlaySFX(116, 100);
+		Item_bark(u8_string_address("I have no backpack! "), u8_stack_ref(1));
+	}
+	u8label label_1B07:
+	if local_m04 != local_m02
+	{
+		local_m04.getFootpad(u8_local_address(local_m1C), u8_local_address(local_m1E), u8_local_address(local_m20_w01));
+		local_m20 = (local_m20 * 8) + local_m04.getZ();
+		if canExistAt(local_m02.getType(), local_m04.getX(), local_m04.getY(), local_m20, 1, 0, 0) and local_m04.getTypeFlag(3)
+		{
+			safePlaySFX(58, 200);
+			Avatar.realDoAnim(AS_EXIT_CAST, getDir());
+			Avatar.turnToFace(getDirToCoords(local_m04.getX(), local_m04.getY()), 0, 10);
+			Avatar.realDoAnim(AS_ENTER_CAST, getDir());
+			local_m08.destroy();
+			local_m02.push();
+			class_057C_moveItemTo(u8_local_address(local_m06_w01), local_m04.getX(), local_m04.getY(), local_m20, 10);
+			Item_create(0, 587, u8_local_address(local_m08_w01));
+			local_m08.pop(local_m04.getX(), local_m04.getY(), local_m04.getZ() + 30);
+			wait(30);
+			local_m02.pop(local_m04.getX(), local_m04.getY(), local_m20);
+			local_m02.fall();
+			safePlaySFX(57, 200);
+			wait(45);
+			levitateAvatar = 0;
+			local_m08.destroy();
+			wait(35);
+			local_m06.destroy();
+			Avatar.realDoAnim(AS_EXIT_CAST, getDir());
+			safePlaySFX(116, 100);
+			return;
+		}
+	}
+	local_m08.setFrame(local_m08.getFrame() + 10);
+	safePlaySFX(57, 200);
+	wait(60);
+	levitateAvatar = 0;
+	local_m08.destroy();
+	wait(35);
+	local_m06.destroy();
+	safePlaySFX(116, 100);
+	Avatar.realDoAnim(AS_EXIT_CAST, getDir());
+	safePlaySFX(116, 100);
+	return;
+	u8label label_1DF7:
+	safePlaySFX(124, 100);
+	class_057C_realDoAnim(this, 28, getDir());
+	safePlaySFX(116, 100);
+	return;
+}
+
+// Derived: routine 0x1E4B, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::restoration(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	magic:Item;
+	magic2:Item;
+	magic3:Item;
+	n:Npc;
+	num:Number;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if not ref
+	{
+		return;
+	}
+	class_0581_unkCloseAllGumps();
+	if referent = 1
+	{
+		if (Avatar.getMana() - 15) < 0
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		if hasBreath
+		{
+			if class_0596_airspel_find_breath_focus() = 0
+			{
+				class_057C_realDoAnim(this, 27, getDir());
+				safePlaySFX(124, 100);
+				class_057C_realDoAnim(this, 28, getDir());
+				return;
+			}
+		}
+		Avatar.setMana(Avatar.getMana() - 15);
+		item = target();
+		if item = 0
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		if item != 1
+		{
+			Avatar.turnToFace(Avatar.getDirToItem(item), 0, 5);
+		}
+	}
+	else
+	{
+		item = ref;
+	}
+	class_057C_realDoAnim(this, 27, getDir());
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(this, getDir(), 29) -> return;
+	class_057C_timedBark(this, 100, u8_string_address("Vas In Mani"));
+	AccumulateIntelligence(20);
+	if (item.getType() = 209) and (item.getFrame() < 3)
+	{
+		class_057C_realDoAnim(this, 30, getDir());
+		if getDistance(Avatar:Referent, item) > 550
+		{
+			Item_bark(u8_string_address("The animal must be closer! "), u8_stack_ref(1));
+			class_057C_realDoAnim(this, 28, getDir());
+			safePlaySFX(116, 100);
+			return;
+		}
+		Item_create(0, 587, u8_local_address(local_m04_w01));
+		magic.pop(item.getX() + 10, item.getY() + 10, item.getZ() + 30);
+		for num = 6 to 11
+		{
+			item.setFrame(num);
+			if num = 10
+			{
+				safePlaySFX(69, 200);
+			}
+			wait(25);
+		}
+		magic.destroy();
+		for num = 0 to 5
+		{
+			item.setFrame(12);
+			wait(15);
+			item.setFrame(11);
+			wait(15);
+		}
+		safePlaySFX(7, 200);
+		Item_create(0, 202, u8_local_address(local_m06_w01));
+		magic2.pop(item.getX() + 110, item.getY() + 110, item.getZ() + 5);
+		for num = 0 to 13
+		{
+			magic2.setFrame(num);
+			wait(10);
+			if num = 5
+			{
+				item.destroy();
+			}
+		}
+		if Avatar.getMap() = 37
+		{
+			passedThirdTest = 1;
+		}
+		magic2.destroy();
+	}
+	else
+	{
+		if item.isNpc() = 1
+		{
+			n = item;
+			n.setHp(n.getStr() * 2);
+			Item_create(10, 587, u8_local_address(local_m04_w01));
+			magic.pop(item.getX() + 7, item.getY() + 10, item.getZ() + 20);
+			wait(20);
+			safePlaySFX(59, 200);
+			class_057C_realDoAnim(this, 29, getDir());
+			Item_create(0, 587, u8_local_address(local_m06_w01));
+			magic2.pop(item.getX() + 30, item.getY() + 10, item.getZ() + 35);
+			wait(20);
+			safePlaySFX(54, 200);
+			class_057C_realDoAnim(this, 31, getDir());
+			Item_create(20, 587, u8_local_address(local_m08_w01));
+			magic3.pop(item.getX() - 30, item.getY() + 10, item.getZ() + 30);
+			wait(20);
+			magic.destroy();
+			wait(20);
+			magic2.destroy();
+			wait(20);
+			magic3.destroy();
+		}
+		else
+		{
+			safePlaySFX(57, 200);
+		}
+		killProcess(referent, PT_ANIM);
+		class_057C_realDoAnim(this, 28, getDir());
+		safePlaySFX(116, 100);
+	}
+}
+
+// Derived: routine 0x2506, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::fadeFromSight()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	counter:Number;
+	limit:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+		class_0581_unkCloseAllGumps();
+		if (Avatar.getMana() - 5) < 0
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		if hasBreath
+		{
+			if class_0596_airspel_find_breath_focus() = 0
+			{
+				class_057C_realDoAnim(this, 27, getDir());
+				safePlaySFX(124, 100);
+				class_057C_realDoAnim(this, 28, getDir());
+				return;
+			}
+		}
+		Avatar.setMana(Avatar.getMana() - 5);
+		class_057C_realDoAnim(this, 27, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(this, getDir(), 31) -> return;
+		class_057C_timedBark(this, 100, u8_string_address("Quas An Lor"));
+		AccumulateIntelligence(20);
+		class_057C_realDoAnim(this, 29, getDir());
+		class_057C_realDoAnim(this, 28, getDir());
+		safePlaySFX(116, 100);
+		[[PT_DEFAULT, NULL_REF]];
+		if Avatar.getStatus() & 4
+		{
+		}
+		else
+		{
+			class_057C_toggleStatus(1, 4, u8_stack_address(-2));
+		}
+		class_057C_toggleStatus(1, 16, u8_stack_address(-2));
+		Avatar.setFrame(Avatar.getFrame());
+		safePlaySFX(116, 100);
+		if Avatar.getStatus() & 16
+		{
+			limit = getInt() * 20;
+		}
+		else
+		{
+			return;
+		}
+	}
+	process
+	{
+		if Avatar.getStatus() & 16
+		{
+			wait(10);
+			counter++;
+			if counter > limit
+			{
+				class_057C_toggleStatus(1, 16, u8_stack_address(-2));
+				safePlaySFX(57, 200);
+				Avatar.setFrame(Avatar.getFrame());
+				return;
+			}
+			continue; // X: reconstructed process-phase latch transfer.
+		}
+		safePlaySFX(57, 200);
+		return;
+	}
+}
+
+// Derived: routine 0x27ED, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::airWalk()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ball:Item;
+	item2:Item;
+	duration:DWord;
+	counter:Number;
+	offX:Number;
+	offY:Number;
+	fram:Number;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_0581_unkCloseAllGumps();
+	if getAirWalkEnabled() = 1
+	{
+		Avatar.setAirWalkEnabled(0);
+		Avatar.realDoAnim(AS_ENTER_CAST, Avatar.getDir());
+		Avatar.realDoAnim(30, Avatar.getDir());
+		class_057C_timedBark(1, 100, u8_string_address("An Vas Hur Por"));
+		safePlaySFX(57, 100);
+		Avatar.realDoAnim(AS_EXIT_CAST, Avatar.getDir());
+		foreach item2 where (type = 587) within 10 cells of Avatar {
+			safePlaySFX(57, 100);
+			item2.destroy();
+		}
+		return;
+	}
+	if (Avatar.getMana() - 15) < 0
+	{
+		class_057C_realDoAnim(this, 27, getDir());
+		safePlaySFX(124, 100);
+		class_057C_realDoAnim(this, 28, getDir());
+		return;
+	}
+	Avatar.setMana(Avatar.getMana() - 15);
+	duration = TimeInMinutes() + ((1) : DWord);
+	class_057C_realDoAnim(this, 27, getDir());
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 54) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(this, getDir(), 30) -> return;
+	class_057C_timedBark(this, 100, u8_string_address("Vas Hur Por"));
+	Item_create(0, 587, u8_local_address(local_m02_w01));
+	ball.orStatus(128);
+	ball.pop(Avatar.getX(), Avatar.getY() - 10, Avatar.getZ() + 10);
+	[[PT_DEFAULT, ball]];
+	AccumulateIntelligence(20);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(this, getDir(), 28) -> return;
+	Avatar.setAirWalkEnabled(1);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 116) -> return;
+	u8label label_2A8A:
+	suspend;
+	if Avatar.getAirWalkEnabled() = 0
+	{
+		safePlaySFX(57, 100);
+		foreach item2 where (type = 587) within 10 cells of Avatar {
+			safePlaySFX(57, 100);
+			item2.destroy();
+		}
+		return;
+	}
+	else
+	{
+		u8label label_2AFB:
+		u8goto label_2CAF if not (TimeInMinutes() < duration);
+		counter++;
+		if counter > 14
+		{
+			counter = 0;
+		}
+		if counter = 0
+		{
+			offX = 0;
+			offY = -10;
+		}
+		else if counter = 1
+		{
+			offX = 4;
+			offY = -9;
+		}
+		else if counter = 2
+		{
+			offX = 7;
+			offY = -7;
+		}
+		else if counter = 3
+		{
+			offX = 9;
+			offY = -4;
+		}
+		else if counter = 4
+		{
+			offX = 10;
+			offY = 0;
+		}
+		else if counter = 5
+		{
+			offX = 9;
+			offY = 4;
+		}
+		else if counter = 6
+		{
+			offX = 7;
+			offY = 7;
+		}
+		else if counter = 7
+		{
+			offX = 4;
+			offY = 9;
+		}
+		else if counter = 7
+		{
+			offX = 0;
+			offY = 10;
+		}
+		else if counter = 8
+		{
+			offX = -4;
+			offY = 9;
+		}
+		else if counter = 9
+		{
+			offX = -7;
+			offY = 7;
+		}
+		else if counter = 10
+		{
+			offX = -9;
+			offY = 4;
+		}
+		else if counter = 11
+		{
+			offX = -10;
+			offY = 0;
+		}
+		else if counter = 12
+		{
+			offX = -9;
+			offY = -4;
+		}
+		else if counter = 13
+		{
+			offX = -7;
+			offY = -7;
+		}
+		else
+		{
+			if counter = 14
+			{
+				offX = -4;
+				offY = -9;
+				u8goto label_2C49;
+			}
+		}
+		u8label label_2C49:
+		if Avatar.isDead()
+		{
+			return;
+		}
+		ball.move(Avatar.getX() + (offX * 10), Avatar.getY() + (offY * 10), Avatar.getZ() + 20);
+		wait(1);
+		u8goto label_2A8A;
+		u8goto label_2AFB;
+		u8label label_2CAF:
+		Avatar.setAirWalkEnabled(0);
+		u8goto label_2A8A;
+	}
+}
+
+// Derived: routine 0x2CC0, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::hearTruth()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	duration:DWord;
+	counter:Number;
+	offX:Number;
+	offY:Number;
+	fram:Number;
+	ball:Item;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_0581_unkCloseAllGumps();
+	if (Avatar.getMana() - 3) < 0
+	{
+		class_057C_realDoAnim(this, 27, getDir());
+		safePlaySFX(124, 100);
+		class_057C_realDoAnim(this, 28, getDir());
+		return;
+	}
+	if hasBreath
+	{
+		if class_0596_airspel_find_breath_focus() = 0
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+	}
+	Avatar.setMana(Avatar.getMana() - 3);
+	[[PT_DEFAULT, NULL_REF]];
+	duration = TimeInMinutes() + ((2) : DWord);
+	counter = 14;
+	class_057C_realDoAnim(this, 27, getDir());
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 54) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(this, getDir(), 31) -> return;
+	class_057C_timedBark(this, 100, u8_string_address("An Quas Lor"));
+	AccumulateIntelligence(20);
+	class_057C_realDoAnim(this, 28, getDir());
+	safePlaySFX(116, 100);
+	hearTruthActive = 1;
+	u8label label_2E82:
+	suspend;
+	[[PT_DEFAULT, NULL_REF]];
+	if (hearTruthActive = 0) or (TimeInMinutes() > duration)
+	{
+		hearTruthActive = 0;
+		safePlaySFX(59, 100);
+		return;
+	}
+	safePlaySFX(191, 50);
+	wait(100 + urandom(60));
+	u8goto label_2E82;
+	u8goto label_2E82;
+}
+
+// Derived: routine 0x2F00, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::intervention()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	counter:Number;
+	limit:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+		class_0581_unkCloseAllGumps();
+		if (Avatar.getMana() - 15) < 0
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		if hasBreath
+		{
+			if class_0596_airspel_find_breath_focus() = 0
+			{
+				class_057C_realDoAnim(this, 27, getDir());
+				safePlaySFX(124, 100);
+				class_057C_realDoAnim(this, 28, getDir());
+				return;
+			}
+		}
+		Avatar.setMana(Avatar.getMana() - 15);
+		class_057C_realDoAnim(this, 27, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(this, getDir(), 31) -> return;
+		class_057C_timedBark(this, 100, u8_string_address("In Sanct An Jux"));
+		AccumulateIntelligence(20);
+		class_057C_realDoAnim(this, 30, getDir());
+		class_057C_realDoAnim(this, 28, getDir());
+		safePlaySFX(115, 100);
+		[[PT_DEFAULT, NULL_REF]];
+		Avatar.setImmortal();
+		limit = getInt() * 20;
+	}
+	process
+	{
+		wait(10);
+		counter++;
+		if counter > limit
+		{
+			Avatar.clrImmortal();
+			safePlaySFX(57, 200);
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x3139, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::resurrection()
+{
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_0581_unkCloseAllGumps();
+}
+
+// Derived: routine 0x314A, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::reveal()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	item:Item;
+	local_m02_w01:U8Bytes1;
+	magic:Item;
+	num:Number;
+	x:Number;
+	y:Number;
+	z:Number;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	class_0581_unkCloseAllGumps();
+	if (Avatar.getMana() - 5) < 0
+	{
+		class_057C_realDoAnim(this, 27, getDir());
+		safePlaySFX(124, 100);
+		class_057C_realDoAnim(this, 28, getDir());
+	}
+	else
+	{
+		if hasBreath
+		{
+			if class_0596_airspel_find_breath_focus() = 0
+			{
+				class_057C_realDoAnim(this, 27, getDir());
+				safePlaySFX(124, 100);
+				class_057C_realDoAnim(this, 28, getDir());
+				return;
+			}
+		}
+		Avatar.setMana(Avatar.getMana() - 5);
+		class_057C_realDoAnim(this, 27, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(this, getDir(), 29) -> return;
+		class_057C_timedBark(this, 100, u8_string_address("Ort Lor"));
+		AccumulateIntelligence(20);
+		[[PT_DEFAULT, NULL_REF]];
+		foreach item within 40 cells of Avatar {
+			if item.getStatus() & 16
+			{
+				Item_create(0, 587, u8_local_address(local_m04_w01));
+				magic.pop(item.getX() + 5, item.getY() + 10, item.getZ() + 10);
+				safePlaySFX(57, 200);
+				for num = 0 to 9
+				{
+					magic.setFrame(num);
+					wait(3);
+				}
+				x = item.getX();
+				y = item.getY();
+				z = item.getZ();
+				item.push();
+				class_057C_toggleStatus(16, u8_local_address(local_m02_w01));
+				item.pop(x, y, z);
+				item.setFrame(item.getFrame());
+				item.touch();
+				magic.destroy();
+			}
+		}
+		class_057C_realDoAnim(this, 28, getDir());
+		safePlaySFX(116, 100);
+	}
+}
+

@@ -1,0 +1,173 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0431
+// FLEX slot: 1075
+// Original offset: 0x00089142
+// Naming evidence: E, exact object-1 linker name `GUARD7`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GUARD7.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+npcclass GUARD7 inherits Npc
+{
+	process guard7_look_bark_living_or_dead_identity();
+	process guard7_enter_fast_area_revive_guard_and_play_idle_animation();
+	process guard7_schedule_update_period_schedule_and_safe_teleport();
+	process guard7_use_run_conversation();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD7::guard7_look_bark_living_or_dead_identity()
+{
+	if Npc_isDead(u8_stack_ref(49))
+	{
+		bark("dead guardsman ");
+	}
+	else
+	{
+		bark("guardsman ");
+	}
+}
+
+// Derived: routine 0x00E3, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD7::guard7_enter_fast_area_revive_guard_and_play_idle_animation()
+{
+	if isDead()
+	{
+		clrDead();
+		clrInCombat();
+		teleport(100, 100, 0, 41);
+	}
+	else
+	{
+		turnToFace(4, 0, 10);
+		realDoAnim(AS_STAND, 4);
+	}
+}
+
+// Derived: routine 0x014D, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD7::guard7_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	local_m07 = 40;
+	local_m05_w02 = 13567;
+	local_m03 = 6751;
+	local_m01 = 48;
+	if class_057C_canSafeTeleport(this, local_m05, local_m07)
+	{
+		clrDead();
+		class_057C_safeTeleport(this, local_m05, local_m07);
+	}
+}
+
+// Derived: routine 0x01A7, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD7::guard7_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String List;
+	local_m06:U8Word;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Guardsman! "), u8_stack_ref(1)) -> return;
+	enterConvo();
+	wait(60);
+	killProcess(1, PT_BARK);
+	local_m06 = 0;
+	if hydrosFree
+	{
+		local_m06++;
+	}
+	if hasHeart
+	{
+		local_m06++;
+	}
+	if pyrosFree
+	{
+		local_m06++;
+	}
+	if local_m06 > 1
+	{
+		bark("Run for your very life! The Titans seek vengeance! ");
+		exitConvo();
+		return;
+	}
+	else if hasHeart
+	{
+		bark("Find shelter before the quakes consume you! We must stop the walking dead from overrunning the city! ");
+		exitConvo();
+		return;
+	}
+	if guard7Met
+	{
+		if guard7Pissed
+		{
+			bark("What now? ");
+			guard7Pissed = 0;
+		}
+		else if urandom(10) > 5
+		{
+			bark("What do you want? ");
+		}
+		else
+		{
+			bark("More questions? ");
+		}
+	}
+	else
+	{
+		bark("What do you want, stranger? ");
+		guard7Met = 1;
+	}
+	local_m04 = <<"Who are you? ", "What is your duty? ", "Where am I? ", "Bye ">>;
+	while local_m02 != "Bye "
+	{
+		local_m02 = ask(local_m04);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "Who are you? "
+			{
+				local_m04 -= <<"Who are you? ">>;
+				bark("None of your concern! ");
+			}
+			case "What is your duty? "
+			{
+				local_m04 -= <<"What is your duty? ">>;
+				bark("Guarding the Tempest. ");
+			}
+			case "Where am I? "
+			{
+				local_m04 -= <<"Where am I? ">>;
+				bark("What! Are you blind? You are standing in the palace of the Tempest. ");
+			}
+			case "Bye "
+			{
+				bark("I really should be about my duties anyway. ");
+				if (devonInRule = 1) and (not guard7Thanked)
+				{
+					guard7Thanked = 1;
+					bark("If the stories hold any truth, thanks for helping Devon gain the rule of Tenebrae. He is much more tolerant than Mordea was. ");
+				}
+				exitConvo();
+				return;
+			}
+		}
+	}
+}
+

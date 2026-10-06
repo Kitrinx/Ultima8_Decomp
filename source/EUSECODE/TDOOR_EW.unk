@@ -1,0 +1,47 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0156
+// FLEX slot: 344
+// Original offset: 0x0010A813
+// Naming evidence: E, exact object-1 linker name `TDOOR_EW`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/TDOOR_EW.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass TDOOR_EW inherits Item
+{
+	process tdoor_ew_look_forward_to_door_ns_describe_door();
+	process tdoor_ew_use_forward_to_door_ns_toggle_open_closed();
+	process tdoor_ew_got_hit_forward_to_door_ns_open_on_avatar_collision(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TDOOR_EW::tdoor_ew_look_forward_to_door_ns_describe_door()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0044_door_ns_describe_door(this) -> return;
+}
+
+// Derived: routine 0x0098, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TDOOR_EW::tdoor_ew_use_forward_to_door_ns_toggle_open_closed()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0044_door_ns_toggle_open_closed(this, 1) -> return;
+}
+
+// Derived: routine 0x00B4, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process TDOOR_EW::tdoor_ew_got_hit_forward_to_door_ns_open_on_avatar_collision(arg_04:U8Word)
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0044_door_ns_open_on_avatar_collision(this, arg_04) -> return;
+}
+

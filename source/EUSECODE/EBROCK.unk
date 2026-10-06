@@ -1,0 +1,55 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0319
+// FLEX slot: 795
+// Original offset: 0x0006957A
+// Naming evidence: E, exact object-1 linker name `EBROCK`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/EBROCK.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass EBROCK inherits Item
+{
+	process ebrock_look_describe_by_frame();
+	process ebrock_use_no_op();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process EBROCK::ebrock_look_describe_by_frame()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getFrame();
+	if local_m02 = 0
+	{
+		bark("glowing obelisk tip ");
+	}
+	else if local_m02 = 1
+	{
+		bark("glowing Heart of Earth ");
+	}
+	else if local_m02 = 2
+	{
+		bark("glowing Tear of the Seas ");
+	}
+	else if local_m02 = 3
+	{
+		bark("glowing Breath of Wind ");
+	}
+	else if local_m02 = 4
+	{
+		bark("glowing Tongue of Flame ");
+	}
+}
+
+// Derived: routine 0x01B0, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process EBROCK::ebrock_use_no_op()
+{
+}
+

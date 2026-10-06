@@ -1,0 +1,241 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0580
+// FLEX slot: 1410
+// Original offset: 0x000AB1EA
+// Naming evidence: E, exact object-1 linker name `LOGBOOK2`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LOGBOOK2.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] logbook2_play_devon_execution_scene()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m06:U8Bytes4; // X: untouched.
+	local_m08:Npc;
+	local_m08_w01:U8Bytes1;
+	local_m0A:Npc;
+	local_m0A_w01:U8Bytes1;
+	local_m0C:Npc;
+	local_m0C_w01:U8Bytes1;
+	local_m0E:Npc;
+	local_m0E_w01:U8Bytes1;
+	local_m10:U8Word;
+	local_m11:U8Byte;
+	local_m13:U8Bytes2; // X: untouched.
+	local_m15:String List;
+	local_m17:String;
+	local_m19:String;
+	local_m1A:U8Byte;
+	local_m1C:Npc;
+	[[519, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m10 = 3;
+	local_m11 = 48;
+	local_m1A = 0;
+	setAvatarInStasis(1);
+	playMusic(54);
+	class_0580_logbook2_clear_execution_scene_area(this);
+	Item_create(0, 582, u8_local_address(local_m02_w01));
+	local_m02.pop(11796, 6575, 48);
+	secondexecution = 1;
+	killProcess(2, PT_ACTIVITY);
+	killProcess(2, PT_PATHFIND);
+	killProcess(2, PT_ANIM);
+	killProcess(7, PT_ACTIVITY);
+	killProcess(7, PT_PATHFIND);
+	killProcess(7, PT_ANIM);
+	Npc_teleport(local_m10, local_m11, 6500, 11819, u8_stack_ref(2));
+	class_057C_realDoAnim(2, 2, 5);
+	Mordea.teleport(11649, 6511, local_m11, local_m10);
+	Mordea.realDoAnim(AS_STAND, 3);
+	if not Salkind.isDead()
+	{
+		killProcess(3, PT_ACTIVITY);
+		killProcess(3, PT_PATHFIND);
+		killProcess(3, PT_ANIM);
+		Salkind.teleport(11670, 6655, local_m11, local_m10);
+		Salkind.realDoAnim(AS_STAND, 2);
+	}
+	if Npc_isDead(u8_stack_ref(19))
+	{
+		Npc_create(0, 574, u8_local_address(local_m1C_w01));
+		local_m1C.orStatus(128);
+		local_m1C.pop(11930, 6410, local_m11);
+		local_m0E = local_m1C;
+		class_057C_realDoAnim(u8_local_address(local_m0E_w01), 2, 5);
+	}
+	else
+	{
+		killProcess(19, PT_ACTIVITY);
+		killProcess(19, PT_PATHFIND);
+		killProcess(19, PT_ANIM);
+		local_m0E = 19;
+		local_m0E.teleport(11930, 6420, local_m11, local_m10);
+		class_057C_realDoAnim(u8_local_address(local_m0E_w01), 2, 5);
+	}
+	killProcess(5, PT_ACTIVITY);
+	killProcess(5, PT_PATHFIND);
+	killProcess(5, PT_ANIM);
+	Darion.teleport(11651, 6406, local_m11, local_m10);
+	Darion.realDoAnim(AS_STAND, 3);
+	Npc_create(1, 574, u8_local_address(local_m08_w01));
+	local_m08.orStatus(128);
+	local_m08.pop(11659, 4870, local_m11);
+	class_057C_realDoAnim(u8_local_address(local_m08_w01), 2, 4);
+	Npc_create(1, 574, u8_local_address(local_m0A_w01));
+	local_m0A.orStatus(128);
+	local_m0A.pop(11907, 4860, local_m11);
+	class_057C_realDoAnim(u8_local_address(local_m0A_w01), 2, 4);
+	Npc_create(1, 574, u8_local_address(local_m0C_w01));
+	local_m0C.orStatus(128);
+	local_m0C.pop(11780, 4710, local_m11);
+	class_057C_realDoAnim(u8_local_address(local_m0C_w01), 2, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057E_logbook4_animate_avatar_struggle(this) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057E_logbook4_animate_actor(this, local_m0A) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057E_logbook4_animate_actor(this, local_m08) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn FadeFromBlack() -> return;
+	wait(20);
+	class_057E_logbook4_animate_actor(this, local_m0C);
+	if not Salkind.isDead()
+	{
+		Item_bark(u8_string_address("...And for treasonous plots against the fair Lady Mordea... "), u8_stack_ref(3));
+	}
+	else
+	{
+		Item_bark(u8_string_address("...And for treasonous plots against the fair Lady Mordea... "), u8_stack_ref(5));
+	}
+	scrollTo(Item_getX(u8_stack_ref(2)), Item_getY(u8_stack_ref(2)) - 100, Item_getZ(u8_stack_ref(2)), 10);
+	local_m0C.bark("Hail, Lady Mordea! ");
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(7, 10, 0, 1) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(5, 8, 0, 2) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(u8_local_address(local_m0E_w01), 8, 0, 7) -> return;
+	class_057C_turnToFace(2, 0, 0, 15);
+	class_057C_timedBark(2, 60, u8_string_address("Oh, no! "));
+	playMusic(53);
+	if not Salkind.isDead()
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(3, 10, 0, 1) -> return;
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn local_m0C.bark("We bring you a thief! ") -> return;
+	class_057C_realDoAnim(u8_local_address(local_m0C_w01), 27, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(u8_local_address(local_m0C_w01), 4, 29) -> return;
+	wait(10);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(1, 4, 12) -> return;
+	wait(10);
+	safePlaySFX(50, 100);
+	Avatar.turnToFace(0, 0, 1);
+	Avatar.realDoAnim(15, 0);
+	killProcess(local_m0C, PT_BARK);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Watch it! "), u8_stack_ref(1)) -> return;
+	class_057C_realDoAnim(u8_local_address(local_m0C_w01), 28, 4);
+	wait(120);
+	killProcess(1, PT_BARK);
+	Avatar.turnToFace(4, 0, 7);
+	Avatar.realDoAnim(AS_STAND, 4);
+	local_m0C.bark("We caught him breaking into the evidence chamber! ");
+	Item_bark(u8_string_address("Well done! "), u8_stack_ref(7));
+	Item_bark(u8_string_address("The block always welcomes another neck. "), u8_stack_ref(7));
+	Item_bark(u8_string_address("I am sorry to see you here, my friend. "), u8_stack_ref(2));
+	Item_bark(u8_string_address("It appears we will both become victims of Mordea. "), u8_stack_ref(2));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn local_m0E.bark("Please... ") -> return;
+	class_057C_turnToFace(u8_local_address(local_m0E_w01), 4, 0, 15);
+	class_057C_realDoAnim(u8_local_address(local_m0E_w01), 0, 4);
+	class_057C_realDoAnim(u8_local_address(local_m0E_w01), 0, 4);
+	if not Npc_isDead(u8_stack_ref(19))
+	{
+		class_057C_realDoAnim(u8_local_address(local_m0E_w01), 0, 4);
+	}
+	class_057C_realDoAnim(u8_local_address(local_m0E_w01), 2, 6);
+	killProcess(local_m0E, PT_BARK);
+	class_057C_timedBark(u8_local_address(local_m0E_w01), 180, u8_string_address("...One execution at a time. "));
+	if not Salkind.isDead()
+	{
+		Salkind.turnToFace(2, 0, 15);
+		Item_bark(u8_string_address("Yes, yes, we must attend to Devon's beheading first! "), u8_stack_ref(3));
+	}
+	Mordea.turnToFace(2, 0, 15);
+	class_057C_timedBark(7, 180, u8_string_address("Very well. Carry on with the execution! "));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(5, 15, 0, 3) -> return;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(u8_local_address(local_m0E_w01), 15, 0, 6) -> return;
+	wait(60);
+	Item_bark(u8_string_address("Goodbye, my friend. "), u8_stack_ref(2));
+	Item_bark(u8_string_address("May Lithos forgive our spirits. "), u8_stack_ref(2));
+	class_057C_turnToFace(2, 4, 0, 20);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057F_logbook3_play_execution_rescue_choice(this, local_m0E, local_m0C, local_m0A, local_m08) -> return;
+}
+
+// Derived: routine 0x0ADB, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] logbook2_clear_execution_scene_area()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m04:Referent;
+	local_m06:Npc;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0F:U8Bytes5;
+	local_m0B:U8Byte;
+	local_m0D:U8Word;
+	local_m0F_w02:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m0F_w02 = 11551;
+	local_m0D = 4735;
+	local_m0B = 48;
+	local_m04 = class_0581_createNear(local_m0F, 115, 0, 0, 1);
+	if local_m04
+	{
+		foreach local_m02 within 200 cells of Avatar {
+			if (local_m02.getZ() >= 48) and (local_m02.getZ() < 125)
+			{
+				local_m08 = local_m02.getX();
+				local_m0A = local_m02.getY();
+				if (local_m08 > 11615) and (local_m08 < 12030) and (local_m0A > 4660) and (local_m0A < 6660)
+				{
+					if local_m02.isNpc()
+					{
+						if local_m02 != 1
+						{
+							local_m06 = local_m02;
+							local_m06.teleport(random(1000), random(1000), 0, 1);
+						}
+					}
+					else
+					{
+						if (local_m02.getType() != 73) and (local_m02.getType() != 508) and (local_m02.getType() != TypePathMarker)
+						{
+							local_m02.push();
+							local_m02.pop(local_m04);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+

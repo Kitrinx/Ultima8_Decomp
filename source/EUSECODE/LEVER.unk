@@ -1,0 +1,445 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02A0
+// FLEX slot: 674
+// Original offset: 0x000A7C62
+// Naming evidence: E, exact object-1 linker name `LEVER`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LEVER.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass LEVER inherits Item
+{
+	process lever_look_describe_by_frame();
+	process lever_use_toggle_lever_and_dispatch_quality_effect();
+	process lever_animate_nearby_winches();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LEVER::lever_look_describe_by_frame()
+{
+	if (getFrame() = 1) or (getFrame() = 4)
+	{
+		bark("broken lever ");
+	}
+	else
+	{
+		bark("lever ");
+	}
+}
+
+// Derived: routine 0x00EB, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LEVER::lever_use_toggle_lever_and_dispatch_quality_effect()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:Item;
+	local_m04_w01:U8Bytes1;
+	local_m05:U8Byte;
+	local_m07:U8Word;
+	local_m09:Item;
+	local_m0A:U8Byte;
+	local_m0C:Item;
+	local_m0C_w01:U8Bytes1;
+	local_m0E:Item;
+	local_m10:U8List2;
+	local_m12:U8Word;
+	local_m14:U8Word;
+	local_m16:U8Word;
+	local_m18:Item;
+	local_m1A:Item;
+	local_m1C:Npc;
+	local_m1C_w01:U8Bytes1;
+	local_m1D:U8Byte;
+	local_m1F:Item;
+	local_m21:U8Bytes2; // X: untouched.
+	local_m23:Npc;
+	local_m23_w01:U8Bytes1;
+	local_m02 = getFrame();
+	if (local_m02 = 1) or (local_m02 = 4)
+	{
+		playSFX(41, 100);
+	}
+	else
+	{
+		local_m05 = 1;
+		if local_m02 < 3
+		{
+			setFrame(1);
+		}
+		else
+		{
+			setFrame(4);
+		}
+		playSFX(88, 100);
+		local_m07 = getQuality();
+		if local_m07 = 1
+		{
+			foreach local_m09 where (type = 549) within 16 cells of referent {
+				local_m09.use();
+			}
+			local_m05 = 0;
+		}
+		else if local_m07 = 2
+		{
+			foreach local_m09 where (type = 605) within 32 cells of referent {
+				TonysBalls(4, 2, local_m09.getX(), local_m09.getY(), local_m09.getZ() + 32);
+			}
+			local_m05 = 0;
+		}
+		else if local_m07 = 3
+		{
+			playSFX(58, 100);
+			playSFX(148, 100);
+			Camera_invertScreen(1);
+			local_m05 = 0;
+		}
+		else if local_m07 = 4
+		{
+			playSFX(58, 100);
+			playSFX(148, 100);
+			Camera_invertScreen(0);
+			local_m05 = 0;
+		}
+		else if local_m07 = 5
+		{
+			local_m0A = 0;
+			u8_search_begin(local_m0C, 2, 32 * 32, referent, <<66, u8_search_word(516), u8_search_word(515), 36>>);
+			while u8_search_condition()
+			{
+				if local_m0C.getQuality() = 7
+				{
+					local_m0A = 1;
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0576_slider_open(u8_local_address(local_m0C_w01)) -> return;
+					AccumulateIntelligence(10);
+				}
+				u8_search_advance();
+			}
+			u8_search_end();
+			if not local_m0A
+			{
+				u8_search_begin(local_m0C, 2, 32 * 32, referent, <<66, u8_search_word(518), u8_search_word(517), 36>>);
+				while u8_search_condition()
+				{
+					if local_m0C.getQuality() = 7
+					{
+						// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+						spawn class_0576_slider_close(u8_local_address(local_m0C_w01)) -> return;
+					}
+					u8_search_advance();
+				}
+				u8_search_end();
+				foreach local_m0E where (type = 672) within 32 cells of referent {
+					local_m0E.setFrame(4);
+				}
+				foreach local_m0E where (type = 672) within 32 cells of referent {
+					wait(32);
+					local_m0E.setQuality(6);
+					playSFX(88, 100);
+					local_m0E.setFrame(5);
+				}
+			}
+			local_m05 = 0;
+		}
+		else if local_m07 = 6
+		{
+			local_m10 = <<2, 3, 4, 5, 6>>;
+			for local_m12 = 1 to 5
+			{
+				local_m16 = urandom(5) + 1;
+				local_m14 = local_m10[local_m12];
+				local_m10[local_m12] = local_m10[local_m16];
+				local_m10[local_m16] = local_m14;
+			}
+			foreach local_m18 where (type = 672) within 32 cells of referent {
+				local_m18.setFrame(4);
+			}
+			local_m12 = 1;
+			foreach local_m18 where (type = 672) within 32 cells of referent {
+				if local_m12 < 6
+				{
+					wait(32);
+					local_m18.setQuality(local_m10[local_m12]);
+					playSFX(88, 100);
+					local_m18.setFrame(5);
+					local_m12 = local_m12 + 1;
+				}
+			}
+		}
+		else if local_m07 = 7
+		{
+			if makePlatformAppear
+			{
+			}
+			else
+			{
+				local_m05 = 0;
+				makePlatformAppear = 1;
+				foreach local_m1A where (type = TypePathMarker) within 30 cells of referent {
+					Npc_create(8, 142, u8_local_address(local_m1C_w01));
+					local_m1C.orStatus(128);
+					local_m1C.pop(local_m1A.getX(), local_m1A.getY(), local_m1A.getZ());
+					class_057C_realDoAnim(u8_local_address(local_m1C_w01), 4, urandom(1) * 2);
+					local_m1C.setTarget(1);
+					local_m1C.setAlignment(64);
+					local_m1C.setInCombat();
+					wait(30);
+				}
+			}
+		}
+		else if (local_m07 = 10) or (local_m07 = 12)
+		{
+			u8_search_begin(local_m04, 2, 30 * 32, referent, <<67, u8_search_word(790), u8_search_word(515), u8_search_word(194), 37, u8_search_word(0), 96, 61, 38, 36>>);
+			while u8_search_condition()
+			{
+				if local_m04.getQuality() = local_m07
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0576_slider_open(u8_local_address(local_m04_w01)) -> return;
+					local_m05 = 0;
+				}
+				u8_search_advance();
+			}
+			u8_search_end();
+			u8_search_begin(local_m04, 2, 30 * 32, referent, <<67, u8_search_word(791), u8_search_word(517), u8_search_word(195), 36>>);
+			while u8_search_condition()
+			{
+				if local_m04.getQuality() = local_m07
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0576_slider_close(u8_local_address(local_m04_w01)) -> return;
+					local_m05 = 0;
+				}
+				u8_search_advance();
+			}
+			u8_search_end();
+		}
+		else if (local_m07 = 11) or (local_m07 = 13)
+		{
+			u8_search_begin(local_m04, 2, 30 * 32, referent, <<67, u8_search_word(789), u8_search_word(516), u8_search_word(135), 37, u8_search_word(0), 96, 61, 38, 36>>);
+			while u8_search_condition()
+			{
+				if local_m04.getQuality() = local_m07
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0576_slider_open(u8_local_address(local_m04_w01)) -> return;
+					local_m05 = 0;
+				}
+				u8_search_advance();
+			}
+			u8_search_end();
+			u8_search_begin(local_m04, 2, 30 * 32, referent, <<67, u8_search_word(792), u8_search_word(518), u8_search_word(136), 36>>);
+			while u8_search_condition()
+			{
+				if local_m04.getQuality() = local_m07
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0576_slider_close(u8_local_address(local_m04_w01)) -> return;
+					local_m05 = 0;
+				}
+				u8_search_advance();
+			}
+			u8_search_end();
+		}
+		else if (local_m07 >= 20) and (local_m07 <= 27)
+		{
+			local_m05 = 0;
+			if local_m07 = 20
+			{
+				leverTest0 = not leverTest0;
+				if not leverTest0
+				{
+					lever_animate_nearby_winches();
+				}
+			}
+			if local_m07 = 21
+			{
+				leverTest1 = not leverTest1;
+				if leverTest1
+				{
+					lever_animate_nearby_winches();
+				}
+			}
+			if local_m07 = 22
+			{
+				leverTest2 = not leverTest2;
+				if leverTest2
+				{
+					lever_animate_nearby_winches();
+				}
+			}
+			if local_m07 = 23
+			{
+				leverTest3 = not leverTest3;
+				if not leverTest3
+				{
+					lever_animate_nearby_winches();
+				}
+			}
+			if local_m07 = 24
+			{
+				leverTest4 = not leverTest4;
+				if leverTest4
+				{
+					lever_animate_nearby_winches();
+				}
+			}
+			if local_m07 = 25
+			{
+				leverTest5 = not leverTest5;
+				if not leverTest5
+				{
+					lever_animate_nearby_winches();
+				}
+			}
+			if local_m07 = 27
+			{
+				leverTest0 = 0;
+				leverTest1 = 0;
+				leverTest2 = 0;
+				leverTest3 = 0;
+				leverTest4 = 0;
+				leverTest5 = 0;
+				leverTestDone = 0;
+				if urandom(10) > 5
+				{
+					if urandom(10) < 7
+					{
+						playSFX(84, 100);
+					}
+				}
+				else
+				{
+					lever_animate_nearby_winches();
+				}
+			}
+			if (not leverTest0) and leverTest1 and leverTest2 and (not leverTest3) and leverTest4 and (not leverTest5) and (not leverTestDone)
+			{
+				foreach local_m09 where (type = 672) within 100 cells of referent {
+					if local_m09.getQuality() = 26
+					{
+						wait(25);
+						local_m09.setFrame(0);
+						leverTestDone = 1;
+					}
+					if local_m09.getQuality() = 27
+					{
+						Camera_startQuake(3);
+						playSFX(49, 200);
+						wait(200);
+						Camera_stopQuake();
+						wait(20);
+						if local_m09.getFrame() = 0
+						{
+							local_m09.setFrame(2);
+						}
+						else
+						{
+							local_m09.setFrame(0);
+						}
+					}
+				}
+			}
+			if local_m07 = 26
+			{
+				foreach local_m09 where (type = 633) within 50 cells of referent {
+					lever_animate_nearby_winches();
+					lever_animate_nearby_winches();
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0581_safePlaySFX(0x00000000, 100, 70) -> return;
+					wait(20);
+					local_m09.destroy();
+					local_m1D = 1;
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0581_safePlaySFX(0x00000000, 100, 70) -> return;
+				}
+				if not local_m1D
+				{
+					lever_animate_nearby_winches();
+					lever_animate_nearby_winches();
+					legal_create(633, 0, 28959, 27071, 112);
+					legal_create(633, 0, 28287, 27071, 112);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0581_safePlaySFX(0x00000000, 100, 70) -> return;
+					wait(30);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0581_safePlaySFX(0x00000000, 100, 70) -> return;
+					wait(20);
+				}
+			}
+		}
+		if local_m07 = 28
+		{
+			u8_search_begin(local_m0C, 2, 32 * 32, referent, <<66, u8_search_word(789), u8_search_word(790), 36>>);
+			while u8_search_condition()
+			{
+				if local_m0C.getQuality() = 28
+				{
+					local_m0A = 1;
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_0576_slider_open(u8_local_address(local_m0C_w01)) -> return;
+				}
+				u8_search_advance();
+			}
+			u8_search_end();
+			foreach local_m1F where (type = TypePathMarker) within 30 cells of referent {
+				Npc_create(35, 411, u8_local_address(local_m23_w01));
+				local_m23.orStatus(128);
+				local_m23.pop(local_m1F.getX(), local_m1F.getY(), local_m1F.getZ());
+				class_057C_realDoAnim(u8_local_address(local_m23_w01), 4, getDirToItem(Avatar:Referent));
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 200, 189) -> return;
+				local_m23.setTarget(1);
+				local_m23.setAlignment(64);
+				local_m23.setInCombat();
+				setQuality(0);
+				local_m05 = 0;
+			}
+		}
+		if not local_m05
+		{
+			if local_m02 < 3
+			{
+				local_m02 = 2 - local_m02;
+			}
+			else
+			{
+				local_m02 = 8 - local_m02;
+			}
+			setFrame(local_m02);
+		}
+	}
+}
+
+// Derived: routine 0x0B34, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LEVER::lever_animate_nearby_winches()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Bytes2; // X: untouched.
+	local_m04:U8Word;
+	local_m06:Item;
+	[[PT_ACTIVITY, referent]];
+	u8_search_begin(local_m06, 2, 10 * 32, referent, <<66, u8_search_word(279), u8_search_word(278), 36>>);
+	while u8_search_condition()
+	{
+		for local_m04 = 0 to 3
+		{
+			local_m06.setFrame(local_m04);
+			playSFX(113, 100, local_m06);
+			wait(10);
+		}
+		u8_search_advance();
+	}
+	u8_search_end();
+}
+

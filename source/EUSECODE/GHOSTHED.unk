@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x019D
+// FLEX slot: 415
+// Original offset: 0x0007BEE2
+// Naming evidence: E, exact object-1 linker name `GHOSTHED`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GHOSTHED.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass GHOSTHED inherits Item
+{
+	process ghosthed_look_bark_ghost_head();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GHOSTHED::ghosthed_look_bark_ghost_head()
+{
+	bark("ghost head ");
+}
+

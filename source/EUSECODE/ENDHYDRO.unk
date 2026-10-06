@@ -1,0 +1,55 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04A6
+// FLEX slot: 1192
+// Original offset: 0x0006A213
+// Naming evidence: E, exact object-1 linker name `ENDHYDRO`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ENDHYDRO.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass ENDHYDRO inherits Egg
+{
+	process endhydro_hatch_run_hydros_release_sequence();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ENDHYDRO::endhydro_hatch_run_hydros_release_sequence()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m02_w01:U8Bytes1;
+	local_m04:Item;
+	local_m06:U8Word;
+	foreach local_m02 where (type = 80) within 20 cells of referent {
+		setAvatarInStasis(1);
+		scrollTo(local_m02.getX(), local_m02.getY(), local_m02.getZ() + 20, 25);
+		class_0050_hydros_animate_emergence(u8_local_address(local_m02_w01));
+		local_m02.bark("Do not be so foolish as to think you have the power to defeat me! ");
+		class_0050_hydros_spawn_release_effects(u8_local_address(local_m02_w01));
+		scrollBack(15);
+		setAvatarInStasis(0);
+		while 1
+		{
+			LightningBolt();
+			playSFX(91);
+			Item_create(0, 511, u8_local_address(local_m04_w01));
+			local_m04.pop(Avatar.getX(), Avatar.getY(), Avatar.getZ() + 8);
+			playSFX(27, 200);
+			for local_m06 = 0 to 4
+			{
+				local_m04.setFrame(local_m06);
+				wait(2);
+			}
+			local_m04.destroy();
+			Avatar.receiveHit(0, urandom(8), class_0581_randRange(1, 10), 8 | 4);
+			wait(urandom(10) * 30);
+		}
+	}
+}
+

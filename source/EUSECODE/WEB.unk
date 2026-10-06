@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0152
+// FLEX slot: 340
+// Original offset: 0x0012456F
+// Naming evidence: E, exact object-1 linker name `WEB`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/WEB.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass WEB inherits Item
+{
+	process web_got_hit_destroy_item();
+}
+
+// Derived: routine 0x0080, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process WEB::web_got_hit_destroy_item()
+{
+	destroy();
+}
+

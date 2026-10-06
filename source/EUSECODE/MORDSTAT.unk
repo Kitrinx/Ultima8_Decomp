@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02BC
+// FLEX slot: 702
+// Original offset: 0x000B8392
+// Naming evidence: E, exact object-1 linker name `MORDSTAT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MORDSTAT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass MORDSTAT inherits Item
+{
+	process mordstat_look_describe_statue_of_mordea();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MORDSTAT::mordstat_look_describe_statue_of_mordea()
+{
+	bark("statue of Mordea ");
+}
+

@@ -1,0 +1,56 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0338
+// FLEX slot: 826
+// Original offset: 0x000457E9
+// Naming evidence: E, exact object-1 linker name `BUG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BUG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass BUG inherits Item
+{
+	process bug_look_describe_mandril();
+	process bug_got_hit_damage_self_when_nearby_item_is_heavy(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BUG::bug_look_describe_mandril()
+{
+	bark("Mandril ");
+}
+
+// Derived: routine 0x00AB, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process BUG::bug_got_hit_damage_self_when_nearby_item_is_heavy(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Npc;
+	local_m02 = arg_04;
+	if referent > 256
+	{
+		return;
+	}
+	local_m04 = referent;
+	if local_m04.isDead()
+	{
+		return;
+	}
+	// X: directional surface search; no Origin spelling is known.
+	foreach local_m02 on surface below referent {
+		if (Item_getWeightIncludingContents(u8_local_address(local_m02_w01)) >= 3) or (local_m02 = 1)
+		{
+			playSFX(85);
+			receiveHit(1, 8, 150, 4);
+			return;
+		}
+	}
+}
+

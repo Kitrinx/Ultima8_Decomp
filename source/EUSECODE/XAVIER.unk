@@ -1,0 +1,1555 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0419
+// FLEX slot: 1051
+// Original offset: 0x00124E9B
+// Naming evidence: E, exact object-1 linker name `XAVIER`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/XAVIER.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "flags";
+uses "free";
+uses "door";
+uses "snddefs";
+
+npcclass Xavier inherits Npc
+{
+	process look();
+	process schedule(currentTime:Long);
+	process enterFastArea();
+	process leaveFastArea();
+	process cast(ref:Referent);
+	process AvatarStoleSomething(ref:Referent);
+	process atMonastery();
+	process randomBarkAtMonastery();
+	process atHome();
+	process randomBarkAtHome();
+	process closeDoor();
+	process inWoods();
+	process randomBarkInWoods();
+	process use();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::look()
+{
+	if isDead()
+	{
+		bark("the body of Xavier ");
+		return;
+	}
+	if xavierName and xavierJob
+	{
+		bark("Xavier the monk ");
+		return;
+	}
+	else if xavierName
+	{
+		bark("Xavier");
+		return;
+	}
+	else if xavierJob
+	{
+		bark("monk ");
+		return;
+	}
+	else
+	{
+		bark("man ");
+		return;
+	}
+}
+
+// Derived: routine 0x016B, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::schedule(currentTime:Long)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	point:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	map:MapNum;
+	sched:Number;
+	map = 37;
+	if Xavier.isDead()
+	{
+		return;
+	}
+	if class_0581_getPeriod() = 2
+	{
+		local_m05_w02 = 18559;
+		local_m03 = 19167;
+		local_m01 = 56;
+		sched = 2;
+	}
+	if class_0581_getPeriod() >= 3
+	{
+		local_m05_w02 = 20703;
+		local_m03 = 16927;
+		local_m01 = 56;
+		sched = 1;
+	}
+	if (class_0581_getPeriod() = 0) or (class_0581_getPeriod() = 1)
+	{
+		local_m05_w02 = 22495;
+		local_m03 = 18143;
+		local_m01 = 56;
+		sched = 3;
+	}
+	if class_057C_canSafeTeleport(this, point, map)
+	{
+		xavierSchedule = sched;
+		class_057C_safeTeleport(this, point, map);
+	}
+}
+
+// Derived: routine 0x022A, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::enterFastArea()
+{
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	if xavierSchedule = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0419_atHome(this) -> return;
+	}
+	else if xavierSchedule = 2
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0419_atMonastery(this) -> return;
+	}
+	else if xavierSchedule = 3
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0419_inWoods(this) -> return;
+	}
+}
+
+// Derived: routine 0x02B3, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::leaveFastArea()
+{
+	xavierJustHealed = 0;
+	killProcess(25, PT_ACTIVITY);
+	killProcess(25, PT_PATHFIND);
+	killProcess(25, PT_ANIM);
+	killProcess(25, PT_BARK);
+	if Xavier.isDead()
+	{
+		teleport(urandom(10000), urandom(10000), 0, 0);
+		return;
+	}
+}
+
+// Derived: routine 0x0327, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::cast(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	count:Number;
+	count = 10;
+	while (not Npc_getTarget(this)) and count
+	{
+		wait(1);
+		count--;
+	}
+	ref = Npc_getTarget(this);
+	if ref = 1
+	{
+		killProcess(25, PT_ACTIVITY);
+		killProcess(25, PT_PATHFIND);
+		killProcess(25, PT_ANIM);
+		killProcess(25, PT_BARK);
+		bark("I must flee! ");
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+		realDoAnim(AS_ENTER_CAST, getDir());
+		realDoAnim(29, getDir());
+		class_057C_toggleStatus(16, this);
+		setFrame(getFrame());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 100, 116) -> return;
+		realDoAnim(AS_EXIT_CAST, getDir());
+		clrImmortal();
+		setDead();
+		teleport(urandom(10000), urandom(10000), 0, 0);
+	}
+}
+
+// Derived: routine 0x049B, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::AvatarStoleSomething(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	stolenItem:Item;
+	item = ref;
+	if xavierSchedule != 1
+	{
+		return;
+	}
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_BARK);
+	resetRef(referent, PT_ANIM);
+	foreach recursive stolenItem within container 1 {
+		if stolenItem = item
+		{
+			cSetActivity(1);
+		}
+	}
+	turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+	bark("What are you doing there...? ");
+	wait(120);
+	enterFastArea();
+	return;
+}
+
+// Derived: routine 0x0598, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::atMonastery()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach pathEgg where ((type = TypePathMarker) and (quality = 4)) within 10 cells of Xavier {
+			counter2 = pathEgg.getFrame();
+		}
+	}
+	process
+	{
+		for counter = counter2 to 31
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = (31 - counter)) and (quality = 4)) within 50 cells of Xavier {
+				if pathfind(pathEgg, 10)
+				{
+					randomBarkAtMonastery();
+				}
+				else
+				{
+					wait(500);
+				}
+			}
+		}
+		counter2 = 0;
+	}
+}
+
+// Derived: routine 0x066F, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::randomBarkAtMonastery()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Xavier:Referent);
+	if (ran < 200) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(8);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			if not xavierMet
+			{
+				bark("It's nice to see new faces. ");
+			}
+			else
+			{
+				bark("Need something else? ");
+			}
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			if not xavierMet
+			{
+				bark("Need help? ");
+				wait(120);
+			}
+			else
+			{
+				bark("Need something else? ");
+			}
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if ran = 3
+		{
+			bark("Let me know if you need my help. ");
+			wait(120);
+		}
+		if ran = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Do you need assistance? ");
+			wait(120);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Oh, well. ");
+		}
+	}
+	else
+	{
+		ran = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Where is that Stellos? ");
+		}
+		if ran = 2
+		{
+			bark("hmmmm ");
+			wait(60);
+		}
+		if ran = 3
+		{
+			bark("Where did I leave that? ");
+		}
+		if ran = 4
+		{
+			bark("Torwin needs to clean this place better. ");
+			wait(60);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Oh well. ");
+		}
+		if ran = 5
+		{
+			bark("Candles, we need candles. ");
+		}
+		if ran = 6
+		{
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Holy Cyrrus should be here soon. ");
+		}
+		if ran = 7
+		{
+			bark("Oh, no. Not again. ");
+			wait(100);
+		}
+	}
+}
+
+// Derived: routine 0x0BA6, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::atHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		if Npc_getLastAnimSet(this) = 51
+		{
+			realDoAnim(AS_SIT_UP, getDir());
+		}
+		foreach pathEgg where ((type = TypePathMarker) and (quality = 5)) within 10 cells of Xavier {
+			counter2 = pathEgg.getFrame();
+		}
+	}
+	process
+	{
+		for counter = counter2 to 12
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter) and (quality = 5)) within 25 cells of Xavier {
+				if pathfind(pathEgg, 7)
+				{
+					if counter = 0
+					{
+						turnToFace(2, 0, 10);
+						bark("I must meditate now. ");
+						realDoAnim(AS_SIT_DOWN, getDir());
+						wait(1200);
+						realDoAnim(AS_SIT_UP, getDir());
+					}
+					else if counter = 5
+					{
+						turnToFace(4, 0, 15);
+						closeDoor();
+					}
+					else
+					{
+						realDoAnim(AS_STAND, getDir());
+						randomBarkAtHome();
+					}
+				}
+				else
+				{
+					wait(500);
+				}
+				wait(60 + urandom(100));
+			}
+		}
+		counter2 = 0;
+	}
+}
+
+// Derived: routine 0x0DB7, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::randomBarkAtHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Xavier:Referent);
+	if (ran < 200) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(8);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			bark("Can I help you? ");
+			wait(120);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Oh, well. ");
+			wait(100);
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not xavierMet
+			{
+				bark("Please leave! You make me nervous! ");
+			}
+			else
+			{
+				bark("Are you lost? ");
+			}
+			wait(120);
+		}
+		if ran = 3
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not xavierMet
+			{
+				bark("Please leave, stranger! This is my abode! ");
+			}
+			else
+			{
+				bark("Hungry? ");
+				realDoAnim(AS_FIDGET, getDir());
+				bark("Thirsty? ");
+			}
+			wait(100);
+		}
+		if ran = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not xavierMet
+			{
+				bark("Why are you in my house? ");
+			}
+			else
+			{
+				bark("Do you need something else? ");
+			}
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+	}
+	else
+	{
+		ran = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			realDoAnim(AS_FIDGET, getDir());
+			bark("I must have a word with Cyrrus. ");
+		}
+		if ran = 2
+		{
+			bark("hmmmm ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(60);
+		}
+		if ran = 3
+		{
+			bark("I should take a walk. ");
+		}
+		if ran = 4
+		{
+			bark("Perhaps I should go the abbey. ");
+			wait(100);
+		}
+		if ran = 5
+		{
+			bark("Mmmmm, fresh air. ");
+			wait(100);
+		}
+		if ran = 6
+		{
+			bark("What to do... ");
+		}
+		if ran = 7
+		{
+			realDoAnim(AS_FIDGET, getDir());
+			bark("I should probably go back. ");
+			wait(60);
+		}
+	}
+}
+
+// Derived: routine 0x134F, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::closeDoor()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m04_w01:U8Bytes1;
+	[[PT_ACTIVITY, referent]];
+	foreach local_m02 where (type = 68) within 10 cells of Xavier {
+		local_m04 = local_m02;
+		break;
+	}
+	if local_m04
+	{
+		bark("These need not be open! ");
+		realDoAnim(AS_ENTER_CAST, getDir());
+		playSFX(115, 200);
+		realDoAnim(29, getDir());
+		class_0044_door_ns_toggle_open_closed(u8_local_address(local_m04_w01), 25);
+		realDoAnim(AS_EXIT_CAST, getDir());
+	}
+}
+
+// Derived: routine 0x1429, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::inWoods()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		if Npc_getLastAnimSet(this) = 51
+		{
+			realDoAnim(AS_SIT_UP, getDir());
+		}
+		foreach pathEgg where ((type = TypePathMarker) and (quality = 6)) within 10 cells of Xavier {
+			counter2 = pathEgg.getFrame();
+		}
+	}
+	process
+	{
+		for counter = counter2 to 29
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter) and (quality = 6)) within 25 cells of Xavier {
+				if pathfind(pathEgg, 12)
+				{
+					if counter = 10
+					{
+						turnToFace(4, 0, 10);
+						realDoAnim(AS_SIT_DOWN, getDir());
+						wait(1200);
+						realDoAnim(AS_SIT_UP, getDir());
+					}
+					else if counter = 15
+					{
+						turnToFace(2, 0, 10);
+						realDoAnim(AS_SIT_DOWN, getDir());
+						wait(1200);
+						realDoAnim(AS_SIT_UP, getDir());
+					}
+					else
+					{
+						realDoAnim(AS_STAND, getDir());
+						randomBarkInWoods();
+					}
+				}
+				else
+				{
+					wait(500);
+				}
+			}
+		}
+		counter2 = 0;
+	}
+}
+
+// Derived: routine 0x1630, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::randomBarkInWoods()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Xavier:Referent);
+	if (ran < 400) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(4);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			bark("Are you following me? ");
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not xavierMet
+			{
+				bark("Please leave! You make me nervous! ");
+			}
+			else
+			{
+				bark("Are you lost? ");
+			}
+			wait(120);
+		}
+		if ran = 3
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not xavierMet
+			{
+				bark("Follow me not, stranger! ");
+			}
+			else
+			{
+				bark("Please, I wish to be alone. ");
+			}
+			wait(100);
+		}
+		if ran = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not xavierMet
+			{
+				bark("Can a man have his privacy? ");
+			}
+			else
+			{
+				bark("Do you wish to speak to me? ");
+			}
+			wait(120);
+		}
+	}
+	else
+	{
+		ran = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			bark("I love the outdoors. ");
+		}
+		if ran = 2
+		{
+			bark("The trees are quite nice this time of year. ");
+			wait(60);
+		}
+		if ran = 3
+		{
+			bark("The air is quite crisp. ");
+		}
+		if ran = 4
+		{
+			bark("The feel of grass underfoot is quite relaxing. ");
+			wait(100);
+		}
+		if ran = 5
+		{
+			bark("I do enjoy a chance to be out. ");
+			bark("The breeze is cool today. ");
+			wait(100);
+		}
+	}
+}
+
+// Derived: routine 0x1AA7, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Xavier::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	askList:String List;
+	answer:String;
+	correct:Number;
+	numAsked:Number;
+	askedList:String List;
+	r:Number;
+	enterConvo();
+	killProcess(1, PT_BARK);
+	if xavierPissed
+	{
+		bark("You! Vile creature! Betrayer! Get out of my sight! ");
+		exitConvo();
+		return;
+	}
+	if not xavierMet
+	{
+		Item_bark(u8_string_address("Excuse me. "), u8_stack_ref(1));
+	}
+	else
+	{
+		Item_bark(u8_string_address("Excuse me. "), u8_stack_ref(1));
+	}
+	if Npc_getLastAnimSet(this) = 51
+	{
+		killProcess(referent, PT_ANIM);
+		realDoAnim(AS_SIT_UP, getDir());
+	}
+	if xavierMet
+	{
+		if havAvaName
+		{
+			bark("It is good to see you, " + getName() + ".");
+		}
+		else
+		{
+			bark("Hello again, friend. ");
+		}
+	}
+	else
+	{
+		bark("A fair day to you, stranger. ");
+	}
+	if attemptedWisdomTest and (not passedWisdomTest)
+	{
+		askList = <<"May I try the Test of Wisdom again? ">>;
+	}
+	if passedWisdomTest and (not attemptedCenteredTest)
+	{
+		askList = <<"May I take the Test of Centeredness? ">>;
+	}
+	if passedWisdomTest and attemptedCenteredTest and (not passedCenteredTest)
+	{
+		askList = <<"May I try the Test of Centeredness again? ">>;
+	}
+	if passedWisdomTest and passedCenteredTest and (not attemptedThirdTest)
+	{
+		askList = <<"I have completed both your tests. ", "bye ">>;
+	}
+	if passedThirdTest and (not hasOwnFoci)
+	{
+		askList += <<"I have completed the Third Test. ">>;
+		askList -= <<"I have completed both your tests. ">>;
+	}
+	if passedThirdTest and hasOwnFoci
+	{
+		askList = <<"I have passed the Third Test. ", "bye ">>;
+		if torwinMet
+		{
+			askList += <<"I have met Torwin. ">>;
+		}
+		if cyrrusMet
+		{
+			askList += <<"I have met Holy Cyrrus. ">>;
+		}
+		if stellosMet
+		{
+			askList += <<"I have met the Honorable Stellos. ">>;
+		}
+	}
+	if stratosMet and (not hasBreath)
+	{
+		askList ^= <<"I have heard the Mystic Voice. ">>;
+	}
+	if xavierMet and hasXavierFoci
+	{
+		askList = <<"I have found your Focus of healing! ">>;
+	}
+	if hasBreath
+	{
+		askList = <<"I have the Breath of Wind. ", "bye ">>;
+	}
+	if xavierMet
+	{
+		askList ^= <<"Hello, Brother Xavier. ", "bye ">>;
+		if (Avatar.getHp() < (Avatar.getStr() * 2)) and xavierJob
+		{
+			askList ^= <<"I need healing. ">>;
+		}
+		if torwinJumped and hasRing
+		{
+			askList ^= <<"I found this ring. ">>;
+		}
+	}
+	else
+	{
+		askList ^= <<"And a fair day to you. ", "bye ">>;
+	}
+	u8label label_2024:
+	u8goto label_7F98 if not (answer != "bye ");
+	askList -= <<"bye ">>;
+	askList += <<"bye ">>;
+	answer = ask(askList);
+	u8goto label_21CF if not (answer = "And a fair day to you. ");
+	bark("You are new here. I am Brother Xavier. Seek you healing? ");
+	askList -= <<"And a fair day to you. ">>;
+	askList ^= <<"What is this place? ", "Healing? ">>;
+	askList ^= <<("My name is " + getName() + ".")>>;
+	xavierName = 1;
+	xavierMet = 1;
+	if hasXavierFoci
+	{
+		askList ^= <<"I have found your Focus of healing! ">>;
+	}
+	if torwinJumped
+	{
+		askList ^= <<"I found this ring. ">>;
+	}
+	u8goto label_7F95;
+	u8label label_21CF:
+	u8goto label_224B if not (answer = ("My name is " + getName() + "."));
+	bark("Well met, " + getName() + ".");
+	askList -= <<("My name is " + getName() + ".")>>;
+	havAvaName = 1;
+	u8goto label_7F95;
+	u8label label_224B:
+	u8goto label_22D8 if not (answer = ("Je m'appelle " + getName() + "."));
+	bark("Ravi de te connoistre, " + getName() + ".");
+	askList -= <<("Je m'appelle " + getName() + ".")>>;
+	havAvaName = 1;
+	u8goto label_7F95;
+	u8label label_22D8:
+	u8goto label_2354 if not (answer = ("Ich hei\xE1e " + getName() + "."));
+	bark("Freut mich, " + getName() + ".");
+	askList -= <<("Ich hei\xE1e " + getName() + ".")>>;
+	havAvaName = 1;
+	u8goto label_7F95;
+	u8label label_2354:
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch answer
+	{
+		case "Hello, Brother Xavier. "
+		{
+			bark("What may I assist you with? ");
+			askList -= <<"Hello, Brother Xavier. ">>;
+			if askedAboutArgent
+			{
+				askList ^= <<"Tell me again of this place. ">>;
+			}
+			else
+			{
+				askList ^= <<"What is this place? ">>;
+			}
+			if spokeAboutTests and (not attemptedWisdomTest)
+			{
+				askList ^= <<"Tell me of the tests. ">>;
+			}
+			if not attemptedWisdomTest
+			{
+				askList ^= <<"I wish to learn to heal. ">>;
+			}
+			if (Avatar.getHp() < (Avatar.getStr() * 2)) and xavierJob
+			{
+				askList ^= <<"I need healing. ">>;
+			}
+		}
+		case "I have heard the Mystic Voice. "
+		{
+			bark("Excellent. Let me be one of the first to offer congradulations on your accomplishments here. We are all quite proud of what you have done. ");
+			askList -= <<"I have heard the Mystic Voice. ">>;
+		}
+		case "I have the Breath of Wind. "
+		{
+			bark("Yes, I suspected as much. But since you have done such a terrible thing, leaving all of us powerless, you must excuse me if I do not offer my thanks. Goodbye! ");
+			askList -= <<"I have the Breath of Wind. ">>;
+			exitConvo();
+			return;
+		}
+		case "I found this ring. "
+		{
+			bark("Yes, that was Torwin's ring. He said it belonged to his father. Where did you find it? ");
+			askList = <<"the monastery ", "the woods ", "Windy Point ">>;
+		}
+		case "the monastery ", "the woods "
+		{
+			bark("Funny that Torwin should lose it there. He was very proud of it, said it meant the world to him. You know, I think it should be returned to his mother. I'm sure she would appreciate this memento of her son. ");
+			askList -= <<"the monastery ", "the woods ", "Windy Point ">>;
+			askList ^= <<"I will return it. ", "I don't wish to return it. ">>;
+		}
+		case "Windy Point "
+		{
+			bark("Oh dear. In his haste to end his life, he must have lost it. It is a terrible tragedy, you know. He was very proud of that ring and I'm sure he would want his mother to have it. Perhaps you should take it to her. ");
+			askList -= <<"the monastery ", "the woods ", "Windy Point ">>;
+			askList ^= <<"I will return it. ", "I don't wish to return it. ">>;
+		}
+		case "I will return it. "
+		{
+			bark("That is a good thing. His mother's name is Rhian and she lives in Tenebrae. She is a weaver and, since the death of her husband, has taken over the running of the shop. Thank you for this good deed. ");
+			askList -= <<"I will return it. ", "I don't wish to return it. ">>;
+			exitConvo();
+			return;
+		}
+		case "I don't wish to return it. "
+		{
+			bark("What? That is a cruel and selfish thing to say! You must return it. You were the last one to see her son alive! I can not believe you would turn your back on someone like this! ");
+			askList -= <<"I don't wish to return it. ">>;
+			askList += <<"I said I would not! ">>;
+		}
+		case "I said I would not! "
+		{
+			bark("Have you learned nothing during your stay here?! You are an insult to this isle, leave me now! ");
+			xavierPissed = 1;
+			exitConvo();
+			return;
+		}
+		case "Healing? "
+		{
+			bark("Yes, this is a place of healing. Do you require my skills as a healer? ");
+			xavierJob = 1;
+			askList ^= <<"Yes, I need healing. ", "No, I don't need healing. ">>;
+			askList -= <<"Healing? ">>;
+		}
+		case "Yes, I need healing. ", "I need healing. "
+		{
+			if xavierJustHealed
+			{
+				bark("I am sorry, but I do not have the strength to perform such a service. Come back later after I have rested. ");
+				exitConvo();
+				return;
+			}
+			u8goto label_306D if not (hasBreath);
+			bark("I would that I could heal you, but a terrible thing has happened. I am not able to touch Stratos. I am afraid something dreadful has happened. ");
+			askList += <<"I have taken the Breath of Wind. ">>;
+			u8goto label_32D5;
+			u8label label_306D:
+			u8goto label_31C7 if not (fociReturned);
+			if Avatar.getHp() < (Avatar.getStr() * 2)
+			{
+				bark("Now that my Focus has been returned to me, I will be able to perform the healing rites upon you. ");
+				healingTouch(1);
+				bark("Please leave me now, I need to rest. ");
+				exitConvo();
+				return;
+			}
+			else
+			{
+				bark("I would heal you, but you are perfectly healthy! ");
+				exitConvo();
+				return;
+			}
+			u8label label_31C7:
+			if not focusMissing
+			{
+				if Avatar.getHp() < (Avatar.getStr() * 2)
+				{
+					bark("Certainly, I will do what I can. ");
+					healingTouch(1);
+					xavierJustHealed = 1;
+					bark("Please leave me now, I need to rest. ");
+					exitConvo();
+					return;
+				}
+				else
+				{
+					bark("I would heal you, but you are perfectly healthy! ");
+				}
+			}
+			u8label label_32D5:
+			askList -= <<"Yes, I need healing. ", "No, I don't need healing. ", "Hello, Brother Xavier. ">>;
+		}
+		case "No, I don't need healing. "
+		{
+			bark("Oh, it is pleased I am that you are well. ");
+			askList -= <<"Yes, I need healing. ", "No, I don't need healing. ">>;
+			askList ^= <<"What is this place? ">>;
+		}
+		case "I wish to learn to heal. "
+		{
+			bark("Then to do this you must become enlightened. ");
+			askList -= <<"I wish to learn to heal. ">>;
+			askList ^= <<"Enlightened? ">>;
+		}
+		case "I have taken the Breath of Wind. "
+		{
+			bark("Oh no! How can you do this? I misread your character, I did not know you for such a power hungry thief! The cost of your folly will be in untold numbers of lives. ");
+			askList -= <<"I have taken the Breath of Wind. ">>;
+			xavierPissed = 1;
+			exitConvo();
+			return;
+		}
+		case "What is this place? ", "Tell me again of this place. "
+		{
+			askedAboutArgent = 1;
+			bark("This is Argentrock Isle. It is home to those that follow the Great Titan of Air, Stratos. ");
+			askList -= <<"What is this place? ", "Tell me again of this place. ">>;
+			askList ^= <<"Who is Stratos? ", "Who are the followers? ">>;
+		}
+		case "Who are the followers? "
+		{
+			bark("We are the Theurgists. By devoting our lives to Stratos, we are able to touch a small portion of the Titan's power and use it to heal. ");
+			askList -= <<"Who are the followers? ">>;
+		}
+		case "Who is Stratos? "
+		{
+			bark("Stratos is the greatest of the Titans, worthy of the respect and admiration of all. ");
+			askList += <<"Worthy of respect? ">>;
+			askList -= <<"Who is Stratos? ">>;
+		}
+		case "Worthy of respect? "
+		{
+			bark("Yes, even for one such as you, who is obviously not enlightened, Stratos can offer great things. ");
+			askList -= <<"Worthy of respect? ">>;
+			askList ^= <<"Enlightened? ", "What great things? ">>;
+		}
+		case "What great things? "
+		{
+			bark("Stratos is the greatest of the Titans. Only through her can one achieve the ability to heal the sick and injured. This gift, the power to heal is the greatest gift anyone can receive. ");
+			askList -= <<"What great things? ">>;
+		}
+		case "Enlightened? "
+		{
+			u8goto label_3CE7 if not (passedWisdomTest);
+			if passedCenteredTest
+			{
+				bark("Yes, " + getName() + " you should know as you are well on your way to enlightenment. You now should seek out Stellos. It is he who can teach you the spells you will need to know in order to reach enlightenment.");
+				exitConvo();
+				return;
+			}
+			else
+			{
+				bark("Yes, " + getName() + ". Your next step in achieving enlightenment is to pass the Test of Centeredness. Are you ready for this test?");
+				askList -= <<"Enlightened? ">>;
+				askList += <<"I am ready for the second test. ", "I am not ready for the second test. ">>;
+			}
+			u8goto label_3DDA;
+			u8label label_3CE7:
+			bark("You are not of our order and have not heard the Mystic Voice of Stratos. Once you have heard the voice, you become enlightened. ");
+			askList -= <<"Enlightened? ">>;
+			askList = <<"I wish enlightenment ", "I do not wish enlightenment. ">>;
+			u8label label_3DDA:
+		}
+		case "I am ready for the second test. "
+		{
+			bark("Then we shall begin. ");
+			exitConvo();
+			return;
+		}
+		case "I am not ready for the second test. "
+		{
+			bark("Then return when you are ready. ");
+			exitConvo();
+			return;
+		}
+		case "I wish enlightenment "
+		{
+			bark("This is a noble cause. I hope you have the mettle for it. The tests to gain enlightenment are fearsome. ");
+			askList -= <<"I wish enlightenment ", "I do not wish enlightenment. ">>;
+			askList = <<"Tell me of the tests. ", "You question my mettle? ", "What makes the tests fearsome? ">>;
+		}
+		case "I do not wish enlightenment. "
+		{
+			bark("That is too bad, I think you might have the strength of character to pass the tests. But if you have not the desire, then I guess it is for the best after all. ");
+			askList -= <<"I do not wish enlightenment. ">>;
+			spokeOfTests = 1;
+		}
+		case "You question my mettle? "
+		{
+			bark("I simply mean that these tests are not for the faint of heart. Only one strong in his faith to Stratos may find the strengh of heart to survive the tests. ");
+			askList -= <<"You question my mettle? ">>;
+		}
+		case "What makes the tests fearsome? "
+		{
+			bark("The tests are quite dangerous. We have lost more than a few initiates to them. ");
+			askList -= <<"What makes the tests fearsome? ">>;
+		}
+		case "Tell me of the tests. "
+		{
+			bark("It is good to see you are interested. I am responsible for administering the first two tests. The first is the Test Of Wisdom. The second is the Test of Centeredness. ");
+			askList = <<"Tell me of the Test of Wisdom. ", "Tell me of the Test of Centeredness. ">>;
+		}
+		case "Tell me of the Test of Wisdom. "
+		{
+			bark("The Test of Wisdom is the first test you may take in your journey for enlightenment. This test consists of five questions which I shall ask you. These questions will test your knowledge of the ways of the Theurgists. You must answer all five correctly to pass the test. If you are thinking of taking this test, I strongly suggest you spend some time studying in the monastery's library. Do you still wish enlightenment? ");
+			askList -= <<"Tell me of the Test of Wisdom. ">>;
+			askList = <<"aye ", "nay ">>;
+		}
+		case "Tell me of the Test of Centeredness. "
+		{
+			if passedCenteredTest
+			{
+				bark("You have taken and passed this test already, " + getName() + ". I do not appreciate the lightness with which you treat these rituals! If you do not know what to do next, you should consult with Stellos.");
+				askList = <<"Where is Stellos? ">>;
+			}
+			else
+			{
+				bark("The Test of Centeredness is the second test you may take on your quest for enlightenment. During this test you will find yourself on a high rock. The winds will test your strength, balance and courage. ");
+				askList -= <<"Tell me of the Test of Centeredness. ">>;
+				if passedWisdomTest = 0
+				{
+					askList += <<"I will take the Test of Centeredness. ">>;
+				}
+				else
+				{
+					askList += <<"May I take the Test of Centeredness? ">>;
+				}
+			}
+		}
+		case "I will take the Test of Centeredness. "
+		{
+			bark("Before you can take the Test of Centeredness, you must pass the Test of Wisdom. ");
+			askList -= <<"I will take the Test of Centeredness. ">>;
+			askList ^= <<"Tell me of the Test of Wisdom. ">>;
+		}
+		case "May I take the Test of Centeredness? "
+		{
+			if not passedCenteredTest
+			{
+				bark("Yes, I think perhaps you are ready. To take the Test of Centeredness you must travel to Windy Point and climb the highest rock there. Once atop the rock, Stratos will begin her testing of you. Her winds will blow you but you must stay atop the rock, for to fall can mean almost sure disablement and possibly death. Good luck, friend. ");
+				askList -= <<"May I take the Test of Centeredness? ">>;
+				exitConvo();
+				return;
+			}
+			else
+			{
+				bark("I appreciate your enthusiasm, but you have already passed the Test of Centeredness and the Test of Wisdom. There is no need for you to take them again. Perhaps you should speak to Stellos now. He can continue to give you guidance in your quest for enlightenment. ");
+				exitConvo();
+				return;
+			}
+		}
+		case "May I try the Test of Centeredness again? "
+		{
+			bark("Certainly, you may try it until you succeed. Don't worry. Many don't pass it the first time. ");
+			exitConvo();
+			return;
+		}
+		case "aye "
+		{
+			bark("That's it, that's the spirit! You have some backbone after all. You are the second in recent times to come for enlightenment. I will ask you five questions. If you can answer all of them right, you may pass to the next test. Do you wish me to continue? ");
+			askList -= <<"aye ", "nay ">>;
+			askList = <<"I am ready, please continue. ", "I am not yet ready. ", "Another wishing enlightenment? ">>;
+		}
+		case "I am not yet ready. "
+		{
+			readyForTests = 1;
+			bark("Then when you feel you are ready, return to me. ");
+			exitConvo();
+			return;
+		}
+		case "I am ready, please continue. ", "May I try the Test of Wisdom again? "
+		{
+			bark("Very well then. I will begin your testing by asking you five questions. If you miss any of them, you fail the test. Do you accept? ");
+			askList -= <<"I am ready, please continue. ", "I am not ready. ">>;
+			askList = <<"Yes, I accept. ", "No, I do not. ">>;
+		}
+		case "No, I do not. "
+		{
+			bark("I understand, it is a bit daunting, I know. Perhaps you would feel more confident if you spent some time in the library. There you will find many texts which may make the Test of Wisdom easier. ");
+			exitConvo();
+			return;
+		}
+		case "Yes, I accept. "
+		{
+			correct = 0;
+			numAsked = 0;
+			attemptedWisdomTest = 1;
+			u8label label_5269:
+			u8goto label_603D if not (numAsked < 5);
+			r = urandom(10);
+			if r = 0
+			{
+				if not ("0" in askedList)
+				{
+					bark("When seeking respite, do you choose a cool beach by the sea, a quiet mountain glen, the warmth of a campfire or a breezy evening on the porch? ");
+					askList = <<"a cool beach by the sea ", "a quiet mountain glen  ", "the warmth of a campfire ", "a breezy evening on the porch ">>;
+					answer = ask(askList);
+					if answer = "a breezy evening on the porch "
+					{
+						correct++;
+					}
+					askedList += <<"0">>;
+					numAsked++;
+				}
+			}
+			else if r = 1
+			{
+				if not ("1" in askedList)
+				{
+					bark("You come across a battle. The fighting is fierce and the injured lay moaning in agony. Do you tend the injured, join the battle, run for help, or do nothing and remain neutral until the fight is over? ");
+					askList = <<"tend the injured ", "join the battle ", "run for help ", "do nothing, remain neutral ">>;
+					answer = ask(askList);
+					if answer = "tend the injured "
+					{
+						correct++;
+					}
+					askedList += <<"1">>;
+					numAsked++;
+				}
+			}
+			else if r = 2
+			{
+				if not ("2" in askedList)
+				{
+					bark("A small child is dying. Healing her will require a great sacrifice. Will you offer your hearing, your ability to speak, your sight or your life? ");
+					askList = <<"my hearing ", "my ability to speak ", "my sight ", "my life ">>;
+					answer = ask(askList);
+					if answer = "my sight "
+					{
+						correct++;
+					}
+					askedList += <<"2">>;
+					numAsked++;
+				}
+			}
+			else if r = 3
+			{
+				if not ("3" in askedList)
+				{
+					bark("Your liege lies dying from a wound received in battle. He will not live long. He asks how the battle fares. You know his troops have been routed. How do you answer? ");
+					askList = <<"the battle is ours ", "the battle is lost ">>;
+					answer = ask(askList);
+					if answer = "the battle is lost "
+					{
+						correct++;
+					}
+					askedList += <<"3">>;
+					numAsked++;
+				}
+			}
+			else if r = 4
+			{
+				if not ("4" in askedList)
+				{
+					bark("You sit in a tavern, sipping a mug of ale. The stalwart fighters around you begin to brag on deeds done to honor their patron Titan. Do you join the camraderie and tell of the glories of Stratos, or do you remain quiet? ");
+					askList = <<"tell of Stratos' glories ", "remain quiet ">>;
+					answer = ask(askList);
+					if answer = "remain quiet "
+					{
+						correct++;
+					}
+					askedList += <<"4">>;
+					numAsked++;
+				}
+			}
+			else if r = 5
+			{
+				if not ("5" in askedList)
+				{
+					bark("Your only child has run away from home. He returns after several years of debauchery and crime. Do you welcome him home, allowing the past to go unpunished, or do you turn him away until he has redeemed himself and regained your trust? ");
+					askList = <<"welcome him home ", "turn him away ">>;
+					answer = ask(askList);
+					if answer = "welcome him home "
+					{
+						correct++;
+					}
+					askedList += <<"5">>;
+					numAsked++;
+				}
+			}
+			else if r = 6
+			{
+				if not ("6" in askedList)
+				{
+					bark("In comrades, is it wiser to look for honesty, loyalty, ability or humility? ");
+					askList = <<"honesty ", "loyalty ", "ability ", "humility ">>;
+					answer = ask(askList);
+					if answer = "honesty "
+					{
+						correct++;
+					}
+					askedList += <<"6">>;
+					numAsked++;
+				}
+			}
+			else if r = 7
+			{
+				if not ("7" in askedList)
+				{
+					bark("Why is wisdom greater than brawn? ");
+					askList = <<"diplomacy can prevent assault ", "a weapon destroys, wit builds ", "speech is faster than swordplay ", "a mind can't be struck, only the skull ">>;
+					answer = ask(askList);
+					if answer = "a weapon destroys, wit builds "
+					{
+						correct++;
+					}
+					askedList += <<"7">>;
+					numAsked++;
+				}
+			}
+			else if r = 8
+			{
+				if not ("8" in askedList)
+				{
+					bark("Your brother stands accused of thievery, having taken material to clothe his family. Do you give truthful testimony or hold your tongue so that the family may be safe? ");
+					askList = <<"give truthful testimony ", "hold my tongue ">>;
+					answer = ask(askList);
+					if answer = "give truthful testimony "
+					{
+						correct++;
+					}
+					askedList += <<"8">>;
+					numAsked++;
+				}
+			}
+			else
+			{
+				if r = 9
+				{
+					if not ("9" in askedList)
+					{
+						bark("Is it better to first comfort a sad child or punish a wicked one? ");
+						askList = <<"comfort a sad child ", "punish the wicked child ">>;
+						answer = ask(askList);
+						if answer = "comfort a sad child "
+						{
+							correct++;
+						}
+						askedList += <<"9">>;
+						numAsked++;
+					}
+					u8goto label_603A;
+				}
+			}
+			u8label label_603A:
+			u8goto label_5269;
+			u8label label_603D:
+			if correct < 5
+			{
+				bark("I am sorry, " + getName() + " but you failed to answer all the questions correctly. Perhaps you would do better if you spent a little more time studying in the library. Come to me when you wish to try again.");
+				exitConvo();
+				return;
+			}
+			else
+			{
+				bark("Very good, you have earned the right to proceed to the next test. ");
+				passedWisdomTest = 1;
+				spokeOfTests = 0;
+				attemptedWisdomTest = 0;
+				readyForTests = 0;
+				askList = <<"Tell me of the Test of Centeredness. ">>;
+			}
+		}
+		case "nay "
+		{
+			bark("Well, it certainly is not for everyone. There is another who has decided to take the tests and he is doing well in his studies. ");
+			spokeOfTests = 1;
+			askList = <<"Another wishing enlightenment? ">>;
+			askList -= <<"nay ", "aye ">>;
+		}
+		case "Tell me of Stellos ", "Where is the Honorable Stellos? ", "Where is Stellos? "
+		{
+			if (class_0581_getPeriod() = 2) or (class_0581_getPeriod() = 1) or (class_0581_getPeriod() = 4)
+			{
+				bark("You can find him in the monastery at this hour. ");
+			}
+			if (class_0581_getPeriod() = 0) or (class_0581_getPeriod() = 5)
+			{
+				bark("You should be able to find him at his house at this hour. It is next to the east wall of the compound. ");
+			}
+			if class_0581_getPeriod() = 3
+			{
+				bark("If you wish to find him, you might try Windy Point. He sometimes goes there at this hour to be in communion with the Mystic Voice. ");
+			}
+			askList -= <<"Tell me of Stellos ", "Where is the Honorable Stellos? ">>;
+		}
+		case "Another wishing enlightenment? "
+		{
+			if torwinJumped
+			{
+				bark("Yes. Torwin was... before he died. ");
+			}
+			else
+			{
+				bark("Yes, a young man named Torwin. He is an ambitious student, a very fast learner. ");
+			}
+			askList -= <<"Another wishing enlightenment? ">>;
+		}
+		case "I have completed both your tests. ", "I have\x09completed the Third Test. "
+		{
+			if havAvaName
+			{
+				bark("Wonderful, I am most pleased for you! You have now earned the right to wear the title 'Initiate'. So, Initiate " + getName() + ", now you must find the Honorable Stellos. He will guide you in the next step on your journey to enlightenment.");
+			}
+			else
+			{
+				bark("Wonderful, I am most pleased for you! You have now earned the right to wear the title 'Initiate'. So, Initiate, now you must find the Honorable Stellos. He will guide you in the next step on your journey to enlightenment. ");
+			}
+			askList -= <<"I have completed both your tests. ", "I have completed the Third Test. ">>;
+			askList ^= <<"Where is the Honorable Stellos? ">>;
+		}
+		case "I have passed the Third Test. "
+		{
+			if fociReturned
+			{
+				bark("That is excellent news. ");
+			}
+			else
+			{
+				bark("Huh? Were you speaking to me? Oh, I am so sorry. You passed the Third Test, you say? Well that is very good. Now, if you'll excuse me, something dreadful has happened and I must attend to it. ");
+				askList = <<"What has happened? ">>;
+			}
+			askList -= <<"I have passed the Third Test. ">>;
+		}
+		case "What has happened? "
+		{
+			bark("Well, if you must know, my Focus of healing is missing. ");
+			askList -= <<"What has happened? ">>;
+			askList += <<"Focus is missing? ">>;
+		}
+		case "Focus is missing? "
+		{
+			bark("Yes, it is missing. What a tragic mishap. I hope I have just mislaid it, but I fear it is stolen. ");
+			askList -= <<"Focus is missing? ">>;
+			askList = <<"mislaid it? ", "stolen? ">>;
+		}
+		case "mislaid it? "
+		{
+			bark("I cannot imagine I simply lost it. It is far too important to me for such an oversight. ");
+			askList -= <<"mislaid it? ">>;
+		}
+		case "stolen? "
+		{
+			bark("If it was, indeed, stolen, it is a tragedy beyond belief. Theft goes against all of Stratos' doctrine. It goes against all we have tried to teach here. ");
+			askList -= <<"stolen? ", "mislaid it? ">>;
+			askList += <<"When did you last see your Focus? ">>;
+		}
+		case "When did you last see your Focus? "
+		{
+			bark("It was only a night ago. I worked very late that night. When I went to bed, I laid my Focus on the chest in my bedroom, just like I always do. When I awoke in the morning, the Focus of healing was gone. Now, I am a very light sleeper. The person who took it must be able to move virtually silently, for the slightest noise would have awoken me. ");
+			askList -= <<"When did you last see your Focus? ">>;
+			askList += <<"Do you know who took it? ">>;
+		}
+		case "Do you know who took it? "
+		{
+			bark("That's ridiculous! If I knew who took it, I would go get it back! Fortunately, there are spells provided by Stratos that will help me learn what happened to it. ");
+			askList -= <<"Do you know who took it? ">>;
+		}
+		case "I have met Torwin. "
+		{
+			if torwinJumped
+			{
+				bark("Yes. His death is quite tragic. ");
+			}
+			else
+			{
+				bark("Strange young man. For a while, I thought quite highly of him. Until you arrived, he was the best student we'd ever had. But... ");
+				askList = <<"Strange young man? ", "Best student? ">>;
+			}
+			askList -= <<"I have met Torwin. ">>;
+		}
+		case "Strange young man? "
+		{
+			bark("He was always unusual. We often find him standing in the shadows outside different houses. What he is doing, we can only guess. When confronted, he offers no explanation, just wanders off. He has recently taken an interest in the Resurrection spell. ");
+			askList -= <<"Strange young man? ">>;
+			askList += <<"Resurrection spell? ">>;
+		}
+		case "Resurrection spell? "
+		{
+			bark("Yes, it is possible to bring the dead back to life if the proper conditions are met. ");
+			askList -= <<"Resurrection spell? ">>;
+			askList += <<"What proper conditions? ">>;
+		}
+		case "What proper conditions? "
+		{
+			bark("It will cost you your eyesight. This is why Stellos is blind. Because of this high price, Stratos only gives that spell to one Adept at a time. It is, afterall, a very dangerous spell. ");
+			askList -= <<"What proper conditions? ">>;
+			askList += <<"Dangerous spell? ">>;
+		}
+		case "Dangerous spell? "
+		{
+			bark("Most certainy, for to cast it, one must journey to the City of the Dead and face the minions of Lithos. More than one caster in our history has not survived that encounter. ");
+			askList -= <<"Dangerous spell? ">>;
+		}
+		case "Best student? "
+		{
+			spokeAboutTorwinX = 1;
+			if torwinJumped
+			{
+				bark("Well, before he died. ");
+			}
+			else
+			{
+				bark("Well, he was until he reached the Third Test. For some reason he could not pass it. He has tried a number of times. I have heard he is trying to find a way to reach Stratos and hear the Mystic Voice without passing that third test. ");
+				askList -= <<"Best student? ">>;
+			}
+		}
+		case "How terrible about Torwin. "
+		{
+			bark("It is said that pride goes before a fall. ");
+			askList -= <<"How terrible about Torwin. ">>;
+		}
+		case "I have met Holy Cyrrus. "
+		{
+			if torwinJumped
+			{
+				if hearTruthActive
+				{
+					bark("He is a nice young man. (I think he is soft and a bit of a sissy.) I have high hopes for his abilities. (He will never make it as an Adept. I bet he's back to his torax in a month.) He and Torwin were very good friends. (I think they spent too much time together and not enough time on their studies.) ");
+					askList -= <<"I have met Holy Cyrrus. ">>;
+				}
+				else
+				{
+					bark("He is a nice young man. I have high hopes for his abilities. He and Torwin were very good friends. ");
+					askList -= <<"I have met Holy Cyrrus. ">>;
+				}
+			}
+			else if hearTruthActive
+			{
+				bark("He is a nice young man. (I think he is soft and a bit of a sissy.) I have high hopes for his abilities. (He will never make it as an Adept. I bet he's back to his torax in a month.) He and Torwin are very good friends. (I think they spend too much time together and not enough time on their studies.) ");
+				askList -= <<"I have met Holy Cyrrus. ">>;
+			}
+			else
+			{
+				bark("He is a nice young man. I have high hopes for his abilities. He and Torwin are very good friends. ");
+				askList -= <<"I have met Holy Cyrrus. ">>;
+			}
+		}
+		case "I have met the Honorable Stellos. "
+		{
+			bark("What a wonderful man. I only hope to aspire to the knowledge he has gained during his long life. ");
+			askList -= <<"I have met the Honorable Stellos. ">>;
+		}
+		case "bye "
+		{
+			bark("Be well, my friend. ");
+			exitConvo();
+			return;
+		}
+		case "I have found your Focus of healing! "
+		{
+			if class_0581_take(1, 396, 9, 1, 1)
+			{
+				bark("How wonderful! Thank you, my friend. There is no way I can repay this debt, but should you need healing, please come to me. ");
+				hasXavierFoci = 0;
+				fociReturned = 1;
+			}
+			else
+			{
+				bark("What? You do not have my Focus! ");
+				bark("Do not toy with me with matters like that! I must have my focus returned! ");
+			}
+			exitConvo();
+			return;
+		}
+	}
+	u8label label_7F95:
+	u8goto label_2024;
+	u8label label_7F98:
+	bark("Goodbye! ");
+	exitConvo();
+	return;
+}
+

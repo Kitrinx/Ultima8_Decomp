@@ -1,0 +1,277 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x042D
+// FLEX slot: 1071
+// Original offset: 0x00086302
+// Naming evidence: E, exact object-1 linker name `GUARD2`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GUARD2.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+npcclass GUARD2 inherits Npc
+{
+	process guard2_look_bark_living_or_dead_identity();
+	process guard2_enter_fast_area_start_location_schedule();
+	process guard2_schedule_update_period_schedule_and_safe_teleport();
+	process guard2_leave_fast_area_stop_active_process();
+	process guard2_use_run_conversation();
+	process guard2_run_patrol_route();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD2::guard2_look_bark_living_or_dead_identity()
+{
+	if isDead()
+	{
+		bark("dead guardsman ");
+	}
+	else
+	{
+		bark("guardsman ");
+	}
+}
+
+// Derived: routine 0x00E1, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD2::guard2_enter_fast_area_start_location_schedule()
+{
+	if Npc_isDead(u8_stack_ref(45))
+	{
+		clrDead();
+		clrInCombat();
+		teleport(100, 100, 0, 41);
+	}
+	else
+	{
+		killProcess(referent, PT_ACTIVITY);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_042D_guard2_run_patrol_route(this) -> return;
+	}
+}
+
+// Derived: routine 0x0138, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD2::guard2_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	local_m07 = 40;
+	local_m05_w02 = 13087;
+	local_m03 = 14335;
+	local_m01 = 48;
+	if class_057C_canSafeTeleport(this, local_m05, local_m07)
+	{
+		class_057C_safeTeleport(this, local_m05, local_m07);
+	}
+}
+
+// Derived: routine 0x018A, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD2::guard2_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x01A5, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD2::guard2_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String List;
+	local_m06:U8Word;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Guardsman! "), u8_stack_ref(1)) -> return;
+	enterConvo();
+	wait(60);
+	killProcess(1, PT_BARK);
+	local_m06 = 0;
+	if hydrosFree
+	{
+		local_m06++;
+	}
+	if hasHeart
+	{
+		local_m06++;
+	}
+	if pyrosFree
+	{
+		local_m06++;
+	}
+	if local_m06 > 1
+	{
+		bark("The Titans are angry! Run to safety and pray for their mercy! ");
+		exitConvo();
+		return;
+	}
+	else if hasHeart
+	{
+		bark("For the sake of Lithos, we are beset by the dead! Find shelter, stranger. ");
+		exitConvo();
+		return;
+	}
+	if guard2Met
+	{
+		if guard2Pissed
+		{
+			bark("What is it now? ");
+			guard2Pissed = 0;
+		}
+		else if urandom(10) > 5
+		{
+			bark("What do you want? ");
+		}
+		else
+		{
+			bark("What! Again with questions! ");
+		}
+	}
+	else
+	{
+		bark("What do you want, stranger? ");
+	}
+	local_m04 = <<"Who are you? ", "What is your duty? ", "Where am I? ", "Bye ">>;
+	u8label label_0443:
+	u8goto label_0BFC if not (local_m02 != "Bye ");
+	local_m02 = ask(local_m04);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m02
+	{
+		case "Who are you? "
+		{
+			guard2Met = 1;
+			local_m04 -= <<"Who are you? ">>;
+			bark("My name is none of your concern. What -is- your concern is staying out of trouble. ");
+		}
+		case "What is your duty? "
+		{
+			local_m04 -= <<"What is your duty? ">>;
+			if devonInRule
+			{
+				bark("My duty is to protect the Tempest, Devon, though I doubt he needs it with his powers. ");
+			}
+			else
+			{
+				bark("My duty is to protect her Ladyship, Mordea, though I doubt she needs it with her powers. You would have to be insane to think of assaulting her. ");
+			}
+		}
+		case "Where am I? "
+		{
+			local_m04 -= <<"Where am I? ">>;
+			if guard2GaveDirections
+			{
+				bark("Try to listen this time! ");
+			}
+			guard2GaveDirections = 1;
+			bark("You are in central Tenebrae. ");
+			turnToFace(2, 0, 15);
+			realDoAnim(AS_DRAW_WEAPON, 0);
+			bark("This direction leads to the palace. ");
+			realDoAnim(AS_SHEATH_WEAPON, 0);
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			if not benticMet
+			{
+				bark("Since you're new here I'd suggest you stay clear of it! ");
+			}
+			if devonInRule
+			{
+				bark("It is a quiet place without Mordea. ");
+			}
+			else
+			{
+				bark("You should head east or west, for the palace holds only trouble for the likes of you. ");
+			}
+			turnToFace(2, 0, 15);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn realDoAnim(AS_DRAW_WEAPON, 2) -> return;
+			bark("To the East is where the rich folks live. ");
+			realDoAnim(AS_SHEATH_WEAPON, 2);
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("On that side is a library and a weapons trainer. ");
+			turnToFace(6, 0, 15);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn realDoAnim(AS_DRAW_WEAPON, 6) -> return;
+			bark("And that is where all the poor sods live. ");
+			realDoAnim(AS_SHEATH_WEAPON, 6);
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("There is the smithy and a tavern in that direction as well. ");
+			if devonInRule
+			{
+				turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+				bark("I must be getting back to duty, now. Mayhaps later we'll meet at the Shattered Skull. ");
+				exitConvo();
+				return;
+			}
+			else
+			{
+				turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+				bark("Now, move along so I can return to duty. ");
+				exitConvo();
+				return;
+			}
+		}
+		case "Bye "
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("I go back to duty now. ") -> return;
+			exitConvo();
+			return;
+		}
+	}
+	u8goto label_0443;
+	u8label label_0BFC:
+	u8_free_local_string(local_m02);
+	u8_free_local_string_list(local_m04);
+}
+
+// Derived: routine 0x0C02, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process GUARD2::guard2_run_patrol_route()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m03:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+	}
+	process
+	{
+		if local_m03
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = 20)) within 30 cells of 45 {
+				pathfind(local_m02, 10);
+				wait(120);
+				turnToFace(2, 0, 20);
+				wait(120);
+				local_m03 = 0;
+			}
+		}
+		else
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = 21)) within 30 cells of 45 {
+				pathfind(local_m02, 10);
+				wait(120);
+				turnToFace(6, 0, 20);
+				wait(120);
+				local_m03 = 1;
+			}
+		}
+	}
+}
+

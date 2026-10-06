@@ -1,0 +1,116 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0243
+// FLEX slot: 581
+// Original offset: 0x00082F8F
+// Naming evidence: E, exact object-1 linker name `GRENADE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GRENADE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass GRENADE inherits Item
+{
+	process grenade_look_describe_by_frame();
+	process grenade_use_burn_fuse_then_explode();
+	process grenade_got_hit_hurl_and_light_unlit_flask(arg_04:U8Word);
+	process grenade_hit_explode_lit_flask_on_impact();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GRENADE::grenade_look_describe_by_frame()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getFrame();
+	killProcess(referent, PT_BARK);
+	if local_m02 modulo 4
+	{
+		bark("lit flask of oil ");
+	}
+	else
+	{
+		bark("flask of oil ");
+	}
+}
+
+// Derived: routine 0x00FB, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GRENADE::grenade_use_burn_fuse_then_explode()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m02 = 6;
+	local_m04 = getFrame();
+	local_m04 = ((local_m04 / 4) * 4) + (local_m04 modulo 4);
+	while local_m02
+	{
+		local_m06 = getFrame() + 1;
+		if local_m06 modulo 4
+		{
+			setFrame(local_m06);
+		}
+		else
+		{
+			local_m02--;
+			setFrame(local_m04 + 1);
+		}
+		wait(10);
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_boom(this, 1) -> return;
+}
+
+// Derived: routine 0x018C, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process GRENADE::grenade_got_hit_hurl_and_light_unlit_flask(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	if not arg_04
+	{
+		local_m02 = getFrame();
+		if (local_m02 modulo 4) = 0
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn hurl(class_0581_randRange(-16, 16), class_0581_randRange(-16, 16), urandom(16) + 8, 2) -> return;
+			if Item_getQ(this)
+			{
+				return;
+			}
+			Item_setQ(1, this);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0243_grenade_use_burn_fuse_then_explode(this) -> return;
+		}
+	}
+}
+
+// Derived: routine 0x0209, event mask 0x00000020.
+// R: `hit` identifies event 05; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GRENADE::grenade_hit_explode_lit_flask_on_impact()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getFrame();
+	if local_m02 modulo 4
+	{
+		if Item_getQ(this)
+		{
+			return;
+		}
+		Item_setQ(1, this);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_boom(this, 1) -> return;
+	}
+}
+

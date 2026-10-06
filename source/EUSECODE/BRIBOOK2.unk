@@ -1,0 +1,20 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0590
+// FLEX slot: 1426
+// Original offset: 0x00042740
+// Naming evidence: E, exact object-1 linker name `BRIBOOK2`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BRIBOOK2.unk`.
+// u8label/u8goto remain invented where emitted.
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bribook2_read_if_ye_be_strong_of_arm()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("If ye be strong of arm, swift of leg, and valorous of heart; then read on But, if ye not be all these things; shrink away from what is contained within me. For the knowledge which lies within my family does contain such power as to burn ye into cinders if ye be not worthy. If you have ever doubted thy strength, go now and look no further. For if ye be false, the slayer shall devour all thy blood in one clean lick. But if ye be truly worthy, the Slayer shall come forth with ye in fierce tempest and like a Jove shall it strike down thine enemies. Now ye have been warned. If you wish to take up the quest to find the Slayer, then proceed. Tread ye upon the path that was brought ye this far and look for my twin. Find the one who is identical to me, and he shall lead ye further."), this);
+}
+

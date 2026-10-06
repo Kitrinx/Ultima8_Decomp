@@ -1,0 +1,87 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x014A
+// FLEX slot: 332
+// Original offset: 0x000FA71F
+// Naming evidence: E, exact object-1 linker name `STALAG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/STALAG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass STALAG inherits Item
+{
+	process stalag_look_bark_stalactite();
+	process stalag_hit_break_and_apply_damage(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process STALAG::stalag_look_bark_stalactite()
+{
+	bark("stalactite ");
+}
+
+// Derived: routine 0x00AE, event mask 0x00000020.
+// R: `hit` identifies event 05; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process STALAG::stalag_hit_break_and_apply_damage(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m06:U8Bytes4; // X: untouched.
+	local_m08:Item;
+	local_m0A:Item;
+	local_m0A_w01:U8Bytes1;
+	local_m0C:U8Bytes2; // X: untouched.
+	local_m08 = arg_04;
+	if getFrame() < 1
+	{
+		if local_m08.isNpc()
+		{
+			local_m0A = arg_04;
+			if local_m0A = 1
+			{
+				setAvatarInStasis(1);
+				playSFX(5, 200, referent);
+				Kernel::resetRef(referent, 515);
+				local_m0A.receiveHit(referent, urandom(7), 15, 4);
+				setType(764);
+				for local_m02 = 0 to 10
+				{
+					setFrame(local_m02);
+					wait(5);
+				}
+				setAvatarInStasis(0);
+				destroy();
+				return;
+			}
+			Kernel::resetRef(referent, 515);
+			playSFX(18, 200, referent);
+			class_057C_receiveHit(15, urandom(7), referent, u8_local_address(local_m0A_w01));
+			setType(764);
+			for local_m02 = 0 to 10
+			{
+				setFrame(local_m02);
+				wait(5);
+			}
+			setAvatarInStasis(0);
+			destroy();
+		}
+		else
+		{
+			Kernel::resetRef(referent, 515);
+			playSFX(31, 200, referent);
+			for local_m02 = 1 to 4
+			{
+				setFrame(local_m02);
+				wait(5);
+			}
+		}
+	}
+}
+

@@ -1,0 +1,168 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x010D
+// FLEX slot: 271
+// Original offset: 0x0010AD87
+// Naming evidence: E, exact object-1 linker name `THURGIST`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/THURGIST.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass THURGIST inherits Item
+{
+	process thurgist_leave_fast_area_clear_reference();
+	process thurgist_look_bark_dead_theurgist();
+	process thurgist_cast_call_for_help_when_attacked();
+	process thurgist_use_run_theurgist_dialogue();
+}
+
+// Derived: routine 0x0080, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process THURGIST::thurgist_leave_fast_area_clear_reference()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+}
+
+// Derived: routine 0x00C1, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process THURGIST::thurgist_look_bark_dead_theurgist()
+{
+	if isDead()
+	{
+		bark("dead theurgist ");
+	}
+	else
+	{
+		bark("theurgist ");
+	}
+}
+
+// Derived: routine 0x0122, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process THURGIST::thurgist_cast_call_for_help_when_attacked()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = 5;
+	while (not Npc_getTarget(this)) and local_m02
+	{
+		wait(1);
+		local_m02--;
+	}
+	if Npc_getTarget(this) = 1
+	{
+		if not isDead()
+		{
+			if Avatar.getStatus() & 16
+			{
+				return;
+			}
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Help me, Stratos! I am attacked! ") -> return;
+			class_057C_realDoAnim(this, 27, getDir());
+			class_057C_realDoAnim(this, 29, getDir());
+			class_057C_toggleStatus(16, this);
+			setFrame(getFrame());
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+			safePlaySFX(116, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0581_safePlaySFX(0x00000000, 100, 116) -> return;
+			teleport(urandom(10000), urandom(10000), 0, 0);
+		}
+	}
+}
+
+// Derived: routine 0x029B, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process THURGIST::thurgist_use_run_theurgist_dialogue()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String List;
+	local_m06:Item;
+	local_m08:U8Word;
+	killProcess(referent, PT_ACTIVITY);
+	killProcess(referent, PT_BARK);
+	if urandom(100) > 50
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Hello... "), u8_stack_ref(1)) -> return;
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Good day... ") -> return;
+	}
+	class_057C_enterConvo(this);
+	wait(30);
+	killProcess(1, PT_BARK);
+	foreach recursive local_m06 where (type = TypePathMarker) within container referent {
+		local_m08 = local_m06.getFrame();
+	}
+	if local_m08 = 0
+	{
+		bark("Any stories you tell will make me homesick, so I'd best not chat with you. ");
+		class_057C_exitConvo(this);
+		cSetActivity(0);
+		return;
+	}
+	else if local_m08 = 1
+	{
+		bark("Sorry, I would speak with you, but I am in a hurry. ");
+		bark("Talk to me later when my duties are done. ");
+		class_057C_exitConvo(this);
+		cSetActivity(0);
+		return;
+	}
+	else if local_m08 = 2
+	{
+		bark("No time to talk now. ");
+		bark("I have my studies to attend to. ");
+		class_057C_exitConvo(this);
+		cSetActivity(0);
+		return;
+	}
+	else if local_m08 = 3
+	{
+		bark("I'd best not speak with you. ");
+		bark("Strangers are a distraction that we do not need here on Argentrock. ");
+		bark("I'd best be about my duties. ");
+		class_057C_exitConvo(this);
+		cSetActivity(0);
+		return;
+	}
+	else if local_m08 = 4
+	{
+		bark("I can not help you at this time. ");
+		bark("If you need assistance, try talking to Stellos. ");
+		bark("He knows everything, for he has been around for 200 years. ");
+		bark("I'm sure he can help you. ");
+		class_057C_exitConvo(this);
+		cSetActivity(0);
+		return;
+	}
+	else if local_m08 = 5
+	{
+		bark("I can not talk to you for I have taken a vow of silence so that I may meditate better... ");
+		wait(120);
+		bark("Oooops... ");
+		class_057C_exitConvo(this);
+		cSetActivity(0);
+		return;
+	}
+	class_057C_exitConvo(this);
+	cSetActivity(0);
+}
+

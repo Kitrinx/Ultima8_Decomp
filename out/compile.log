@@ -1,0 +1,2072 @@
+TLIB 3.02 Copyright (c) 1992 Borland International
+*setargv.obj &
+*wild.obj &
+*segheap.obj &
+*farheap.obj &
+*loadprog.obj &
+*doscmd.obj &
+*ctrlbrk.obj &
+*system.obj &
+*spawn.obj &
+*crtinit.obj &
+*ioctl.obj &
+*int86.obj &
+*intr.obj &
+*signal.obj &
+*strchr.obj &
+*strchrx.obj &
+*delay.obj &
+*harderr.obj &
+*hard.obj &
+*fcorelft.obj &
+*brk.obj &
+*h_pada.obj &
+*h_padd.obj &
+*h_pina.obj &
+*h_psbh.obj &
+*ioerror.obj &
+*pcmp.obj
+TLIB 3.02 Copyright (c) 1992 Borland International
+-+setargv.obj &
+-+wild.obj &
++segheap.obj &
+-+farheap.obj &
+-+loadprog.obj &
+-+doscmd.obj &
+-+ctrlbrk.obj &
+-+system.obj &
+-+spawn.obj &
+-+crtinit.obj &
+-+ioctl.obj &
+-biosdisk.obj &
+-fheapchk.obj &
+-+int86.obj &
+-+intr.obj &
+-+signal.obj &
+-+strchr.obj &
+-fstrchr.obj &
++strchrx.obj &
+-+delay.obj &
+-+harderr.obj &
+-+hard.obj &
+-h_psbp.obj &
+-+fcorelft.obj &
+-+brk.obj &
+-+h_pada.obj &
+-+h_padd.obj &
+-+h_pina.obj &
+-+h_psbh.obj &
+-coreleft.obj &
+-f_pcmp.obj &
+-n_pcmp.obj &
++pcmp.obj &
+-+ioerror.obj
+Turbo ImpLib  Version 1.0  Copyright (c) 1992 Borland International
+All rights reserved.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   AREAFIND.ASM  to  D:\OBJ\AREAFIND.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  446k
+
+== BOOK
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\book.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning ..\ITEM\BOOK.C 94: Constant out of range in comparison in function BookGump::nextPage()
+Warning ..\ITEM\BOOK.C 208: Function should return a value in function Book::read(char *)
+Warning ..\ITEM\BOOK.C 217: Function should return a value in function Scroll::read(char *)
+
+
+	Available memory 3842812
+
+== COMBIN
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\combin.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3860656
+
+== CONTAIN
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\contain.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+
+
+	Available memory 3771516
+
+== EGG
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\egg.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning TEXTGUMP.H 89: 'TextCheckMenuItemGump::addPullDown(PullDownGump *,unsigned char)' hides virtual function 'PureMenuItemGump::addPullDown(PullDownGump *)'
+
+
+	Available memory 3570656
+
+== GLOB
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\glob.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3760096
+
+== GRAVE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\grave.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning ..\ITEM\GRAVE.C 73: Constant out of range in comparison in function GraveGump::moreToCome()
+Warning ..\ITEM\GRAVE.C 85: Constant out of range in comparison in function GraveGump::nextLine()
+Warning ..\ITEM\GRAVE.C 191: Function should return a value in function Grave::read(short,char *)
+Warning ..\ITEM\GRAVE.C 200: Function should return a value in function Plaque::read(short,char *)
+
+
+	Available memory 3847764
+
+== GUARDIAN
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\guardian.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3833496
+
+== ITEM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\item.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning ..\ITEM\ITEM.C 46: Redefinition of 'LOBYTE' is not identical
+Warning ..\ITEM\ITEM.C 47: Redefinition of 'HIBYTE' is not identical
+Warning ..\ITEM\ITEM.C 1088: Function should return a value in function Item::use()
+
+
+	Available memory 3201264
+
+== ITEMCACH
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\itemcach.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+
+
+	Available memory 3484312
+
+== ITEMDATA
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\itemdata.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3865692
+
+== ITEMFIND
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\itemfind.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\ITEM\ITEMFIND.C 36: Constant out of range in comparison in function ItemFinder::ItemFinder(unsigned short,char *,unsigned short)
+Warning ..\ITEM\ITEMFIND.C 267: Constant out of range in comparison in function RegionItemFinder::RegionItemFinder(unsigned short,unsigned short,char *,unsigned short)
+Warning ..\ITEM\ITEMFIND.C 286: Constant out of range in comparison in function AreaItemFinder::init(unsigned short,unsigned short,unsigned short,unsigned short,char *,unsigned short)
+Warning ..\ITEM\ITEMFIND.C 365: Constant out of range in comparison in function ContainerItemFinder::init(unsigned short,char *,unsigned short)
+Warning ..\ITEM\ITEMFIND.C 374: Constant out of range in comparison in function RecursiveContainerItemFinder::init(unsigned short,char *,unsigned short)
+
+
+	Available memory 3815776
+
+== MAPFILE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\mapfile.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3869520
+
+== MONEGG
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\monegg.c:
+Warning ..\ITEM\MONEGG.C 32: Initializing Activity with int in function MonsterEgg::hatch()
+Warning ..\ITEM\MONEGG.C 48: Initializing Activity with int in function MonsterEgg::hatch()
+
+
+	Available memory 3807460
+
+== NPC
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\npc.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 2848976
+
+== PRELOAD
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\preload.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3822404
+
+== SCRIT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\scrit.c:
+
+
+	Available memory 4152588
+
+== TYPE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\type.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3824024
+
+== DSFXMAN
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\dsfxman.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3592820
+
+== SNDMGR
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\sndmgr.c:
+
+
+	Available memory 3969952
+
+== SONARC
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\sonarc.c:
+
+
+	Available memory 4014904
+
+== AHEADER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\aheader.c:
+
+
+	Available memory 3949568
+
+== AMUSIC
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\amusic.cpp:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning AMUSIC.CPP 466: Initializing ProcessType with int in function MusicProcess::MusicProcess(short)
+
+
+	Available memory 3890860
+
+== ANIM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\anim.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+
+
+	Available memory 3485908
+
+== ANIMCACH
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\animcach.c:
+
+
+	Available memory 3882120
+
+== ANIMCALL
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\animcall.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning ANIMCALL.C 116: Initializing AnimSet with int in function generalAnimCall(unsigned short)
+
+
+	Available memory 3591948
+
+== ANIMCLAS
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\animclas.c:
+
+
+	Available memory 3808564
+
+== ANIMFILE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\animfile.c:
+
+
+	Available memory 3890896
+
+== ANIMPRIM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\animprim.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3540204
+
+== ANODE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\anode.c:
+
+
+	Available memory 4165280
+
+== APPDEBUG
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\appdebug.c:
+
+
+	Available memory 3790436
+
+== ARMORDAT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\armordat.c:
+
+
+	Available memory 4077720
+
+== ARTLESS
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\artless.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 4008128
+
+== ASTREAM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\astream.c:
+
+
+	Available memory 4150048
+
+== AUXFUNCS
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\auxfuncs.c:
+
+
+	Available memory 3807460
+
+== BALLS
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\balls.c:
+
+
+	Available memory 3782192
+
+== BARK
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\bark.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning TEXTGUMP.H 89: 'TextCheckMenuItemGump::addPullDown(PullDownGump *,unsigned char)' hides virtual function 'PureMenuItemGump::addPullDown(PullDownGump *)'
+Warning BARK.C 251: Constant out of range in comparison in function BarkGump::nextPage()
+
+
+	Available memory 3534640
+
+== BARKFIDG
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\barkfidg.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning BARKFIDG.C 15: Initializing ProcessType with int in function BarkFidget::BarkFidget(unsigned short,unsigned char)
+
+
+	Available memory 3802380
+
+== BASECAM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\basecam.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3972828
+
+== BIOSTIME
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\biostime.c:
+
+
+	Available memory 4078708
+
+== BUTTON
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\button.c:
+
+
+	Available memory 4062364
+
+== CAFONT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cafont.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+
+
+	Available memory 4065724
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   CALLDTOR.ASM  to  D:\OBJ\CALLDTOR.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  448k
+
+== CAMERA
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\camera.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3524500
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   CLRVPT.ASM  to  D:\OBJ\CLRVPT.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  444k
+
+== COLBUF
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\colbuf.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3867732
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   COLLIDE.ASM  to  D:\OBJ\COLLIDE.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  444k
+
+== COMBATBR
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\combatbr.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3693040
+
+== COMBOBOX
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\combobox.c:
+
+
+	Available memory 4031828
+
+== CONTGUMP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\contgump.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3538152
+
+== CONTRECT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\contrect.c:
+
+
+	Available memory 4020568
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   CPYVD.ASM  to  D:\OBJ\CPYVD.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  444k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   CPYVPT.ASM  to  D:\OBJ\CPYVPT.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  444k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   DAC.ASM  to  D:\OBJ\DAC.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  415k
+
+== DEBUGGER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\debugger.c:
+
+
+	Available memory 4135672
+
+== DEBUGUMP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\debugump.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning TEXTGUMP.H 89: 'TextCheckMenuItemGump::addPullDown(PullDownGump *,unsigned char)' hides virtual function 'PureMenuItemGump::addPullDown(PullDownGump *)'
+Warning DEBUGUMP.C 177: 'width' is assigned a value that is never used in function DebugScroller::commandKeyboard(Event &)
+Warning DEBUGUMP.C 790: 'desc' is assigned a value that is never used in function ViewFile::loadFile()
+
+
+	Available memory 3675904
+
+== CDESC
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cdesc.c:
+Warning DEXT286\CDESC.C 127: Function should return a value in function Desc::getBase()
+
+
+	Available memory 4077960
+
+== CPROTMEM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cprotmem.c:
+
+
+	Available memory 3992920
+
+== SELMNGR
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\selmngr.c:
+
+
+	Available memory 4122408
+
+== DISPATCH
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\dispatch.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning DISPATCH.C 169: Function should return a value in function keyWaiting()
+
+
+	Available memory 3893548
+
+== DIST
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\dist.c:
+
+
+	Available memory 4148588
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   DLASM.ASM  to  D:\OBJ\DLASM.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  423k
+
+== DLIST
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\dlist.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+
+
+	Available memory 3731716
+
+== DLITEM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\dlitem.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+
+
+	Available memory 3623308
+
+== DESCRIPT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\descript.c:
+
+
+	Available memory 4069624
+
+== SPANKER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\spanker.c:
+Warning DOSFIX32\SPANKER.C 302: Function should return a value in function Spanky::getNextCsIp()
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   D:\OBJ\spanker.ASM
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  365k
+
+
+
+	Available memory 4001896
+
+== DRAGGUMP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\draggump.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning DRAGGUMP.C 94: Constant out of range in comparison in function DrgNewGump::commandMouseLeft(Event &)
+
+
+	Available memory 3992048
+
+== EDITEM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\editem.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3699188
+
+== CINTLIST
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cintlist.c:
+
+
+	Available memory 4098868
+
+== CMEVENT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cmevent.c:
+
+
+	Available memory 4096188
+
+== CMOUSE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cmouse.c:
+
+
+	Available memory 4115352
+
+== CMPOINT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cmpoint.c:
+
+
+	Available memory 4028284
+
+== CMSELECT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cmselect.c:
+
+
+	Available memory 3983668
+
+== CTMPOINT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\ctmpoint.c:
+
+
+	Available memory 4105212
+
+== CTRACKER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\ctracker.c:
+
+
+	Available memory 4045764
+
+== KTIMER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\ktimer.c:
+Warning EVENT\KTIMER.C 16: Initializing ProcessType with int in function AilTimer::AilTimer()
+
+
+	Available memory 4077720
+
+== FANIM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\fanim.c:
+
+
+	Available memory 4055120
+
+== CFILE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cfile.c:
+
+
+	Available memory 4054108
+
+== CSHRFILE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cshrfile.c:
+
+
+	Available memory 4105296
+
+== FEXIST
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\fexist.c:
+
+
+	Available memory 4166732
+
+== FILESPEC
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\filespec.c:
+
+
+	Available memory 4056340
+
+== FILEBOX
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\filebox.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3921180
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   FILEUTIL.ASM  to  D:\OBJ\FILEUTIL.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  446k
+
+== FLAG
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\flag.c:
+
+
+	Available memory 4100180
+
+== FASTFLEX
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\fastflex.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 4114392
+
+== FLEX
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\flex.c:
+
+
+	Available memory 4100716
+
+== SPCHFLEX
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\spchflex.c:
+
+
+	Available memory 4097064
+
+== STEPFLEX
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\stepflex.c:
+
+
+	Available memory 4028156
+
+== FLICPLAY
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\flicplay.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3609112
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   FLIPSKIP.ASM  to  D:\OBJ\FLIPSKIP.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  437k
+
+== FONT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\font.c:
+Warning FONT.C 147: Function should return a value in function Font::printf(int,int,char *,...)
+Warning FONT.C 233: Function should return a value in function getRomFontPtr()
+
+
+	Available memory 4068704
+
+== FORMAT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\format.c:
+
+
+	Available memory 4095708
+
+== GAMETIME
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\gametime.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3806608
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   GETREGS.ASM  to  D:\OBJ\GETREGS.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  447k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   GETRGB.ASM  to  D:\OBJ\GETRGB.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+== GRANTPEA
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\grantpea.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3708220
+
+== CCURRVP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\ccurrvp.c:
+
+
+	Available memory 4144012
+
+== CGLOBVP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cglobvp.c:
+
+
+	Available memory 4143572
+
+== CICRTC
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cicrtc.c:
+
+
+	Available memory 4137508
+
+== CPALETTE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cpalette.c:
+
+
+	Available memory 4031276
+
+== CRECT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\crect.c:
+
+
+	Available memory 4166300
+
+== CSHAPE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cshape.c:
+
+
+	Available memory 4115628
+
+== CVIDMODE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cvidmode.c:
+
+
+	Available memory 4113184
+
+== CVPORT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cvport.c:
+
+
+	Available memory 4085724
+
+== CYTABLE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cytable.c:
+
+
+	Available memory 4167656
+
+== INITSYS
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\initsys.c:
+
+
+	Available memory 4083412
+
+== MERGEARY
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\mergeary.c:
+
+
+	Available memory 4149508
+
+== GRAVITY
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\gravity.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3594036
+
+== GUMPCOLR
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\gumpcolr.c:
+
+
+	Available memory 4187720
+
+== GUMPSHAP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\gumpshap.c:
+
+
+	Available memory 4098900
+
+== HANDLES
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\handles.c:
+
+
+	Available memory 4160528
+
+== HARDWARE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\hardware.c:
+
+
+	Available memory 4052960
+
+== INIT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\init.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning TEXTGUMP.H 89: 'TextCheckMenuItemGump::addPullDown(PullDownGump *,unsigned char)' hides virtual function 'PureMenuItemGump::addPullDown(PullDownGump *)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3442092
+
+== INTER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\inter.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3260332
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   INTERUPT.ASM  to  D:\OBJ\INTERUPT.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+== INTLIST
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\intlist.c:
+
+
+	Available memory 4074352
+
+== IRGUMP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\irgump.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3643820
+
+== KERNEL
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\kernel.c:
+
+
+	Available memory 3869688
+
+== KTEXTED
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\ktexted.c:
+
+
+	Available memory 3988572
+
+== LISTBOX
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\listbox.c:
+
+
+	Available memory 4002972
+
+== LOITER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\loiter.c:
+
+
+	Available memory 3808564
+
+== MAIN
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\main.c:
+Warning TEXTGUMP.H 89: 'TextCheckMenuItemGump::addPullDown(PullDownGump *,unsigned char)' hides virtual function 'PureMenuItemGump::addPullDown(PullDownGump *)'
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3761084
+
+== MAINMENU
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\mainmenu.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3437160
+
+== CMEMHNDP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cmemhndp.c:
+
+
+	Available memory 4157956
+
+== MENU
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\menu.c:
+
+
+	Available memory 3976532
+
+== MESSAGE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\message.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 4062812
+
+== CBIOS
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cbios.c:
+
+
+	Available memory 4130248
+
+== CDLIST
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cdlist.c:
+
+
+	Available memory 4164348
+
+== CEXIT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cexit.c:
+
+
+	Available memory 4125944
+
+== CLLIST
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cllist.c:
+
+
+	Available memory 4159840
+
+== ERROR
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\error.c:
+
+
+	Available memory 4114216
+
+== FERROR
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\ferror.c:
+
+
+	Available memory 4132008
+
+== FVINFO
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\fvinfo.c:
+
+
+	Available memory 4123348
+
+== MISSILE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\missile.c:
+
+
+	Available memory 3926392
+
+== MLIST
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\mlist.c:
+Warning MLIST.C 176: Function should return a value in function List::removeFromList(unsigned short)
+
+
+	Available memory 4058804
+
+== MONDATA
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\mondata.c:
+
+
+	Available memory 4072200
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   MOTCHECK.ASM  to  D:\OBJ\MOTCHECK.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            3
+Remaining memory:  436k
+
+== MOTRAK
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\motrak.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3786768
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   MSDL.ASM  to  D:\OBJ\MSDL.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   MSDOWN.ASM  to  D:\OBJ\MSDOWN.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   MSDR.ASM  to  D:\OBJ\MSDR.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+== MSGPROC
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\msgproc.c:
+
+
+	Available memory 4004992
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   MSLEFT.ASM  to  D:\OBJ\MSLEFT.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   MSRIGHT.ASM  to  D:\OBJ\MSRIGHT.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   MSUL.ASM  to  D:\OBJ\MSUL.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   MSUP.ASM  to  D:\OBJ\MSUP.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   MSUR.ASM  to  D:\OBJ\MSUR.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+== MUSICFLS
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\musicfls.cpp:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3955848
+
+== MVSCRN
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\mvscrn.c:
+
+
+	Available memory 4136332
+
+== NEWGUMP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\newgump.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3992840
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   NEWHOOK.ASM  to  D:\OBJ\NEWHOOK.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  444k
+
+== NOTLIST
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\notlist.c:
+
+
+	Available memory 4069004
+
+== OCCLUDE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\occlude.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3777424
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   OPENFILE.ASM  to  D:\OBJ\OPENFILE.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  446k
+
+== PAGAN
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\pagan.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3656384
+
+== PAL
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\pal.c:
+
+
+	Available memory 3962628
+
+== PATHFIND
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\pathfind.c:
+Warning PATHFIND.C 120: Unreachable code in function PathFinder::process()
+
+
+	Available memory 3743824
+
+== PREAMBLE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\preamble.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3610988
+
+== PRIORITY
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\priority.c:
+
+
+	Available memory 4170408
+
+== PRISM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\prism.c:
+
+
+	Available memory 4167468
+
+== PROCESS
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\process.c:
+Warning PROCESS.C 549: Function should return a value in function Process::allocate(unsigned long)
+
+
+	Available memory 3975120
+
+== PROCMON
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\procmon.c:
+
+
+	Available memory 4022072
+
+== PROFILER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\profiler.c:
+
+
+	Available memory 4031932
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   RANDINT.ASM  to  D:\OBJ\RANDINT.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  447k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   RCFILE.ASM  to  D:\OBJ\RCFILE.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  446k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   READFILE.ASM  to  D:\OBJ\READFILE.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  444k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   REDIRECT.ASM  to  D:\OBJ\REDIRECT.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  436k
+
+== REFSTORE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\refstore.c:
+
+
+	Available memory 3934824
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   ROFILE.ASM  to  D:\OBJ\ROFILE.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  446k
+
+== SAVEGAME
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\savegame.c:
+
+
+	Available memory 4060568
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SB.ASM  to  D:\OBJ\SB.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  427k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SBDAC.ASM  to  D:\OBJ\SBDAC.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  437k
+
+== SBUTTON
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\sbutton.c:
+Warning SBUTTON.C 16: Functions containing missing return statements are not expanded inline in function ShapePushButton::set_frame(int)
+Warning SBUTTON.C 17: Functions containing missing return statements are not expanded inline in function ShapeCycleButton::set_frame(int)
+Warning SBUTTON.C 18: Functions containing missing return statements are not expanded inline in function ShapeActivatorButton::set_frame(int)
+
+
+	Available memory 4056620
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SCALE.ASM  to  D:\OBJ\SCALE.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  441k
+
+== SCRATCHM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\scratchm.c:
+
+
+	Available memory 4154472
+
+== SCROLBAR
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\scrolbar.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3964112
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SDDXF.ASM  to  D:\OBJ\SDDXF.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            3
+Remaining memory:  436k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SDFDXF.ASM  to  D:\OBJ\SDFDXF.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            3
+Remaining memory:  436k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SDFXF.ASM  to  D:\OBJ\SDFXF.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  437k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SDXF.ASM  to  D:\OBJ\SDXF.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  437k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SEEKFILE.ASM  to  D:\OBJ\SEEKFILE.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  446k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SETREGS.ASM  to  D:\OBJ\SETREGS.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SETRGB.ASM  to  D:\OBJ\SETRGB.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  446k
+
+== FWRITSKP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\fwritskp.c:
+
+
+	Available memory 4131996
+
+== IWRITSKP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\iwritskp.c:
+
+
+	Available memory 4089648
+
+== WRITSKP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\writskp.c:
+
+
+	Available memory 4110172
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SKIPDRAW.ASM  to  D:\OBJ\SKIPDRAW.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  437k
+
+== SLIDER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\slider.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 4010856
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   SMEMCPY.ASM  to  D:\OBJ\SMEMCPY.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  446k
+
+== SPRITE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\sprite.c:
+
+
+	Available memory 3945368
+
+== SSQUARE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\ssquare.c:
+
+
+	Available memory 4084824
+
+== STATGUMP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\statgump.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3709652
+
+== STATREST
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\statrest.c:
+
+
+	Available memory 3807460
+
+== STDINT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\stdint.c:
+
+
+	Available memory 4055732
+
+== LSYSTEM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\lsystem.c:
+
+
+	Available memory 4042944
+
+== SIMPEXIT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\simpexit.c:
+
+
+	Available memory 4176792
+
+== SYSTEM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\system.c:
+
+
+	Available memory 4134016
+
+== SYSTIMER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\systimer.c:
+
+
+	Available memory 4071100
+
+== TARGGUMP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\targgump.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3852428
+
+== TBUTTON
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\tbutton.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning TBUTTON.C 81: Functions containing missing return statements are not expanded inline in function TextPushButton::set_frame(int)
+Warning TBUTTON.C 87: Functions containing missing return statements are not expanded inline in function TextActivatorButton::set_frame(int)
+
+
+	Available memory 4067224
+
+== CWRKSTR
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cwrkstr.c:
+
+
+	Available memory 4124444
+
+== TEXTEDIT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\textedit.c:
+
+
+	Available memory 3988620
+
+== TEXTGUMP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\textgump.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning TEXTGUMP.H 89: 'TextCheckMenuItemGump::addPullDown(PullDownGump *,unsigned char)' hides virtual function 'PureMenuItemGump::addPullDown(PullDownGump *)'
+
+
+	Available memory 3916580
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   TMRSRECT.ASM  to  D:\OBJ\TMRSRECT.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  442k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   TMSVRECT.ASM  to  D:\OBJ\TMSVRECT.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  442k
+
+== U8DIR
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\u8dir.c:
+
+
+	Available memory 3789412
+
+== U8DISPAT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\u8dispat.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning TEXTGUMP.H 89: 'TextCheckMenuItemGump::addPullDown(PullDownGump *,unsigned char)' hides virtual function 'PureMenuItemGump::addPullDown(PullDownGump *)'
+
+
+	Available memory 3720096
+
+== U8GMPSHP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\u8gmpshp.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+
+
+	Available memory 4077276
+
+== U8POINT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\u8point.c:
+
+
+	Available memory 4081984
+
+== U8SBAR
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\u8sbar.c:
+
+
+	Available memory 4000716
+
+== U8YESNO
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\u8yesno.c:
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+
+
+	Available memory 3778824
+
+== UPROCESS
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\uprocess.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3625464
+
+== URANDOM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\urandom.c:
+
+
+	Available memory 4078824
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   VDBOX.ASM  to  D:\OBJ\VDBOX.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  444k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   VDLINE.ASM  to  D:\OBJ\VDLINE.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  442k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   VDPUTPIX.ASM  to  D:\OBJ\VDPUTPIX.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   VDRECT.ASM  to  D:\OBJ\VDRECT.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  442k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   VIEWFILE.ASM  to  D:\OBJ\VIEWFILE.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  447k
+
+== WAIT
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\wait.c:
+
+
+	Available memory 4057052
+
+== WORLD
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\world.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning DRAGGUMP.H 24: 'DrgNewGump::draw(int,int)' hides virtual function 'NewGump::draw(short,short)'
+Warning BASECAM.H 29: 'PanelGump::draw(short,short)' hides virtual function 'DrgNewGump::draw(int,int)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning TEXTGUMP.H 89: 'TextCheckMenuItemGump::addPullDown(PullDownGump *,unsigned char)' hides virtual function 'PureMenuItemGump::addPullDown(PullDownGump *)'
+Warning WORLD.C 202: Function should return a value in function CheatWindow::resetMenu()
+Warning WORLD.C 1078: Initializing AnimSet with int in function World::commandMouseMovement(Event &)
+Warning WORLD.C 1079: Initializing AnimSet with int in function World::commandMouseMovement(Event &)
+Warning WORLD.C 1080: Initializing AnimSet with int in function World::commandMouseMovement(Event &)
+Warning WORLD.C 1129: Initializing AnimSet with int in function World::commandMouseLeft(Event &)
+Warning WORLD.C 1130: Initializing AnimSet with int in function World::commandMouseLeft(Event &)
+Warning WORLD.C 1131: Initializing AnimSet with int in function World::commandMouseLeft(Event &)
+Warning WORLD.C 1137: Initializing AnimSet with int in function World::commandMouseLeft(Event &)
+Warning WORLD.C 1138: Initializing AnimSet with int in function World::commandMouseLeft(Event &)
+Warning WORLD.C 1175: Initializing AnimSet with int in function World::commandMouseLeft(Event &)
+Warning WORLD.C 1196: Initializing AnimSet with int in function World::commandMouseLeft(Event &)
+Warning WORLD.C 1207: Initializing AnimSet with int in function World::commandMouseLeft(Event &)
+Warning WORLD.C 1280: Initializing AnimSet with int in function World::commandMouseRight(Event &)
+Warning WORLD.C 1284: Initializing AnimSet with int in function World::commandMouseRight(Event &)
+Warning WORLD.C 1289: Initializing AnimSet with int in function World::commandMouseRight(Event &)
+Warning WORLD.C 1294: Initializing AnimSet with int in function World::commandMouseRight(Event &)
+Warning WORLD.C 1295: Initializing AnimSet with int in function World::commandMouseRight(Event &)
+Warning WORLD.C 1306: Initializing AnimSet with int in function World::commandMouseRight(Event &)
+Warning WORLD.C 1325: Initializing AnimSet with int in function World::commandMouseRight(Event &)
+Warning WORLD.C 1383: Initializing AnimSet with int in function World::commandNoEvents(Event &)
+Warning WORLD.C 1387: Initializing AnimSet with int in function World::commandNoEvents(Event &)
+Warning WORLD.C 1396: Initializing AnimSet with int in function World::commandNoEvents(Event &)
+Warning WORLD.C 1401: Initializing AnimSet with int in function World::commandNoEvents(Event &)
+Warning WORLD.C 1403: Initializing AnimSet with int in function World::commandNoEvents(Event &)
+Warning WORLD.C 1417: Initializing AnimSet with int in function World::commandNoEvents(Event &)
+Warning WORLD.C 1630: Initializing AnimSet with int in function World::postDragItem(Event &)
+
+
+	Available memory 3211572
+
+== WPNCACHE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\wpncache.c:
+Warning WPNCACHE.C 89: Function should return a value in function WeaponCache::getWeaponIndex(unsigned short)
+
+
+	Available memory 3808564
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   WRITFILE.ASM  to  D:\OBJ\WRITFILE.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+
+== YAMM
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\yamm.c:
+Warning YAMM.C 45: Function should return a value in function initYamm()
+
+
+	Available memory 4099140
+
+== ZSEARCH
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\zsearch.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3837624
+
+== CHARGEN
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\chargen.c:
+
+
+	Available memory 4069324
+
+== UNITFILE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\unitfile.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+
+
+	Available memory 3869904
+
+== CACHE
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\cache.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\XCACHE\CACHE.C 170: Constant out of range in comparison in function CacheNodePtr::findSpace(long)
+Warning ..\XCACHE\CACHE.C 281: Constant out of range in comparison in function CacheNodePtr::deallocate(CacheNodePtr)
+Warning ..\XCACHE\CACHE.C 287: Constant out of range in comparison in function CacheNodePtr::deallocate(CacheNodePtr)
+Warning ..\XCACHE\CACHE.C 526: Constant out of range in comparison in function CacheNodePtr::verify(char *,unsigned short)
+Warning ..\XCACHE\CACHE.C 547: Constant out of range in comparison in function CacheNodePtr::verify(char *,unsigned short)
+Warning ..\XCACHE\CACHE.C 547: Constant out of range in comparison in function CacheNodePtr::verify(char *,unsigned short)
+Warning ..\XCACHE\CACHE.C 566: Constant out of range in comparison in function CacheNodePtr::verify(char *,unsigned short)
+Warning ..\XCACHE\CACHE.C 566: Constant out of range in comparison in function CacheNodePtr::verify(char *,unsigned short)
+Warning ..\XCACHE\CACHE.C 582: Constant out of range in comparison in function CacheNodePtr::verify(char *,unsigned short)
+Warning ..\XCACHE\CACHE.C 582: Constant out of range in comparison in function CacheNodePtr::verify(char *,unsigned short)
+Warning ..\XCACHE\CACHE.C 652: Constant out of range in comparison in function CacheNodePtr::dump()
+Warning ..\XCACHE\CACHE.C 654: Constant out of range in comparison in function CacheNodePtr::dump()
+
+
+	Available memory 3863272
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   CACHENOD.ASM  to  D:\OBJ\CACHENOD.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  440k
+
+== FLEXHAND
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\flexhand.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+
+
+	Available memory 4096128
+
+== HANDLER
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\handler.c:
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+Warning ..\XCACHE\HANDLER.C 35: Function should return a value in function CacheHandler::reserve(int)
+
+
+	Available memory 4120812
+
+== SHAPHAND
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\shaphand.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\XCACHE\CACHE.H 43: Constant out of range in comparison in function CacheNodePtr::isFree()
+Warning ..\XCACHE\CACHE.H 44: Constant out of range in comparison in function CacheNodePtr::isAllocated()
+Warning ..\XCACHE\CACHE.H 45: Constant out of range in comparison in function CacheNodePtr::isDummy()
+
+
+	Available memory 4045224
+
+== DESKIP
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+d:\stub\deskip.c:
+Warning FLEX\FASTFLEX.H 21: 'FastFlex::init(char *,Index *,OpenMode,short)' hides virtual function 'FlexFile::init(char *,OpenMode,short)'
+Warning ..\ZACKCMP\DESKIP.C 285: Function should return a value in function ZackFile::read(char *,long,long)
+Warning ..\ZACKCMP\DESKIP.C 298: Function should return a value in function ZackFile::write(char *,long,long)
+
+
+	Available memory 3842492
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   AIL16.ASM  to  D:\OBJ\AIL16.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  438k
+
+Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+
+Assembling file:   DCMP8.ASM  to  D:\OBJ\DCMP8.OBJ
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  445k
+

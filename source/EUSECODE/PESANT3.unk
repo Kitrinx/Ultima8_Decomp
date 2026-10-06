@@ -1,0 +1,296 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0344
+// FLEX slot: 838
+// Original offset: 0x000D89BE
+// Naming evidence: E, exact object-1 linker name `PESANT3`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/PESANT3.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass PESANT3 inherits Item
+{
+	process pesant3_look_describe_living_or_dead();
+	process pesant3_enter_fast_area_start_beggar_solicitation_loop();
+	process pesant3_leave_fast_area_clear_beggar_process_refs();
+	process pesant3_cast_report_avatar_attack_to_guard();
+	process pesant3_use_run_beggar_donation_dialogue();
+	process pesant3_play_beggar_solicitation_loop();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PESANT3::pesant3_look_describe_living_or_dead()
+{
+	if isDead()
+	{
+		bark("dead beggar ");
+	}
+	else
+	{
+		bark("beggar ");
+	}
+}
+
+// Derived: routine 0x00DB, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PESANT3::pesant3_enter_fast_area_start_beggar_solicitation_loop()
+{
+	local_m03:U8Bytes3; // X: untouched.
+	if referent > 250
+	{
+		return;
+	}
+	if isDead()
+	{
+		return;
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0344_pesant3_play_beggar_solicitation_loop(this) -> return;
+}
+
+// Derived: routine 0x0110, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PESANT3::pesant3_leave_fast_area_clear_beggar_process_refs()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+}
+
+// Derived: routine 0x0151, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PESANT3::pesant3_cast_report_avatar_attack_to_guard()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = 25;
+	while (not Npc_getTarget(this)) and local_m02
+	{
+		wait(1);
+		local_m02--;
+	}
+	if Npc_getTarget(this) = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_wait(0x00000000, 200) ->
+		spawn class_058B_callTheGuards(this, 0) -> return;
+		clrInCombat();
+		if not isDead()
+		{
+			if urandom(100) > 50
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Help! I'm being oppressed! ") -> return;
+			}
+			else
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Argh! I'm being attacked! ") -> return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0244, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PESANT3::pesant3_use_run_beggar_donation_dialogue()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:Number;
+	if referent > 250
+	{
+		return;
+	}
+	killProcess(referent, PT_ACTIVITY);
+	killProcess(referent, PT_BARK);
+	if urandom(100) > 50
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Hello... "), u8_stack_ref(1)) -> return;
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Greetings... "), u8_stack_ref(1)) -> return;
+	}
+	class_057C_enterConvo2(this);
+	wait(60);
+	killProcess(1, PT_BARK);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_realDoAnim(this, getDir(), 48) -> return;
+	if urandom(100) > 50
+	{
+		bark("Do you have any old coins you don't want? ");
+	}
+	else
+	{
+		bark("How's about helpin' out a poor cripple? ");
+	}
+	u8goto label_0A3B if not (class_0581_askYesNo(0x00000000) = 1);
+	foreach recursive local_m02 where (type = 143) within container 1 {
+		local_m04 += local_m02.getQuantity();
+	}
+	if local_m04
+	{
+		local_m06 = Item_getSliderInput(1, local_m04, 0, this);
+		if local_m06
+		{
+			class_0581_take(1, 143, 0, 0, local_m06);
+			Item_bark(u8_string_address("Here you go. "), u8_stack_ref(1));
+			if local_m06 > 9
+			{
+				local_m08 = random(6);
+				bark("Thank you, my friend. ");
+				bark("And, as a word of warning remember this... ");
+				if local_m08 = 0
+				{
+					bark("Always look for traps within chests. ");
+					bark("No treasure is worth dying for. ");
+				}
+				if local_m08 = 1
+				{
+					bark("Do not use healing spells when you do not need to. ");
+					bark("They will do you more damage than good. ");
+				}
+				if local_m08 = 2
+				{
+					bark("Remember that sword is a friend in times of great danger, ");
+					bark("but a well placed boot can also bring down an undead stranger... ");
+				}
+				if local_m08 = 3
+				{
+					bark("Exploring the catacombs may be dangerous to your health. ");
+					bark("Take care to map your route, lest you seal your own doom! ");
+				}
+				if local_m08 = 4
+				{
+					bark("Never try to kill a skeleton, for they are already the undead. ");
+				}
+				if local_m08 = 5
+				{
+					bark("Yellow shrooms with spots of green are very bad for your kidneys and spleen. ");
+					bark("But yellow shrooms with spots of red will bring you back when you are dead. ");
+				}
+				if local_m08 = 6
+				{
+					bark("Children should be seen, not heard. ");
+				}
+			}
+			else
+			{
+				bark("Thank you kindly, stranger. ");
+				bark("May Hydros find favor with you. ");
+			}
+			class_057C_exitConvo(this);
+			return;
+		}
+		else
+		{
+			Item_bark(u8_string_address("Sorry, I do not have any money. "), u8_stack_ref(1));
+			bark("Maybe next time... ");
+			class_057C_exitConvo(this);
+			return;
+		}
+	}
+	else
+	{
+		Item_bark(u8_string_address("Oooops! "), u8_stack_ref(1));
+		Item_bark(u8_string_address("Sorry, I do not have any money. "), u8_stack_ref(1));
+		bark("Maybe next time... ");
+		bark("Thanks anyway... ");
+		class_057C_exitConvo(this);
+		return;
+	}
+	u8goto label_0B41;
+	u8label label_0A3B:
+	Item_bark(u8_string_address("Peasant! "), u8_stack_ref(1));
+	local_m08 = urandom(3);
+	if local_m08 = 0
+	{
+		bark("May the Lurker take ya! ");
+	}
+	if local_m08 = 1
+	{
+		bark("May the minions of Lithos suck the marrow from your bones! ");
+	}
+	if local_m08 = 2
+	{
+		bark("May you roast in Pyros' flames for all time! ");
+	}
+	u8label label_0B41:
+	class_057C_exitConvo(this);
+}
+
+// Derived: routine 0x0B53, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process PESANT3::pesant3_play_beggar_solicitation_loop()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m04:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		wait(300);
+	}
+	process
+	{
+		wait(urandom(200) + 200);
+		local_m02 = urandom(8);
+		local_m04 = getDistance(referent, Avatar:Referent);
+		if somebodyTalking
+		{
+			local_m02 = 0;
+		}
+		if (local_m04 > 100) and (local_m04 < 500)
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_057C_realDoAnim(this, getDir(), 47) -> return;
+			if local_m02 = 1
+			{
+				bark("Hey... ");
+				class_057C_realDoAnim(this, 48, getDir());
+			}
+			if local_m02 = 2
+			{
+				bark("Over here... ");
+				class_057C_realDoAnim(this, 48, getDir());
+			}
+			if local_m02 = 3
+			{
+				class_057C_realDoAnim(this, 48, getDir());
+				bark("Pssst... ");
+			}
+			if local_m02 = 4
+			{
+				bark("You...! ");
+				class_057C_realDoAnim(this, 48, getDir());
+				bark("Come here...! ");
+			}
+			if local_m02 = 5
+			{
+				bark("Get over here...! ");
+			}
+		}
+		else
+		{
+			class_057C_realDoAnim(this, 48, getDir());
+		}
+	}
+}
+

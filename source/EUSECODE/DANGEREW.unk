@@ -1,0 +1,82 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02EC
+// FLEX slot: 750
+// Original offset: 0x0005AC26
+// Naming evidence: E, exact object-1 linker name `DANGEREW`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/DANGEREW.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass DANGEREW inherits Item
+{
+	process dangerew_got_hit_flash_linked_danger_and_damage_striker(arg_04:U8Word);
+	process dangerew_animate_linked_danger_flash(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process DANGEREW::dangerew_got_hit_flash_linked_danger_and_damage_striker(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Bytes2; // X: untouched.
+	local_m04:U8Word;
+	local_m06:Item;
+	local_m08:Item;
+	local_m0A:Npc;
+	local_m0A_w01:U8Bytes1;
+	local_m0C:U8Word;
+	local_m0D:U8Byte;
+	local_m04 = getQuality();
+	local_m08 = arg_04;
+	if arg_04
+	{
+		foreach local_m06 where ((type = 748) and (frame = 0) and (quality = local_m04)) within 10 cells of referent {
+			local_m06.setFrame(1);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_02EC_dangerew_animate_linked_danger_flash(this, local_m06) -> return;
+		}
+		playSFX(189, 200);
+		if local_m08.isNpc()
+		{
+			local_m0A = arg_04;
+			foreach recursive local_m0C where (type = 760) within container 1 {
+				local_m0D = 1;
+			}
+			if (not local_m0D) and (local_m0A.isDead() = 0)
+			{
+				class_057C_receiveHit(urandom(5) + 5, Item_getDirFromItem(referent, this), referent, u8_local_address(local_m0A_w01));
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0165, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process DANGEREW::dangerew_animate_linked_danger_flash(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:Item;
+	[[PT_ACTIVITY, referent]];
+	local_m04 = arg_04;
+	for local_m02 = 1 to 5
+	{
+		local_m04.setFrame(local_m02);
+		wait(1);
+	}
+	for local_m02 = 1 to 5
+	{
+		local_m04.setFrame(6 - local_m02);
+		wait(1);
+	}
+	local_m04.setFrame(0);
+}
+

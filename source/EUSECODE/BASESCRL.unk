@@ -1,0 +1,178 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x009F
+// FLEX slot: 161
+// Original offset: 0x0002094D
+// Naming evidence: E, exact object-1 linker name `BASESCRL`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BASESCRL.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass BASESCRL inherits Item
+{
+	process basescrl_look_bark_description_by_quality();
+	process basescrl_use_dispatch_scroll_text_by_quality();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BASESCRL::basescrl_look_bark_description_by_quality()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getQuality();
+	if local_m02 = 0
+	{
+		bark("Scroll ");
+		return;
+	}
+	else if local_m02 = 1
+	{
+		bark("scroll of dispelling magic portals ");
+		return;
+	}
+	else if local_m02 = 50
+	{
+		bark("scroll of trap detection ");
+		return;
+	}
+	else if local_m02 = 51
+	{
+		bark("scroll of trap destruction ");
+		return;
+	}
+	else if local_m02 = 52
+	{
+		bark("scroll of healing ");
+		return;
+	}
+	else if local_m02 = 53
+	{
+		bark("scroll of restoration ");
+		return;
+	}
+	else if local_m02 = 54
+	{
+		bark("scroll of invisibility ");
+		return;
+	}
+	else if local_m02 = 55
+	{
+		bark("Restore to sight scroll ");
+		return;
+	}
+	else
+	{
+		bark("scroll ");
+		return;
+	}
+}
+
+// Derived: routine 0x028D, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BASESCRL::basescrl_use_dispatch_scroll_text_by_quality()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m02_w01:U8Bytes1;
+	local_m04:U8Word;
+	local_m02 = referent;
+	local_m04 = local_m02.getQuality();
+	if local_m04 = 0
+	{
+		class_057A_scroll1_read_shopping_list(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 1
+	{
+		class_0579_scroll2_read_scroll_of_dispelling_magical_portals_by(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 2
+	{
+		class_057A_scroll1_read_i_can_go_no_further_these(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 3
+	{
+		class_057A_scroll1_read_bryans_final_note(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 4
+	{
+		class_057A_scroll1_read_bruces_final_note(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 5
+	{
+		class_057A_scroll1_read_have_trust_in_things_you_cannot(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 6
+	{
+		class_057A_scroll1_read_this_scroll_while_in_possession_of(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 7
+	{
+		class_057A_scroll1_read_sysaphus_floor_complaint_copy_a(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 8
+	{
+		class_057A_scroll1_read_sysaphus_floor_complaint_copy_b(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 9
+	{
+		class_057A_scroll1_read_mental_note_fix_floors_those_water(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 10
+	{
+		class_057A_scroll1_read_from_my_experiments_i_have_found(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 11
+	{
+		class_057A_scroll1_read_most_honorable_lady_mordea_i_have(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 12
+	{
+		class_057A_scroll1_read_lieutenant_vittek_see_that_you_meet(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 13
+	{
+		class_057A_scroll1_read_graners_armor_note(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 14
+	{
+		class_057A_scroll1_read_my_time_above_this_ground_draws(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 15
+	{
+		class_057A_scroll1_read_trecaste_i_have_read_yradan_s(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 50
+	{
+		class_0579_scroll2_read_detection_scroll_of_trapped_chests_enchanted(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 51
+	{
+		class_0579_scroll2_read_destruction_scroll_of_traps_in_chests(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 52
+	{
+		class_0579_scroll2_read_scroll_of_healing_enchanted_by_varkus(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 53
+	{
+		class_0579_scroll2_read_scroll_of_restoration_enchanted_by_varkus(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 54
+	{
+		class_0579_scroll2_read_scroll_of_invisibility_enchanted_by_magethief(u8_local_address(local_m02_w01));
+	}
+	else if local_m04 = 55
+	{
+		class_0579_scroll2_read_scroll_of_revisibility_enchanted_by_magethief(u8_local_address(local_m02_w01));
+	}
+	else
+	{
+		class_057A_scroll1_read_shopping_list(u8_local_address(local_m02_w01));
+	}
+}
+

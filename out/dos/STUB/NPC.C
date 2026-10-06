@@ -1,0 +1,1 @@
+#include "..\ITEM\NPC.C"

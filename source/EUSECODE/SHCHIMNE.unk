@@ -1,0 +1,43 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02D2
+// FLEX slot: 724
+// Original offset: 0x000F4EE8
+// Naming evidence: E, exact object-1 linker name `SHCHIMNE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SHCHIMNE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass SHCHIMNE inherits Item
+{
+	process shchimne_look_describe_chimney();
+	process shchimne_enter_fast_area_emit_random_chimney_smoke();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SHCHIMNE::shchimne_look_describe_chimney()
+{
+	bark("chimney");
+}
+
+// Derived: routine 0x00AA, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SHCHIMNE::shchimne_enter_fast_area_emit_random_chimney_smoke()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	if random(2) = 1
+	{
+		if local_m02.legal_create(757, 0, getX(), getY(), getZ() + 24)
+		{
+			local_m02.orStatus(128);
+		}
+	}
+}
+

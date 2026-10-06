@@ -1,0 +1,37 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0268
+// FLEX slot: 618
+// Original offset: 0x000774B1
+// Naming evidence: E, exact object-1 linker name `FLOATIN`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FLOATIN.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass FLOATIN inherits Item
+{
+	process floatin_look_describe_floating_platform();
+	process floatin_release_award_dexterity_from_surface_weight();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FLOATIN::floatin_look_describe_floating_platform()
+{
+	bark("floating platform ");
+}
+
+// Derived: routine 0x00B5, event mask 0x00000200.
+// R: `release` identifies event 09; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FLOATIN::floatin_release_award_dexterity_from_surface_weight()
+{
+	if Item_getSurfaceWeight(this) = 0
+	{
+		AccumulateDexterity(15);
+	}
+}
+

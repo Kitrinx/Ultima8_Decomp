@@ -1,0 +1,148 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04B5
+// FLEX slot: 1207
+// Original offset: 0x000F8C8E
+// Naming evidence: E, exact object-1 linker name `SORCHAT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SORCHAT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass SORCHAT inherits Egg
+{
+	process sorchat_clear_spell_casting_area(arg_00:U8Word);
+	process sorchat_hatch_warn_spell_thief_and_start_combat();
+}
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process SORCHAT::sorchat_clear_spell_casting_area(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:U8Bytes2; // X: untouched.
+	local_m05:U8Byte;
+	local_m0A:U8Bytes5;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	local_m0A_w02:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_FX, arg_00]];
+		local_m05 = 0;
+	}
+	process
+	{
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m02 where (type = 454) on surface below arg_00 {
+			if class_0583_firespel_is_candle_lit(local_m02)
+			{
+				local_m05 = 1;
+			}
+		}
+		if local_m05
+		{
+			local_m05 = 0;
+			continue; // X: reconstructed process-phase latch transfer.
+		}
+		foreach local_m02 where ((type = 400) and (quality = 666)) within 20 cells of arg_00 {
+			local_m0A_w02 = local_m02.getX() + 96;
+			local_m08 = local_m02.getY() + 96;
+			local_m06 = local_m02.getZ() + 8;
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m0A) -> return;
+			wait(35);
+			local_m02.destroy();
+			wait(class_0581_randRange(15, 30));
+		}
+		u8_search_begin(local_m02, 2, 30 * 32, arg_00, <<66, u8_search_word(634), u8_search_word(313), 36>>);
+		while u8_search_condition()
+		{
+			local_m02.destroy();
+			u8_search_advance();
+		}
+		u8_search_end();
+		return;
+	}
+}
+
+// Derived: routine 0x019C, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SORCHAT::sorchat_hatch_warn_spell_thief_and_start_combat()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Npc;
+	local_m02_w01:U8Bytes1;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m09:U8Byte;
+	local_m09 = 0;
+	local_m06 = 0;
+	local_m08 = 0;
+	if (getX() = 15022) and (getY() = 24170) and (getZ() = 72)
+	{
+		foreach local_m04 where (type = 124) within 40 cells of referent {
+			local_m06 = local_m04;
+			local_m09 = 1;
+		}
+	}
+	else if ((getX() = 14938) and (getY() = 23894) and (getZ() = 72)) or ((getX() = 14744) and (getY() = 24120) and (getZ() = 72))
+	{
+		foreach local_m04 where (type = 124) within 40 cells of referent {
+			local_m06 = local_m04;
+		}
+	}
+	else
+	{
+		if (getX() = 11039) and (getY() = 18687) and (getZ() = 72)
+		{
+			local_m02 = 0;
+			foreach local_m04 where (type = 200) within 30 cells of referent {
+				local_m02 = local_m04;
+			}
+			if local_m02
+			{
+				if (local_m02 = 58) and (local_m02.isDead() = 0)
+				{
+					class_057C_enterConvo(u8_local_address(local_m02_w01));
+					local_m02.bark("You will not steal my spell! I will kill you first! ");
+					class_057C_exitConvo(u8_local_address(local_m02_w01));
+				}
+				local_m02.setTarget(1);
+				[[527, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+				destroy();
+				return;
+			}
+			u8goto label_037A;
+		}
+	}
+	u8label label_037A:
+	if local_m06
+	{
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m04 where ((type = 397) and (frame = 20)) on surface below local_m06 {
+			local_m08 = local_m04;
+		}
+		if local_m08
+		{
+			if local_m09
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_04B5_sorchat_clear_spell_casting_area(0x00000000, local_m06) -> return;
+			}
+			else
+			{
+				killProcess(local_m08, PT_FX);
+			}
+		}
+	}
+}
+

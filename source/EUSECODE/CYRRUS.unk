@@ -1,0 +1,1106 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0416
+// FLEX slot: 1048
+// Original offset: 0x0004F9D8
+// Naming evidence: E, exact object-1 linker name `CYRRUS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/CYRRUS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+uses "npc";
+uses "flags";
+uses "door";
+
+npcclass Cyrrus inherits Npc
+{
+	process look();
+	process schedule(currentTime:Long);
+	process enterFastArea();
+	process leaveFastArea();
+	process cast(ref:Referent);
+	process AvatarStoleSomething(ref:Referent);
+	process atHome();
+	process randomBarkAtHome();
+	process atMonastery();
+	process randomBarkAtMonastery();
+	process inWoods();
+	process randomBarkInWoods();
+	process use();
+	process closeDoor();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::look()
+{
+	if Cyrrus.isDead()
+	{
+		bark("the late Cyrrus ");
+	}
+	else if cyrrusName and cyrrusJob
+	{
+		bark("Holy Cyrrus, the healer ");
+	}
+	else if cyrrusName
+	{
+		bark("Cyrrus");
+	}
+	else if cyrrusJob
+	{
+		bark("monk ");
+	}
+	else
+	{
+		bark("man ");
+	}
+}
+
+// Derived: routine 0x0166, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::schedule(currentTime:Long)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	point:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	map:MapNum;
+	sched:Number;
+	if Cyrrus.isDead()
+	{
+		return;
+	}
+	map = 37;
+	if class_0581_getPeriod() = 3
+	{
+		local_m05_w02 = 18975;
+		local_m03 = 17695;
+		local_m01 = 56;
+		sched = 2;
+	}
+	if (class_0581_getPeriod() = 4) or (class_0581_getPeriod() = 5)
+	{
+		local_m05_w02 = 23039;
+		local_m03 = 17663;
+		local_m01 = 56;
+		sched = 3;
+	}
+	if (class_0581_getPeriod() = 0) or (class_0581_getPeriod() = 1) or (class_0581_getPeriod() = 2)
+	{
+		local_m05_w02 = 20223;
+		local_m03 = 21535;
+		local_m01 = 56;
+		sched = 1;
+	}
+	if class_057C_canSafeTeleport(this, point, map)
+	{
+		cyrrusSchedule = sched;
+		class_057C_safeTeleport(this, point, map);
+	}
+}
+
+// Derived: routine 0x0239, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::enterFastArea()
+{
+	if Cyrrus.isDead()
+	{
+		teleport(urandom(10000), urandom(10000), 0, 0);
+	}
+	else
+	{
+		resetRef(referent, PT_ACTIVITY);
+		resetRef(referent, PT_PATHFIND);
+		resetRef(referent, PT_ANIM);
+		resetRef(referent, PT_BARK);
+		if cyrrusSchedule = 1
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0416_atHome(this) -> return;
+		}
+		else if cyrrusSchedule = 2
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0416_atMonastery(this) -> return;
+		}
+		else if cyrrusSchedule = 3
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0416_inWoods(this) -> return;
+		}
+	}
+}
+
+// Derived: routine 0x02F3, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::leaveFastArea()
+{
+	cyrrusJustHealed = 0;
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+}
+
+// Derived: routine 0x033A, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::cast(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	count:Number;
+	count = 10;
+	while (not Npc_getTarget(this)) and count
+	{
+		wait(1);
+		count--;
+	}
+	ref = Npc_getTarget(this);
+	if ref = 1
+	{
+		resetRef(referent, PT_ACTIVITY);
+		resetRef(referent, PT_PATHFIND);
+		resetRef(referent, PT_BARK);
+		resetRef(referent, PT_ANIM);
+		bark("Aid me, Stratos! ");
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+		realDoAnim(AS_ENTER_CAST, getDir());
+		realDoAnim(29, getDir());
+		class_057C_toggleStatus(16, this);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 100, 116) -> return;
+		setFrame(getFrame());
+		realDoAnim(AS_EXIT_CAST, getDir());
+		clrImmortal();
+		setDead();
+		teleport(urandom(10000), urandom(10000), 0, 0);
+	}
+}
+
+// Derived: routine 0x04B6, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::AvatarStoleSomething(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	stolenItem:Item;
+	item = ref;
+	if cyrrusSchedule != 1
+	{
+		return;
+	}
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_BARK);
+	resetRef(referent, PT_ANIM);
+	foreach recursive stolenItem within container 1 {
+		if stolenItem = item
+		{
+			cSetActivity(1);
+		}
+	}
+	turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+	bark("What are you doing there...? ");
+	wait(120);
+	enterFastArea();
+	return;
+}
+
+// Derived: routine 0x05B3, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::atHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		if Npc_getLastAnimSet(this) = 51
+		{
+			realDoAnim(AS_SIT_UP, getDir());
+		}
+		foreach pathEgg where ((type = TypePathMarker) and (quality = 7)) within 10 cells of Cyrrus {
+			counter2 = pathEgg.getFrame();
+		}
+	}
+	process
+	{
+		for counter = counter2 to 7
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter) and (quality = 7)) within 25 cells of Cyrrus {
+				if pathfind(pathEgg, 10)
+				{
+					if counter = 0
+					{
+						turnToFace(2, 0, 10);
+						bark("I must meditate! ");
+						realDoAnim(AS_SIT_DOWN, getDir());
+						wait(1000);
+						realDoAnim(AS_SIT_UP, getDir());
+						bark("I feel refreshed now! ");
+					}
+					else if (counter = 1) or (counter = 3)
+					{
+						turnToFace(2, 0, 10);
+						closeDoor();
+					}
+					else if not somebodyTalking
+					{
+						randomBarkAtHome();
+						wait(30);
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+					}
+				}
+				else
+				{
+					wait(500);
+				}
+				wait(60 + urandom(100));
+			}
+		}
+		counter2 = 0;
+	}
+}
+
+// Derived: routine 0x082B, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::randomBarkAtHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Cyrrus:Referent);
+	if (ran < 200) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(4);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			bark("Why are you still here? ");
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not cyrrusMet
+			{
+				bark("Why are you here, stranger? ");
+			}
+			else
+			{
+				bark("Please, I'd like my privacy. ");
+			}
+			wait(120);
+		}
+		if ran = 3
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not cyrrusMet
+			{
+				bark("Are you here to rob me?! ");
+			}
+			else
+			{
+				bark("Please, I need to be alone. ");
+			}
+			wait(120);
+		}
+		if ran = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not cyrrusMet
+			{
+				bark("What are you doing here? ");
+			}
+			else
+			{
+				bark("May I help you with something? ");
+			}
+			wait(120);
+		}
+	}
+	else
+	{
+		ran = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			if not torwinJumped
+			{
+				bark("I wonder if Torwin has supper plans? ");
+			}
+			else
+			{
+				bark("Gee, I miss Torwin. ");
+			}
+		}
+		if ran = 2
+		{
+			bark("Hmmmm... ");
+			wait(60);
+		}
+		if ran = 3
+		{
+			bark("I need to return to my studies. ");
+		}
+		if ran = 4
+		{
+			bark("Perhaps I should travel home to Tenebrae. ");
+			wait(50);
+			bark("Then I could visit my true love, Jenna. ");
+			wait(100);
+		}
+		if ran = 5
+		{
+			realDoAnim(AS_SIT_DOWN, getDir());
+			bark("Curse these shoes. ");
+			realDoAnim(AS_SIT_UP, getDir());
+		}
+		if ran = 6
+		{
+			bark("I should tend to the garden. ");
+		}
+		if ran = 7
+		{
+			bark("It is rather humid today. ");
+			wait(60);
+		}
+	}
+}
+
+// Derived: routine 0x0D97, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::atMonastery()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		if Npc_getLastAnimSet(this) = 51
+		{
+			realDoAnim(AS_SIT_UP, getDir());
+		}
+		foreach pathEgg where ((type = TypePathMarker) and (quality = 8)) within 10 cells of Cyrrus {
+			counter2 = pathEgg.getFrame();
+		}
+	}
+	process
+	{
+		for counter = counter2 to 12
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter) and (quality = 8)) within 25 cells of Cyrrus {
+				if pathfind(pathEgg, 10)
+				{
+					if (counter = 3) or (counter = 10)
+					{
+						turnToFace(2, 0, 10);
+						closeDoor();
+					}
+					else if not somebodyTalking
+					{
+						randomBarkAtMonastery();
+						wait(30);
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+					}
+				}
+				else
+				{
+					wait(500);
+				}
+				wait(60 + urandom(100));
+			}
+		}
+		counter2 = 0;
+	}
+}
+
+// Derived: routine 0x0F47, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::randomBarkAtMonastery()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Cyrrus:Referent);
+	if (ran < 200) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(3);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			bark("Do you require my assistance? ");
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not torwinMet
+			{
+				bark("What do you need here, stranger? ");
+			}
+			else
+			{
+				bark("What do you require? ");
+			}
+			wait(120);
+		}
+		if ran = 3
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not torwinMet
+			{
+				bark("Yes, stranger? ");
+			}
+			else
+			{
+				bark("Yes? ");
+			}
+			wait(120);
+		}
+	}
+	else
+	{
+		ran = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			if torwinJumped
+			{
+				bark("I need to speak to the others. ");
+			}
+			else
+			{
+				bark("I need to speak to Torwin. ");
+			}
+		}
+		if ran = 2
+		{
+			bark("Mmmmm ");
+		}
+		if ran = 3
+		{
+			bark("I'm feeling a bit peckish. ");
+		}
+		if ran = 4
+		{
+			bark("I should leave for Tenebrae soon. ");
+		}
+		if ran = 5
+		{
+			bark("Blast these bunions. ");
+			wait(100);
+		}
+		if ran = 6
+		{
+			bark("I must remember to prune the garden. ");
+		}
+		if ran = 7
+		{
+			bark("Let me see... ");
+			wait(60);
+			bark("No, that's not it. ");
+		}
+	}
+}
+
+// Derived: routine 0x1357, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::inWoods()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		if Npc_getLastAnimSet(this) = 51
+		{
+			realDoAnim(AS_SIT_UP, getDir());
+		}
+		foreach pathEgg where ((type = TypePathMarker) and (quality = 6)) within 10 cells of Cyrrus {
+			counter2 = pathEgg.getFrame();
+		}
+	}
+	process
+	{
+		for counter = counter2 to 19
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = (19 - counter)) and (quality = 6)) within 25 cells of Cyrrus {
+				if pathfind(pathEgg, 12)
+				{
+					if counter = 10
+					{
+						turnToFace(urandom(7), 0, 10);
+						realDoAnim(AS_SIT_DOWN, getDir());
+						wait(1200);
+						realDoAnim(AS_SIT_UP, getDir());
+					}
+					else if counter = 14
+					{
+						turnToFace(urandom(7), 0, 10);
+						realDoAnim(AS_SIT_DOWN, getDir());
+						wait(1200);
+						realDoAnim(AS_SIT_UP, getDir());
+					}
+					else if not somebodyTalking
+					{
+						randomBarkInWoods();
+						wait(30);
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+					}
+				}
+				else
+				{
+					wait(500);
+				}
+			}
+		}
+		counter2 = 0;
+	}
+}
+
+// Derived: routine 0x15A8, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::randomBarkInWoods()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Cyrrus:Referent);
+	if (ran < 400) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(4);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			bark("Are you lost? ");
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not cyrrusMet
+			{
+				bark("Is it not lovely here? ");
+			}
+			else
+			{
+				bark("Do you want something, my friend? ");
+			}
+			wait(120);
+		}
+		if ran = 3
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not cyrrusMet
+			{
+				bark("Hello, stranger! ");
+				bark("Do you need something? ");
+			}
+			else
+			{
+				bark("This is lovely, but I do miss Tenebrae. ");
+			}
+			wait(100);
+		}
+		if ran = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not cyrrusMet
+			{
+				bark("Are you in need? ");
+			}
+			else
+			{
+				bark("I wish Jenna were here. ");
+			}
+			wait(120);
+		}
+	}
+	else
+	{
+		ran = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			bark("I wish I were in Tenebrae. ");
+		}
+		if ran = 2
+		{
+			bark("Ouch! ");
+			bark("Curse these insects! ");
+			wait(60);
+		}
+		if ran = 3
+		{
+			bark("I should have brought my cloak. ");
+		}
+		if ran = 4
+		{
+			bark("Hummm, no birds today. ");
+			wait(100);
+		}
+		if ran = 5
+		{
+			bark("The clouds are turning grey... ");
+			bark("I think it's going to rain. ");
+			wait(100);
+		}
+	}
+}
+
+// Derived: routine 0x1A3E, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	answer:String;
+	askList:String List;
+	Item_bark(u8_string_address("Pardon me. "), u8_stack_ref(1));
+	if Npc_getLastAnimSet(this) = 51
+	{
+		killProcess(referent, PT_ANIM);
+		realDoAnim(AS_SIT_UP, getDir());
+	}
+	enterConvo();
+	killProcess(1, PT_BARK);
+	if cyrrusMet
+	{
+		if cyrrusName
+		{
+			askList = <<"Hello, Cyrrus. ">>;
+		}
+		else
+		{
+			askList = <<"Hello. ">>;
+		}
+		if (Avatar.getHp() < (Avatar.getStr() * 2)) and cyrrusJob
+		{
+			askList ^= <<"I need healing. ">>;
+		}
+		if attemptedWisdomTest and (not passedWisdomTest)
+		{
+			askList ^= <<"Have you passed the Test of Wisdom? ">>;
+		}
+		if passedWisdomTest and (not attemptedCenteredTest)
+		{
+			askList ^= <<"Is the Test of Centeredness difficult? ">>;
+			askList -= <<"Have you passed the Test of Wisdom? ">>;
+		}
+		if passedWisdomTest and passedCenteredTest and (not attemptedThirdTest)
+		{
+			askList ^= <<"I have passed the Tests of Wisdom and Centeredness. ">>;
+			askList -= <<"Have you passed the Test of Wisdom? ", "Is the Test of Centeredness difficult? ">>;
+		}
+		if passedThirdTest and (not (torwinJumped and (not hasOwnFoci)))
+		{
+			askList ^= <<"I passed the Third Test. ">>;
+			askList -= <<"I have passed the Tests of Wisdom and Centeredness. ", "Have you passed the Test of Wisdom? ", "Is the Test of Centeredness difficult? ">>;
+		}
+		if passedThirdTest and hasOwnFoci and torwinMet
+		{
+			askList ^= <<"I have passed the Third Test and have my Foci. ">>;
+			askList -= <<"I passed the Third Test. ", "I have passed the Tests of Wisdom and Centeredness. ", "Have you passed the Test of Wisdom? ", "Is the Test of Centeredness difficult? ">>;
+		}
+		if spokeAboutTorwinS and spokeAboutTorwinX
+		{
+			askList ^= <<"Have you seen Torwin? ">>;
+		}
+		if stratosMet and (not hasBreath)
+		{
+			askList ^= <<"I have heard the Mystic Voice. ">>;
+		}
+		if torwinJumped and hasRing
+		{
+			askList ^= <<"I found this ring. ">>;
+		}
+		if hasBreath
+		{
+			askList ^= <<"I have the Breath of Wind. ">>;
+			askList -= <<"I passed the Third Test. ", "I have passed the Tests of Wisdom and Centeredness. ", "Have you passed the Test of Wisdom? ", "Is the Test of Centeredness difficult? ">>;
+		}
+	}
+	else
+	{
+		askList = <<"Good day to you. ">>;
+	}
+	while answer != "bye "
+	{
+		askList -= <<"bye ">>;
+		askList += <<"bye ">>;
+		answer = ask(askList);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch answer
+		{
+			case "Good day to you. "
+			{
+				bark("Welcome to our island. ");
+				askList -= <<"Good day to you. ">>;
+				askList += <<"By what are you called? ", "What place is this? ">>;
+			}
+			case "Hello, Cyrrus. ", "Hello. "
+			{
+				bark("Ah, hello my friend. I am pleased to see you. ");
+				askList -= <<"Hello, Cyrrus. ", "Hello. ">>;
+				askList ^= <<"Where are you from? ">>;
+			}
+			case "By what are you called? "
+			{
+				cyrrusName = 1;
+				cyrrusMet = 1;
+				bark("I am called Holy Cyrrus but please, just call me Cyrrus. ");
+				askList -= <<"By what are you called? ">>;
+				askList ^= <<"Holy Cyrrus? ">>;
+			}
+			case "I have heard the Mystic Voice. "
+			{
+				bark("That is marvelous! You must be very excited. It is too bad that Torwin could not be here to share in your triumph... ");
+				askList -= <<"I have heard the Mystic Voice. ">>;
+			}
+			case "I need healing. "
+			{
+				if cyrrusJustHealed
+				{
+					bark("I am sorry, but I do not have the strength to perform such a service. Come back later after I have rested. ");
+					askList ^= <<"I need healing. ">>;
+				}
+				else
+				{
+					bark("That is certainly no problem. ");
+					healingTouch(1);
+					cyrrusJustHealed = 1;
+					bark("Please leave me now, I need to rest. ");
+					exitConvo();
+					return;
+				}
+			}
+			case "Have you passed the Test of Wisdom? "
+			{
+				bark("For certes. It is only the first step on the road to Enlightenment. It was not easy by any means. ");
+				askList += <<"Will you tell me the answers? ", "Where did you get the answers? ">>;
+				askList -= <<"Have you passed the Test of Wisdom? ">>;
+			}
+			case "The Test of Centeredness was difficult? ", "Is the Test of Centeredness difficult? "
+			{
+				bark("Difficult? It was nearly the death of me! I fell at least five times. Fortunately Stratos saw fit to keep me and not send me to my death over the steep side. But, you'll see for yourself when you get there! ");
+				askList -= <<"The Test of Centeredness was difficult? ", "Is the Test of Centeredness difficult? ">>;
+			}
+			case "I have passed the Tests of Wisdom and Centeredness. "
+			{
+				bark("You have? But you've just arrived on our island. I don't believe we've ever had anyone complete them this fast. Stratos will be so pleased with your accomplishments. Now you must find Stellos and begin on the next part of your journey. ");
+				askList -= <<"I have passed the Tests of Wisdom and Centeredness. ">>;
+			}
+			case "I have passed the Third Test and have my Foci. "
+			{
+				if fociReturned
+				{
+					bark("That is wonderful! You must be quite excited. ");
+				}
+				else
+				{
+					bark("I am sorry I can not celebrate with you, but a terrible thing has happened. Brother Xavier has lost one of his Foci. ");
+					askList ^= <<"How did it happen? ">>;
+				}
+				askList -= <<"I have passed the Third Test and have my Foci. ">>;
+			}
+			case "How did it happen? "
+			{
+				bark("It seems it was taken while he slept. I am sorry but I must be going. I have to help look for the missing Focus. ");
+				exitConvo();
+				return;
+			}
+			case "Have you seen Torwin? "
+			{
+				if torwinJumped
+				{
+					bark("Why, no. And, may I add, what a cruel thing to ask! ");
+				}
+				else if hearTruthActive
+				{
+					bark("No I have not. (yes I have) ");
+					askList = <<"Why are you covering up for him? ", "Where is he? ">>;
+				}
+				else
+				{
+					bark("No, I haven't seen him all day. ");
+				}
+				askList -= <<"Have you seen Torwin? ">>;
+			}
+			case "Where is he? "
+			{
+				if hearTruthActive
+				{
+					bark("I do not know. (He told me he was going to go to Windy Point today for something very important.) ");
+					torwinGottaJump = 1;
+					Npc_schedule(((100) : DWord), u8_stack_ref(26));
+				}
+				else
+				{
+					bark("I do not know. ");
+				}
+				askList -= <<"Where is he? ">>;
+			}
+			case "Why are you covering up for him? "
+			{
+				if hearTruthActive
+				{
+					bark("I am not covering for him! (I think he is the one who took the Focus. I don't think he meant any harm by it, though. He is not a mean-spirited person) ");
+				}
+				else
+				{
+					bark("Pardon me? I am not covering up for him. That would go against all the teachings of Stratos. ");
+				}
+				askList -= <<"Why are you covering up for him? ">>;
+			}
+			case "Holy Cyrrus? "
+			{
+				bark("That is the name given to me by Stellos. Everyone thinks it is a grand name. ");
+				askList -= <<"Holy Cyrrus? ">>;
+				askList += <<"It is a grand name. ", "Everyone? ">>;
+			}
+			case "It is a grand name. "
+			{
+				bark("I am sure my father has bragged about it to everyone, including the torax! ");
+				askList -= <<"It is a grand name. ">>;
+				askList += <<"Your father is a herdsman? ">>;
+			}
+			case "Everyone? "
+			{
+				bark("My mother and father, the others here... why, just everyone. ");
+				askList -= <<"Everyone? ">>;
+			}
+			case "Your father is a herdsman? "
+			{
+				bark("Yes, and so I would be. It's birthing time back home. My favorite time of the year. Watching the beginning of a new life, helping that new life to stand... aahhh, it is one of greatest joys in my life. But that is all behind me now. ");
+				askList -= <<"Your father is a herdsman? ">>;
+				askList = <<"Where are you from? ">>;
+			}
+			case "Where are you from? "
+			{
+				bark("My home is in the hills of Tenebrae. Even Argent Rock with all its finery is but a pale shadow of the beauty of Tenebrae. The ocean, the hills, the people...I miss it so. ");
+				askList -= <<"Where are you from? ">>;
+				askList += <<"You miss the people of Tenebrae? ", "Why are you here? ">>;
+			}
+			case "Why are you here? "
+			{
+				bark("It was discovered when I was quite young that I had a talent for healing. My mother and father were so proud. They told everyone about their brilliant child who was going to heal the world. Then my sister was injured by a kith. No matter how I tried, my meager skills were no match for her injury. She died and I vowed it would never happen again. I left home and made my way here. I've been here ever since. ");
+				askList -= <<"Why are you here? ">>;
+			}
+			case "You miss the people of Tenebrae? "
+			{
+				bark("It has been my home since birth. I miss the people. Darion with all his bluff and bluster, used to carry candy in his pocket for me. Bentic tutored both Jenna and I when we were young. Oh, my beloved Jenna. I try not to think of her, it pains me so. ");
+				askList -= <<"You miss the people of Tenebrae? ">>;
+				askList += <<"Tell me of Jenna. ", "Tell me of Darion. ">>;
+				if benticCacked
+				{
+					askList += <<"Bentic is dead. ">>;
+				}
+				else
+				{
+					askList += <<"Tell me of Bentic. ">>;
+				}
+			}
+			case "Tell me of Bentic. "
+			{
+				bark("I miss him so. He is a kind and gentle man who's greatest loves in life are his books and his studies. He knows so much about so many things, he is fascinating to talk with. ");
+				askList -= <<"Tell me of Bentic. ">>;
+			}
+			case "Tell me of Darion. "
+			{
+				bark("He talked of the day I would join the guard. I told him many times I would be a herdsman like my father. 'Nonsense,' he would say, 'you're cut out to be a guard, you have the spirit for it.' I don't know why, the guard never does anything but hang around the castle hoping Aramina will bring them a sweet from the Tempest's table! He is Jenna's father, you know. ");
+				askList -= <<"Tell me of Darion. ">>;
+				askList += <<"Jenna's father? ">>;
+			}
+			case "Jenna's father? "
+			{
+				bark("Yes, and in my fondest dreams, he was to be my father- in-law, for I love Jenna so. ");
+				askList -= <<"Jenna's father? ">>;
+			}
+			case "Bentic is dead. "
+			{
+				bark("Oh no! Say it is not so! Oh dear! You bring me sad news of my home! Pray, how did this happen? ");
+				askList -= <<"Bentic is dead. ">>;
+				askList = <<"Mordea had him executed. ", "I know not ">>;
+			}
+			case "I know not "
+			{
+				bark("'Tis a sad day for me. Bentic was a dear friend. ");
+				askList -= <<"I know not ", "Mordea had him executed. ">>;
+			}
+			case "Mordea had him executed. "
+			{
+				bark("The Tempest? I knew she was a hard woman, but to execute someone as gentle and harmless as Bentic? What terrible thing did he do that would anger the Tempest so? ");
+				askList -= <<"Mordea had him executed. ", "I know not ">>;
+				askList += <<"He conducted forbidden research. ", "I do not know ">>;
+			}
+			case "I do not know "
+			{
+				bark("I cannot imagine what terrible wrong Bentic committed that would result in his death. He was a kind and good man. ");
+				askList -= <<"I do not know ">>;
+			}
+			case "He conducted forbidden research. "
+			{
+				bark("Research was what Bentic loved most. Ah, 'tis a sad day when good folks are executed for doing something which they love and brings harm to no one. ");
+				askList -= <<"He conducted forbidden research. ", "I do not know ">>;
+			}
+			case "Tell me of Jenna. "
+			{
+				if jennaMet
+				{
+					bark("Ah, you've met her, then. Isn't she a lovely creature? I have loved her from the moment I laid eyes on her. I always dreamed she would marry me and live with me in the hills, helping tend the torax. It is funny how things never work out like we expect. ");
+				}
+				else
+				{
+					bark("She lives in Tenebrae. If you should travel there, stop in and see her. She is a lovely girl, so full of life. I would that I could marry her, but I cannot. ");
+				}
+				askList += <<"Why not marry her? ">>;
+				askList -= <<"Tell me of Jenna. ">>;
+			}
+			case "Why not marry her? "
+			{
+				bark("Look around you, my friend. There are few enough of us here on Argent Rock. Rare are those with the talent it takes to touch the power of Stratos and use it to heal. I am one of those few. To help the people of this land I must sacrifice that which I most dearly desire...to marry my beloved Jenna and live a simple herdsman's life in the hills above Tenebrae. ");
+				askList -= <<"Why not marry her? ">>;
+			}
+			case "What place is this? "
+			{
+				bark("This is Argent Rock, home of the Theurgists. ");
+				askList -= <<"What place is this? ">>;
+				askList += <<"Who are the Theurgists? ">>;
+			}
+			case "Who are the Theurgists? "
+			{
+				cyrrusJob = 1;
+				bark("Why we are the disciples of Stratos, the Great Titan of Air. We are healers. ");
+				askList -= <<"Who are the Theurgists? ">>;
+			}
+			case "I passed the Third Test. "
+			{
+				bark("I have heard. This is certainly a great occasion. Now you are ready to attempt the greatest feat of your life...to reach out and touch the power that is Stratos. ");
+				askList -= <<"I passed the Third Tests. ">>;
+				askList ^= <<"Touch Stratos' power? ", "The greatest feat? ">>;
+			}
+			case "Touch Stratos' power? "
+			{
+				bark("The power that gives us the ability to heal people. It is a thrilling moment when you first touch the Titan. Certainly nothing you will ever forget. ");
+				askList -= <<"Touch Stratos' power? ">>;
+			}
+			case "The greatest feat? "
+			{
+				bark("You must go to Stellos. He will tell you how to reach Stratos. ");
+				askList -= <<"The greatest feat? ">>;
+			}
+			case "I have the Breath of Wind. "
+			{
+				bark("That explains it then. I felt a tremor in my link with Stratos, then it was broken. I am unable to heal. ");
+				askList -= <<"I have the Breath of Wind. ">>;
+				askList += <<"You are unable to heal? ">>;
+			}
+			case "You are unable to heal? "
+			{
+				bark("I hope that you use the Breath of Wind for a higher purpose, for it was taken at great sacrifice to the people of this land. It is a bitter sweet time for me. ");
+				askList += <<"Why bittersweet? ">>;
+				askList -= <<"You are unable to heal? ">>;
+			}
+			case "Why bittersweet? "
+			{
+				bark("For if my link with Stratos is permanently broken then I can never heal the sick and injured of this land again. This would be a tragic thing for the people, however, it also would release me of my vow to Stratos, leaving me free to return to Tenebrae and marry my beloved Jenna. So while I mourn for the people, I thank you for giving my love to me. ");
+				askList -= <<"Why bittersweet? ">>;
+			}
+			case "Will you tell me the answers? "
+			{
+				bark("Certainly not. That is an unthinkable thing. You must find the answers yourself as have all those seeking Enlightenment before you have. ");
+				askList -= <<"Will you tell me the answers? ", "Where did you get the answers? ">>;
+			}
+			case "Where did you get the answers? "
+			{
+				bark("From the library. Oh, the hours I spent in there pouring over the old texts until the candle I was using was burned to a nub. Yes, those were difficult days. But not as difficult as the Test of Centeredness. ");
+				askList -= <<"Where did you get the answers? ", "Will you tell me the answers? ">>;
+				askList += <<"The Test of Centeredness was difficult? ">>;
+			}
+			case "I found this ring. "
+			{
+				bark("My goodness. That's Torwin's ring! Oh my, it belonged to his father. He showed it to everyone he met. Oh how terribly, terribly sad! You should take it to his mother. ");
+				askList -= <<"I found this ring. ">>;
+				askList += <<"I shall. ", "I don't think I will. ">>;
+			}
+			case "I shall. "
+			{
+				bark("I know she will be very happy. It is a kind thing you do. Give her my regards, will you? ");
+				exitConvo();
+				return;
+			}
+			case "I don't think I will. "
+			{
+				bark("Perhaps you are right. The shock and sadness might be too much for her. Still, I think it would be best to return it to her. ");
+				askList -= <<"I shall. ", "I don't think I will. ">>;
+			}
+			case "The Test of Centeredness was difficult? ", "Is the Test of Centeredness difficult? "
+			{
+				bark("Difficult? It was nearly the death of me! I fell at least five times. Fortunately Stratos saw fit to keep me and not send me to my death over the steep side. But, you'll see for yourself when you get there! ");
+				askList -= <<"The Test of Centeredness was difficult? ", "Is the Test of Centeredness difficult? ">>;
+			}
+			case "bye "
+			{
+				bark("Goodbye. ");
+				exitConvo();
+				return;
+			}
+		}
+	}
+	exitConvo();
+}
+
+// Derived: routine 0x5366, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Cyrrus::closeDoor()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m04_w01:U8Bytes1;
+	[[PT_ACTIVITY, referent]];
+	foreach local_m02 where ((type = 69) or (type = 342)) within 10 cells of Cyrrus {
+		local_m04 = local_m02;
+		break;
+	}
+	if local_m04
+	{
+		bark("Why is this wide open? ");
+		class_0044_door_ns_toggle_open_closed(u8_local_address(local_m04_w01), 22);
+	}
+}
+

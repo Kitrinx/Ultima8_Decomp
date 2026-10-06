@@ -1,0 +1,671 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0403
+// FLEX slot: 1029
+// Original offset: 0x000E6289
+// Naming evidence: E, exact object-1 linker name `SALKIND`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/SALKIND.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "flags";
+uses "free";
+uses "npc";
+uses "door";
+
+npcclass Salkind inherits Npc
+{
+	process look();
+	process schedule(currentTime:Long);
+	process enterFastArea();
+	process leaveFastArea();
+	process AvatarStoleSomething(ref:Referent);
+	process cast(ref:Referent);
+	process atHome();
+	process atCourt();
+	process randomBarkAtHome();
+	process closeDoor();
+	process use();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::look()
+{
+	if salkindName and salkindJob
+	{
+		if isDead()
+		{
+			bark("Salkind the late Seneschal ");
+		}
+		else
+		{
+			bark("Salkind the Seneschal ");
+		}
+	}
+	else if salkindName
+	{
+		if isDead()
+		{
+			bark("the very late Salkind ");
+		}
+		else
+		{
+			bark("Salkind");
+		}
+	}
+	else if salkindJob
+	{
+		if isDead()
+		{
+			bark("dead Seneschal ");
+		}
+		else
+		{
+			bark("Seneschal ");
+		}
+	}
+	else if isDead()
+	{
+		bark("corpse ");
+	}
+	else
+	{
+		bark("man ");
+	}
+}
+
+// Derived: routine 0x020E, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::schedule(currentTime:Long)
+{
+}
+
+// Derived: routine 0x021B, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::enterFastArea()
+{
+	if (toranDead = 0) or (isDead() = 1) or (secondexecution = 1)
+	{
+		return;
+	}
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	if SalkindSchedule = 2
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0403_atCourt(this) -> return;
+	}
+	else if SalkindSchedule = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0403_atHome(this) -> return;
+	}
+}
+
+// Derived: routine 0x02AE, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::leaveFastArea()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+}
+
+// Derived: routine 0x02EF, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::AvatarStoleSomething(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	if (SalkindSchedule != 1) or (isDead() = 1)
+	{
+		return;
+	}
+	item = ref;
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	salkindPissed = 1;
+	turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+	bark("What do you think you are doing? ");
+	enterFastArea();
+	return;
+}
+
+// Derived: routine 0x03BF, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::cast(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	count:Number;
+	count = 10;
+	while (not Npc_getTarget(this)) and count
+	{
+		wait(1);
+		count--;
+	}
+	ref = Npc_getTarget(this);
+	if ref = 1
+	{
+		realDoAnim(AS_DRAW_WEAPON, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn callTheGuards(NULL_REF) -> return;
+		if not isDead()
+		{
+			if urandom(100) > 50
+			{
+				bark("Don't hurt me! ");
+			}
+			else
+			{
+				bark("Please! I'll do anything... ");
+			}
+		}
+	}
+}
+
+// Derived: routine 0x04B6, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::atHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach pathEgg where (type = TypePathMarker) within 10 cells of Salkind {
+			counter2 = pathEgg.getFrame();
+		}
+	}
+	process
+	{
+		for counter = counter2 to 10
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter)) within 30 cells of Salkind {
+				if pathfind(pathEgg, 12)
+				{
+					if counter = 5
+					{
+						turnToFace(4, 0, 15);
+						closeDoor();
+						wait(100);
+					}
+					else
+					{
+						if not somebodyTalking
+						{
+							randomBarkAtHome();
+						}
+						wait(100);
+					}
+				}
+				else
+				{
+					wait(700);
+				}
+			}
+			wait(200);
+			counter2 = 0;
+		}
+	}
+}
+
+// Derived: routine 0x05F7, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::atCourt()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	dir:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		wait(300);
+	}
+	process
+	{
+		ran = urandom(10);
+		turnToFace(getDirToItem(Mordea:Referent), 0, 15);
+		dir = getDir();
+		if ran <= 3
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			realDoAnim(AS_FIDGET, dir);
+			turnToFace(getDirToItem(Mordea:Referent), 0, 20);
+		}
+		else if (ran >= 4) and (ran <= 8)
+		{
+			realDoAnim(AS_FIDGET, dir);
+		}
+		else
+		{
+			realDoAnim(AS_DRAW_WEAPON, dir);
+			realDoAnim(AS_SHEATH_WEAPON, dir);
+		}
+		wait(200 + urandom(100));
+	}
+}
+
+// Derived: routine 0x072E, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::randomBarkAtHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	avaP:WorldPoint;
+	torP:WorldPoint;
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	if (getDistance(Avatar:Referent, Salkind:Referent) < 300) and ((Avatar.getStatus() & 16) = 0)
+	{
+		ran = urandom(4);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			bark("Leave me be! ");
+			realDoAnim(AS_FIDGET, getDir());
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not salkindMet
+			{
+				bark("Out of my house or I shall call the guards! ");
+			}
+			else
+			{
+				bark("Are we lost, perhaps? ");
+			}
+			wait(120);
+		}
+		if ran = 3
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not torwinMet
+			{
+				realDoAnim(AS_FIDGET, getDir());
+				bark("Leave, or I shall summon the guards! ");
+			}
+			else
+			{
+				realDoAnim(AS_FIDGET, getDir());
+				bark("Please, I wish to be alone. ");
+			}
+			wait(100);
+		}
+		if ran = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			if not torwinMet
+			{
+				bark("Can a man have his privacy? ");
+			}
+			else
+			{
+				bark("Do you wish to speak to me? ");
+			}
+			wait(120);
+		}
+		return;
+	}
+	u8goto label_0DA3 if not (getDistance(Avatar:Referent, Salkind:Referent) < 700);
+	ran = urandom(12);
+	turnToFace(urandom(7), 0, 10);
+	if ran = 1
+	{
+		bark("Where is that girl? ");
+		realDoAnim(AS_FIDGET, getDir());
+	}
+	else if ran = 2
+	{
+		bark("Aramina?");
+		wait(60);
+		realDoAnim(AS_FIDGET, getDir());
+	}
+	else if ran = 3
+	{
+		bark("Where is that logbook...? ");
+	}
+	else if ran = 4
+	{
+		realDoAnim(AS_FIDGET, getDir());
+		bark("dum de dum... ");
+		return;
+		wait(100);
+	}
+	else if ran = 5
+	{
+		realDoAnim(AS_DRAW_WEAPON, getDir());
+		bark("Where did I put that? ");
+		realDoAnim(AS_SHEATH_WEAPON, getDir());
+		bark("Oh, yes... ");
+	}
+	else if ran = 6
+	{
+		bark("Where are my documents? ");
+		wait(100);
+	}
+	else if ran = 7
+	{
+		realDoAnim(AS_FIDGET, getDir());
+		bark("He will pay dearly for that. ");
+		wait(100);
+	}
+	else if ran = 8
+	{
+		realDoAnim(AS_DRAW_WEAPON, getDir());
+		bark("Where is my jeweled dagger...? ");
+		realDoAnim(AS_SHEATH_WEAPON, getDir());
+		wait(100);
+	}
+	return;
+	u8label label_0DA3:
+}
+
+// Derived: routine 0x0DA5, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::closeDoor()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m04_w01:U8Bytes1;
+	[[PT_ACTIVITY, referent]];
+	foreach local_m02 where (type = 68) within 10 cells of Salkind {
+		local_m04 = local_m02;
+		break;
+	}
+	if local_m04
+	{
+		turnToFace(getDirToItem(local_m04), 0, 10);
+		bark("Who keeps opening these? ");
+		class_0044_door_ns_toggle_open_closed(u8_local_address(local_m04_w01), 3);
+	}
+}
+
+// Derived: routine 0x0E3F, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Salkind::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	answer:String;
+	askList:String List;
+	if not toranDead
+	{
+		return;
+	}
+	if getMap() = 3
+	{
+		if not devonJailed
+		{
+			bark("Out of my way! I must attend to her Ladyship! ");
+			exitConvo();
+			return;
+		}
+	}
+	if not salkindMet
+	{
+		Item_bark(u8_string_address("Greetings stranger. "), u8_stack_ref(1));
+	}
+	else
+	{
+		Item_bark(u8_string_address("One moment, Salkind... "), u8_stack_ref(1));
+	}
+	enterConvo();
+	killProcess(1, PT_BARK);
+	if not salkindMet
+	{
+		askList = <<"May I ask your name? ", "bye ">>;
+	}
+	else if salkindPissed = 1
+	{
+		ran = random(2);
+		if ran = 0
+		{
+			bark("Oh, returned, have we? Don't we have some nerve, hmmmmm? ");
+			askList ^= <<"I would like to speak with you. ">>;
+		}
+		else if ran = 1
+		{
+			bark("We certainly were never taught manners, were we? ");
+			askList ^= <<"I would like to speak with you. ">>;
+		}
+		else if ran = 2
+		{
+			bark("I have no time for your nonsense. ");
+			askList ^= <<"I would like to speak with you. ">>;
+		}
+	}
+	else
+	{
+		askList ^= <<"Who is Lady Mordea? ", "What is a Tempest? ", "bye ">>;
+		if metDevonInJail
+		{
+			askList ^= <<"What do you know about Bentic? ", "What do you know about Devon? ">>;
+		}
+		if urandom(10) > 5
+		{
+			bark("How may I be of assistance? ");
+		}
+		else
+		{
+			bark("Greetings. ");
+		}
+	}
+	while answer != "bye "
+	{
+		askList -= <<"bye ">>;
+		askList += <<"bye ">>;
+		answer = ask(askList);
+		u8goto label_1387 if not (answer = "May I ask your name? ");
+		salkindMet = 1;
+		salkindName = 1;
+		bark("Certainly, I am Salkind. And who might we be? ");
+		askList += <<("I am " + getName() + ".")>>;
+		askList += <<"None of your concern. ">>;
+		askList -= <<"May I ask your name? ">>;
+		if metDevonInJail
+		{
+			askList += <<"What do you know about Devon? ", "What do you know about Bentic? ">>;
+		}
+		continue; // X: reconstructed ordinary-while latch transfer.
+		u8label label_1387:
+		if answer = ("I am " + getName() + ".")
+		{
+			bark("And what can I help you with today, hmmmm?");
+			askList -= <<("I am " + getName() + "."), "None of your concern. ">>;
+			askList += <<"What do you do? ">>;
+		}
+		else if answer = ("Je suis " + getName() + ".")
+		{
+			bark("Et en quoi puis-je t'estre utile aujourd'hui, hmmmm?");
+			askList -= <<("Je suis " + getName() + "."), "None of your concern. ">>;
+			askList += <<"What do you do? ">>;
+		}
+		else if answer = ("Ich hei\xE1e " + getName() + ".")
+		{
+			bark("Ah, wirklich ein sch\x94ner Name, den wir da haben. Und? Was gibt es noch zu fragen?");
+			askList -= <<("Ich hei\xE1e " + getName() + "."), "None of your concern. ">>;
+			askList += <<"What do you do? ">>;
+		}
+		else
+		{
+			// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+			switch answer
+			{
+				case "What do you do? "
+				{
+					bark("What do I do? My, we are a nosy little thing, aren't we? Well, if you must know, I am the Seneschal to Lady Mordea. ");
+					askList -= <<"What do you do? ">>;
+					askList += <<"What is a seneschal? ", "Who is Lady Mordea? ">>;
+				}
+				case "Who is Lady Mordea? "
+				{
+					bark("Lady Mordea?! Why, out of what torax field did we crawl? She is only our Tempest. Perhaps we should go lie down and have a little rest. It seems our mind is a bit addled. ");
+					askList -= <<"Who is Lady Mordea? ">>;
+				}
+				case "None of your concern. "
+				{
+					bark("Apparently we were not taught our manners well at all. I shall not tolerate such rudeness. Begone! ");
+					salkindPissed = 1;
+					exitConvo();
+					return;
+				}
+				case "What is a seneschal? "
+				{
+					salkindJob = 1;
+					bark("Oh my, we aren't too up on titles are we? Yes, I am the seneschal. It is my duty to take care of running the day to day affairs of the city so that our Tempest, the Lady Mordea, can concentrate on more important things. ");
+					askList = <<"What is a Tempest? ", "Tell me about Lady Mordea. ", "What more important things? ">>;
+				}
+				case "What is a Tempest? "
+				{
+					bark("Surely you have heard of the Tempest? Oh, I see, we are just a visitor to this city, eh? Well, the Tempest is the handmaiden to the Great Titan of Water Hydros. ");
+					askList -= <<"What is a Tempest? ">>;
+					askList += <<"What are the Tempest duties? ", "Who is Hydros? ">>;
+				}
+				case "What are the Tempest duties? "
+				{
+					bark("How is it we don't know about the Tempest? Are we a very busy person or perhaps a little simple-minded? Well, no matter. The Tempest has the ability to touch a portion of the power of Hydros. ");
+					askList -= <<"What are the Tempest duties? ">>;
+				}
+				case "Who is Hydros? "
+				{
+					bark("Ah, the great Water Titan, the Lurker. What ever title she goes by, she is the most powerful of the Titans. The Lady Mordea can use a bit of Hydro's power to control the weather and all things of water. ");
+					askList -= <<"Who is Hydros? ">>;
+				}
+				case "Tell me about Lady Mordea. "
+				{
+					bark("She is a wise ruler and a fierce leader, most worthy of the title, 'Tempest'. So many times people say 'This thing or that thing cannot be done.' and yet she does it. Do we not now have much lower crime than under the previous Tempest? There is your proof! ");
+					askList -= <<"Tell me about Lady Mordea. ">>;
+					askList += <<"Tell me about the title 'Tempest'. ">>;
+				}
+				case "Tell me about the title 'Tempest'. "
+				{
+					bark("My, my, my. We really are a bit simple, aren't we? Perhaps we've been drinking a bit too much of Orlok's ale, hmmmm? Well, just to humor you, I'll refresh your memory. The title of Tempest is given to the leader of the city of Tenebrae. To become the Tempest, one must have been born of the royal family. It is only through heredity one may sit upon the throne. ");
+					askList -= <<"Tell me about the title 'Tempest'. ">>;
+					askList += <<"Why is the Tempestry hereditary? ">>;
+				}
+				case "Why is the Tempestry hereditary? "
+				{
+					bark("Because the powers that are necessary to bear the title are only transferred from parent to child. Lady Mordea received the power from her father. Does that make things a little clearer for you? ");
+					askList -= <<"Why is the Tempestry hereditary? ">>;
+					askList += <<"Who was Lady Mordea's father? ">>;
+				}
+				case "Who was Lady Mordea's father? "
+				{
+					bark("Didn't you learn anything as a child? Lord Keldan was Lady Mordea's father! And might I add that Lady Mordea is twice the Tempest Lord Keldan ever was. Why, if it weren't for his wife's encouragement, he would never have admitted his powers and assumed the title of Tempest, and then where would we be? ");
+					askList -= <<"Who was Lady Mordea's father? ">>;
+				}
+				case "What more important things? "
+				{
+					bark("Well, if it were to be common knowledge what the Tempest does, then there would be no mystery...no majestic mystique, hmmm? ");
+					askList -= <<"What more important things? ">>;
+				}
+				case "What do you know about Bentic? "
+				{
+					bark("That knave! He was conducting forbidden research. Why I am pleased we took care of him when we did. Nipped that problem right in the bud, we did. ");
+					askList -= <<"What do you know about Bentic? ">>;
+					askList = <<"You 'took care of him?' ", "What is 'forbidden research'? ">>;
+				}
+				case "You 'took care of him?' "
+				{
+					bark("He was executed, of course. ");
+					askList -= <<"You 'took care of him?' ">>;
+					askList = <<"Executed?! ">>;
+				}
+				case "Executed?! "
+				{
+					bark("Yes, on the docks. Oh, it is the best way. And we do it on the docks so that the site is easily washed down. No mess, no fuss. It is my job to schedule the executions. I keep records of all executions in my log book. ");
+					askList -= <<"Executed?! ">>;
+					askList += <<"What do you mean the 'best way'? ", "What log book? ">>;
+				}
+				case "What log book? "
+				{
+					bark("Why, my log book. I have to keep records of these sorts of things, you know. Why, how else would we keep track of expenses and such? Lady Mordea requires a full accounting of these things. It's all part of the thankless job of the seneschal. But that's all right, just knowing that I've done my job to the best of my ability is all the reward I need. ");
+					askList -= <<"What log book? ">>;
+				}
+				case "What do you mean the 'best way'? "
+				{
+					bark("The quicker the better. Can't have prisoners cluttering up the jails, costing the taxpayers' money. This way we keep costs down and add a serious deterrent to those who might be thinking of breaking the law. ");
+					askList -= <<"What do you mean the 'best way'? ">>;
+				}
+				case "What is 'forbidden research'? "
+				{
+					bark("If I told you what research was forbidden, then I'd just be encouraging you, wouldn't I, hmmmm? ");
+					askList -= <<"What is 'forbidden research'? ">>;
+				}
+				case "What do you know about Devon? "
+				{
+					bark("That trouble maker. Well, he will be taken care of, and well he deserves it. ");
+					askList -= <<"What do you know about Devon? ">>;
+					askList += <<"What are the charges? ">>;
+				}
+				case "What are the charges? "
+				{
+					bark("That is privileged information. It will be revealed at the execution. Good heavens, it's almost time. Oh, and there is -so- much to do before an execution. Arrange for the clean up crew, make sure Shaana's axe is sharpened...I've enjoyed our little talk, but I must leave now. Good day. ");
+					exitConvo();
+					return;
+				}
+				case "I would like to speak with you. "
+				{
+					bark("Well, have we learned our manners? ");
+					askList = <<"yes, sir ", "no ">>;
+				}
+				case "yes, sir "
+				{
+					bark("Well, that's a little more like it. Perhaps there is some hope for us after all, hmmmm? Now, what can I do for you? ");
+					salkindPissed = 0;
+					askList -= <<"yes, sir ", "no ">>;
+					askList += <<"What do you do? ">>;
+				}
+				case "no "
+				{
+					bark("Don't toy with me! I won't stand for it! ");
+					exitConvo();
+					bark("Swine! ");
+					return;
+				}
+				default
+				{
+					ran = random(3);
+					if ran = 0
+					{
+						bark("Farewell. ");
+					}
+					else if ran = 1
+					{
+						bark("Good day to you, stranger. ");
+					}
+					else if ran = 2
+					{
+						bark("Until we meet again. ");
+					}
+					exitConvo();
+					return;
+				}
+			}
+		}
+	}
+	exitConvo();
+}
+

@@ -1,0 +1,55 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0219
+// FLEX slot: 539
+// Original offset: 0x00077992
+// Naming evidence: E, exact object-1 linker name `FOOD`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FOOD.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass FOOD inherits Item
+{
+	process food_look_describe_by_frame();
+	process food_use_eat_fish_and_feed_avatar();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FOOD::food_look_describe_by_frame()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getFrame();
+	if local_m02 = 0
+	{
+		bark("fish ");
+	}
+	else if local_m02 = 1
+	{
+		bark("cooked fish ");
+	}
+	else if local_m02 = 2
+	{
+		bark("Torax ribs ");
+	}
+	else if local_m02 = 3
+	{
+		bark("cooked Torax ribs ");
+	}
+}
+
+// Derived: routine 0x014A, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FOOD::food_use_eat_fish_and_feed_avatar()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Mmmm... "), u8_stack_ref(1)) -> return;
+	destroy();
+	FeedAvatar(2);
+}
+

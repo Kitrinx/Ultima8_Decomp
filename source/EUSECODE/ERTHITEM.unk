@@ -1,0 +1,138 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02EA
+// FLEX slot: 748
+// Original offset: 0x0006BA06
+// Naming evidence: E, exact object-1 linker name `ERTHITEM`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ERTHITEM.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass ERTHITEM inherits Item
+{
+	process erthitem_look_describe_by_frame();
+	process erthitem_use_cast_earth_spell_selected_by_frame();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ERTHITEM::erthitem_look_describe_by_frame()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getFrame();
+	if local_m02 = 0
+	{
+		bark("Death Speak ");
+	}
+	else if local_m02 = 1
+	{
+		bark("Mask of Death ");
+	}
+	else if local_m02 = 2
+	{
+		bark("Rock Flesh ");
+	}
+	else if local_m02 = 3
+	{
+		bark("Summon Dead ");
+	}
+	else if local_m02 = 4
+	{
+		bark("Open Ground ");
+	}
+	else if local_m02 = 5
+	{
+		bark("Create Golem ");
+	}
+	else if local_m02 = 6
+	{
+		bark("Withstand Death ");
+	}
+	else if local_m02 = 7
+	{
+		bark("Grant Peace ");
+	}
+	else if local_m02 = 8
+	{
+		bark("Call Quake ");
+	}
+	else if local_m02 = 9
+	{
+		bark("Meteor Shower ");
+	}
+}
+
+// Derived: routine 0x0261, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ERTHITEM::erthitem_use_cast_earth_spell_selected_by_frame()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m09:U8Bytes5;
+	local_m05:U8Byte;
+	local_m07:U8Word;
+	local_m09_w02:U8Word;
+	local_m02 = getFrame();
+	local_m04 = 0;
+	local_m09_w02 = Avatar.getX();
+	local_m07 = Avatar.getY();
+	local_m05 = Avatar.getZ();
+	if local_m02 = 0
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0586_deathSpeak(1, local_m04) -> return;
+	}
+	else if local_m02 = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0586_feignDeath(1) -> return;
+	}
+	else if local_m02 = 2
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0586_rockFlesh(1) -> return;
+	}
+	else if local_m02 = 3
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0586_summonUndead(1, local_m09) -> return;
+	}
+	else if local_m02 = 4
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0586_openGround(1) -> return;
+	}
+	else if local_m02 = 5
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0586_createGolem(1, local_m04) -> return;
+	}
+	else if local_m02 = 6
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0586_withstandDeath(1) -> return;
+	}
+	else if local_m02 = 7
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0586_grantPeace(1) -> return;
+	}
+	else if local_m02 = 8
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0586_callQuake(1, 10) -> return;
+	}
+	else if local_m02 = 9
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0585_meteorShower(1) -> return;
+	}
+	destroy();
+}
+

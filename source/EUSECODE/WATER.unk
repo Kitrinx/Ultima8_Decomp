@@ -1,0 +1,198 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x056E
+// FLEX slot: 1392
+// Original offset: 0x00123D0B
+// Naming evidence: E, exact object-1 linker name `WATER`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/WATER.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] water_handle_item_splash_and_sinking(arg_04:U8Word, arg_06:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:Item;
+	local_m0B:WorldPoint;
+	local_m0B_w01:U8Bytes1;
+	local_m0D:Npc;
+	local_m0E:U8Byte;
+	if (arg_04 != 0) and (arg_06 = 0)
+	{
+		local_m02 = arg_04;
+		if Item_isOn(referent, u8_local_address(local_m02_w01)) = 0
+		{
+			return;
+		}
+	}
+	if arg_04
+	{
+		local_m04 = arg_04;
+		if local_m04.getStatus() & 2048
+		{
+			return;
+		}
+	}
+	if not neverSinks
+	{
+		local_m06 = arg_04;
+		if isSFXPlaying(99)
+		{
+			stopSFX(99);
+			wait(1);
+		}
+		if isSFXPlaying(177)
+		{
+			stopSFX(177);
+			wait(1);
+		}
+		if arg_04
+		{
+			if local_m06.getZ() = 254
+			{
+				return;
+			}
+			killProcess(arg_04, 515);
+			if (local_m06 = 2) and (DevonHitWater = 1)
+			{
+				return;
+			}
+			if (local_m06 = 2) and (DevonHitWater = 0)
+			{
+				createSprite(580, 40, 79, 79, 1, 1, local_m06.getX() + 160, local_m06.getY() + 160, local_m06.getZ());
+				playSFX(77, 100, 2);
+				DevonHitWater = 1;
+				return;
+			}
+			playSFX(77, 100);
+			createSprite(580, 40, 79, 79, 1, 1, local_m06.getX() + 160, local_m06.getY() + 160, local_m06.getZ());
+			local_m06.getPoint(u8_local_address(local_m0B_w01));
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_056E_water_spawn_ripple_sequence(this, 4, local_m0B) -> return;
+			if local_m06.isNpc()
+			{
+				local_m0D = arg_04;
+				if local_m0D = 1
+				{
+					setAvatarInStasis(1);
+					Kernel::resetRef(local_m0D, 6);
+					local_m0D.move(local_m0D.getX(), local_m0D.getY(), getZ() + 1);
+					Kernel::resetRef(1, PT_ANIM);
+					Kernel::resetRef(0, 544);
+					Npc_doAnim(1, 10000, 8, 56, u8_local_address(local_m0D_w01));
+					local_m0E = 0;
+					if local_m0D.isDead()
+					{
+						local_m0E = 1;
+					}
+					local_m0D.setDead();
+					Camera::setCenterOn(0);
+					local_m0D.move(0, 0, 0);
+					if local_m0E = 0
+					{
+						local_m0D.clrDead();
+					}
+					local_m0D.clrImmortal();
+					Npc_clrWithstandDeath(u8_local_address(local_m0D_w01));
+					local_m0D.receiveHit(0, 0, Avatar.getHp(), 128 | (32 | 8));
+					return;
+				}
+				else
+				{
+					local_m0D.teleport(urandom(10000), urandom(10000), 0, 0);
+					local_m0D.clrImmortal();
+					local_m0D.setDead();
+					Kernel::resetRef(local_m0D, 6);
+					return;
+				}
+			}
+			if (local_m06.getType() = 81) or (local_m06.getType() = 256)
+			{
+				return;
+			}
+			else if local_m06.getType() = 442
+			{
+				return;
+			}
+			else
+			{
+				resetRef(arg_04, 6);
+				Item_destroyContents(u8_local_address(local_m06_w01));
+				local_m06.destroy();
+			}
+		}
+	}
+}
+
+// Derived: routine 0x03A8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views; overlapping names alias bytes.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] water_spawn_ripple_sequence(arg_04:U8Bytes5, arg_04_w02:U8Word, arg_06:U8Word, arg_08:U8Byte, arg_09:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	local_m05_w02 = arg_04_w02 + 176;
+	local_m03 = arg_06 + 176;
+	local_m01 = arg_08;
+	for local_m07 = 1 to arg_09
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_056E_water_animate_ripple(this, local_m05) -> return;
+		wait(50);
+	}
+}
+
+// Derived: routine 0x0405, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views; overlapping names alias bytes.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] water_animate_ripple(arg_04:U8Bytes5, arg_04_w01:U8Bytes1)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m02.legal_create(476, 0, u8_local_address(arg_04_w01));
+	local_m04 = 0;
+	u8label label_0422:
+	suspend;
+	if local_m02 = 0
+	{
+		return;
+	}
+	local_m04++;
+	u8goto label_0440 if not (local_m04 != 25);
+	u8goto label_0422;
+	u8label label_0440:
+	local_m04 = 0;
+	if local_m02 != 0
+	{
+		local_m06 = local_m02.getFrame();
+		if local_m06 = 6
+		{
+			local_m02.destroy();
+			return;
+		}
+		else
+		{
+			local_m02.setFrame(local_m06 + 1);
+		}
+	}
+	u8goto label_0422;
+}
+

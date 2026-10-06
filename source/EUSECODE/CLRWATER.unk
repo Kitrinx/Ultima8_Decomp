@@ -1,0 +1,26 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x015B
+// FLEX slot: 349
+// Original offset: 0x00048C56
+// Naming evidence: E, exact object-1 linker name `CLRWATER`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/CLRWATER.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass CLRWATER inherits Item
+{
+	process clrwater_got_hit_forward_to_water_handle_item_splash_and_sinking(arg_04:U8Word, arg_06:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process CLRWATER::clrwater_got_hit_forward_to_water_handle_item_splash_and_sinking(arg_04:U8Word, arg_06:U8Word)
+{
+	class_056E_water_handle_item_splash_and_sinking(this, arg_04, arg_06);
+}
+

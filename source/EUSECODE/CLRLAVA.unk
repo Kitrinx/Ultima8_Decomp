@@ -1,0 +1,121 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0199
+// FLEX slot: 411
+// Original offset: 0x00048906
+// Naming evidence: E, exact object-1 linker name `CLRLAVA`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/CLRLAVA.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass CLRLAVA inherits Item
+{
+	process clrlava_got_hit_splash_and_apply_lava_effect(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process CLRLAVA::clrlava_got_hit_splash_and_apply_lava_effect(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m01:U8Byte;
+	local_m02:U8Byte;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0D:U8Byte;
+	local_m0F:Npc;
+	local_m10:U8Byte;
+	if not butthead
+	{
+		if not neverSinks
+		{
+			if arg_04
+			{
+				local_m01 = 0;
+				local_m02 = 0;
+				local_m04 = arg_04;
+				if getFrame() <= 32
+				{
+					local_m0A = local_m04.getX();
+					local_m0C = local_m04.getY();
+					local_m0D = local_m04.getZ();
+					while (local_m0A = local_m04.getX()) and (local_m0C = local_m04.getY()) and (local_m0D = local_m04.getZ())
+					{
+						foreach local_m08 where (type = 580) within 7 cells of arg_04 {
+							local_m01 = 1;
+						}
+						if not local_m01
+						{
+							playSFX(172, 100);
+							createSprite(580, 81, 119, 2, local_m04.getX() + 160, local_m04.getY() + 160, local_m04.getZ());
+						}
+						foreach local_m06 where (type = 703) within 2 cells of arg_04 {
+							local_m02 = 1;
+						}
+						if not local_m02
+						{
+							local_m04.receiveHit(referent, local_m04.getDirToItem(referent), class_0581_randRange(2, 4), 128);
+						}
+						else
+						{
+							local_m02 = 0;
+						}
+						wait(30);
+					}
+				}
+				else
+				{
+					foreach local_m08 where (type = 580) within 7 cells of arg_04 {
+						local_m01 = 1;
+					}
+					if not local_m01
+					{
+						playSFX(172, 100);
+						createSprite(580, 81, 119, 2, local_m04.getX() + 160, local_m04.getY() + 160, local_m04.getZ());
+					}
+					if arg_04 != 1
+					{
+						local_m04.destroy();
+					}
+					else
+					{
+						setAvatarInStasis(1);
+						butthead = 1;
+						local_m0F = arg_04;
+						Kernel::resetRef(local_m0F, 6);
+						local_m0F.move(local_m0F.getX(), local_m0F.getY(), getZ() + 1);
+						Kernel::resetRef(1, PT_ANIM);
+						Kernel::resetRef(0, 544);
+						Npc_doAnim(1, 10000, 8, 57, u8_local_address(local_m0F_w01));
+						local_m10 = 0;
+						if local_m0F.isDead()
+						{
+							local_m10 = 1;
+						}
+						local_m0F.setDead();
+						Camera::setCenterOn(0);
+						local_m0F.move(0, 0, 0);
+						if local_m10 = 0
+						{
+							local_m0F.clrDead();
+						}
+						local_m0F.clrImmortal();
+						Npc_clrWithstandDeath(u8_local_address(local_m0F_w01));
+						local_m0F.receiveHit(0, 0, local_m0F.getHp(), 128 | (32 | 8));
+						butthead = 0;
+						return;
+					}
+				}
+			}
+		}
+	}
+}
+

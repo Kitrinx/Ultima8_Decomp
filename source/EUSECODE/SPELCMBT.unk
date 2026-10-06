@@ -1,0 +1,454 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0574
+// FLEX slot: 1398
+// Original offset: 0x000F9071
+// Naming evidence: E, exact object-1 linker name `SPELCMBT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SPELCMBT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process spelcmbt_no_op_entry_0080(arg_00:U8DWord)
+{
+	[[568, u8_load(arg_00, 2)]]; // R/X: process type name unproved; numeric VM expression retained.
+}
+
+// Derived: routine 0x008C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process spelcmbt_no_op_entry_008c(arg_00:U8DWord)
+{
+	[[568, u8_load(arg_00, 2)]]; // R/X: process type name unproved; numeric VM expression retained.
+}
+
+// Derived: routine 0x0098, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process spelcmbt_no_op_entry_0098(arg_00:U8DWord)
+{
+	[[568, u8_load(arg_00, 2)]]; // R/X: process type name unproved; numeric VM expression retained.
+}
+
+// Derived: routine 0x00A4, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process spelcmbt_flash_away_from_target(arg_04:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:Item;
+	local_m09:U8Word;
+	local_m0B:U8Word;
+	local_m0D:U8Word;
+	local_m0F:U8Word;
+	local_m10:U8Byte;
+	local_m11:U8Byte;
+	local_m13:Number;
+	[[568, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent = 27
+	{
+		return ((0) : DWord);
+	}
+	local_m07 = arg_04;
+	local_m09 = 8;
+	local_m0F = 0;
+	local_m10 = 0;
+	local_m11 = 0;
+	local_m05_w02 = local_m07.getX();
+	local_m03 = local_m07.getY();
+	local_m01 = local_m07.getZ();
+	while (local_m11 = 0) and (local_m10 = 0)
+	{
+		if local_m09 = 20
+		{
+			local_m11 = 1;
+		}
+		local_m0B = 0;
+		local_m0D = 0;
+		if not local_m0F
+		{
+			local_m0D = -32;
+		}
+		else if local_m0F = 1
+		{
+			local_m0B = 32;
+			local_m0D = -32;
+		}
+		else if local_m0F = 2
+		{
+			local_m0B = 32;
+		}
+		else if local_m0F = 3
+		{
+			local_m0B = 32;
+			local_m0D = 32;
+		}
+		else if local_m0F = 4
+		{
+			local_m0D = 32;
+		}
+		else if local_m0F = 5
+		{
+			local_m0B = -32;
+			local_m0D = 32;
+		}
+		else if local_m0F = 6
+		{
+			local_m0B = -32;
+		}
+		else if local_m0F = 7
+		{
+			local_m0B = -32;
+			local_m0D = -32;
+		}
+		local_m05_w02 = local_m07.getX() + (local_m0B * local_m09);
+		local_m03 = local_m07.getY() + (local_m0D * local_m09);
+		if local_m0F = 7
+		{
+			local_m0F = 0;
+			local_m09++;
+		}
+		else
+		{
+			local_m0F++;
+		}
+		if canExistAt(96, local_m05_w02, local_m03, local_m01, 1, 0, 0)
+		{
+			local_m10 = 1;
+		}
+	}
+	if not local_m10
+	{
+		return ((0) : DWord);
+	}
+	wait(45);
+	class_0583_flash(this, local_m05);
+	class_057C_turnToFace(this, getDirToItem(arg_04), 0, 3);
+	return ((1) : DWord);
+	local_m13 = random(10);
+	killProcess(referent, PT_BARK);
+	if not local_m13
+	{
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 3);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Now I shall char the flesh from your bones! ") -> return;
+		wait(90);
+	}
+	if local_m13 = 1
+	{
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 3);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Burn, fool! ") -> return;
+		wait(90);
+	}
+	if local_m13 = 2
+	{
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 3);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("You will die! ") -> return;
+		wait(90);
+	}
+	if local_m13 = 3
+	{
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 3);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Do not think that you can run from me! ") -> return;
+		wait(90);
+	}
+	if local_m13 = 4
+	{
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 3);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Ha! Do not run from me! ") -> return;
+		wait(90);
+	}
+	if local_m13 = 5
+	{
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 3);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Pyros will devour you! ") -> return;
+		wait(90);
+	}
+}
+
+// Derived: routine 0x04F7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process spelcmbt_apply_missing_fire_defenses()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m01:U8Byte;
+	local_m02:U8Byte;
+	local_m04:Item;
+	[[568, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m01 = 1;
+	local_m02 = 1;
+	foreach local_m04 where (type = 703) within 2 cells of referent {
+		local_m01 = 0;
+	}
+	if local_m01
+	{
+		foreach local_m04 where (type = 400) within 4 cells of referent {
+			if local_m04.getFrame() <= 9
+			{
+				class_0583_endureHeat(this);
+				return;
+			}
+		}
+	}
+	foreach local_m04 where (type = 400) within 1 cells of referent {
+		if (local_m04.getFrame() >= 10) and (local_m04.getFrame() <= 19)
+		{
+			local_m02 = 0;
+		}
+	}
+	if local_m02
+	{
+		class_0583_armorOfFlames(this);
+		return;
+	}
+}
+
+// Derived: routine 0x05D1, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process spelcmbt_cast_random_fire_attack(arg_04:U8Word, arg_06:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:Number;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	[[568, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m02 = arg_04;
+	local_m08 = 0;
+	local_m06 = random(10);
+	if referent = 27
+	{
+		local_m08 = 4;
+	}
+	else if (referent = 29) or (referent = 28) or (referent = 57)
+	{
+		local_m08 = 3;
+	}
+	else if (referent = 32) or (referent = 31) or (referent = 58)
+	{
+		local_m08 = 2;
+	}
+	else
+	{
+		local_m08 = 1;
+	}
+	if arg_06 = -1
+	{
+		arg_06 = local_m08;
+	}
+	if not local_m08
+	{
+		return;
+	}
+	if local_m06 < local_m08
+	{
+		local_m0A = 0;
+		foreach local_m04 where (type = 96) within 64 cells of Avatar {
+			local_m0A++;
+		}
+		if (local_m0A < 2) and (arg_06 != 0)
+		{
+			class_0589_summonDaemon(this, local_m02);
+			arg_06--;
+		}
+		else
+		{
+			class_0583_explosion(this, arg_04);
+		}
+	}
+	else if local_m06 < (local_m08 + 2)
+	{
+		class_0583_createFire(this, arg_04);
+	}
+	else if local_m06 < (local_m08 + 4)
+	{
+		class_0583_explosion(this, arg_04);
+	}
+	else
+	{
+		class_0583_flameBolt(this, arg_04);
+	}
+	local_m06 = random(4);
+	if not local_m06
+	{
+		killProcess(referent, PT_BARK);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("You will die this day, fool! ") -> return;
+		wait(175);
+	}
+	else if local_m06 = 1
+	{
+		killProcess(referent, PT_BARK);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Knave, Pyros will feast upon you! ") -> return;
+		wait(175);
+	}
+	else if local_m06 = 2
+	{
+		killProcess(referent, PT_BARK);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Feel the Fire, dolt! ") -> return;
+		wait(175);
+	}
+}
+
+// Derived: routine 0x084D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process spelcmbt_run_spell_combat(arg_04:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m01:U8Byte;
+	local_m03:Item;
+	local_m05:Number;
+	local_m07:U8Bytes2; // X: untouched.
+	local_m09:U8Word;
+	local_m0B:U8Word;
+	local_m10:U8Bytes5; // X: untouched.
+	local_m12:Npc;
+	local_m14:Npc;
+	local_m16:Item;
+	local_m16_w01:U8Bytes1;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[568, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+		setAvatarInStasis(0);
+		local_m01 = 0;
+		local_m09 = 5;
+		local_m0B = -1;
+		while (not Npc_getTarget(this)) and local_m09
+		{
+			wait(1);
+			local_m09--;
+		}
+		arg_04 = Npc_getTarget(this);
+		if arg_04 = 0
+		{
+			return;
+		}
+		local_m05 = 800;
+		local_m12 = arg_04;
+		local_m16 = referent;
+		if (local_m12 = 1) and ((referent = 29) or (referent = 32) or (referent = 28) or (referent = 31) or (referent = 57) or (referent = 52) or (referent = 56) or (referent = 53) or (referent = 55) or (referent = 60))
+		{
+			avatarMasterSorcerer = 1;
+		}
+		else if (local_m12 = 1) and (referent = 27) and (MalchirTest < 6)
+		{
+			avatarMasterSorcerer = 1;
+		}
+	}
+	process
+	{
+		if local_m12.isDead()
+		{
+			local_m05 = 960;
+			local_m12 = 0;
+			foreach local_m03 within 30 cells of referent {
+				if local_m03.isNpc()
+				{
+					local_m14 = local_m03;
+					if (local_m14.isDead() = 0) and (Npc_isEnemy(local_m14, this) = 1)
+					{
+						if getDistance(local_m14, referent) <= local_m05
+						{
+							local_m05 = getDistance(local_m14, referent);
+							local_m12 = local_m14;
+						}
+					}
+				}
+			}
+			if local_m12 = 0
+			{
+				clrInCombat();
+				return;
+			}
+		}
+		if local_m12.getType() = 96
+		{
+			if getDistance(local_m12, referent) >= 800
+			{
+				class_057C_turnToFace(u8_local_address(local_m16_w01), local_m16.getDirToItem(local_m12), 0, 3);
+			}
+			else if getDistance(local_m12, referent) <= 320
+			{
+				class_0589_banishDaemon(this, local_m12);
+			}
+			else
+			{
+				local_m09 = 0;
+				foreach local_m03 where (type = 96) within 64 cells of Avatar {
+					local_m09++;
+				}
+				if local_m09 < 2
+				{
+					class_0589_summonDaemon(this, local_m12);
+				}
+			}
+		}
+		else if getDistance(local_m12, referent) >= 800
+		{
+			class_057C_turnToFace(u8_local_address(local_m16_w01), local_m16.getDirToItem(local_m12), 0, 3);
+		}
+		else if getDistance(local_m12, referent) >= 704
+		{
+			local_m0B = class_0574_spelcmbt_cast_random_fire_attack(u8_local_address(local_m16_w01), local_m12, local_m0B);
+			class_0574_spelcmbt_apply_missing_fire_defenses(u8_local_address(local_m16_w01));
+		}
+		else if getDistance(local_m12, referent) <= 192
+		{
+			foreach local_m03 where (type = 15) within 6 cells of referent {
+				local_m01 = 1;
+			}
+			if not local_m01
+			{
+				class_0583_fireShield(this);
+				class_0574_spelcmbt_flash_away_from_target(u8_local_address(local_m16_w01), local_m12);
+			}
+			class_0574_spelcmbt_apply_missing_fire_defenses(u8_local_address(local_m16_w01));
+			local_m0B = class_0574_spelcmbt_cast_random_fire_attack(u8_local_address(local_m16_w01), local_m12, local_m0B);
+		}
+		else
+		{
+			class_0574_spelcmbt_apply_missing_fire_defenses(u8_local_address(local_m16_w01));
+			local_m0B = class_0574_spelcmbt_cast_random_fire_attack(u8_local_address(local_m16_w01), local_m12, local_m0B);
+		}
+	}
+}
+
+// Derived: routine 0x0BD0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process spelcmbt_no_op_entry_0bd0(arg_00:U8DWord)
+{
+	[[568, u8_load(arg_00, 2)]]; // R/X: process type name unproved; numeric VM expression retained.
+}
+

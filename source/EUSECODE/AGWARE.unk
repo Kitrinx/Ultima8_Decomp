@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00B8
+// FLEX slot: 186
+// Original offset: 0x00005069
+// Naming evidence: E, exact object-1 linker name `AGWARE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/AGWARE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass AGWARE inherits Item
+{
+	process agware_look_bark_silverware();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process AGWARE::agware_look_bark_silverware()
+{
+	bark("silverware ");
+}
+

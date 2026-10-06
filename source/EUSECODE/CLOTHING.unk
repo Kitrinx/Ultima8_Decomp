@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0241
+// FLEX slot: 579
+// Original offset: 0x0004884D
+// Naming evidence: E, exact object-1 linker name `CLOTHING`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/CLOTHING.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass CLOTHING inherits Item
+{
+	process clothing_look_describe_clothing();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process CLOTHING::clothing_look_describe_clothing()
+{
+	bark("clothing  ");
+}
+

@@ -1,0 +1,58 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x01D2
+// FLEX slot: 468
+// Original offset: 0x000B8DBB
+// Naming evidence: E, exact object-1 linker name `MUSHGRUP`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MUSHGRUP.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass MUSHGRUP inherits Item
+{
+	process mushgrup_look_bark_mushroom();
+	process mushgrup_use_scatter_mushroom_nearby();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MUSHGRUP::mushgrup_look_bark_mushroom()
+{
+	bark("mushroom  ");
+}
+
+// Derived: routine 0x00AD, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MUSHGRUP::mushgrup_use_scatter_mushroom_nearby()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Referent;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m0B:U8Bytes5;
+	local_m07:U8Byte;
+	local_m09:U8Word;
+	local_m0B_w02:U8Word;
+	local_m06 = 0;
+	foreach recursive local_m04 where (type = 465) within 5 cells of referent {
+		local_m06++;
+	}
+	if local_m06 < 10
+	{
+		local_m0B_w02 = getX();
+		local_m09 = getY();
+		local_m07 = getZ();
+		local_m02 = class_0581_createNear(local_m0B, 465, urandom(4), 0, 1);
+		if local_m02
+		{
+			local_m04 = local_m02;
+			local_m04.orStatus(128);
+			local_m04.fall();
+		}
+	}
+}
+

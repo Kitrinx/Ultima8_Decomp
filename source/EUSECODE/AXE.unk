@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00F4
+// FLEX slot: 246
+// Original offset: 0x00016E5B
+// Naming evidence: E, exact object-1 linker name `AXE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/AXE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass AXE inherits Item
+{
+	process axe_look_bark_axe();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process AXE::axe_look_bark_axe()
+{
+	bark("axe ");
+}
+

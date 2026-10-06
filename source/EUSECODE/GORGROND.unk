@@ -1,0 +1,1209 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x041F
+// FLEX slot: 1057
+// Original offset: 0x0007CB18
+// Naming evidence: E, exact object-1 linker name `GORGROND`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GORGROND.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+globalflag gorgrondWarned:2;
+
+npcclass GORGROND inherits Npc
+{
+	process gorgrond_cast_forward_to_spell_combat(arg_04:U8Word);
+	process gorgrond_avatar_stole_something_warn_then_target_thief(arg_04:U8Word);
+	process gorgrond_look_bark_living_or_dead_identity();
+	process gorgrond_schedule_update_period_schedule_and_safe_teleport();
+	process gorgrond_enter_fast_area_target_avatar_and_return_to_idle_marker();
+	process gorgrond_leave_fast_area_stop_active_process();
+	process gorgrond_use_toggle_gump_and_run_sorcerer_dialogue();
+	process [[PT_DEFAULT, referent]] gorgrond_greet_avatar();
+	process [[PT_DEFAULT, referent]] gorgrond_say_farewell();
+	process [[PT_DEFAULT, referent]] gorgrond_respond_to_silence();
+	process [[PT_DEFAULT, referent]] gorgrond_resolve_argument();
+	process [[PT_DEFAULT, referent]] gorgrond_discuss_acolyte_outcome();
+	process [[PT_DEFAULT, referent]] gorgrond_grovel_to_master();
+	routine gorgrond_remove_dungbreath_reply(arg_00:String List);
+	process [[PT_DEFAULT, referent]] gorgrond_discuss_sorcerers_enclave();
+}
+
+// Derived: routine 0x0080, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process GORGROND::gorgrond_cast_forward_to_spell_combat(arg_04:U8Word)
+{
+	gorgrondMad = 3;
+	class_0574_spelcmbt_run_spell_combat(this, arg_04);
+}
+
+// Derived: routine 0x00A7, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process GORGROND::gorgrond_avatar_stole_something_warn_then_target_thief(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	if not arg_04
+	{
+		return;
+	}
+	killProcess(referent, PT_ACTIVITY);
+	turnToFace(getDirToItem(Avatar:Referent), 0, 5);
+	foreach recursive local_m02 within container 1 {
+		if local_m02 = arg_04
+		{
+			setAvatarInStasis(1);
+			bark("You will pay for that it with your life! ");
+			setTarget(1);
+			return;
+		}
+	}
+	if not gorgrondWarned
+	{
+		gorgrondWarned = 1 + gorgrondWarned;
+		bark("Leave that alone. ");
+	}
+	else if gorgrondWarned = 1
+	{
+		gorgrondWarned = 1 + gorgrondWarned;
+		bark("I said, leave my things alone! ");
+	}
+	else if gorgrondWarned = 2
+	{
+		gorgrondWarned = 1 + gorgrondWarned;
+		bark("I will kill you if you move my things again! ");
+	}
+	else
+	{
+		setAvatarInStasis(1);
+		bark("Now you die! ");
+		setTarget(1);
+		return;
+	}
+	gorgrond_enter_fast_area_target_avatar_and_return_to_idle_marker();
+}
+
+// Derived: routine 0x028A, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GORGROND::gorgrond_look_bark_living_or_dead_identity()
+{
+	if gorgrondName and gorgrondJob
+	{
+		if isDead()
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Gorgrond the late Sorcerer ") -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Gorgrond the Sorcerer ") -> return;
+		}
+	}
+	else if gorgrondName
+	{
+		if isDead()
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("the deceased Gorgrond ") -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Gorgrond") -> return;
+		}
+	}
+	else if gorgrondJob
+	{
+		if isDead()
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("dead Sorcerer ") -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Sorcerer ") -> return;
+		}
+	}
+	else if isDead()
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("dead mage ") -> return;
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("mage ") -> return;
+	}
+}
+
+// Derived: routine 0x03F3, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GORGROND::gorgrond_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	if isDead()
+	{
+		return;
+	}
+	else if not inDaemonScene
+	{
+		local_m05_w02 = 18687;
+		local_m03 = 20223;
+		local_m01 = 56;
+		if class_057C_canSafeTeleport(this, local_m05, 12)
+		{
+			class_057C_safeTeleport(this, local_m05, 12);
+		}
+	}
+}
+
+// Derived: routine 0x045E, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GORGROND::gorgrond_enter_fast_area_target_avatar_and_return_to_idle_marker()
+{
+	if isDead()
+	{
+		return;
+	}
+	else if avatarMasterSorcerer
+	{
+		setTarget(1);
+	}
+	else if inDaemonScene = 0
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057B_move_return_to_idle_marker(this) -> return;
+	}
+}
+
+// Derived: routine 0x04A9, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GORGROND::gorgrond_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x04C4, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GORGROND::gorgrond_use_toggle_gump_and_run_sorcerer_dialogue()
+{
+	if isDead()
+	{
+		if getStatus() & 256
+		{
+			closeGump();
+		}
+		else
+		{
+			Item_openGump(12, this);
+		}
+	}
+	else
+	{
+		enterConvo();
+		if acolyteKilled = 0
+		{
+			gorgrond_greet_avatar();
+		}
+		if gorgrondMad
+		{
+			gorgrond_resolve_argument();
+		}
+		else if acolyteKilled = 0
+		{
+			gorgrond_discuss_sorcerers_enclave();
+		}
+		else if not Malchir.isDead()
+		{
+			gorgrond_discuss_acolyte_outcome();
+		}
+		else
+		{
+			gorgrond_grovel_to_master();
+		}
+		exitConvo();
+	}
+}
+
+// Derived: routine 0x05A8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] GORGROND::gorgrond_greet_avatar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String List;
+	local_m0A:U8Bytes2; // X: untouched.
+	local_m0C:Number;
+	u8goto label_1267 if not (not gorgrondMet);
+	gorgrondMet = 1;
+	bark("What do you want, stranger? ");
+	local_m08 = <<"Just your attention. ", "I wish to speak to you. ", "It's none of your business. ">>;
+	local_m04 = ask(local_m08);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "Just your attention. "
+		{
+			bark("Who are you? ");
+		}
+		case "I wish to speak to you. "
+		{
+			bark("Who are you? ");
+		}
+		case "It's none of your business. "
+		{
+			bark("Alright, then leave! ");
+			gorgrondMad = 1 + gorgrondMad;
+			return;
+		}
+		default
+		{
+			gorgrond_respond_to_silence();
+			return;
+		}
+	}
+	local_m02 = "I am called " + getName() + ".";
+	local_m08 = <<local_m02, "I cannot tell you. ", "You would not understand. ">>;
+	local_m04 = ask(local_m08);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case local_m02
+		{
+			bark("Oh, greetings, " + getName() + ". I am Gorgrond. What do you need of me?");
+			gorgrondAvaName = 1;
+			gorgrondName = 1;
+		}
+		case "I cannot tell you. "
+		{
+			bark("Why not? ");
+			local_m08 = <<"If I did, I would have to kill you. ", "What does it matter? ", "I'm not sure. ">>;
+			local_m04 = ask(local_m08);
+			// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+			switch local_m04
+			{
+				case "If I did, I would have to kill you. "
+				{
+					bark("Ha, you'd find that hard to do. But I like you, you're funny. What do you want to know? ");
+				}
+				case "What does it matter? "
+				{
+					bark("Well, what do I call you if I don't know your name? ");
+					local_m02 = "Good question. I am " + getName() + ".";
+					local_m08 = <<local_m02, "That's your problem. ", "You may call me Sir. ">>;
+					local_m04 = ask(local_m08);
+					// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+					switch local_m04
+					{
+						case local_m02
+						{
+							bark("Oh, greetings, " + getName() + ". I am Gorgrond. What do you need of me?");
+							gorgrondAvaName = 1;
+							gorgrondName = 1;
+						}
+						case "That's your problem. "
+						{
+							bark("Fine then, I'll call you Dungbreath. Will that do? ");
+							local_m02 = "No, please call me " + getName() + ".";
+							local_m08 = <<local_m02, "Yes, that will do nicely. ", "No, I won't abide that. ", local_m02, "You will die for your insolence! ">>;
+							local_m04 = ask(local_m08);
+							// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+							switch local_m04
+							{
+								case "Yes, that will do nicely. "
+								{
+									bark("Fine then. What do you want, Dungbreath? ");
+									gorgrondDung = 1;
+								}
+								case "No, I won't abide that. "
+								{
+									bark("Well, it's too bad you couldn't give me your name, Dungbreath. ");
+									local_m02 = "I will! It's " + getName() + ".";
+									local_m08 = <<local_m02, "I don't care what you call me. ", "That's it! You die! ">>;
+									local_m04 = ask(local_m08);
+									// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+									switch local_m04
+									{
+										case local_m02
+										{
+											bark("Oh, greetings, " + getName() + ". I am Gorgrond. What do you need of me?");
+											gorgrondAvaName = 1;
+											gorgrondName = 1;
+										}
+										case "I don't care what you call me. "
+										{
+											bark("Good. Dungbreath it is. What do you seek here? ");
+											gorgrondDung = 1;
+										}
+										case "That's it! You die! "
+										{
+											bark("I do not think so, fool. My Sorcery will bring you to your knees, then I will feed you to my pet daemon! ");
+											setTarget(1);
+										}
+										default
+										{
+											gorgrond_respond_to_silence();
+											return;
+										}
+									}
+								}
+								case local_m02
+								{
+									bark("Fine then. What do you want, " + getName() + "?");
+								}
+								case "You will die for your insolence! "
+								{
+									bark("It is you who will die, peasant! ");
+									setTarget(1);
+									return;
+								}
+								default
+								{
+									gorgrond_respond_to_silence();
+									return;
+								}
+							}
+						}
+						case "You may call me Sir. "
+						{
+							bark("And you may call me your death, knave! ");
+							setTarget(1);
+							return;
+						}
+						default
+						{
+							gorgrond_respond_to_silence();
+							return;
+						}
+					}
+				}
+				case "I'm not sure. "
+				{
+					bark("Are you simple minded? Should I speak slower? Why... can't... you... tell... me... your... name? Oh, nevermind. What do you want? ");
+				}
+				default
+				{
+					gorgrond_respond_to_silence();
+					return;
+				}
+			}
+		}
+		case "You would not understand. "
+		{
+			bark("Do you take me for a fool? I am not a simplemind! My Sorcery is strong, as you will see if you anger me further. Go away now, before I loose my anger upon you. ");
+			gorgrondMad = 1 + gorgrondMad;
+			return;
+		}
+		default
+		{
+			gorgrond_respond_to_silence();
+			return;
+		}
+	}
+	if gorgrondDung
+	{
+		local_m06 = "Dungbreath";
+	}
+	else if gorgrondAvaName
+	{
+		local_m06 = getName();
+	}
+	else
+	{
+		local_m06 = "stranger";
+	}
+	return;
+	u8label label_1267:
+	if gorgrondDung
+	{
+		local_m06 = "Dungbreath";
+	}
+	else if gorgrondAvaName
+	{
+		local_m06 = getName();
+	}
+	else
+	{
+		local_m06 = "stranger";
+	}
+	local_m0C = urandom(3);
+	if gorgrondMad = 1
+	{
+		if not local_m0C
+		{
+			local_m02 = "What, " + local_m06 + "? ";
+		}
+		else if local_m0C = 1
+		{
+			local_m02 = "Must you pester me? ";
+		}
+		else
+		{
+			local_m02 = "I am not a sage. I have no great information to give to you. ";
+		}
+		local_m02 += "What do you want? ";
+		u8goto label_14D7;
+	}
+	if gorgrondMad = 2
+	{
+		if not local_m0C
+		{
+			local_m02 = "Go away! I do not wish to speak with you. ";
+		}
+		else if local_m0C = 1
+		{
+			local_m02 = "I don't like you. Leave me be! ";
+		}
+		else
+		{
+			local_m02 = "Disturb me no longer. ";
+		}
+		u8goto label_14D7;
+	}
+	if gorgrondMad = 3
+	{
+		bark("You die, fool! ");
+		return;
+	}
+	else if not local_m0C
+	{
+		local_m02 = "Hello again, " + local_m06 + ". What do you want?";
+	}
+	else if local_m0C = 1
+	{
+		local_m02 += "What do you want of me now, " + local_m06 + "?";
+	}
+	else
+	{
+		local_m02 += "Greetings again. What do you need? ";
+	}
+	u8label label_14D7:
+	bark(u8_string_local_address(local_m02));
+}
+
+// Derived: routine 0x14F2, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] GORGROND::gorgrond_say_farewell()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:Number;
+	local_m02 = "stranger";
+	local_m04 = "Farewell.";
+	if gorgrondDung
+	{
+		local_m02 = "Dungbreath";
+	}
+	else if gorgrondAvaName
+	{
+		local_m02 = getName();
+	}
+	else
+	{
+		local_m02 = "stranger";
+	}
+	local_m06 = urandom(3);
+	if gorgrondMad = 1
+	{
+		if not local_m06
+		{
+			local_m04 = "Leave me, " + local_m02 + ".";
+		}
+		else if local_m06 = 1
+		{
+			local_m04 = "Go away! ";
+		}
+		else
+		{
+			local_m04 = "Have a care, " + local_m02 + ". I am no gentle giant.";
+		}
+	}
+	else if gorgrondMad = 2
+	{
+		if not local_m06
+		{
+			local_m04 = "I can see that you will not survive long here, " + local_m02 + ". Good luck to you. With your tongue, you'll need it.";
+		}
+		else if local_m06 = 1
+		{
+			local_m04 = "My temper will be kept only for so long. Go now while you still may. ";
+		}
+		else
+		{
+			local_m04 = "I have held my temper long enough!... No, I will not destroy you yet. But be warned, you have crossed the threshold into dangerous territory. Few have survived where you go. ";
+		}
+	}
+	else if not local_m06
+	{
+		local_m04 = "Goodbye, " + local_m02 + ".";
+	}
+	else if local_m06 = 1
+	{
+		local_m04 = "Farewell. ";
+	}
+	bark(u8_string_local_address(local_m04));
+}
+
+// Derived: routine 0x17D7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] GORGROND::gorgrond_respond_to_silence()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:Number;
+	if gorgrondDung
+	{
+		local_m02 = "Dungbreath";
+	}
+	else if gorgrondAvaName
+	{
+		local_m02 = getName();
+	}
+	else
+	{
+		local_m02 = "stranger";
+	}
+	local_m06 = urandom(3);
+	if gorgrondMad = 1
+	{
+		if not local_m06
+		{
+			local_m04 = "This is boring, I will not wait upon your slow wit. ";
+		}
+		else if local_m06 = 1
+		{
+			local_m04 = "Well, " + local_m02 + ", I cannot wait here forever.";
+		}
+	}
+	else if gorgrondMad = 2
+	{
+		if not local_m06
+		{
+			local_m04 = "I find you irritating. Go now, " + local_m02 + ", and do not return.";
+		}
+		else
+		{
+			local_m04 = "I will not kill you yet, fool. But if you ever speak to me again, you will risk death. ";
+		}
+	}
+	else if not local_m06
+	{
+		local_m04 = "Perhaps your thoughts are too much for your little mind. Think less, " + local_m02 + ", it will serve you well.";
+	}
+	else if local_m06 = 1
+	{
+		local_m04 = "If you wish to speak, you must first open your mouth, dullard. ";
+	}
+	bark(u8_string_local_address(local_m04));
+	gorgrondMad = 1 + gorgrondMad;
+}
+
+// Derived: routine 0x1A5E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] GORGROND::gorgrond_resolve_argument()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String List;
+	local_m0A:Number;
+	local_m0A = urandom(3);
+	if gorgrondDung
+	{
+		local_m02 = "Dungbreath";
+	}
+	else if gorgrondAvaName
+	{
+		local_m02 = getName();
+	}
+	else
+	{
+		local_m02 = "stranger";
+	}
+	local_m08 = <<"I meant no offense. ", "Must you be so obstinate? ">>;
+	if gorgrondMad = 1
+	{
+		local_m08 ^= <<"You will tell me what I want to know! ">>;
+	}
+	else if gorgrondMad = 2
+	{
+		local_m08 ^= <<"I will crush you! ">>;
+	}
+	else
+	{
+		setTarget(1);
+		return;
+	}
+	local_m08 ^= <<"Nevermind. ">>;
+	u8label label_1B86:
+	u8goto label_1DF9 if not (local_m04 != "Nevermind. ");
+	local_m04 = ask(local_m08);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "I meant no offense. "
+		{
+			bark("Some was taken, but I am a forgiving sort. What do you want of me? ");
+			gorgrondMad = 0;
+			gorgrond_discuss_sorcerers_enclave();
+			return;
+		}
+		case "Must you be so obstinate? "
+		{
+			bark("Only to those of a churlish nature. ");
+			return;
+		}
+		case "You will tell me what I want to know! "
+		{
+			bark("Leave... here... now. Else die. ");
+			gorgrondMad = 1 + gorgrondMad;
+			return;
+		}
+		case "You are not worthy to live! "
+		{
+			bark("You are wrong, it is you who are not worthy, and I shall prove it upon your body, knave! ");
+			setTarget(1);
+			return;
+		}
+		case "Nevermind. "
+		{
+			return;
+		}
+		default
+		{
+			gorgrond_respond_to_silence();
+			return;
+		}
+	}
+	u8goto label_1B86;
+	u8label label_1DF9:
+	u8_free_local_string(local_m02);
+	u8_free_local_string(local_m04);
+	u8_free_local_string(local_m06);
+	u8_free_local_string_list(local_m08);
+}
+
+// Derived: routine 0x1E03, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] GORGROND::gorgrond_discuss_acolyte_outcome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m02 = random(3);
+	if acolyteKilled = 2
+	{
+		if not ticked
+		{
+			bark("Do you know what you have done? You have allowed Bane to destroy one of the most powerful, resourceful, and courageous Sorcerers this isle has ever known. I shall never forgive you for it, even though Malchir has. Leave me be. ");
+		}
+		else if ticked = 1
+		{
+			bark("Go! You have killed my closest comrade! What else would you have of me? Leave me alone! ");
+		}
+		else if ticked = 2
+		{
+			bark("If you speak to me again, I shall allow you to feel the agony that you visited upon my friend! Leave or die! ");
+		}
+		else
+		{
+			setTarget(1);
+		}
+		ticked = 1 + ticked;
+	}
+	else
+	{
+		if not local_m02
+		{
+			bark("Now that Vardion has allowed you to join us, you should learn as much from him as you can. Vardion always says that a moment spent in study is worth a day spent at play. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("I thank you for helping to destroy that conniving kith, Bane. She would have driven the Sorcerers into open war with the Tenebraens. ");
+		}
+		else
+		{
+			bark("Prepare for the Trials of the Obsidian Fortress as best as you can. You are not allowed to leave once you have entered. ");
+		}
+		bark("Forgive me, for I can speak no more at the moment, matters weigh heavily upon my mind... Farewell. ");
+	}
+}
+
+// Derived: routine 0x22C2, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] GORGROND::gorgrond_grovel_to_master()
+{
+	realDoAnim(49, getDir());
+	if not gorgrondGroveled
+	{
+		bark("Master! I am not worthy. Forgive my lack of attentiveness. I will return to my studies. There is no need for punishment. I promise that my performance will improve. You'll see. ");
+		gorgrondGroveled = 1;
+	}
+	else
+	{
+		bark("Forgive me. I have offended you. I never seem to do things right. I will redouble my efforts to make your faith in me not seem misplaced. ");
+	}
+	wait(100);
+	realDoAnim(50, getDir());
+}
+
+// Derived: routine 0x2497, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming synchronous call and no spawn prove the routine kind.
+routine GORGROND::gorgrond_remove_dungbreath_reply(arg_00:String List)
+{
+	if gorgrondDung
+	{
+		arg_00 = class_0581_free_append_list_line("Don't call me Dungbreath. ", arg_00);
+	}
+	return arg_00;
+}
+
+// Derived: routine 0x24D8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] GORGROND::gorgrond_discuss_sorcerers_enclave()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String;
+	local_m0A:String List;
+	local_m0C:String List;
+	local_m0E:U8Bytes2; // X: untouched.
+	local_m0F:U8Byte;
+	local_m10:U8Byte;
+	local_m11:U8Byte;
+	local_m12:U8Byte;
+	local_m13:U8Byte;
+	local_m0F = 0;
+	local_m10 = 0;
+	local_m11 = 0;
+	local_m12 = 0;
+	local_m13 = 0;
+	local_m0A = <<"What can you tell me of this place? ">>;
+	if not gorgrondJob
+	{
+		local_m0A ^= <<"What do you do here? ">>;
+	}
+	if gorgrondDung
+	{
+		local_m08 = "Dungbreath";
+	}
+	else if gorgrondAvaName
+	{
+		local_m08 = getName();
+	}
+	else
+	{
+		local_m08 = "stranger";
+	}
+	local_m0A ^= <<"Farewell. ">>;
+	while local_m04 != "Farewell. "
+	{
+		if class_0581_countStrList(local_m0A) <= 1
+		{
+			local_m02 = "Is there anything else, " + local_m08 + "?";
+			bark(u8_string_local_address(local_m02));
+			local_m0A = <<"What can you tell me of this place? ">>;
+			if not gorgrondJob
+			{
+				local_m0A ^= <<"What do you do here? ">>;
+			}
+			if gorgrondDung
+			{
+				local_m08 = "Dungbreath";
+			}
+			else if gorgrondAvaName
+			{
+				local_m08 = getName();
+			}
+			else
+			{
+				local_m08 = "stranger";
+			}
+			local_m0A ^= <<"Farewell. ">>;
+		}
+		local_m0A = class_0581_free_append_list_line("Farewell. ", local_m0A);
+		local_m04 = ask(local_m0A);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "What can you tell me of this place? "
+			{
+				bark("Well, " + local_m08 + ", this is the Sorcerer's Enclave.");
+				local_m0A = <<"Tell me about Sorcerer's Enclave. ">>;
+				if not local_m0F
+				{
+					local_m0A ^= <<"What can you say of Sorcerers? ">>;
+				}
+				local_m0A = class_041F_gorgrond_remove_dungbreath_reply(local_m0A);
+			}
+			case "What do you do here? "
+			{
+				bark("I am a Sorcerer. ");
+				if not local_m0F
+				{
+					local_m0A ^= <<"What can you say of Sorcerers? ">>;
+				}
+				local_m0A -= <<"What do you do here? ">>;
+				gorgrondJob = 1;
+			}
+			case "Don't call me Dungbreath. "
+			{
+				bark("Tell me your name, and I won't. ");
+				local_m02 = "I am called, " + getName() + ".";
+				local_m0C = <<local_m02, "Why must you know? ", "I will not tell you. ">>;
+				local_m06 = ask(local_m0C);
+				// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+				switch local_m06
+				{
+					case local_m02
+					{
+						bark("That's much better. Now we can be on speaking terms. ");
+						local_m08 = getName();
+						gorgrondDung = 0;
+						gorgrondAvaName = 1;
+					}
+					case "Why must you know? "
+					{
+						bark("I don't, I just will continue to call you Dungbreath until I know a name to call you. ");
+						local_m02 = "Fine then, call me, " + getName() + ".";
+						local_m0C = <<local_m02, "You will never know. ">>;
+						local_m06 = ask(local_m0C);
+						// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+						switch local_m06
+						{
+							case local_m02
+							{
+								bark("That's much better. Now we can be on speaking terms. ");
+								local_m08 = getName();
+								gorgrondDung = 0;
+								gorgrondAvaName = 1;
+							}
+							case "You will never know. "
+							{
+								bark("Fine, Dungbreath. ");
+							}
+							default
+							{
+								gorgrond_respond_to_silence();
+								local_m04 = "Farewell. ";
+							}
+						}
+					}
+					case "I will not tell you. "
+					{
+						bark("Fine, Dungbreath. ");
+					}
+					default
+					{
+						gorgrond_respond_to_silence();
+						local_m04 = "Farewell. ";
+					}
+				}
+				local_m0A -= <<"Don't call me Dungbreath. ">>;
+			}
+			case "Tell me about Sorcerer's Enclave. "
+			{
+				bark("Let me see, " + local_m08 + ". It's in a ravine. It's filled with lava. Hmmm... Yes, that's about it.");
+				local_m0A = <<"You're not very bright, are you? ", "I see. That was helpful. ", "What an... esoteric description. ">>;
+				local_m0A = class_041F_gorgrond_remove_dungbreath_reply(local_m0A);
+			}
+			case "What can you say of Sorcerers? "
+			{
+				bark("Oh, quite a bit. I am most knowledgeable, you know. I have studied here for a long time. Since I was a babe. ");
+				local_m0A = <<"Well... What can you say? ", "You were born here? ", "I find that hard to believe. ">>;
+				local_m0F = 1;
+			}
+			case "Not really very bright, are you? "
+			{
+				bark("Smart enough not to speak to someone who insults me! ");
+				gorgrondMad = 1 + gorgrondMad;
+			}
+			case "I see. That was helpful. "
+			{
+				bark("Thank you. Glad to be of aid. Vardion always says that I am so mercifully free of cluttering thoughts. I'm not sure what he means, but he smiles when he says it. So it must be good. ");
+				local_m0A = <<"Farewell. ">>;
+				if not local_m10
+				{
+					local_m0A ^= <<"Vardion? Tell me of him. ">>;
+				}
+				local_m0A ^= <<"You -are- free of thought. ", "I think he means you are stupid. ", "It is good to have friends. ">>;
+			}
+			case "What an... esoteric description. "
+			{
+				bark("Do you think so? What's esso?... Bane uses that word sometimes. She's not nice like Vardion. What do you mean? ");
+				local_m0A = <<"Nothing. Don't worry about it. ", "Tell me what you know of Bane. ">>;
+				if not local_m10
+				{
+					local_m0A ^= <<"Vardion? Tell me of him. ">>;
+				}
+			}
+			case "Well... What can you say? "
+			{
+				bark("Hmmm? About what, " + local_m08 + "?");
+				local_m0A -= <<"Well... What can you say? ">>;
+				local_m0A = class_0581_free_prepend_list_line("About Sorcerer's Enclave! ", local_m0A);
+				local_m0A = class_041F_gorgrond_remove_dungbreath_reply(local_m0A);
+			}
+			case "You were born here? "
+			{
+				bark("Of course. Are you a simpleton? All Pagans are born on this island. Not very smart, are you? ");
+				local_m0A -= <<"You were born here? ">>;
+				local_m0A = class_0581_free_prepend_list_line("I meant, here in the Enclave. ", local_m0A);
+			}
+			case "I find that hard to believe. "
+			{
+				bark("No, really. I was a child at one time. ");
+				local_m0A -= <<"I find that hard to believe. ">>;
+				local_m0A = class_0581_free_prepend_list_line("No. Your knowledge is suspect. ", local_m0A);
+			}
+			case "Vardion? Tell me of him. "
+			{
+				bark("He is the greatest Pagan alive. Um, except for the Master, perhaps. He knows so many things. It hurts my head to even think about what he knows. ");
+				local_m0A = <<"Why is he so great? ", "Can you tell me what he knows? ">>;
+				if not local_m13
+				{
+					local_m0A ^= <<"Who is the Master. ">>;
+				}
+			}
+			case "About Sorcerer's Enclave! "
+			{
+				bark("I can tell you this... You are beginning to anger me! ");
+				gorgrondMad = 1 + gorgrondMad;
+			}
+			case "Tell me what you know of Bane. "
+			{
+				if not askedFriend
+				{
+					bark("Why, is she a friend of yours? ");
+					local_m0A = <<"As a matter of fact, yes. ", "No, of course not. ", "Why do you ask? ">>;
+				}
+				if friendBane
+				{
+					bark("I have already told you. She is a back-stabbing, foul-tempered, mean-spirited wench. ");
+					local_m0A -= <<"Tell me what you know of Bane. ">>;
+				}
+				else
+				{
+					bark("Vardion has plans for her. ");
+					if not local_m10
+					{
+						local_m0A ^= <<"Vardion? Tell me of him. ">>;
+					}
+					if not local_m11
+					{
+						local_m0A ^= <<"Tell me his plans. ">>;
+					}
+				}
+			}
+			case "I think he means you are stupid. "
+			{
+				bark("And I think you are a dolt! ");
+				gorgrondMad = 1 + gorgrondMad;
+			}
+			case "It is good to have friends. "
+			{
+				bark("Yes, and Vardion is the best friend to have. ");
+				local_m0A -= <<"It is good to have friends. ">>;
+			}
+			case "You -are- free of thought. "
+			{
+				bark("Thank you. But you are not very original, " + local_m08 + ".");
+				local_m0A -= <<"You -are- free of thought. ">>;
+				local_m0A = class_041F_gorgrond_remove_dungbreath_reply(local_m0A);
+			}
+			case "Nothing. Don't worry about it. "
+			{
+				bark("I won't. ");
+				local_m0A -= <<"Nothing. Don't worry about it. ">>;
+			}
+			case "No. Your knowledge is suspect. "
+			{
+				bark("A suspect of what? ");
+				local_m0A -= <<"No. Your knowledge is suspect. ">>;
+				local_m0A = class_0581_free_prepend_list_lines(<<"Do you know anything of value? ", "That's it. I've had it. Goodbye! ">>, local_m0A);
+			}
+			case "I meant, here in the Enclave. "
+			{
+				bark("Oh, yes. I was born in this room. " + local_m08 + " I don't remember anything about it though. So don't ask.");
+				local_m0A -= <<"I meant, here in the Enclave. ">>;
+				local_m0A = class_041F_gorgrond_remove_dungbreath_reply(local_m0A);
+			}
+			case "Why is he so great? "
+			{
+				bark("Because he is the First Acolyte, and... because he said so. ");
+				local_m0A = <<"What is a First Acolyte? ">>;
+				if not local_m12
+				{
+					local_m0A ^= <<"Acolyte? What is that? ">>;
+				}
+				local_m0A ^= <<"Do you believe everything he says? ">>;
+			}
+			case "Can you tell me what he knows? "
+			{
+				bark("No! I told you it hurts to even think about it. You must be deaf. ");
+				local_m0A -= <<"Can you tell me what he knows? ">>;
+			}
+			case "Who is the Master. "
+			{
+				bark("Master Malchir is the leader of the Sorcerers. ");
+				local_m0A = <<"Tell me about Master Malchir. ", "How did Malchir become leader? ">>;
+				if not local_m0F
+				{
+					local_m0A ^= <<"What can you say of Sorcerers? ">>;
+				}
+			}
+			case "As a matter of fact, yes. "
+			{
+				bark("Well, guard your back well. You would be suprised what might sprout from it, with her as your 'friend'. ");
+				local_m0A -= <<"As a matter of fact, yes. ">>;
+				friendBane = 1;
+			}
+			case "No, of course not. "
+			{
+				bark("Well, you should know that Vardion has some plans concerning her. ");
+				local_m0A -= <<"No, of course not. ">>;
+				if not local_m10
+				{
+					local_m0A ^= <<"Vardion? Tell me of him. ">>;
+				}
+				if not local_m11
+				{
+					local_m0A ^= <<"Tell me his plans. ">>;
+				}
+			}
+			case "Why do you ask? "
+			{
+				bark("Because she is a back-stabbing, foul-tempered, mean-spirited wench. And she hates me. I don't know why, but now I hate her too. Again, is she your friend? ");
+				local_m0A -= <<"Why do you ask? ">>;
+				askedFriend = 1;
+			}
+			case "That's it. I've had it. Goodbye! "
+			{
+				gorgrond_say_farewell();
+				local_m04 = "Farewell. ";
+			}
+			case "Do you know anything of value? "
+			{
+				bark("I know that you are beginning to irritate me. And that I don't have to listen to you. Leave me be. ");
+				gorgrondMad = 1 + gorgrondMad;
+			}
+			case "Tell me his plans. "
+			{
+				bark("No, I can't do that. You have to ask him yourself. ");
+				local_m0A -= <<"Tell me his plans. ">>;
+			}
+			case "Tell me about Master Malchir. "
+			{
+				bark("Why should I? You aren't a Sorcerer. And if you want to be one, you should talk to Vardion. I don't have the patience to train you. ");
+				local_m0A -= <<"Tell me about Master Malchir. ">>;
+				if not local_m0F
+				{
+					local_m0A ^= <<"What can you say of Sorcerers? ">>;
+				}
+				if not local_m10
+				{
+					local_m0A ^= <<"Vardion? Tell me of him. ">>;
+				}
+			}
+			case "How did Malchir become leader? "
+			{
+				bark("How should I know? He was Master when I started learning to walk. In my first memories, I remember hearing him say that I would be a strong Acolyte one day. This seemed to bring him great pleasure. ");
+				local_m0A -= <<"How did Malchir become leader? ">>;
+				if not local_m12
+				{
+					local_m0A ^= <<"Acolyte? What is that? ">>;
+				}
+			}
+			case "What is a First Acolyte? "
+			{
+				bark("That is the Sorcerer who runs the Enclave in the Master's absence. Really, that's just about all the time. ");
+				local_m0A -= <<"What is a First Acolyte? ">>;
+				if not local_m13
+				{
+					local_m0A ^= <<"Who is the Master. ">>;
+				}
+			}
+			case "Acolyte? What is that? "
+			{
+				bark("You're looking at one. ");
+				local_m0A -= <<"Acolyte? What is that? ">>;
+				local_m0A ^= <<"What does being an Acolyte entail? ">>;
+			}
+			case "Do you believe everything he says? "
+			{
+				bark("Yes. He has never lied to me yet. He told me so. ");
+				local_m0A -= <<"Do you believe everything he says? ">>;
+			}
+			case "What does being an Acolyte entail? "
+			{
+				bark("We assist the Master with his rituals, " + local_m08 + ". He draws upon our power to replace his when it wanes.");
+				local_m0A -= <<"What does being an Acolyte entail? ">>;
+				local_m0A ^= <<"What rituals? ">>;
+				if gorgrondDung
+				{
+					local_m0A = class_041F_gorgrond_remove_dungbreath_reply(local_m0A);
+				}
+			}
+			case "What rituals? "
+			{
+				bark("I can't tell you. You are not a Sorcerer. ");
+				local_m0A -= <<"What rituals? ">>;
+				if not local_m0F
+				{
+					local_m0A ^= <<"What can you say of Sorcerers? ">>;
+				}
+			}
+			case "Farewell. "
+			{
+				gorgrond_say_farewell();
+			}
+			case ""
+			{
+				gorgrond_respond_to_silence();
+				local_m04 = "Farewell. ";
+			}
+			default
+			{
+				bark("I can't understand you. What did you say? ");
+			}
+		}
+		if gorgrondMad
+		{
+			local_m04 = "Farewell. ";
+		}
+	}
+}
+

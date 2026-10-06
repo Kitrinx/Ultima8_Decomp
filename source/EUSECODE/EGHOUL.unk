@@ -1,0 +1,64 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04C4
+// FLEX slot: 1222
+// Original offset: 0x00069743
+// Naming evidence: E, exact object-1 linker name `EGHOUL`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/EGHOUL.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass EGHOUL inherits Egg
+{
+	process eghoul_hatch_spawn_ghouls_at_markers();
+	process [[PT_DEFAULT, referent]] eghoul_spawn_ghoul(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process EGHOUL::eghoul_hatch_spawn_ghouls_at_markers()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	foreach local_m02 where (type = 581) within 20 cells of referent {
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_04C4_eghoul_spawn_ghoul(this, local_m02) -> return;
+	}
+}
+
+// Derived: routine 0x00BD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] EGHOUL::eghoul_spawn_ghoul(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Npc;
+	local_m06:U8Word;
+	local_m02 = arg_04;
+	local_m06 = local_m02.getFrame();
+	while local_m06 < 7
+	{
+		local_m02.setFrame(local_m06);
+		local_m06 = local_m06 + 1;
+		wait(10);
+	}
+	local_m02.push();
+	if Npc_create(0, 142, u8_local_address(local_m04_w01))
+	{
+		local_m04.pop(local_m02.getX(), local_m02.getY(), local_m02.getZ());
+		local_m04.setTarget(1);
+		local_m02.destroy();
+	}
+	else
+	{
+		local_m02.pop();
+		local_m02.destroy();
+	}
+}
+

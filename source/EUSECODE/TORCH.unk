@@ -1,0 +1,52 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0238
+// FLEX slot: 570
+// Original offset: 0x0010B969
+// Naming evidence: E, exact object-1 linker name `TORCH`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/TORCH.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass TORCH inherits Item
+{
+	process torch_look_describe_torch();
+	process torch_use_ignite_reachable_unlit_torch_target();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TORCH::torch_look_describe_torch()
+{
+	bark("torch  ");
+}
+
+// Derived: routine 0x00AA, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process TORCH::torch_use_ignite_reachable_unlit_torch_target()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m02 = target();
+	if local_m02 = 0
+	{
+		return;
+	}
+	if Item_canReach(128, local_m02, u8_stack_ref(1)) = 0
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn local_m02.bark("can't reach ") -> return;
+	}
+	else
+	{
+		if (local_m02.getType() = 395) and (local_m02.getFrame() = 19) and ((local_m02.getStatus() & 8) = 0)
+		{
+			class_0581_legal_setType(local_m02, 267, 0, local_m02.getX(), local_m02.getY(), local_m02.getZ());
+		}
+	}
+}
+

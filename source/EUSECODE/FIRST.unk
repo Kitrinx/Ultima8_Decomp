@@ -1,0 +1,37 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04A3
+// FLEX slot: 1189
+// Original offset: 0x000768FB
+// Naming evidence: E, exact object-1 linker name `FIRST`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FIRST.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass FIRST inherits Egg
+{
+	process first_hatch_activate_scene_items_and_avatar();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIRST::first_hatch_activate_scene_items_and_avatar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	foreach local_m02 where (type = 267) within 65 cells of referent {
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn local_m02.enterFastArea() -> return;
+	}
+	Camera::setCenterOn(0);
+	scrollTo(14423, 5975, 28, 40);
+	wait(60);
+	Avatar.realDoAnim(AS_GET_UP, 4);
+	Item_use(u8_stack_ref(2));
+	return;
+}
+

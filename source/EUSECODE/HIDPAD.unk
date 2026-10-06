@@ -1,0 +1,58 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02DF
+// FLEX slot: 737
+// Original offset: 0x00092F97
+// Naming evidence: E, exact object-1 linker name `HIDPAD`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/HIDPAD.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass HIDPAD inherits Item
+{
+	process hidpad_got_hit_teleport_avatar_or_destroy_striker_by_quality(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process HIDPAD::hidpad_got_hit_teleport_avatar_or_destroy_striker_by_quality(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	if arg_04 = 0
+	{
+		return;
+	}
+	local_m04 = Item_getQ(this);
+	local_m02 = arg_04;
+	if local_m04 = 0
+	{
+		if local_m02 = 1
+		{
+			Kernel::resetRef(local_m02, 6);
+			teleportToEgg(62, 3, 1);
+		}
+		else
+		{
+			local_m02.destroy();
+		}
+	}
+	else if local_m04 = 1
+	{
+		if local_m02 = 1
+		{
+			Kernel::resetRef(local_m02, 6);
+			teleportToEgg(15, 1, 1);
+		}
+		else
+		{
+			local_m02.destroy();
+		}
+	}
+}
+

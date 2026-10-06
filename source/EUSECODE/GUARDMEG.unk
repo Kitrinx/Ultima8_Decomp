@@ -1,0 +1,68 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04B3
+// FLEX slot: 1205
+// Original offset: 0x0008B6F7
+// Naming evidence: E, exact object-1 linker name `GUARDMEG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GUARDMEG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass GUARDMEG inherits Egg
+{
+	process guardmeg_enter_fast_area_spawn_combat_guards();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARDMEG::guardmeg_enter_fast_area_spawn_combat_guards()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:U8Bytes2; // X: untouched.
+	local_m05:U8Byte;
+	local_m07:U8Word;
+	local_m09:Npc;
+	local_m09_w01:U8Bytes1;
+	local_m0B:Item;
+	local_m0D:Npc;
+	local_m07 = Egg_getEggId(this);
+	if not hasHeart
+	{
+		foreach local_m02 where (type = 574) within 5 cells of referent {
+			local_m05 = 1;
+		}
+		if not local_m05
+		{
+			Npc_create(0, 574, u8_local_address(local_m09_w01));
+			local_m09.orStatus(128);
+			local_m09.pop(getX(), getY(), getZ());
+			class_057C_realDoAnim(u8_local_address(local_m09_w01), 2, local_m07);
+			Item_create(0, 174, u8_local_address(local_m0B_w01));
+			local_m0B.orStatus(128);
+			local_m0B.pop(local_m09);
+		}
+	}
+	else
+	{
+		foreach local_m0D where (type = 142) within 15 cells of referent {
+			local_m05 = 1;
+		}
+		if not local_m05
+		{
+			if urandom(100) > 70
+			{
+				Npc_create(8, 142, u8_local_address(local_m0D_w01));
+				local_m0D.orStatus(128);
+				local_m0D.pop(getX(), getY(), getZ());
+				local_m0D.setTarget(1);
+				local_m0D.setAlignment(64);
+				local_m0D.setInCombat();
+			}
+		}
+	}
+}
+

@@ -1,0 +1,102 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02C8
+// FLEX slot: 714
+// Original offset: 0x000ED498
+// Naming evidence: E, exact object-1 linker name `SFX`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SFX.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass SFX inherits Item
+{
+	process sfx_enter_fast_area_start_quality_selected_sound_loop();
+	process sfx_leave_fast_area_clear_sound_process_refs();
+	process [[PT_DEFAULT, referent]] sfx_play_quality_zero_random_loop();
+	process [[PT_DEFAULT, referent]] sfx_play_quality_one_periodic_loop();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SFX::sfx_enter_fast_area_start_quality_selected_sound_loop()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getQuality();
+	if local_m02 = 0
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_02C8_sfx_play_quality_zero_random_loop(this) -> return;
+	}
+	else if local_m02 = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_02C8_sfx_play_quality_one_periodic_loop(this) -> return;
+	}
+}
+
+// Derived: routine 0x00C4, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SFX::sfx_leave_fast_area_clear_sound_process_refs()
+{
+	resetRef(referent, 6);
+}
+
+// Derived: routine 0x00DD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] SFX::sfx_play_quality_zero_random_loop()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+	}
+	process
+	{
+		if (not isSFXPlaying(115)) and (not isSFXPlaying(116))
+		{
+			if urandom(2) = 0
+			{
+				if urandom(2)
+				{
+					playSFX(115, 10, referent);
+				}
+				else
+				{
+					playSFX(116, 10, referent);
+				}
+			}
+		}
+	}
+}
+
+// Derived: routine 0x013F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] SFX::sfx_play_quality_one_periodic_loop()
+{
+	local_m02:U8Bytes2; // X: untouched.
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		wait(500);
+	}
+	process
+	{
+		wait(urandom(200) + 400);
+		if urandom(100) > 50
+		{
+			playSFX(163, 10, referent);
+		}
+		else
+		{
+			playSFX(165, 10, referent);
+		}
+	}
+}
+

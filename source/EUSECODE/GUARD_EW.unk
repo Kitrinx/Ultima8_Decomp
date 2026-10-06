@@ -1,0 +1,302 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x043B
+// FLEX slot: 1085
+// Original offset: 0x0008B8D5
+// Naming evidence: E, exact object-1 linker name `GUARD_EW`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GUARD_EW.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+
+npcclass GUARD_EW inherits Npc
+{
+	process guard_ew_look_bark_living_or_dead_identity();
+	process guard_ew_enter_fast_area_turn_guard_and_play_idle_animation();
+	process guard_ew_schedule_update_period_schedule_and_safe_teleport();
+	process guard_ew_use_run_conversation();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD_EW::guard_ew_look_bark_living_or_dead_identity()
+{
+	if Npc_isDead(u8_stack_ref(59))
+	{
+		bark("dead guardsman ");
+	}
+	else
+	{
+		bark("guardsman ");
+	}
+}
+
+// Derived: routine 0x00E3, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD_EW::guard_ew_enter_fast_area_turn_guard_and_play_idle_animation()
+{
+	if isDead()
+	{
+		return;
+	}
+	turnToFace(4, 0, 10);
+	realDoAnim(AS_STAND, 4);
+}
+
+// Derived: routine 0x012D, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD_EW::guard_ew_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	local_m07 = 5;
+	local_m05_w02 = 5535;
+	local_m03 = 22591;
+	local_m01 = 48;
+	if class_057C_canSafeTeleport(this, local_m05, local_m07)
+	{
+		clrDead();
+		class_057C_safeTeleport(this, local_m05, local_m07);
+	}
+}
+
+// Derived: routine 0x0187, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD_EW::guard_ew_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String List;
+	local_m05:U8Byte;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	enterConvo();
+	local_m08 = 0;
+	if hydrosFree
+	{
+		local_m08++;
+	}
+	if hasHeart
+	{
+		local_m08++;
+	}
+	if pyrosFree
+	{
+		local_m08++;
+	}
+	if local_m08 > 1
+	{
+		bark("Run for cover. The Titans have gone mad! ");
+		exitConvo();
+		return;
+	}
+	else if hasHeart
+	{
+		bark("Run for your very life -- the ground shakes and the dead have come to the claim the city! ");
+		exitConvo();
+		return;
+	}
+	if (benticCacked = 1) and (interrogEW = 0) and (devonInRule = 0)
+	{
+		pathfind(1, 12);
+		realDoAnim(AS_DRAW_WEAPON, getDir());
+		if guardEWMet
+		{
+			bark("Hold, you! ");
+		}
+		else
+		{
+			bark("Hold, stranger! ");
+		}
+	}
+	else
+	{
+		Item_bark(u8_string_address("Guardsman! "), u8_stack_ref(1));
+		if guardEWMet
+		{
+			bark("Aye. What do you want? ");
+		}
+		else
+		{
+			bark("Aye, stranger? ");
+		}
+	}
+	if (benticCacked = 1) and (interrogEW = 0) and (devonInRule = 0)
+	{
+		local_m04 = <<"What is the problem? ">>;
+		interrogEW = 1;
+	}
+	else
+	{
+		local_m04 = <<"What is your name? ", "Where does this road lead? ", "What do you guard? ", "Bye. ">>;
+	}
+	u8label label_0477:
+	u8goto label_1668 if not (local_m02 != "Bye. ");
+	local_m02 = ask(local_m04);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m02
+	{
+		case "What is the problem? "
+		{
+			bark("That is what I wish to ask you! What do you know about Bentic the Scholar? ");
+			local_m05 = 1;
+			local_m04 = <<"We have spoken. ", "Nothing. ", "What concern is it of yours? ">>;
+		}
+		case "We have spoken. "
+		{
+			bark("Then know this: For conducting forbidden research, Bentic's head rests deep within the realm of the Lurker upon the command of the Lady Mordea. Know also that as his confidant all of your actions are under observation. Now answer this: What do you know of the fisherman named Devon? ");
+			local_m05 = 0;
+			local_m04 = <<"I have met him. ", "Who is Devon? ", "What concern is it of yours? ">>;
+		}
+		case "Nothing. ", "I know nothing of Bentic. "
+		{
+			if benticMet
+			{
+				bark("You lie! You have been seen speaking to him. Know this: For conducting forbidden research, Bentic's head rests deep within the realm of the Lurker upon the command of the Lady Mordea. Know also that as his confidant all of your actions are under observation. Now answer this: What do you know of the fisherman named Devon? ");
+				local_m06 = 1;
+			}
+			else
+			{
+				bark("Then know this and be warned: For conducting forbidden research, the scholar's head rests deep within the realm of the Lurker upon the command of the Lady Mordea. Now answer this: What do you know of the fisherman named Devon? ");
+			}
+			local_m05 = 0;
+			local_m04 = <<"I have met him. ", "Who is Devon? ", "What concern is it of yours? ">>;
+		}
+		case "I have met him. "
+		{
+			bark("Then let me also inform you that he has been placed under arrest and imprisoned. For your association with him you are also under suspicion. Be very careful whom you choose as friends from now on. ");
+			local_m04 = <<"Why was Devon arrested? ", "May I go now? ">>;
+		}
+		case "Why was Devon arrested? "
+		{
+			local_m04 -= <<"Why was Devon arrested? ">>;
+			bark("I do not have such answers. Ask him yourself! ");
+		}
+		case "Who is Devon? "
+		{
+			if local_m06
+			{
+				bark("Again you lie to me! ");
+			}
+			bark("Others have seen you with him, so do not pretend you have forgotten the fisherman. He has been placed under arrest and imprisoned. For your association with him you are also under suspicion. Be very careful whom you\x09choose as friends from now on. ");
+			local_m04 = <<"Why was Devon arrested? ", "May I go now? ">>;
+		}
+		case "What concern is it of yours? "
+		{
+			bark("Do not risk your worthless life with such boldness. Now answer the question! ");
+			if local_m05
+			{
+				local_m04 = <<"We have spoken. ", "I know nothing of Bentic. ", "No! ">>;
+			}
+			else
+			{
+				local_m04 = <<"I have met him. ", "Who is Devon? ", "No! ">>;
+			}
+		}
+		case "No! "
+		{
+			bark("Then die for your insolence! ");
+			exitConvo();
+			setEnemyAlignment(32);
+			setInCombat();
+			setTarget(1);
+			return;
+		}
+		case "What is your name? "
+		{
+			local_m04 -= <<"What is your name? ">>;
+			if guardEWMet
+			{
+				bark("Never you mind such things. Better to be worried about your own hide. ");
+			}
+			else
+			{
+				bark("What an odd question. 'Tis not -my- name that is important. You should be more concerned about your own business. ");
+			}
+		}
+		case "What do you guard? "
+		{
+			local_m04 -= <<"What do you guard? ">>;
+			if guardEWMet
+			{
+				bark("What a peculiar mind for questions you have. ");
+			}
+			if devonInRule
+			{
+				bark("I guard Devon and city, of course. ");
+			}
+			else
+			{
+				bark("I guard her Ladyship Mordea, of course! ");
+			}
+		}
+		case "Where does this road lead? "
+		{
+			local_m04 -= <<"Where does this road lead? ">>;
+			if askedAboutEWRoad
+			{
+				bark("We have already discussed that, now haven't we. Do not waste my time. ");
+				if Npc_getLastAnimSet(this) = 5
+				{
+					realDoAnim(AS_SHEATH_WEAPON, getDir());
+				}
+				exitConvo();
+				return;
+			}
+			else
+			{
+				askedAboutEWRoad = 1;
+				if vividosMet
+				{
+					bark("You should know. I have seen you on your way to the cemetery. An eerie place, if you ask me, but your business is your own as long as you cause no trouble. ");
+				}
+				else
+				{
+					bark("To the east lies the cemetery. An eerie place if you ask me. ");
+				}
+				local_m04 += <<"Eerie? How eerie? ">>;
+			}
+		}
+		case "Eerie? How eerie? "
+		{
+			local_m04 -= <<"Eerie? How eerie? ">>;
+			bark("'Tis not safe for sane men to be there. The cemetery is where the Necromancers inter the dead. Lithos may demand it, but I think it takes a twisted mind to perform the tasks they do. Some say that Lithos lets the Necromancers keep a few of the dead around to serve them. And late at night, I, myself, have often heard sounds that would freeze your bones. Beware to any who go there. ");
+		}
+		case "May I go now? "
+		{
+			local_m04 -= <<"May I go now? ">>;
+			bark("Yes, I have no more questions. Be off with you, and stay clear of trouble! ");
+			if Npc_getLastAnimSet(this) = 5
+			{
+				realDoAnim(AS_SHEATH_WEAPON, getDir());
+			}
+			exitConvo();
+			return;
+		}
+		case "Bye. "
+		{
+			bark("Aye. Enough of these questions. ");
+			guardEWMet = 1;
+			if Npc_getLastAnimSet(this) = 5
+			{
+				realDoAnim(AS_SHEATH_WEAPON, getDir());
+			}
+			exitConvo();
+			return;
+		}
+	}
+	u8goto label_0477;
+	u8label label_1668:
+	u8_free_local_string(local_m02);
+	u8_free_local_string_list(local_m04);
+}
+

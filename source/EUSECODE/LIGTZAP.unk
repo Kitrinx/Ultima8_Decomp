@@ -1,0 +1,54 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0352
+// FLEX slot: 852
+// Original offset: 0x000A8A27
+// Naming evidence: E, exact object-1 linker name `LIGTZAP`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LIGTZAP.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass LIGTZAP inherits Item
+{
+	process ligtzap_got_hit_shock_overlapping_attacker_once(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process LIGTZAP::ligtzap_got_hit_shock_overlapping_attacker_once(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	if arg_04 = 0
+	{
+		return;
+	}
+	if (alreadyHitLightningZapper = 0) and (Item_overlaps(arg_04, this) = 1)
+	{
+		alreadyHitLightningZapper = 1;
+		wait(urandom(16));
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn LightningBolt() -> return;
+		Item_create(0, 511, u8_local_address(local_m02_w01));
+		local_m02.pop(Avatar.getX() - 50, Avatar.getY() - 50, Avatar.getZ());
+		playSFX(27, 200);
+		for local_m04 = 0 to 4
+		{
+			local_m02.setFrame(local_m04);
+			wait(4);
+		}
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+		local_m02.destroy();
+		class_057C_receiveHit(1, 100, Avatar.getDir(), referent, u8_stack_address(-6));
+		wait(10);
+		alreadyHitLightningZapper = 0;
+	}
+}
+

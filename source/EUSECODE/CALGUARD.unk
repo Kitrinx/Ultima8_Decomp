@@ -1,0 +1,282 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x058B
+// FLEX slot: 1421
+// Original offset: 0x000459DA
+// Naming evidence: E, exact object-1 linker name `CALGUARD`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/CALGUARD.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// O: recovered callable name.
+// O/E: the target ABI profile proves this callable kind.
+// O/E: the complete callable ABI refines neutral parameter types; BP-bound names remain reconstructed.
+process Npc::callTheGuards(arg_04:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m04:Item;
+	local_m09:U8Bytes5;
+	local_m05:U8Byte;
+	local_m07:U8Word;
+	local_m09_w02:U8Word;
+	local_m0B:U8Word;
+	local_m0D:U8Word;
+	local_m0F:U8Word;
+	local_m11:U8Word;
+	local_m12:U8Byte;
+	local_m13:U8Byte;
+	local_m14:U8Byte;
+	[[PT_DEFAULT, NULL_REF]];
+	if class_0581_getCellDist(1, referent) >= 20
+	{
+		return;
+	}
+	if (guardsCalled = 1) or (Avatar.isDead() = 1)
+	{
+		return;
+	}
+	else
+	{
+		guardsCalled = 1;
+	}
+	if Npc_isDead(u8_stack_ref(32))
+	{
+		return;
+	}
+	setAvatarInStasis(1);
+	if referent = 32
+	{
+		if Avatar.isDead()
+		{
+			return;
+		}
+		killProcess(32, PT_ACTIVITY);
+		killProcess(32, PT_PATHFIND);
+		killProcess(32, PT_ANIM);
+		killProcess(32, PT_BARK);
+		class_057C_turnToFace(32, getDirToItem(Avatar:Referent), 0, 5);
+		if arg_04
+		{
+			Item_bark(u8_string_address("Knave, I find you guilty of theft. "), u8_stack_ref(32));
+		}
+		else
+		{
+			Item_bark(u8_string_address("Knave, I find you guilty of assault. "), u8_stack_ref(32));
+		}
+		Avatar.turnToFace(Avatar.getDirToItem(32), 0, 5);
+		Item_bark(u8_string_address("And so... I sentence you to death. "), u8_stack_ref(32));
+		class_057C_realDoAnim(32, 27, Npc_getDir(u8_stack_ref(32)));
+		Item_bark(u8_string_address("I call upon the power of the Cabal and consign you to the flames! "), u8_stack_ref(32));
+		class_057C_realDoAnim(32, 31, Npc_getDir(u8_stack_ref(32)));
+		scrollTo(Avatar.getX(), Avatar.getY(), Avatar.getZ() + 20, 20);
+		class_0594_bodypart_explode_avatar_into_body_parts(1);
+		class_057C_realDoAnim(32, 31, Npc_getDir(u8_stack_ref(32)));
+		class_057C_realDoAnim(32, 28, Npc_getDir(u8_stack_ref(32)));
+		return;
+	}
+	local_m02 = arg_04;
+	local_m0B = 4;
+	local_m12 = 0;
+	local_m13 = 0;
+	local_m14 = 0;
+	local_m09_w02 = getX();
+	local_m07 = getY();
+	local_m05 = getZ();
+	while (local_m13 = 0) and (local_m12 = 0)
+	{
+		if not local_m14
+		{
+			if local_m0B = 4
+			{
+				local_m11 = Avatar.getDirToItem(referent);
+				local_m11 = (local_m11 + 4) modulo 8;
+			}
+			else if (local_m0B = 25) or ((class_0581_abs(local_m09_w02 - Avatar.getX()) <= 32) and (class_0581_abs(local_m09_w02 - Avatar.getX()) <= 32))
+			{
+				local_m14 = 1;
+				local_m0B = 4;
+				local_m11 = 0;
+				local_m09_w02 = getX();
+				local_m07 = getY();
+				local_m05 = getZ();
+			}
+		}
+		else
+		{
+			if local_m0B = 15
+			{
+				local_m13 = 1;
+			}
+		}
+		local_m0D = 0;
+		local_m0F = 0;
+		if not local_m11
+		{
+			local_m0F = -32;
+		}
+		else if local_m11 = 1
+		{
+			local_m0D = 32;
+			local_m0F = -32;
+		}
+		else if local_m11 = 2
+		{
+			local_m0D = 32;
+		}
+		else if local_m11 = 3
+		{
+			local_m0D = 32;
+			local_m0F = 32;
+		}
+		else if local_m11 = 4
+		{
+			local_m0F = 32;
+		}
+		else if local_m11 = 5
+		{
+			local_m0D = -32;
+			local_m0F = 32;
+		}
+		else if local_m11 = 6
+		{
+			local_m0D = -32;
+		}
+		else if local_m11 = 7
+		{
+			local_m0D = -32;
+			local_m0F = -32;
+		}
+		if not local_m14
+		{
+			local_m09_w02 = getX() + (local_m0D * local_m0B);
+			local_m07 = getY() + (local_m0F * local_m0B);
+			local_m0B++;
+		}
+		else
+		{
+			local_m09_w02 = getX() + (local_m0D * local_m0B);
+			local_m07 = getY() + (local_m0F * local_m0B);
+			if local_m11 = 7
+			{
+				local_m11 = 0;
+				local_m0B++;
+			}
+			else
+			{
+				local_m11++;
+			}
+		}
+		if canExistAt(192, local_m09_w02, local_m07, local_m05, 1, 0, 0)
+		{
+			local_m12 = 1;
+		}
+	}
+	if local_m12
+	{
+		Item_create(0, 769, u8_local_address(local_m04_w01));
+		local_m04.pop(local_m09_w02, local_m07, local_m05);
+		local_m09_w02 += 96;
+		local_m07 += 96;
+		local_m05 += 8;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m09) -> return;
+		local_m09_w02 = local_m04.getX();
+		local_m07 = local_m04.getY();
+		local_m05 = local_m04.getZ();
+		wait(25);
+		local_m04.destroy();
+		class_057C_toggleStatus(32, 16, u8_stack_address(-2));
+		class_057C_toggleStatus(32, 4, u8_stack_address(-2));
+		Npc_teleport(getMap(), local_m05, local_m07, local_m09_w02, u8_stack_ref(32));
+		killProcess(32, PT_ACTIVITY);
+		somebodyTalking = 1;
+		wait(35);
+		class_057C_toggleStatus(32, 16, u8_stack_address(-2));
+		class_057C_toggleStatus(32, 4, u8_stack_address(-2));
+		Item_touch(u8_stack_ref(32));
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(32, Item_getDirToItem(referent, u8_stack_ref(32)), 28) -> return;
+		wait(35);
+		scrollTo(local_m09_w02, local_m07, local_m05, 15);
+		if isDead()
+		{
+			Avatar.turnToFace(Avatar.getDirToItem(32), 0, 6);
+			Item_bark(u8_string_address("What foul deed is this? "), u8_stack_ref(32));
+			class_057C_turnToFace(32, Item_getDirToItem(1, u8_stack_ref(32)), 0, 6);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("You did this! "), u8_stack_ref(32)) -> return;
+			wait(45);
+			class_057C_timedBark(1, 65, u8_string_address("No, wait... I can explain! "));
+			killProcess(32, PT_BARK);
+			Item_bark(u8_string_address("Knave, I find you guilty of murder. "), u8_stack_ref(32));
+		}
+		else
+		{
+			clrInCombat();
+			killProcess(32, PT_ACTIVITY);
+			killProcess(referent, PT_ACTIVITY);
+			killProcess(referent, PT_BARK);
+			Item_bark(u8_string_address("What seems to be the problem? "), u8_stack_ref(32));
+			if Npc_getLastAnimSet(this) = 2
+			{
+				if (getType() != 836) and (getType() != 496) and (getType() != 430)
+				{
+					class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 6);
+				}
+				if arg_04
+				{
+					bark("This person is a thief! ");
+				}
+				else
+				{
+					bark("This person attacked me! ");
+				}
+			}
+			else if arg_04
+			{
+				bark("That person is a thief! ");
+			}
+			else
+			{
+				bark("That person attacked me! ");
+			}
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_057C_turnToFace(32, 6, 0, Item_getDirToItem(1, u8_stack_ref(32))) -> return;
+			Avatar.turnToFace(Avatar.getDirToItem(32), 0, 6);
+			class_057C_timedBark(32, 80, u8_string_address("This one? "));
+			if (getType() != 836) and (getType() != 496) and (getType() != 430)
+			{
+				class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 6);
+			}
+			bark("Yes. What are you going to do about it? ");
+			Item_bark(u8_string_address("Fear not. I shall take care of this matter. "), u8_stack_ref(32));
+			if arg_04
+			{
+				Item_bark(u8_string_address("Knave, I find you guilty of theft. "), u8_stack_ref(32));
+			}
+			else
+			{
+				Item_bark(u8_string_address("Knave, I find you guilty of assault. "), u8_stack_ref(32));
+			}
+		}
+		Item_bark(u8_string_address("And so... I sentence you to death. "), u8_stack_ref(32));
+		class_057C_realDoAnim(32, 27, Npc_getDir(u8_stack_ref(32)));
+		Item_bark(u8_string_address("I call upon the power of the Cabal and consign you to the flames! "), u8_stack_ref(32));
+		class_057C_realDoAnim(32, 31, Npc_getDir(u8_stack_ref(32)));
+		scrollTo(Avatar.getX(), Avatar.getY(), Avatar.getZ() + 20, 20);
+		class_0594_bodypart_explode_avatar_into_body_parts(1);
+		class_057C_realDoAnim(32, 31, Npc_getDir(u8_stack_ref(32)));
+		class_057C_realDoAnim(32, 28, Npc_getDir(u8_stack_ref(32)));
+		return ((1) : DWord);
+	}
+	else
+	{
+		setAvatarInStasis(0);
+		return ((0) : DWord);
+	}
+}
+

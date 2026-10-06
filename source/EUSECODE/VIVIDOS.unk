@@ -1,0 +1,1507 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0415
+// FLEX slot: 1047
+// Original offset: 0x0011974C
+// Naming evidence: E, exact object-1 linker name `VIVIDOS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/VIVIDOS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+npcclass VIVIDOS inherits Npc
+{
+	process vividos_cast_invoke_mountain_king_counterattack(arg_04:U8Word);
+	process vividos_perform_eternity_ceremony();
+	process vividos_animate_ritual_undead(arg_04:U8Word);
+	process vividos_look_bark_identity_description();
+	process vividos_schedule_update_period_schedule_and_safe_teleport();
+	process vividos_enter_fast_area_start_location_schedule();
+	process vividos_leave_fast_area_stop_active_process();
+	process vividos_run_cemetery_schedule();
+	process vividos_play_random_cemetery_bark();
+	process vividos_run_tomb_schedule();
+	process vividos_play_random_tomb_bark();
+	process vividos_use_run_conversation();
+	process vividos_discuss_necromancy_request();
+	process vividos_train_necromancer_apprentice();
+}
+
+// Derived: routine 0x0080, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process VIVIDOS::vividos_cast_invoke_mountain_king_counterattack(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = 10;
+	while (not Npc_getTarget(this)) and local_m02
+	{
+		wait(1);
+		local_m02--;
+	}
+	arg_04 = Npc_getTarget(this);
+	if arg_04 = 1
+	{
+		if not isDead()
+		{
+			setAvatarInStasis(1);
+			realDoAnim(AS_ENTER_CAST, 3);
+			realDoAnim(30, 3);
+			realDoAnim(AS_EXIT_CAST, 3);
+			bark("Mountain King, I call Your name. Save me from this interloper! ");
+			Camera_startQuake(1);
+			playSFX(49, 200);
+			wait(360);
+			class_057C_receiveHit(1, Avatar.getHp(), Item_getDirFromItem(referent, this), referent, u8_stack_address(-6));
+			Camera_stopQuake();
+		}
+	}
+}
+
+// Derived: routine 0x01D7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process VIVIDOS::vividos_perform_eternity_ceremony()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8Bytes2; // X: untouched.
+	local_m0A:Item;
+	local_m0C:Npc;
+	local_m0C_w01:U8Bytes1;
+	local_m0E:Npc;
+	local_m0E_w01:U8Bytes1;
+	local_m10:Npc;
+	local_m10_w01:U8Bytes1;
+	local_m12:U8Word;
+	local_m14:U8Word;
+	local_m16:U8Word;
+	[[519, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	setAvatarInStasis(1);
+	Camera::setCenterOn(0);
+	Avatar.turnToFace(1, 2, 2);
+	scrollTo(getX(), getY() - 80, getZ(), Avatar.getMap());
+	wait(20);
+	foreach local_m0A where (type = 572) within 10 cells of referent {
+		local_m02 = local_m0A;
+	}
+	bark("Thank you, my friend. You have done good service this day. And your timing could not be better. For, as you can see, Lothian lies upon the altar barely clinging to life. For your service, I will grant you the boon which you did ask of me. I will introduce you to the Necromancer. But first, stand witness to the Ceremony of Eternity. For the time has come for Lothian and I to perform the ceremony. Please follow my instructions closely. Are you prepared, Lothian? ");
+	local_m02.bark("All of my life I have prepared for this, Vividos. I beg you now, send me to the Mountain King. ");
+	bark("Very well, please, my friend, stand beside the altar. ");
+	foreach local_m0A where (type = TypePathMarker) within 10 cells of referent {
+		if local_m0A.getFrame() = 20
+		{
+			Npc_pathfind(6, local_m0A, u8_stack_ref(1));
+		}
+	}
+	wait(30);
+	Avatar.turnToFace(6, 0, 15);
+	wait(30);
+	bark("Please kneel before the Altar of Passage. ");
+	Avatar.realDoAnim(35, 6);
+	realDoAnim(35, 3);
+	bark("Lord Lithos, Mountain King, eldest and mightiest of the four Titans, we come forth to send your faithful servant Lothian into your waiting arms. Tell us now, Lord of the Underworld, does this, our sacrifice please you? ");
+	Camera_startQuake(1);
+	playSFX(49, 200);
+	wait(120);
+	Camera_stopQuake();
+	local_m02.bark("Yes, Lord! Take me! I am ready to greet you, Mountain King! ");
+	realDoAnim(34, 3);
+	realDoAnim(AS_STAND, 3);
+	wait(20);
+	realDoAnim(AS_ENTER_CAST, 3);
+	realDoAnim(29, 3);
+	realDoAnim(AS_EXIT_CAST, 3);
+	bark("Let all rejoice, for Lithos is pleased with this, our sacrifice. Now, prepare to greet the ambassadors from Lithos' realm. ");
+	realDoAnim(AS_ENTER_CAST, 3);
+	realDoAnim(30, 3);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn bark("Kal Corp") -> return;
+	realDoAnim(AS_EXIT_CAST, 3);
+	Npc_create(8, 142, u8_local_address(local_m0C_w01));
+	local_m0C.orStatus(128);
+	local_m0C.pop(7871, 24639, 8);
+	local_m0C.realDoAnim(AS_GET_UP, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0415_vividos_animate_ritual_undead(this, local_m0C) -> return;
+	Npc_create(8, 142, u8_local_address(local_m0E_w01));
+	local_m0E.orStatus(128);
+	local_m0C.pop(8031, 24639, 8);
+	local_m0E.realDoAnim(AS_GET_UP, 4);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0415_vividos_animate_ritual_undead(this, local_m0E) -> return;
+	Npc_create(8, 142, u8_local_address(local_m10_w01));
+	local_m10.orStatus(128);
+	local_m10.pop(7820, 25000, 8);
+	local_m10.realDoAnim(AS_GET_UP, 2);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0415_vividos_animate_ritual_undead(this, local_m10) -> return;
+	Item_bark(u8_string_address("The dead now surround you, Lothian. Prepare yourself for your Lord. "), u8_stack_ref(21));
+	local_m02.bark("The grave opens before me! ");
+	realDoAnim(AS_ENTER_CAST, 3);
+	realDoAnim(29, 3);
+	bark("Be you cleansed for death. Lithos awaits you. ");
+	realDoAnim(29, 3);
+	realDoAnim(AS_EXIT_CAST, 3);
+	local_m02.bark("Sweet dagger, I am your sheath. Wear me now, lovely blade! ");
+	bark("Go you now to the Mountain King! From life to death. From death to Lithos! ");
+	realDoAnim(AS_ENTER_CAST, 3);
+	realDoAnim(30, 3);
+	bark("Ex Ort Corp. Ort Des Lithos!");
+	Camera_startQuake(1);
+	safePlaySFX(49, 200);
+	realDoAnim(AS_EXIT_CAST, 3);
+	wait(120);
+	turnToFace(2, 0, 10);
+	Item_create(0, 429, u8_local_address(local_m04_w01));
+	foreach local_m02 where (type = 572) within 20 cells of 21 {
+		local_m12 = local_m02.getX();
+		local_m14 = local_m02.getY();
+		local_m16 = local_m02.getZ();
+		local_m02.destroy();
+	}
+	teleport(getX(), getY(), 164, getMap());
+	local_m04.pop(local_m12, local_m14, local_m16);
+	for local_m06 = 0 to 25
+	{
+		local_m04.setFrame(local_m06);
+		if local_m06 = 6
+		{
+			playSFX(16, 100);
+		}
+		if local_m06 = 8
+		{
+			playSFX(55, 100);
+		}
+		if local_m06 = 9
+		{
+			playSFX(184, 100);
+		}
+		wait(5);
+	}
+	Camera_stopQuake();
+	Item_create(1, 572, u8_local_address(local_m02_w01));
+	local_m04.destroy();
+	teleport(getX(), getY(), 8, getMap());
+	local_m02.pop(local_m12, local_m14, local_m16);
+	Item_bark(u8_string_address("Now shall we bow in reverence of deeds here done, and to the awesome might of the Mountain King. "), u8_stack_ref(21));
+	Item_bark(u8_string_address("All is done. Lothian may now join her lord. "), u8_stack_ref(21));
+	class_057C_realDoAnim(21, 2, 3);
+	Item_bark(u8_string_address("Arise, my friend. "), u8_stack_ref(21));
+	Avatar.realDoAnim(50, 7);
+	Avatar.realDoAnim(AS_STAND, 7);
+	Item_bark(u8_string_address("You may now greet the Necromancer my friend, for I am he. "), u8_stack_ref(21));
+	lothianDead = 1;
+	wait(20);
+	ceremonySoon = 0;
+	Avatar.realDoAnim(AS_STAND, 7);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0415_vividos_train_necromancer_apprentice(this) -> return;
+}
+
+// Derived: routine 0x0F9D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process VIVIDOS::vividos_animate_ritual_undead(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Npc;
+	local_m02_w01:U8Bytes1;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, arg_04]];
+		local_m02 = arg_04;
+		local_m02.realDoAnim(AS_FIDGET, local_m02.getDir());
+	}
+	process
+	{
+		wait(10 + urandom(30));
+		local_m02.realDoAnim(55, local_m02.getDir());
+	}
+}
+
+// Derived: routine 0x100A, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process VIVIDOS::vividos_look_bark_identity_description()
+{
+	if vividosMet
+	{
+		bark("Vividos");
+	}
+	else
+	{
+		bark("Mage ");
+	}
+}
+
+// Derived: routine 0x1059, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process VIVIDOS::vividos_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	local_m09:U8Word;
+	local_m07 = 6;
+	if Npc_isDead(u8_stack_ref(21))
+	{
+		return;
+	}
+	if ceremonySoon
+	{
+		return;
+	}
+	local_m05_w02 = 7999;
+	local_m03 = 25791;
+	local_m01 = 8;
+	local_m09 = 2;
+	if (class_0581_getPeriod() = 0) or (class_0581_getPeriod() = 1)
+	{
+		local_m05_w02 = 7999;
+		local_m03 = 25791;
+		local_m01 = 8;
+		local_m09 = 2;
+	}
+	if class_0581_getPeriod() >= 2
+	{
+		local_m05_w02 = 7359;
+		local_m03 = 24415;
+		local_m01 = 56;
+		local_m09 = 1;
+	}
+	if class_057C_canSafeTeleport(this, local_m05, local_m07)
+	{
+		vividosSchedule = local_m09;
+		class_057C_safeTeleport(this, local_m05, local_m07);
+	}
+}
+
+// Derived: routine 0x1116, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process VIVIDOS::vividos_enter_fast_area_start_location_schedule()
+{
+	if Npc_isDead(u8_stack_ref(21))
+	{
+		return;
+	}
+	if ceremonySoon
+	{
+		return;
+	}
+	resetRef(referent, PT_BARK);
+	if vividosSchedule = 2
+	{
+		resetRef(referent, PT_ACTIVITY);
+		resetRef(referent, PT_PATHFIND);
+		resetRef(referent, PT_ANIM);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0415_vividos_run_cemetery_schedule(this) -> return;
+	}
+	else if vividosSchedule = 1
+	{
+		resetRef(referent, PT_ACTIVITY);
+		resetRef(referent, PT_PATHFIND);
+		resetRef(referent, PT_ANIM);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0415_vividos_run_tomb_schedule(this) -> return;
+	}
+}
+
+// Derived: routine 0x11C9, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process VIVIDOS::vividos_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x11E4, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process VIVIDOS::vividos_run_cemetery_schedule()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach local_m02 where (type = TypePathMarker) within 20 cells of 21 {
+			local_m06 = local_m02.getFrame();
+		}
+	}
+	process
+	{
+		for local_m04 = local_m06 to 27
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = local_m04)) within 50 cells of 21 {
+				if pathfind(local_m02, 10)
+				{
+					if not somebodyTalking
+					{
+						turnToFace(0, 0, 10);
+						realDoAnim(AS_FIDGET, getDir());
+						vividos_play_random_cemetery_bark();
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+						realDoAnim(AS_FIDGET, getDir());
+					}
+				}
+				else
+				{
+					wait(500);
+					realDoAnim(AS_FIDGET, getDir());
+				}
+			}
+		}
+		local_m06 = 0;
+	}
+}
+
+// Derived: routine 0x1352, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process VIVIDOS::vividos_play_random_cemetery_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m0A:U8Bytes5;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	local_m0A_w02:U8Word;
+	local_m0C:U8Word;
+	[[PT_ACTIVITY, referent]];
+	local_m05_w02 = Avatar.getX();
+	local_m03 = Avatar.getY();
+	local_m01 = Avatar.getZ();
+	local_m0A_w02 = Item_getX(u8_stack_ref(21));
+	local_m08 = Item_getY(u8_stack_ref(21));
+	local_m06 = Item_getZ(u8_stack_ref(21));
+	local_m0C = class_0581_free_get_point_distance(local_m0A, local_m05);
+	if local_m0C < 200
+	{
+		local_m0C = urandom(8);
+		if local_m0C = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Hello? ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m0C = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Can I help you? ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m0C = 3
+		{
+			bark("PRAISE LITHOS!! ");
+			wait(60);
+		}
+		if local_m0C = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Do you require my assistance? ");
+			wait(120);
+			bark("Very well then... ");
+		}
+	}
+	else
+	{
+		local_m0C = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if local_m0C = 1
+		{
+			bark("Blessed are the children of Lithos. ");
+		}
+		else
+		{
+			if local_m0C = 2
+			{
+				bark("Oh, to be with Lithos. ");
+				realDoAnim(AS_FIDGET, getDir());
+				wait(60);
+			}
+			if local_m0C = 3
+			{
+				bark("Ahh, the life of the Necromancer. ");
+			}
+			if local_m0C = 4
+			{
+				bark("The ground is cool and good today. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(60);
+			}
+			if local_m0C = 5
+			{
+				bark("I wonder...? ");
+				realDoAnim(AS_FIDGET, getDir());
+				bark("What is my lord doing right now? ");
+			}
+			if local_m0C = 6
+			{
+				bark("Oh mighty Lithos, forgive my fragility. ");
+			}
+			if local_m0C = 7
+			{
+				bark("My, the undead are restless today. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(100);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x1895, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process VIVIDOS::vividos_run_tomb_schedule()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach local_m02 where (type = TypePathMarker) within 10 cells of 21 {
+			local_m06 = local_m02.getFrame();
+		}
+	}
+	process
+	{
+		for local_m04 = local_m06 to 27
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = local_m04)) within 50 cells of 21 {
+				if pathfind(local_m02, 10)
+				{
+					if not somebodyTalking
+					{
+						vividos_play_random_tomb_bark();
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+						realDoAnim(AS_FIDGET, getDir());
+					}
+				}
+				else
+				{
+					wait(500);
+					realDoAnim(AS_FIDGET, getDir());
+				}
+			}
+		}
+		local_m06 = 0;
+	}
+}
+
+// Derived: routine 0x19CE, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process VIVIDOS::vividos_play_random_tomb_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m0A:U8Bytes5;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	local_m0A_w02:U8Word;
+	local_m0C:U8Word;
+	[[PT_ACTIVITY, referent]];
+	local_m05_w02 = Avatar.getX();
+	local_m03 = Avatar.getY();
+	local_m01 = Avatar.getZ();
+	local_m0A_w02 = Item_getX(u8_stack_ref(21));
+	local_m08 = Item_getY(u8_stack_ref(21));
+	local_m06 = Item_getZ(u8_stack_ref(21));
+	local_m0C = class_0581_free_get_point_distance(local_m0A, local_m05);
+	if local_m0C < 200
+	{
+		local_m0C = urandom(8);
+		if local_m0C = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Hello? ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m0C = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Can I help you? ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m0C = 3
+		{
+			bark("One can almost feel Moriens' presence in these walls. ");
+			wait(60);
+		}
+		if local_m0C = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Do you require my assistance? ");
+			wait(120);
+			bark("Very well then... ");
+		}
+	}
+	else
+	{
+		local_m0C = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if local_m0C = 1
+		{
+			bark("I do worry so... ");
+		}
+		else
+		{
+			if local_m0C = 2
+			{
+				bark("Oh, to be with Lithos. ");
+				realDoAnim(AS_FIDGET, getDir());
+				wait(60);
+			}
+			if local_m0C = 3
+			{
+				bark("Powerful indeed is the Mountain King. ");
+			}
+			if local_m0C = 4
+			{
+				bark("Tred lightly here on holy ground. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(60);
+			}
+			if local_m0C = 5
+			{
+				bark("I do worry so...? ");
+				realDoAnim(AS_FIDGET, getDir());
+				bark("There are so many people who do not show Lithos respect. ");
+			}
+			if local_m0C = 6
+			{
+				bark("Oh mighty Lithos, forgive my fragility. ");
+			}
+			if local_m0C = 7
+			{
+				bark("I must read Moriens book again very soon. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(100);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x1F4B, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process VIVIDOS::vividos_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	enterConvo();
+	if vivTold
+	{
+		haveDagger = 0;
+		local_m02 = Avatar.getEquip(6);
+		if local_m02 != 0
+		{
+			foreach recursive local_m04 where (type = 571) within container local_m02 {
+				haveDagger = 1;
+			}
+		}
+	}
+	if vividosMet
+	{
+		bark("Hello again, my friend. ");
+	}
+	else
+	{
+		bark("Ah, a stranger. Have you come to the tomb to learn? ");
+	}
+	if not lothianDead
+	{
+		vividos_discuss_necromancy_request();
+	}
+	else
+	{
+		vividos_train_necromancer_apprentice();
+	}
+	if hasHeart
+	{
+		bark("YOU!! You stole the Heart of Earth! You betrayed the Mountain King and now he has forsaken us!! He tears the land apart. He has sent his army of the dead to walk above the ground and it is all because of you!! Give the Heart of Earth back now and he may spare us. If not, all is lost. Go!! Get away from here and return to the Mountain King what is His!!! ");
+		exitConvo();
+		return;
+	}
+}
+
+// Derived: routine 0x21F0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process VIVIDOS::vividos_discuss_necromancy_request()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String List;
+	local_m06:U8Bytes2; // X: untouched.
+	local_m08:U8Word;
+	local_m0A:Item;
+	[[519, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m02 = "";
+	if haveDagger
+	{
+		local_m04 += <<"I have the dagger. ">>;
+	}
+	if toldDagger
+	{
+		local_m04 += <<"How are you today, Vividos? ", "Tell me of Lithos. ">>;
+	}
+	else
+	{
+		vividosMet = 1;
+		local_m04 = <<"What Tomb? ">>;
+	}
+	if mythranMet
+	{
+		local_m04 += <<"Yes, I'm here to learn. ">>;
+	}
+	else
+	{
+		local_m04 += <<"Learn about what? ">>;
+	}
+	while local_m02 != "Farewell. "
+	{
+		local_m04 -= <<"Farewell. ">>;
+		local_m04 += <<"Farewell. ">>;
+		local_m02 = ask(local_m04);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "What Tomb? "
+			{
+				bark("What Tomb? Why -the- Tomb. The Tomb of Moriens. ");
+				local_m04 += <<"The Tomb of Moriens? ">>;
+				local_m04 -= <<"What Tomb? ">>;
+			}
+			case "The Tomb of Moriens? "
+			{
+				bark("Yes! Moriens, the Great One, was interred here, within these very walls. ");
+				local_m04 += <<"What do you mean by interred? ">>;
+				local_m04 -= <<"The Tomb of Moriens? ">>;
+			}
+			case "Yes, I'm here to learn. "
+			{
+				bark("Oh my! This is excellent news! Well, I shall teach you all about our mysteries and traditions. ");
+				local_m04 = <<"Traditions. ", "Necromancer? ", "What mysteries? ">>;
+			}
+			case "What do you mean by interred? "
+			{
+				bark("Buried, then given over to Lithos, the Mountain King. Long has it been since Moriens joined Lithos. ");
+				local_m04 += <<"How long has it been? ", "Who is Lithos? ">>;
+				local_m04 -= <<"What do you mean by interred? ">>;
+			}
+			case "Who is Lithos? "
+			{
+				bark("What a jest you play, my friend! As if any one could not know of the Mountain King. How could a person live and not know of the Earth Titan? You have a sharp wit, friend. ");
+				local_m04 -= <<"Who is Lithos? ">>;
+			}
+			case "How long has it been? "
+			{
+				bark("Oh, generations ago, too many to count. Moriens is the ancient father of all Necromancers. ");
+				local_m04 -= <<"How long has it been? ">>;
+			}
+			case "Learn about what? "
+			{
+				bark("Learn the way of the Necromancer. Learn our traditions and mysteries! ");
+				local_m04 = <<"Necromancer? ", "Traditions. ", "What mysteries? ">>;
+				local_m04 -= <<"Learn about what? ">>;
+			}
+			case "Necromancer? "
+			{
+				bark("Lothian is the current Necromancer. But you probably already knew that. ");
+				if mythranNec
+				{
+					local_m04 += <<"I need to speak to the Necromancer. ">>;
+				}
+				local_m04 += <<"Lothian?">>;
+				local_m04 -= <<"Necromancer? ">>;
+			}
+			case "I need to speak to the Necromancer. "
+			{
+				bark("I am sorry but that is impossible. The Necromancer is very ill and she is not receiving anyone. ");
+				local_m04 += <<"She's too sick to see me? ">>;
+				local_m04 -= <<"I need to speak to the Necromancer. ">>;
+			}
+			case "She's too sick to see me? "
+			{
+				bark("Yes. In fact, she has been slipping in and out of consciousness lately. Even if you were to see her, she probably would not be awake. ");
+				local_m04 -= <<"She's too sick to see me? ">>;
+			}
+			case "Lothian?"
+			{
+				bark("Long has she been the Necromancer. Lothian has loyally served since I was but a boy. ");
+				local_m04 -= <<"Lothian?">>;
+			}
+			case "Traditions. "
+			{
+				bark("Our lives are very structured. We must perform our rites very precisely lest they be not accepted. Yet sometimes such precision can create problems. ");
+				local_m04 += <<"Not accepted. ", "What problems? ">>;
+				local_m04 -= <<"Traditions. ">>;
+			}
+			case "What mysteries? "
+			{
+				bark("I can not tell someone who is not of our order about our mysteries. You could learn all if you were to join the order and become a novice. ");
+				local_m04 += <<"Join your order? ", "What is a novice? ">>;
+				local_m04 -= <<"What mysteries? ">>;
+			}
+			case "What is a novice? "
+			{
+				bark("A novice is someone who has newly joined the order and has just begun to learn. ");
+				local_m04 -= <<"What is a novice? ">>;
+			}
+			case "Join your order? "
+			{
+				bark("Few people join our order. Life here is not easy but it is rewarding. ");
+				local_m04 -= <<"Join your order? ">>;
+			}
+			case "Not accepted. "
+			{
+				bark("As you are not of our order, I can not tell you much. Suffice to say that titanic forces are often fickle. ");
+				local_m04 += <<"Titanic forces? ">>;
+				local_m04 -= <<"Not accepted. ">>;
+			}
+			case "Titanic forces? "
+			{
+				bark("You have many questions, my friend! I was the same when first I came to the Tomb. Unfortunately, I can answer little since, as I have said, you are not of our order. ");
+				local_m04 -= <<"Titanic forces? ">>;
+			}
+			case "What problems? "
+			{
+				bark("As I said, in our rituals, everything must be done at the right time with the right tools. Unfortunately, we are missing a most important tool. ");
+				local_m04 += <<"Missing a tool? ">>;
+				local_m04 -= <<"What problems? ">>;
+			}
+			case "Missing a tool? "
+			{
+				bark("Yes, our ceremonial dagger. It was taken from us by that power mad witch, Mordea. ");
+				local_m04 = <<"Power mad? ", "Mordea took the dagger? ">>;
+				vivTold = 1;
+				if mordeaDead
+				{
+					local_m04 = <<"Mordea is dead. ">>;
+				}
+			}
+			case "Mordea took the dagger? "
+			{
+				bark("Yes! Never before have we had to worry about such things. People have always feared the cemetery and respected our work. But not long ago, Mordea came here with an armed force and took the dagger. ");
+				local_m04 = <<"Why is this dagger special? ", "People respected your work? ">>;
+			}
+			case "People respected your work? "
+			{
+				bark("Oh yes, we were respected and feared. The Necromancers have always been held in just regard as one of the great powers of the world. It has taken one so obsessed with power as Mordea to lessen the people's regard for us. ");
+				local_m04 = <<"People feared you? ", "Your order is a great power? ", "People's regard has lessened? ">>;
+			}
+			case "People feared you? "
+			{
+				bark("It is only natural that people fear forces that they do not understand. Of course they have never had a reason to fear us. Those of our order have always been benevolent, unlike the followers of Pyros or the Lurker. ");
+				local_m04 += <<"Pyros? ", "The Lurker? ">>;
+				local_m04 -= <<"People feared you? ">>;
+			}
+			case "Pyros? "
+			{
+				bark("Please, speak not of that malevolent demon! I should not have mentioned his name. All the world would he consume in his flame if he were allowed! ");
+				local_m04 -= <<"Pyros? ">>;
+				if pyrosHis
+				{
+					local_m04 += <<"Is Pyros a Titan? ">>;
+				}
+			}
+			case "Is Pyros a Titan? "
+			{
+				bark("Please, I asked you not to speak of him. ");
+				local_m04 -= <<"Is Pyros a Titan? ">>;
+			}
+			case "The Lurker? "
+			{
+				bark("The water Titan. Damned be her and all who follow her. That is Mordea's station; to follow that watery spirit and oppress all in her way. ");
+				local_m04 -= <<"The Lurker? ">>;
+			}
+			case "Your order is a great power? "
+			{
+				bark("What greater power could there be than the power of the land itself? We who follow the Mountain King are peaceful, but when we are pressed we can wield our power well. ");
+				local_m04 += <<"What about Mordea? ">>;
+				local_m04 -= <<"Your order is a great power? ">>;
+			}
+			case "What about Mordea? "
+			{
+				bark("It would do more harm than good for the Necromancer to wage war with Mordea. Even though Mordea is power mad. ");
+				local_m04 = <<"Power mad? ", "More harm than good? ">>;
+			}
+			case "People's regard has lessened? "
+			{
+				bark("Yes, I am sad to say. We shall yet win them back, however. Lithos will lead us out of these dark times and show to all His power and majesty. ");
+				local_m04 += <<"Power and majesty? ">>;
+				local_m04 -= <<"People's regard has lessened? ">>;
+			}
+			case "Power and majesty? "
+			{
+				bark("You must understand that we do not seek to rule all, such as Mordea does. We simply wish all to respect and revere Lithos. ");
+				local_m04 -= <<"Power and majesty? ">>;
+			}
+			case "More harm than good? "
+			{
+				bark("Think of the destruction that would occur if two Titanic forces were to lock themselves in combat. The destruction would be terrible. ");
+				local_m04 -= <<"More harm than good? ">>;
+			}
+			case "Why is this dagger special? "
+			{
+				bark("It was given to Moriens by the Mountain King Himself. We can not perform our ceremonies with any other dagger. ");
+				local_m04 -= <<"Why is this dagger special? ">>;
+			}
+			case "Power mad? "
+			{
+				bark("I don't care who hears me say it! Mordea is evil and power hungry! Long has she been a tyrant but now she has gone too far! Now that she has the dagger, we can not perform our rites without her approval. ");
+				local_m04 += <<"She has gone too far? ", "You need her approval? ">>;
+				local_m04 -= <<"Power mad? ">>;
+			}
+			case "She has gone too far? "
+			{
+				bark("What Mordea has done violates generations of tradition and work. ");
+				local_m04 -= <<"She has gone too far? ">>;
+			}
+			case "You need her approval? "
+			{
+				bark("Yes! Without her approval, we can not perform our rituals. We can not work under such conditions! We need to get the dagger back soon or there will be great danger. ");
+				local_m04 = <<"Get the dagger back. ", "What kind of danger? ">>;
+				local_m04 -= <<"You need her approval? ">>;
+			}
+			case "What kind of danger? "
+			{
+				bark("I truly can not tell you. The Mountain King's temper is, well, titanic. He may rip the land apart should we anger him. ");
+				local_m04 += <<"Rip the land apart? ", "Anger him? ">>;
+				local_m04 -= <<"What kind of danger? ">>;
+			}
+			case "Rip the land apart? "
+			{
+				bark("Oh yes, earthquakes, fissures, landslides, the power of the Earth Titan is very great. I have never seen the power of His wrath before, but I have heard terrible stories. ");
+				local_m04 += <<"What stories? ">>;
+				local_m04 -= <<"Rip the land apart? ">>;
+			}
+			case "What stories? "
+			{
+				bark("In the days before Moriens agreed to serve the Mountain King, our lord did often rend the land as was His pleasure. ");
+				local_m04 += <<"Why did he do this? ">>;
+				local_m04 -= <<"What stories? ">>;
+			}
+			case "Why did he do this? "
+			{
+				bark("Please, I do not have time to talk of this. I need to get the dagger back before Lothian dies. ");
+				local_m04 -= <<"Why did he do this? ">>;
+			}
+			case "Anger him? "
+			{
+				bark("Yes. If I am not able to perform the appropriate ceremony upon Lothian, I will greatly disappoint, and anger, my Lord. ");
+				local_m04 -= <<"Anger him? ">>;
+			}
+			case "Get the dagger back. "
+			{
+				bark("How? Lothian is very ill and I must stay by her side. Besides, neither of us are trained warriors to challenge Mordea's guards. How could we possibly retrieve the dagger? ");
+				local_m04 += <<"I'll get the dagger. ", "Stay by her side. ">>;
+				local_m04 -= <<"Get the dagger back. ">>;
+			}
+			case "I'll get the dagger. "
+			{
+				bark("Will you truly? ");
+				local_m02 = ask(<<"Yes. ", "No. ">>);
+				if local_m02 = "Yes. "
+				{
+					bark("Thank you! I have heard that Mordea keeps the dagger in her chambers. You will know the dagger by its golden hilt and serpentine blade. Please hurry, for soon we shall need the dagger! ");
+					toldDagger = 1;
+					if mythranNec
+					{
+						local_m04 += <<"May I meet the Necromancer? ">>;
+					}
+				}
+				else
+				{
+					bark("That is a cruel jest. We need the dagger soon else we shall all suffer. ");
+				}
+				local_m04 -= <<"I'll get the dagger. ">>;
+			}
+			case "Stay by her side. "
+			{
+				bark("It is as I have said, our ceremonies must occur at the correct time. I can tell you no more than that except to say that I must be present when Lothian dies. ");
+				local_m04 -= <<"Stay by her side. ">>;
+			}
+			case "May I meet the Necromancer? "
+			{
+				bark("If you bring to me the dagger, I will get you an audience with the Necromancer. ");
+				local_m04 -= <<"May I meet the Necromancer? ">>;
+			}
+			case "Mordea is dead. "
+			{
+				bark("She is truly dead? Oh praise be to the Mountain King! Perhaps now we may get our dagger back and avert certain danger. ");
+				local_m04 = <<"What kind of dagger? ", "You may get the dagger back. ">>;
+			}
+			case "What kind of dagger? "
+			{
+				bark("It is a very special dagger. This dagger was given to us by the Mountain King so that we may perform a very special ceremony. Without the dagger, I can not perform the ceremony. ");
+				local_m04 -= <<"What kind of dagger? ">>;
+			}
+			case "You may get the dagger back. "
+			{
+				bark("Unfortunately, I can not leave here. You see, I must stay by Lothian's side. ");
+				local_m04 += <<"Stay by her side. ", "I'll get the dagger. ">>;
+				local_m04 -= <<"You may get the dagger back. ">>;
+			}
+			case "Farewell. "
+			{
+				bark("Farewell, friend. ");
+				local_m04 -= <<"Farewell. ">>;
+				exitConvo();
+				return;
+			}
+			case "I have the dagger. "
+			{
+				bark("Truly?! You have the dagger? Bless you, my friend, bless you! Your timing is perfect for I need the dagger immediately! May I please have the dagger? ");
+				Npc_pathfind(8, 21, u8_stack_ref(1));
+				local_m08 = Avatar.getEquip(6);
+				if local_m08 != 0
+				{
+					foreach recursive local_m0A where (type = 571) within container local_m08 {
+						local_m0A.destroy();
+					}
+				}
+				local_m04 -= <<"I have the dagger. ">>;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0415_vividos_perform_eternity_ceremony(this) -> return;
+				return;
+			}
+			case "How are you today, Vividos? "
+			{
+				bark("Not well, I fear. Our problem still exists and Lothian nears her end. Have you managed to get the dagger away from Mordea? ");
+				local_m04 += <<"What problem? ", "Is Lothian dying? ", "No, I don't have the dagger. ">>;
+				local_m04 -= <<"How are you today, Vividos? ">>;
+			}
+			case "No, I don't have the dagger. "
+			{
+				bark("Oh. I was hoping that you had retrieved the dagger for me. I am terribly afraid of what may happen if I do not get it soon. You did promise to get the dagger. Please do so as soon as possible. ");
+				local_m04 -= <<"No, I don't have the dagger. ">>;
+			}
+			case "What problem? "
+			{
+				bark("Have you completely forgotten the discussion which we had when first we met? By the power of the Mountain King, man, how could you forget my plight when your own safety is at stake? Mordea has stolen our ceremonial dagger and you promised to retrieve it. ");
+				local_m04 += <<"Oh yes, I do remember. ", "I was but joking, friend. ">>;
+				local_m04 -= <<"What problem? ">>;
+			}
+			case "I was but joking, friend. "
+			{
+				bark("I do remember from our first meeting that you have a sharp wit, but to say such a thing is more cruel than funny. By Lithos' eyes, please hold your jests until our crisis has past. ");
+				local_m04 -= <<"I was but joking, friend. ">>;
+			}
+			case "Oh yes, I do remember. "
+			{
+				bark("How very nice of you to recall! Please listen closely, if you do not retrieve the dagger, I can not inter people. If I can not inter people, Lithos will become very upset. ");
+				local_m04 += <<"What will happen if Lithos becomes upset? ">>;
+				local_m04 -= <<"Oh yes, I do remember. ">>;
+			}
+			case "What will happen if Lithos becomes upset? "
+			{
+				bark("I probably should not tell you this, since you are not a member of our order, but these are dire times. Lithos may rend the ground underneath our very feet. He may bring great landslides to destroy Tenebrae. He may create quakes that kill us all. Lithos is great and powerful and we do not want him to become upset. ");
+				local_m04 += <<"That sounds terrible. ", "Could this really happen? ">>;
+				local_m04 -= <<"What will happen if Lithos becomes upset? ">>;
+			}
+			case "That sounds terrible. "
+			{
+				bark("Of course it sounds terrible! This is why I am so frantic! Now please, go and retrieve the dagger as you promised! ");
+				local_m04 -= <<"That sounds terrible. ">>;
+			}
+			case "Could this really happen? "
+			{
+				bark("I do not believe your questions! Is this another one of your jokes? Of course it could happen! Please leave me now. I am too un-nerved to speak. ");
+				local_m04 -= <<"Could this really happen? ">>;
+				exitConvo();
+				return;
+			}
+			case "Is Lothian dying? "
+			{
+				bark("Yes, she's dying! I told you that when last you were here. ");
+				local_m04 -= <<"Is Lothian dying? ">>;
+			}
+			case "Tell me of Lithos. "
+			{
+				bark("I am sorry friend, but I do not have time to tell you anything of the Mountain King that you can not already know. After you have retrieved the dagger for me, I will tell you in great length of our lord, the Earth Titan. ");
+				local_m04 -= <<"Tell me of Lithos. ">>;
+			}
+			default
+			{
+				bark("Did you wish to continue this conversation, my friend? ");
+			}
+		}
+	}
+}
+
+// Derived: routine 0x5D41, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process VIVIDOS::vividos_train_necromancer_apprentice()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:String;
+	local_m06:String List;
+	local_m08:U8Bytes2; // X: untouched.
+	local_m0A:String;
+	local_m0C:U8Bytes2; // X: untouched.
+	local_m0E:Item;
+	local_m0F:U8Byte;
+	local_m10:U8Byte;
+	local_m12:U8Bytes2; // X: untouched.
+	local_m14:Item;
+	local_m16:Item;
+	local_m18:U8Word;
+	[[519, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m06 = <<"You are the Necromancer? ", "You murdered that woman! ">>;
+	if isApprentice
+	{
+		local_m06 = <<"Hello, Necromancer. ">>;
+		if toldReagents
+		{
+			local_m02 = Avatar.getEquip(6);
+			foreach recursive local_m0E where ((type = 395) and ((frame = 10) or (frame = 20))) within container local_m02 {
+				if local_m0E.getFrame() = 10
+				{
+					local_m0F = 1;
+				}
+				if local_m0E.getFrame() = 20
+				{
+					local_m10 = 1;
+				}
+				if local_m0F and local_m10
+				{
+					haveReagents = 1;
+				}
+			}
+		}
+		if haveReagents and (not haveReagentsDone)
+		{
+			local_m06 += <<"I have brought you the reagents, Necromancer. ">>;
+		}
+		if lithosMet and (not gotTheKey)
+		{
+			local_m06 += <<"I have met the Mountain King. ">>;
+		}
+		if lothInterred
+		{
+			local_m06 += <<"I have interred Lothian, Necromancer. ">>;
+		}
+		if askToDo and (not haveReagentsDone)
+		{
+			local_m06 += <<"What must I do? ">>;
+		}
+		if openBirth = 1
+		{
+			local_m06 = <<"I have seen the Birthplace of Moriens. ">>;
+		}
+	}
+	while local_m04 != "Farewell. "
+	{
+		local_m06 -= <<"Farewell. ">>;
+		local_m06 += <<"Farewell. ">>;
+		local_m04 = ask(local_m06);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "You are the Necromancer? "
+			{
+				bark("I am now. With Lothian's passage, I step forward and take her place. As Lothian's Scion, I was next in the Necromantic line of succession. ");
+				local_m06 += <<"What is a Scion? ">>;
+				local_m06 -= <<"You are the Necromancer? ">>;
+			}
+			case "You murdered that woman! "
+			{
+				bark("I killed her, yes. But I did not murder her. ");
+				local_m06 = <<"Well what's the difference? ", "Why did you have to stab her? ">>;
+			}
+			case "Why did you have to stab her? "
+			{
+				bark("Have you not heard a word that I have said? The Ceremony of Eternity is one of our most sacred rites. It is Lithos' law! ");
+				local_m06 -= <<"Why did you have to stab her? ">>;
+			}
+			case "What is a Scion? "
+			{
+				bark("A Scion is the Necromancer's chosen successor. It is normal for the Necromancer's first apprentice to be the Scion. It is sad to say, but I was Lothian's only apprentice. Now, I am in need of an apprentice. ");
+				local_m06 = <<"Why were you the only apprentice? ", "You need an apprentice? ">>;
+			}
+			case "Well what's the difference? "
+			{
+				bark("Murdering some one is to take their life against their will. Lothian had known nearly her entire life that, when it was her time of passage, she would be killed in this fashion. The same will happen to me when it is my time. ");
+				local_m06 += <<"So that is the Ceremony of Eternity? ", "The same will happen to you? ">>;
+				local_m06 -= <<"Well what's the difference? ">>;
+			}
+			case "Why were you the only apprentice? "
+			{
+				bark("It is as I have said: many people fear us, and many more can not live so demanding and structured life as is necessary of one who serves the Mountain King. ");
+				local_m06 += <<"Why do people fear you? ">>;
+				local_m06 -= <<"Why were you the only apprentice? ">>;
+			}
+			case "Why do people fear you? "
+			{
+				bark("Many people are ignorant and do not understand what we do. They think that we live with corpses and that we are diseased. All of this is foolishness. ");
+				local_m06 -= <<"Why do people fear you? ">>;
+			}
+			case "So that is the Ceremony of Eternity? "
+			{
+				bark("Yes, the ceremony must be performed as Lithos has commanded. You see, as Lothian was Necromancer, she will be permitted into the Hall of Eternity. In order to be allowed into this most hallowed of places, the Necromancers must be prepared in the Ceremony of Eternity. ");
+				local_m06 += <<"What is the Hall of Eternity? ">>;
+				local_m06 -= <<"So that is the Ceremony of Eternity? ">>;
+			}
+			case "I have seen the Birthplace of Moriens. "
+			{
+				bark("That is well. I hope that your experience was as wonderful as my own. ");
+				local_m06 -= <<"I have seen the Birthplace of Moriens. ">>;
+			}
+			case "What is the Hall of Eternity? "
+			{
+				bark("The Hall of Eternity is a special place within the City of the Dead. The City of the Dead is a place where only Necromancers are allowed. It is there that Lithos sits upon His throne and consults His Necromancers, and dispenses His judgement. The Hall is a most prestigious place. ");
+				local_m06 += <<"The City of the Dead? ">>;
+				local_m06 -= <<"What is the Hall of Eternity? ">>;
+			}
+			case "The City of the Dead? "
+			{
+				bark("Yes, the heart of Lithos' realm. The City of the Dead is where all Necromancers who have been interred go and live on in death under Lithos' gentle rule. ");
+				local_m06 -= <<"The City of the Dead? ">>;
+			}
+			case "You need an apprentice? "
+			{
+				bark("Yes, I do. While we are on this subject, it occurs to me that you are a man of exceptional qualities, both physical and spiritual. Would you wish to become my apprentice? ");
+				local_m06 = <<"Yes, I am honored. ", "No, thank you. ">>;
+			}
+			case "Yes, I am honored. "
+			{
+				bark("Good, then it is so done. As my apprentice, I would have you begin your studies immediately. Much must be learned before one can wield the magic of a Necromancer. ");
+				local_m06 += <<"What must I do? ", "I'll learn magic? ">>;
+				local_m06 -= <<"Yes, I am honored. ", "No, thank you. ">>;
+				askToDo = 1;
+				isApprentice = 1;
+			}
+			case "What must I do? "
+			{
+				bark("First you must gather some reagents for me. Return them to me and I will teach you of their magical properties. There will be other tasks to follow. If you accomplish all of them correctly, then I shall make you my apprentice, and most likely, the Scion. After that, you shall make a pilgrimage. ");
+				local_m06 += <<"What reagents do you need? ", "A pilgrimage? ">>;
+				local_m06 -= <<"What must I do? ">>;
+			}
+			case "A pilgrimage? "
+			{
+				bark("Do not concern yourself with that now. There is much that must be done before you may even think about your holy pilgrimage. ");
+				local_m06 -= <<"A pilgrimage? ">>;
+			}
+			case "No, thank you. "
+			{
+				bark("This saddens me. I do think that you would make a fine apprentice, and eventually, Necromancer. Is your mind completely made up, are you certain that you do not wish to be my apprentice? ");
+				local_m06 = <<"Yes, I am certain. ", "Well, perhaps I should be your apprentice. ">>;
+			}
+			case "Yes, I am certain. "
+			{
+				bark("Very well, I am sure you have good reason for your decision. I am, however, very busy and must get on with my duties. Thank you very much for your help, but I must be on my way. ");
+				local_m06 -= <<"Yes, I am certain. ">>;
+				exitConvo();
+				playMusic(121);
+				return;
+			}
+			case "Well, perhaps I should be your apprentice. "
+			{
+				bark("Good, then it is done. As my apprentice, I would have you begin your studies immediately. Much must be learned before one can wield the magic of the Necromancer. ");
+				local_m06 += <<"What must I do? ", "I'll learn magic? ">>;
+				isApprentice = 1;
+				local_m06 -= <<"Well, perhaps I should be your apprentice. ", "Yes, I am certain. ">>;
+			}
+			case "I'll learn magic? "
+			{
+				bark("Indeed you will, my apprentice. By the time that you have completed your studies, you will be capable of more than you ever dreamed possible. ");
+				local_m06 += <<"There is much to learn. ">>;
+				local_m06 -= <<"I'll learn magic? ">>;
+			}
+			case "There is much to learn. "
+			{
+				bark("Indeed there is, apprentice. That is why you must consult the library freely and often. There you will learn much of our order, our history, and our magic. ");
+				local_m06 += <<"Where is the library? ", "Will you help me learn? ">>;
+				local_m06 -= <<"There is much to learn. ">>;
+			}
+			case "Where is the library? "
+			{
+				bark("It is located just upstairs. Feel free to use it at any time. I expect to see you there quite often. ");
+				local_m06 -= <<"Where is the library? ">>;
+			}
+			case "Will you help me learn? "
+			{
+				bark("Yes, of course, my student. It is part of my responsibility to teach you all that I know. ");
+				local_m06 -= <<"Will you help me learn? ">>;
+			}
+			case "What reagents do you need? "
+			{
+				bark("I need for you to bring me a sample of Executioner's Hood from a place of danger and fallen sticks from a place where spirits roam. ");
+				local_m06 += <<"These items are -magical-? ", "What does Executioner's Hood look like? ", "Where spirits roam? ">>;
+				local_m06 -= <<"What reagents do you need? ">>;
+				toldReagents = 1;
+				if not devonInRule
+				{
+					benticCacked = 1;
+					devonJailed = 1;
+					Bentic.teleport(getX(), getY(), getZ(), 0);
+					Bentic.setDead();
+				}
+			}
+			case "Where spirits roam? "
+			{
+				bark("Yes, that is very important. Go to Western Tenebrae. There you will find the sticks, better known as `deadman's elbows,' that I need. ");
+				local_m06 -= <<"Where spirits roam? ">>;
+			}
+			case "These items are -magical-? "
+			{
+				bark("Each taken individually, the item's magical properties are inert. However, when blended together under the proper conditions and intonements, their magical qualities are unlocked. All of this you will learn in time. ");
+				local_m06 -= <<"These items are -magical-? ">>;
+			}
+			case "What does Executioner's Hood look like? "
+			{
+				bark("It is a black, leafy plant. It grows nearby, between the Graveyard and Tenebrae. Look for the hood under a large tree. It is a rare plant, so look closely. ");
+				local_m06 -= <<"What does Executioner's Hood look like? ">>;
+			}
+			case "The same will happen to you? "
+			{
+				bark("Of course. When my time comes to be sent to meet the Mountain King, my first apprentice will perform the Ceremony of Eternity and prepare me for my journey. It is the way of the Necromancer. ");
+				local_m06 -= <<"The same will happen to you? ">>;
+			}
+			case "I have brought you the reagents, Necromancer. "
+			{
+				bark("Give them to me. ");
+				local_m02 = Avatar.getEquip(6);
+				Avatar.turnToFace(1, 0, 15);
+				turnToFace(3, 1, 15);
+				foreach recursive local_m14 where (type = 395) within container local_m02 {
+					if (local_m14.getFrame() = 10) or (local_m14.getFrame() = 20)
+					{
+						local_m14.destroy();
+					}
+				}
+				bark("You have done well, my apprentice. For your efforts and your obvious learning, I have something for you. This is the Key of the Caretaker. It will allow you entry into the Upper Catacombs. There you must go to learn more of our art. ");
+				local_m06 = <<"What is in the Catacombs? ", "Where are the upper catacombs? ", "What is the Key of the Caretaker? ", "Farewell. ">>;
+				if class_0581_give(1, 232, 0, 0, 1)
+				{
+					haveReagentsDone = 1;
+				}
+				else
+				{
+					Item_create(0, 232, u8_local_address(local_m16_w01));
+					local_m18 = Avatar.getEquip(6);
+					local_m16.pop(local_m18);
+					haveReagentsDone = 1;
+				}
+				local_m06 -= <<"I have brought you the reagents, Necromancer. ", "Hello, Necromancer. ">>;
+			}
+			case "What is the Key of the Caretaker? "
+			{
+				bark("The Key is an item of power which will allow you to cast the spells which you will learn in the Catacombs. In order to cast spells, you must place the proper reagents in a bag, close the bag, and then invoke the power of the key on the closed bag. When you open the bag, you will find a magic talisman within. When you invoke the magic of the talisman, you cast the spell. ");
+				local_m06 -= <<"What is the Key of the Caretaker? ">>;
+			}
+			case "What is in the Catacombs? "
+			{
+				bark("There you will find the ancient Necromancers. Those who travelled the path of the Necromancer long before you or I. My  ancient ancestors will teach you what you need to know of our magic. ");
+				local_m06 += <<"How am I to find them? ", "Can you not teach me magic? ">>;
+				local_m06 -= <<"What is in the Catacombs? ">>;
+			}
+			case "How am I to find them? "
+			{
+				bark("With good faith and a strong heart. Do not worry, apprentice. The Ancient Necromancers will make themselves known to you. ");
+				local_m06 -= <<"How am I to find them? ">>;
+			}
+			case "Can you not teach me magic? "
+			{
+				bark("I can, and in years to come I will. However, the first level of spells you must learn from the ancient Necromancers. Those who first created the spells that you will learn will teach them to you. If you pass their tests, you will learn their magic. Then you must come back to me. ");
+				local_m06 -= <<"Can you not teach me magic? ">>;
+			}
+			case "Where are the upper catacombs? "
+			{
+				bark("You will find the entrance to the catacombs through the very rock itself. You will need the Open Earth spell, which you can find in the library, and the Key of the Caretaker. Go you then just north of here. There you will find a small hall. Cast the Open Earth spell upon the rock face and you shall gain entrance to the the catacombs. ");
+				local_m06 += <<"The spell is in the library? ">>;
+				local_m06 -= <<"Where are the upper catacombs? ">>;
+			}
+			case "The spell is in the library? "
+			{
+				bark("Yes, there you find much that will help you. For in order that you may speak to the Necromancers, there is another spell which you must learn. ");
+				local_m06 += <<"What is there that will help me? ", "What other spell? ">>;
+				local_m06 -= <<"The spell is in the library? ">>;
+			}
+			case "What other spell? "
+			{
+				bark("As the Necromancers are, to be certain, dead, you must cast Death Speak upon their sacred corpses. Only then shall you hear the voices of wisdom from their lifeless mouths. This spell you shall also find in the library. ");
+				local_m06 -= <<"What other spell? ">>;
+			}
+			case "What is there that will help me? "
+			{
+				bark("In the library, there are books of knowledge. Not only spells that you must learn, but also the history of our Necromantic order. In the library you will also find many reagents which you may use when learning to cast spells. ");
+				local_m06 -= <<"What is there that will help me? ">>;
+			}
+			case "I have met the Mountain King. "
+			{
+				bark("And since you are still alive, I can see that He and His Ancient Necromancers did approve of you. Now, I have something else for you, my apprentice. ");
+				local_m06 = <<"The journey was difficult. ", "You have something for me? ">>;
+			}
+			case "The journey was difficult. "
+			{
+				bark("Yes, I remember when I met the Mountain King. I too found the journey most difficult. Yet, all has been worth the effort. ");
+				local_m06 -= <<"The journey was difficult. ">>;
+			}
+			case "You have something for me? "
+			{
+				bark("Not yet, my apprentice. Did Lithos tell you that there is one last task for you to perform? ");
+				local_m06 = <<"Yes, he did. ", "No, he didn't. ">>;
+			}
+			case "No, he didn't. "
+			{
+				bark("He did not? I do not believe you. The Mountain King instructed me to ask you if He had told you what you must do. He told me He instructed you to inter Lothian. If you did not perform this task, you were to be expelled from His order. Now you lie to me. Therefore, you must go from here. Never return here again. ");
+				local_m06 -= <<"No, he didn't. ">>;
+				vividosPissed = 1;
+				exitConvo();
+				playMusic(121);
+				return;
+			}
+			case "Yes, he did. "
+			{
+				bark("What did He tell you? ");
+				local_m06 = <<"I must inter Lothian. ">>;
+			}
+			case "I must inter Lothian. "
+			{
+				bark("That is correct, apprentice. Take this, the Key of the Scion. By touching this item to Lothian, you will make her body acceptable for interment, as commanded in our covenant with Lithos. Know that this Key will also permit access through many doors within the Catacombs. ");
+				if class_0581_give(1, 232, 3, 0, 1)
+				{
+					Item_bark(u8_string_address("Thank you, Necromancer. "), u8_stack_ref(1));
+					gotTheKey = 1;
+				}
+				else
+				{
+					Item_bark(u8_string_address("You did not give me a key, Necromancer. "), u8_stack_ref(1));
+				}
+				local_m06 = <<"Another key? ", "Where is Lothian? ">>;
+			}
+			case "Where is Lothian? "
+			{
+				bark("You will find her outside of the tomb, near the Northeast corner of the building. There her body awaits you to send it to the Mountain King. ");
+				local_m06 -= <<"Where is Lothian? ">>;
+			}
+			case "Another key? "
+			{
+				bark("Yes, but as you have seen, these keys are not what one normally thinks of as a key. This is not so much a physical key as it is a spiritual one. ");
+				local_m06 -= <<"Another key? ">>;
+			}
+			case "Farewell. "
+			{
+				if isApprentice
+				{
+					bark("Farewell, apprentice. ");
+				}
+				else
+				{
+					bark("Farewell, my friend. ");
+				}
+				local_m06 -= <<"Farewell. ">>;
+				exitConvo();
+				playMusic(121);
+				return;
+			}
+			case "I have interred Lothian, Necromancer. "
+			{
+				bark("You have done well, my apprentice. You have shown yourself well. You have served with bravery and great knowledge. I have decided to name you Scion and thereby officially name you my heir in the Necromatic line. Now, you are ready to make your pilgrimage. ");
+				local_m06 = <<"Thank you, Necromancer. ", "Oh yes, my pilgrimage. ">>;
+				local_m06 -= <<"I have interred Lothian, Necromancer. ">>;
+			}
+			case "Hello, Necromancer. "
+			{
+				bark("Greetings to you, my apprentice. I trust that all is well? ");
+				local_m06 += <<"Yes, I am well. ", "No, things are not well. ">>;
+				local_m06 -= <<"Hello, Necromancer. ">>;
+			}
+			case "Yes, I am well. "
+			{
+				bark("Good, good. Lithos does provide well for His followers. ");
+				local_m06 -= <<"Yes, I am well. ", "No, things are not well. ">>;
+			}
+			case "No, things are not well. "
+			{
+				bark("Well, trust in Lithos and everything will work out. ");
+				local_m06 -= <<"Yes, I am well. ", "No, things are not well. ">>;
+			}
+			case "Oh yes, my pilgrimage. "
+			{
+				bark("Yes, your pilgrimage. It is customary for the Scion to make a pilgrimage to the birthplace of Moriens. There, the Scion does pay homage to Moriens and hope for a visitation. ");
+				saidBirth = 1;
+				local_m06 += <<"Where is this place? ", "A visitation? ">>;
+				local_m06 -= <<"Oh yes, my pilgrimage. ">>;
+			}
+			case "A visitation? "
+			{
+				bark("Yes, well do I remember my pilgrimage. Long did I travel, and such an adventure it was. And when I arrived at the holy birthplace, I did see a most magnificent thing. It was so wonderous that first I thought myself to be mad. ");
+				local_m06 += <<"Was it dangerous? ", "What did you see? ">>;
+				local_m06 -= <<"A visitation? ">>;
+			}
+			case "What did you see? "
+			{
+				bark("Perhaps it is best that I do not tell you. I would not wish to color your expectations. After all, everyone comes away from their pilgrimage with a different experience. But be certain that your experience shall be a profound one. ");
+				local_m06 -= <<"What did you see? ">>;
+			}
+			case "Was it dangerous? "
+			{
+				bark("What kind of a question is that from a man who has already performed such great deeds? ");
+				local_m06 -= <<"Was it dangerous? ">>;
+			}
+			case "Where is this place? "
+			{
+				bark("You must return to the Upper Catacombs. Once there, seek out the signs that mark the way. ");
+				local_m06 -= <<"Where is this place? ">>;
+			}
+			case "Thank you, Necromancer. "
+			{
+				bark("Say no more, Scion. You have earned your status. ");
+				local_m06 -= <<"Thank you, Necromancer. ">>;
+			}
+			default
+			{
+				bark("Did you wish to continue this conversation? ");
+			}
+		}
+	}
+}
+

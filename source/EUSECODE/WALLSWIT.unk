@@ -1,0 +1,125 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x01F9
+// FLEX slot: 507
+// Original offset: 0x0012382D
+// Naming evidence: E, exact object-1 linker name `WALLSWIT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/WALLSWIT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass WALLSWIT inherits Item
+{
+	process wallswit_look_bark_switch();
+	process wallswit_use_toggle_screen_and_linked_sliders();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process WALLSWIT::wallswit_look_bark_switch()
+{
+	bark("switch ");
+}
+
+// Derived: routine 0x00AA, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process WALLSWIT::wallswit_use_toggle_screen_and_linked_sliders()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Bytes2; // X: untouched.
+	local_m04:Item;
+	local_m04_w01:U8Bytes1;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m09:U8Byte;
+	local_m06 = getFrame();
+	local_m08 = getQuality();
+	local_m09 = 1;
+	if (local_m06 = 0) or (local_m06 = 3)
+	{
+		playSFX(88, 100);
+		setFrame(getFrame() + 1);
+		wait(10);
+		setFrame(getFrame() + 1);
+	}
+	else
+	{
+		if (local_m06 = 2) or (local_m06 = 5)
+		{
+			playSFX(88, 100);
+			setFrame(getFrame() - 1);
+			wait(10);
+			setFrame(getFrame() - 1);
+		}
+	}
+	if local_m08 = 0
+	{
+		playSFX(58, 100);
+		Camera_invertScreen(1);
+		setQuality(1);
+	}
+	else if local_m08 = 1
+	{
+		playSFX(58, 100);
+		Camera_invertScreen(0);
+		setQuality(0);
+	}
+	else if local_m08 = 2
+	{
+		u8_search_begin(local_m04, 2, 30 * 32, referent, <<67, u8_search_word(790), u8_search_word(515), u8_search_word(194), 37, u8_search_word(0), 96, 61, 38, 36>>);
+		while u8_search_condition()
+		{
+			if local_m04.getQuality() = local_m08
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0576_slider_open(u8_local_address(local_m04_w01)) -> return;
+				local_m09 = 1;
+			}
+			u8_search_advance();
+		}
+		u8_search_end();
+		u8_search_begin(local_m04, 2, 30 * 32, referent, <<67, u8_search_word(791), u8_search_word(517), u8_search_word(195), 36>>);
+		while u8_search_condition()
+		{
+			if local_m04.getQuality() = local_m08
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0576_slider_close(u8_local_address(local_m04_w01)) -> return;
+			}
+			u8_search_advance();
+		}
+		u8_search_end();
+	}
+	else if local_m08 = 3
+	{
+		u8_search_begin(local_m04, 2, 30 * 32, referent, <<67, u8_search_word(789), u8_search_word(516), u8_search_word(135), 37, u8_search_word(0), 96, 61, 38, 36>>);
+		while u8_search_condition()
+		{
+			if local_m04.getQuality() = local_m08
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0576_slider_open(u8_local_address(local_m04_w01)) -> return;
+				local_m09 = 1;
+			}
+			u8_search_advance();
+		}
+		u8_search_end();
+		u8_search_begin(local_m04, 2, 30 * 32, referent, <<67, u8_search_word(792), u8_search_word(518), u8_search_word(136), 36>>);
+		while u8_search_condition()
+		{
+			if local_m04.getQuality() = local_m08
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0576_slider_close(u8_local_address(local_m04_w01)) -> return;
+			}
+			u8_search_advance();
+		}
+		u8_search_end();
+	}
+}
+

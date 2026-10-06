@@ -1,0 +1,20 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x058D
+// FLEX slot: 1423
+// Original offset: 0x0004311B
+// Naming evidence: E, exact object-1 linker name `BRIBOOK5`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BRIBOOK5.unk`.
+// u8label/u8goto remain invented where emitted.
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bribook5_read_well_have_ye_done_to_reach()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("Well have ye done to reach this far. Behind me lies the entrance way of the Slayer's chamber. But for the last time, be ye warned: Many are those who have tred this ground before ye. Many have come seeking the Slayer, and jealous are they of others who seek what they prize. Go ye now into the chamber, for theSlayer beckons. The Slayer, whose fine oaken body be so strong as to withstand the Titanic forces that would try to tame it. Ye have come seeking this treasure. Ye have now gotten what ye have sought. Be careful that it does not kill ye, for the Slayer will not travel with ye unless it deems ye worthy."), this);
+}
+

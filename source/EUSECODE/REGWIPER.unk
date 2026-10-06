@@ -1,0 +1,67 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04A9
+// FLEX slot: 1195
+// Original offset: 0x000E1053
+// Naming evidence: E, exact object-1 linker name `REGWIPER`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/REGWIPER.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass REGWIPER inherits Egg
+{
+	process regwiper_enter_fast_area_replace_region_items();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process REGWIPER::regwiper_enter_fast_area_replace_region_items()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:Item;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m04 = Egg_getEggXRange(this);
+	local_m06 = Egg_getEggYRange(this);
+	if talkedToDeadDudes = 0
+	{
+		return;
+	}
+	if local_m04 > local_m06
+	{
+		local_m02 = local_m04;
+	}
+	else
+	{
+		local_m02 = local_m06;
+	}
+	foreach local_m08 within local_m02 cells of referent {
+		if (not local_m08.isNpc()) and (local_m08.getType() != 73)
+		{
+			if (not (local_m08.getStatus() & 128)) and (local_m08.getFamily() != 3)
+			{
+				local_m08.destroy();
+			}
+		}
+	}
+	local_m0A = -127;
+	local_m0C = -127;
+	while local_m0C <= 512
+	{
+		while local_m0A <= 512
+		{
+			Item_create(urandom(4) + 12, 349, u8_local_address(local_m08_w01));
+			local_m08.pop(getX() + local_m0A, getY() + local_m0C, getZ());
+			local_m0A += 128;
+		}
+		local_m0A = -127;
+		local_m0C += 128;
+	}
+}
+

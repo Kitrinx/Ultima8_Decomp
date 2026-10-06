@@ -1,0 +1,1276 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0409
+// FLEX slot: 1035
+// Original offset: 0x0009FAAC
+// Naming evidence: E, exact object-1 linker name `KORICK`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/KORICK.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+npcclass KORICK inherits Npc
+{
+	process korick_look_bark_living_or_dead_identity();
+	process korick_avatar_stole_something_call_guards_for_theft(arg_04:U8Word);
+	process korick_enter_fast_area_start_location_schedule();
+	process korick_schedule_update_period_schedule_and_safe_teleport();
+	process korick_cast_call_guard_execution_when_attacked(arg_04:U8Word);
+	process korick_leave_fast_area_stop_process_and_restore_dead_position();
+	process korick_sell_armor();
+	process korick_sell_weapons();
+	process korick_run_shop_schedule();
+	process korick_play_random_shop_bark();
+	process korick_run_walk_schedule();
+	process korick_play_random_walk_bark();
+	process korick_run_home_schedule();
+	process korick_play_random_home_bark();
+	process korick_use_run_conversation();
+	process korick_forge_focus();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KORICK::korick_look_bark_living_or_dead_identity()
+{
+	if Npc_isDead(u8_stack_ref(9))
+	{
+		bark("dead Korick ");
+	}
+	else if korickMet
+	{
+		bark("Korick the Smith ");
+	}
+	else
+	{
+		bark("man ");
+	}
+}
+
+// Derived: routine 0x010B, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process KORICK::korick_avatar_stole_something_call_guards_for_theft(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	if Npc_isDead(u8_stack_ref(9))
+	{
+		return;
+	}
+	local_m02 = arg_04;
+	if ((local_m02.getType() = 531) or (local_m02.getType() = 539) or (local_m02.getType() = 541) or (local_m02.getType() = 542) or (local_m02.getType() = 540)) and (not guardsCalled)
+	{
+		resetRef(referent, PT_ACTIVITY);
+		resetRef(referent, PT_PATHFIND);
+		resetRef(referent, PT_ANIM);
+		resetRef(referent, PT_BARK);
+		bark("Stop! Thief! ");
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn callTheGuards(arg_04) -> return;
+	}
+}
+
+// Derived: routine 0x01E1, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KORICK::korick_enter_fast_area_start_location_schedule()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	if korickSchedule = 2
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0409_korick_run_walk_schedule(this) -> return;
+	}
+	else if korickSchedule = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0409_korick_run_shop_schedule(this) -> return;
+	}
+}
+
+// Derived: routine 0x0252, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KORICK::korick_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	if Npc_isDead(u8_stack_ref(9))
+	{
+		return;
+	}
+	if class_0581_getPeriod() < 3
+	{
+		local_m05_w02 = 12220;
+		local_m03 = 16572;
+		local_m01 = 48;
+		local_m07 = 1;
+	}
+	else
+	{
+		local_m05_w02 = 12031;
+		local_m03 = 7039;
+		local_m01 = 48;
+		local_m07 = 2;
+	}
+	if class_057C_canSafeTeleport(this, local_m05, 39)
+	{
+		korickSchedule = local_m07;
+		class_057C_safeTeleport(this, local_m05, 39);
+	}
+}
+
+// Derived: routine 0x02DC, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process KORICK::korick_cast_call_guard_execution_when_attacked(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = 10;
+	while (not Npc_getTarget(this)) and local_m02
+	{
+		wait(1);
+		local_m02--;
+	}
+	arg_04 = Npc_getTarget(this);
+	if arg_04 = 1
+	{
+		if not isDead()
+		{
+			if urandom(100) > 50
+			{
+				bark("Help me, Beren! ");
+			}
+			else
+			{
+				bark("Town Sorcerer! ");
+			}
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn callTheGuards(NULL_REF) -> return;
+		}
+	}
+}
+
+// Derived: routine 0x03AA, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KORICK::korick_leave_fast_area_stop_process_and_restore_dead_position()
+{
+	killProcess(referent, PT_ACTIVITY);
+	killProcess(referent, PT_PATHFIND);
+	killProcess(referent, PT_ANIM);
+	killProcess(referent, PT_BARK);
+	if Npc_isDead(u8_stack_ref(9))
+	{
+		teleport(urandom(10000), urandom(10000), 0, 0);
+		return;
+	}
+}
+
+// Derived: routine 0x0420, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process KORICK::korick_sell_armor()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String List;
+	local_m04:String;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	[[PT_DEFAULT, referent]];
+	bark("Outstanding! I think that you find my armor to be the finest made. I have leggings, helmets, arm guards, and shields. Which would you prefer? ");
+	local_m02 = <<"Leggings ", "Helmet ", "Arm guards ", "Shield ">>;
+	local_m04 = ask(local_m02);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "Leggings "
+		{
+			bark("Very good! My leggings sell for 12 obsidian coins per pair. I'm sure that you'll find that quite a bargain considering their unmatched quality. ");
+			local_m06 = 12;
+			local_m08 = 2;
+			local_m0A = 532;
+		}
+		case "Arm guards "
+		{
+			bark("Fine, my arm guards are but eleven coins. ");
+			local_m06 = 11;
+			local_m08 = 6;
+			local_m0A = 530;
+		}
+		case "Shield "
+		{
+			bark("So you are in need of a shield? Shields cost 12 Blacks. ");
+			local_m06 = 12;
+			local_m08 = 0;
+			local_m0A = 539;
+		}
+		case "Helmet "
+		{
+			bark("Well, today shall be a good day! Helmets cost 13 coins. ");
+			local_m06 = 13;
+			local_m08 = 0;
+			local_m0A = 531;
+		}
+		case "Nothing, thank you. "
+		{
+			bark("As you wish. ");
+			return;
+		}
+	}
+	local_m02 = <<"Here is the amount. ", "Never mind, thank you. ">>;
+	local_m04 = ask(local_m02);
+	if local_m04 = "Here is the amount. "
+	{
+		if class_0581_give(1, local_m0A, local_m08, 0, 1)
+		{
+			if class_0581_take(1, 143, 0, 0, local_m06)
+			{
+				bark("Thank you very much, my friend. ");
+			}
+			else
+			{
+				bark("Ahh, it seems that you do not have enough money. Please come back when you enough Obsidian. Remember, quality is worth a high price. ");
+				class_0581_take(1, local_m0A, local_m08, 0, 1);
+				return;
+			}
+		}
+		else
+		{
+			bark("Well, it seems that you are carrying too much. Do not worry, I will hold this for you until you can carry it. ");
+		}
+	}
+	else
+	{
+		bark("I understand. Thank you anyway. ");
+		return;
+	}
+}
+
+// Derived: routine 0x09BF, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process KORICK::korick_sell_weapons()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String List;
+	local_m04:U8Word;
+	local_m06:String;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Bytes2; // X: untouched.
+	[[PT_DEFAULT, referent]];
+	bark("Fine news! I am sure that you will appreciate the quality of my weapons. Would you be wanting a sabre, scimitar, mace, dagger, axe, or broadsword? ");
+	local_m02 = <<"Sabre ", "Scimitar ", "Mace ", "Dagger ", "Axe ", "Broadsword ">>;
+	local_m06 = ask(local_m02);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m06
+	{
+		case "Sabre "
+		{
+			bark("Very well, a sabre costs but 75 Obsidians. ");
+			local_m08 = 75;
+			local_m0A = 0;
+			local_m04 = 542;
+		}
+		case "Scimitar "
+		{
+			bark("A fine weapon. A scimiar will cost you 90 Blacks. ");
+			local_m08 = 90;
+			local_m0A = 0;
+			local_m04 = 541;
+		}
+		case "Mace "
+		{
+			bark("My, you must have some heavy work ahead of you. My maces are a mere 15 coins. ");
+			local_m08 = 15;
+			local_m0A = 0;
+			local_m04 = 417;
+		}
+		case "Dagger "
+		{
+			bark("Something to keep in your boot, eh? A dagger is  but 5 coins. ");
+			local_m08 = 5;
+			local_m0A = 0;
+			local_m04 = 418;
+		}
+		case "Axe "
+		{
+			bark("Ahh, I mighty weapon for a mighty fellow. One good axe costs 25 coins. ");
+			local_m08 = 25;
+			local_m0A = 0;
+			local_m04 = 419;
+		}
+		case "Broadsword "
+		{
+			bark("Very good. The broadsword is truly the most elegant and noble of weapons. My broadswords are but 125 Obsidians. ");
+			local_m08 = 125;
+			local_m0A = 0;
+			local_m04 = 420;
+		}
+		case "Nothing, thank you. "
+		{
+			bark("As you wish. ");
+			return;
+		}
+	}
+	local_m02 = <<"Here is the amount. ", "Never mind, thank you. ">>;
+	local_m06 = ask(local_m02);
+	if local_m06 = "Here is the amount. "
+	{
+		if class_0581_give(1, local_m04, local_m0A, 0, 1)
+		{
+			if class_0581_take(1, 143, 0, 0, local_m08)
+			{
+				bark("Thank you very much, my friend. ");
+			}
+			else
+			{
+				bark("Ahh, it seems that you do not have enough money. Please come back when you enough Obsidian. Remember, quality is worth a high price. ");
+				class_0581_take(1, local_m04, local_m0A, 0, 1);
+				return;
+			}
+		}
+		else
+		{
+			bark("Well, it seems that you are carrying too much. Do not worry, I will hold this for you until you can carry it. ");
+		}
+	}
+	else
+	{
+		bark("I understand. Thank you anyway. ");
+		return;
+	}
+}
+
+// Derived: routine 0x1051, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process KORICK::korick_run_shop_schedule()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach local_m02 where (type = TypePathMarker) within 10 cells of 9 {
+			local_m06 = local_m02.getFrame();
+		}
+	}
+	process
+	{
+		for local_m04 = local_m06 to 7
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = local_m04)) within 50 cells of 9 {
+				if pathfind(local_m02, 10)
+				{
+					if local_m04 = 0
+					{
+						turnToFace(0, 0, 10);
+						realDoAnim(55, getDir());
+						korick_play_random_shop_bark();
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						korick_play_random_shop_bark();
+					}
+				}
+				else
+				{
+					wait(100);
+					realDoAnim(AS_FIDGET, getDir());
+				}
+			}
+		}
+		local_m06 = 0;
+	}
+}
+
+// Derived: routine 0x119A, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process KORICK::korick_play_random_shop_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	[[PT_ACTIVITY, referent]];
+	local_m02 = getDistance(Avatar:Referent, 9);
+	if local_m02 < 200
+	{
+		local_m02 = urandom(8);
+		if local_m02 = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("What can I get for you? ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m02 = 2
+		{
+			bark("There is nothing like a good day's work. ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m02 = 3
+		{
+			bark("I need to make a few more daggers. ");
+			wait(60);
+		}
+		if local_m02 = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Fine quality items, eh? ");
+		}
+	}
+	else
+	{
+		local_m02 = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if local_m02 = 1
+		{
+			bark("Hard work is good for the soul. ");
+		}
+		else
+		{
+			if local_m02 = 2
+			{
+				bark("Hmmm, I think that I got too much carbon in that last sword. ");
+				realDoAnim(AS_FIDGET, getDir());
+				wait(60);
+			}
+			if local_m02 = 3
+			{
+				bark("It certainly gets hot in here. ");
+			}
+			if local_m02 = 4
+			{
+				bark("Perhaps I will take a few days off and go to the country. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(60);
+			}
+			if local_m02 = 5
+			{
+				bark("Perhaps I should try my hand at jewelry making. ");
+				realDoAnim(AS_FIDGET, getDir());
+				bark("No, that work is far too delicate for me. ");
+			}
+			if local_m02 = 6
+			{
+				turnToFace(urandom(3), 0, 10);
+				bark("Another day at the shop. ");
+			}
+			if local_m02 = 7
+			{
+				bark("Oh how I love the glow of hot metal. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(100);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x16D8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process KORICK::korick_run_walk_schedule()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach local_m02 where ((type = TypePathMarker) and (quality = 4)) within 10 cells of 9 {
+			local_m06 = local_m02.getFrame();
+		}
+	}
+	process
+	{
+		for local_m04 = local_m06 to 14
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = local_m04)) within 50 cells of 9 {
+				if pathfind(local_m02, 10)
+				{
+					if not somebodyTalking
+					{
+						korick_play_random_walk_bark();
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+						realDoAnim(AS_FIDGET, getDir());
+					}
+				}
+				else
+				{
+					wait(500);
+					realDoAnim(AS_FIDGET, getDir());
+				}
+			}
+		}
+		local_m06 = 0;
+	}
+}
+
+// Derived: routine 0x181B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process KORICK::korick_play_random_walk_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	[[PT_ACTIVITY, referent]];
+	local_m02 = getDistance(Avatar:Referent, 9);
+	if local_m02 < 200
+	{
+		local_m02 = urandom(8);
+		if local_m02 = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Oh, hello. ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m02 = 2
+		{
+			bark("At last, some peace and quiet. ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m02 = 3
+		{
+			bark("How I value my time alone. ");
+			wait(60);
+		}
+		if local_m02 = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Are you following me? ");
+		}
+	}
+	else
+	{
+		local_m02 = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if local_m02 = 1
+		{
+			bark("Maybe I will stroll over to the valley. ");
+		}
+		else
+		{
+			if local_m02 = 2
+			{
+				bark("How good it is to be away from that noisy shop. ");
+				realDoAnim(AS_FIDGET, getDir());
+				wait(60);
+			}
+			if local_m02 = 3
+			{
+				bark("Ahh, fresh air. ");
+			}
+			if local_m02 = 4
+			{
+				bark("I so love to walk at this time of day. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(60);
+			}
+			if local_m02 = 5
+			{
+				bark("What a lovely day for a stroll. ");
+				realDoAnim(AS_FIDGET, getDir());
+				bark("Of course, -every- day is a lovely day for a stroll. ");
+			}
+		}
+	}
+}
+
+// Derived: routine 0x1C3F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process KORICK::korick_run_home_schedule()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach local_m02 where ((type = TypePathMarker) and (quality = 4)) within 10 cells of 9 {
+			local_m06 = local_m02.getFrame();
+		}
+	}
+	process
+	{
+		for local_m04 = local_m06 to 8
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = local_m04)) within 50 cells of 9 {
+				if pathfind(local_m02, 10)
+				{
+					if not somebodyTalking
+					{
+						korick_play_random_home_bark();
+					}
+					else
+					{
+						realDoAnim(AS_FIDGET, getDir());
+						wait(30);
+						realDoAnim(AS_FIDGET, getDir());
+					}
+				}
+				else
+				{
+					wait(500);
+					realDoAnim(AS_FIDGET, getDir());
+				}
+			}
+		}
+		local_m06 = 0;
+	}
+}
+
+// Derived: routine 0x1D82, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process KORICK::korick_play_random_home_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	[[PT_ACTIVITY, referent]];
+	local_m02 = getDistance(Avatar:Referent, 9);
+	if local_m02 < 200
+	{
+		local_m02 = urandom(8);
+		if local_m02 = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Why are you in my bedroom? ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m02 = 2
+		{
+			bark("I should probably eat something before I turn in. ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(120);
+		}
+		if local_m02 = 3
+		{
+			bark("Perhaps I should get a wife. ");
+			wait(60);
+		}
+		if local_m02 = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_FIDGET, getDir());
+			bark("You are in my bedroom! ");
+		}
+	}
+	else
+	{
+		local_m02 = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if local_m02 = 1
+		{
+			bark("I need to build a new room onto this house. ");
+		}
+		else
+		{
+			if local_m02 = 2
+			{
+				bark("Perhaps I should get an apprentice. ");
+				realDoAnim(AS_FIDGET, getDir());
+				wait(60);
+			}
+			if local_m02 = 3
+			{
+				bark("This house is too small. ");
+			}
+			if local_m02 = 4
+			{
+				bark("I certainly did enjoy that walk. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(60);
+			}
+			if local_m02 = 5
+			{
+				bark("I am rather thirsty. ");
+				realDoAnim(AS_FIDGET, getDir());
+				bark("Yet, I would enjoy some company now and again. ");
+			}
+			if local_m02 = 6
+			{
+				bark("I had a long day. ");
+			}
+			if local_m02 = 7
+			{
+				bark("I am exhausted. ");
+				realDoAnim(AS_EXIT_CAST, getDir());
+				wait(100);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x2248, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process KORICK::korick_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String List;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Excuse me... "), u8_stack_ref(1)) -> return;
+	killProcess(referent, PT_ACTIVITY);
+	wait(30);
+	enterConvo();
+	killProcess(1, PT_BARK);
+	if korickRealPissed
+	{
+		bark("I do not wish to speak to you, my lord. I have many things that I must do and these things do not include you. ");
+		exitConvo();
+		return;
+	}
+	if korickPissed
+	{
+		bark("Now look, you, if you wish to come into -my- place, yau had better be more polite. Do you understand? ");
+		local_m08 = <<"Yes, I'm sorry. ", "Shove off, you windbag! ">>;
+	}
+	else
+	{
+		bark("Fair greetin', mate. ");
+	}
+	if korickPissed
+	{
+		local_m08 = <<"Yes, I'm sorry. ", "Shove off, you windbag! ">>;
+	}
+	else if korickMet
+	{
+		local_m08 = <<"How are you, Korick? ">>;
+		local_m08 ^= <<"I'd like to buy something. ">>;
+	}
+	else
+	{
+		local_m08 = <<"Greetings to you. ">>;
+	}
+	if passedCenteredTest
+	{
+		local_m08 += <<"Make me a focus. ">>;
+	}
+	while local_m04 != "Farewell "
+	{
+		local_m08 -= <<"Farewell. ">>;
+		local_m08 += <<"Farewell. ">>;
+		local_m04 = ask(local_m08);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "Greetings to you. "
+			{
+				bark("Well, a new face in town. I am Korick, the smith here in Tenebrae. Have you come to buy something? ");
+				local_m08 += <<"A new face? ", "I'd like to buy something. ">>;
+				korickMet = 1;
+				local_m08 -= <<"Greetings to you. ">>;
+			}
+			case "I'd like to buy something. "
+			{
+				if korickSchedule = 2
+				{
+					bark("I will be glad to sell you anything in my shop, but only when I am in it. Please stop by when I am there and I will be more than happy to help you. ");
+					local_m08 -= <<"I'd like to buy something. ">>;
+				}
+				else
+				{
+					bark("Outstanding! Would you like to buy armor or weapons? ");
+					local_m08 = <<"Armor. ", "Weapons. ">>;
+				}
+			}
+			case "Armor. "
+			{
+				korick_sell_armor();
+			}
+			case "Weapons. "
+			{
+				korick_sell_weapons();
+			}
+			case "Yes, I'm sorry. "
+			{
+				bark("Well, all is forgiven. I did not wish to be so gruff, but I will not tolerate rude behavior, even if it is unintended. So, what did you want to talk about? ");
+				local_m08 = <<"I'd like to buy something. ", "Where I'm from. ">>;
+				korickPissed = 0;
+			}
+			case "Where I'm from. "
+			{
+				bark("Oh aye, that is what we were talking about. Look, if you do not wish for me to know your whereabouts, just tell me so. You do not have to tell me some outlandish story. ");
+				local_m08 += <<"I'd rather not say. ", "Somewhere far away. ">>;
+				local_m08 -= <<"Where I'm from. ">>;
+			}
+			case "I'd rather not say. "
+			{
+				bark("That is fine. Perhaps you will trust me after we have come to know each other better. It is perhaps a fault of mine that I am quite trusting of too many people. ");
+				local_m08 += <<"Why is trusting a fault? ">>;
+				local_m08 -= <<"I'd rather not say. ">>;
+			}
+			case "Why is trusting a fault? "
+			{
+				bark("Come now, we do not live in a perfect world. For all that I know you may be a dangerous person. But, I go on my instincts. And by nature I am a trusting fellow. ");
+				local_m08 -= <<"Why is trusting a fault? ">>;
+			}
+			case "A new face? "
+			{
+				bark("You are certainly not from Tenebrae. Are from the country? ");
+				local_m08 += <<"None of your business. ", "Not from Tenebrae. ", "Umm, the country. ">>;
+				local_m08 -= <<"A new face? ">>;
+			}
+			case "Not from Tenebrae. "
+			{
+				bark("I may not be wealthy and important but I do believe that I know everyone in town and everything about this town. ");
+				local_m08 = <<"You're not wealthy? ", "You know everyone? ", "You know everything about Tenebrae? ">>;
+				local_m08 -= <<"Not from Tenebrae. ">>;
+			}
+			case "You know everything about Tenebrae? "
+			{
+				bark("Oh yes. Over in on the East side, that's where all of the rich folk live. The library is also there. Of course Lady Mordea's palace occupies the central part of the city.  And here on the West side is where we common folk live. It has never been nice here but lately things have gotten worse. ");
+				local_m08 += <<"How have things gotten worse? ">>;
+				local_m08 -= <<"You know everything about Tenebrae? ">>;
+			}
+			case "How have things gotten worse? "
+			{
+				bark("Things have just deteriorated. There was a fire in the Northern part of the West side. The folks that lived there lost everything. Now they just wander the streets asking for handouts. The old man that lived there died in the fire. Folks say that he haunts the place now. ");
+				local_m08 -= <<"How have things gotten worse? ">>;
+			}
+			case "How are you, Korick? "
+			{
+				bark("I am well and fine, my friend. I have actually accomplished quite a bit today. I must say that I feel truly blessed to have talented hands. ");
+				local_m08 += <<"What have you done? ", "You've got talented hands? ">>;
+				local_m08 -= <<"How are you, Korick? ">>;
+			}
+			case "What have you done? "
+			{
+				bark("Oh nothing special. I have just had a productive day so far. I truly hate it when I have not had a productive day. If I do not accomplish something by the time I am ready to sleep, I feel that I have wasted a part of my life. We all must contribute, you know. ");
+				local_m08 += <<"I see that you like to work. ", "We must contribute? ">>;
+				local_m08 -= <<"What have you done? ">>;
+			}
+			case "You've got talented hands? "
+			{
+				bark("I know that it sounds immodest to say such things but it -is- the truth. Besides, it was not I that created my talent. The creators made me as I am, skills and all. ");
+				local_m08 += <<"Creators? What creators? ", "Your talent with metal? ">>;
+				local_m08 -= <<"You've got talented hands? ">>;
+			}
+			case "Creators? What creators? "
+			{
+				if devonInRule
+				{
+					bark("Please, not so loud. Although I feel that I can freely discuss my beliefs now that Mordea is gone, I certainly do not want a Titan to hear me. ");
+					local_m08 += <<"What are your beliefs? ">>;
+				}
+				else
+				{
+					bark("Creators? I did not mention creators! You must have been mistaken my friend. I-I would never speak of such nonsense. Why, The Lady forbids such talk. ");
+				}
+				local_m08 -= <<"Creators? What creators? ">>;
+			}
+			case "What are your beliefs? "
+			{
+				bark("I believe in the Ancient Ones, the Gods of Emotion. The Ancient Ones have been here far longer than these Titans who currently exist. And they will come again. ");
+				local_m08 += <<"You believe in gods of emotion? ">>;
+				local_m08 -= <<"What are you beliefs? ">>;
+			}
+			case "You believe in gods of emotion? "
+			{
+				bark("Yes, everyone tells me that I am crazy, but they will see. But please I do not wish to discuss this any further. As I said, I would not wish for a Titan to hear me speak of such things. ");
+				local_m08 -= <<"You believe in gods of emotion? ">>;
+			}
+			case "Your talent with metal? "
+			{
+				bark("Yes, I have always had a great talent in shaping metal. ");
+				local_m08 -= <<"Your talent with metal? ">>;
+			}
+			case "I see that you like to work. "
+			{
+				bark("Oh yes, my father taught me that you must work hard in order to be respected. No one respects a lazy person who does not carry their load. ");
+				local_m08 -= <<"I see that you like to work. ">>;
+			}
+			case "We must contribute? "
+			{
+				bark("Yes, we must all do our part in society. If we do not all pull our load, then others must take up the slack. When that happens, then unhappiness breeds and society will break down. Hard work keeps all of this from happening. ");
+				local_m08 -= <<"We must contribute? ">>;
+			}
+			case "You're not wealthy? "
+			{
+				bark("That is very true. One will never get rich as a blacksmith but I've never wanted riches. ");
+				local_m08 -= <<"You're not wealthy? ">>;
+				local_m08 += <<"You never wanted riches? ">>;
+			}
+			case "You never wanted riches? "
+			{
+				bark("I am simple man. I have enough to make my way in the world. My greatest satisfaction is a job well done and that is something that money can not buy. ");
+				local_m08 += <<"You have enough, eh? ", "A job well done. ">>;
+				local_m08 -= <<"You never wanted riches? ">>;
+			}
+			case "You have enough, eh? "
+			{
+				bark("Absolutely! After a good day's work, I have a good meal, a tall tankard of ale and some good conversation. After that, I have a comfortable bed awaiting me. What more could a man want? ");
+				local_m08 -= <<"You have enough, eh? ">>;
+			}
+			case "A job well done. "
+			{
+				bark("For a true craftsman, his greatest joy is perfecting his craft. Men who take pride in what they make are becoming a dying breed. If you ask me, the world is changing for the worst. ");
+				local_m08 += <<"You perfect your craft? ", "How is the world changing? ">>;
+				local_m08 -= <<"A job well done. ">>;
+			}
+			case "You perfect your craft? "
+			{
+				bark("Well, one can never truly -perfect- one's craft. The best that a craftsman can hope to do is be a little better each time that he creates something. ");
+				local_m08 -= <<"You perfect your craft? ">>;
+			}
+			case "How is the world changing? "
+			{
+				bark("It is true. People used to be very friendly to one another. Can you believe that not long ago I saw a cutpurse attack a lady? ");
+				local_m08 += <<"What's a cutpurse? ", "People used to be friendly. ">>;
+				local_m08 -= <<"How is the world changing? ">>;
+			}
+			case "What's a cutpurse? "
+			{
+				bark("Oh, sorry. You really aren't from here, are you. A cutpurse is someone who steals from people. Anyway, this dishonorable wretch actually attacked a lady! It was a good thing that I was there. ");
+				local_m08 += <<"He attacked a lady? ", "A good thing you were there? ">>;
+				local_m08 -= <<"What's a cutpurse? ">>;
+			}
+			case "He attacked a lady? "
+			{
+				bark("Yes! A defenseless lady! Can you believe that? ");
+				local_m08 -= <<"He attacked a lady? ">>;
+			}
+			case "A good thing you were there? "
+			{
+				bark("Had I not been there, the thief would have gotten away with his crime. Fortunatly, I was there and thrashed him. ");
+				local_m08 += <<"You thrashed him? ">>;
+				local_m08 -= <<"A good thing you were there? ">>;
+			}
+			case "You thrashed him? "
+			{
+				bark("I most certainly did. Beren, the town Sorcerer was nowhere to be found, so I took care of the man myself. I do believe that the wretch is still in jail too. Her Ladyship does not look well upon violence against ladies. ");
+				local_m08 += <<"In jail, huh? ", "Her Ladyship... do you mean Mordea? ">>;
+				local_m08 -= <<"You thrashed him? ">>;
+			}
+			case "In jail, huh? "
+			{
+				bark("Yes sir. I don't mean to brag but I am rather proud of myself for capturing such a man. ");
+				local_m08 -= <<"In jail, huh? ">>;
+			}
+			case "Her Ladyship... do you mean Mordea? "
+			{
+				bark("Yes. It is odd being ruled by a lady but Mordea is not like most women. She is very strong, like a man, and does rule well. ");
+				local_m08 -= <<"Her Ladyship... do you mean Mordea? ">>;
+			}
+			case "Umm, the country. "
+			{
+				bark("The countryside can be so beautiful, particularly the valley. I would like to live there, but I must live in town. ");
+				local_m08 += <<"Why must you live in town? ">>;
+				local_m08 -= <<"Umm, the country. ">>;
+			}
+			case "Why must you live in town? "
+			{
+				bark("Well, I could never ply my trade in the country now, could I? There's not enough people in the country in need of a smith to keep me in business. So, where are you from? ");
+				local_m08 = <<"The Valley ", "Martin's Meadow ", "Somewhere far away. ">>;
+			}
+			case "The Valley "
+			{
+				bark("Strange, I've been there many times and I've never seen you. ");
+				local_m08 = <<"Many times ", "You've never seen me? ">>;
+			}
+			case "Somewhere far away. "
+			{
+				bark("Well, if you don't wish to tell me, I understand. Every man has got to have his secrets. ");
+				local_m08 = <<"Not from Tenebrae. ", "I'd like to buy something. ">>;
+			}
+			case "Many times "
+			{
+				bark("Yes, I have been there many, many times and the only people who have lived there for a very long time have been a herdsman and his wife. Frankly, I don't think that you're tellin' me the truth and I don't like that. I think that you'd better just leave here. ");
+				local_m08 -= <<"Many times ">>;
+				korickPissed = 1;
+				exitConvo();
+				return;
+			}
+			case "You've never seen me? "
+			{
+				bark("No, never. I don't think that you're tellin' me the truth and I don't take to be lied to. I think that you'd just better leave my shop. ");
+				local_m08 -= <<"You've never seen me? ">>;
+				korickPissed = 1;
+				exitConvo();
+				return;
+			}
+			case "Martin's Meadow "
+			{
+				bark("Martin's meadow? I've never heard of such a place. I think that you are lying to me and I don't have time to put up with that. I think that you ad better get goin'. ");
+				local_m08 -= <<"Martin's Meadow ">>;
+				korickPissed = 1;
+				exitConvo();
+				return;
+			}
+			case "None of your business. "
+			{
+				bark("Look, I do not have to put up with rude people in my shop. I am slow to anger but don't test me! ");
+				local_m08 += <<"You're slow to anger? ">>;
+				local_m08 -= <<"None of your business. ">>;
+			}
+			case "You're slow to anger? "
+			{
+				bark("I try to be understanding of others. Of course, when I lose my patience, I have ample means to vent my frustration. ");
+				local_m08 += <<"Understanding of others? ">>;
+				local_m08 -= <<"Your slow to anger? ">>;
+			}
+			case "Understanding of others? "
+			{
+				bark("I do try to be understanding of others but I will not tolerate someone who is rude to me in my own shop. ");
+				local_m08 -= <<"Understanding of others? ">>;
+			}
+			case "Farewell. "
+			{
+				bark("Goodbye, my friend. ");
+				local_m08 -= <<"Farewell. ">>;
+				exitConvo();
+				return;
+			}
+			case "You know everyone? "
+			{
+				bark("Indeed I do. Everyone needs a smith now and then, you know. Those who are too high born to come into my shop personally are well known by everyone in town. Everyone else comes in here sooner or later. ");
+				local_m08 -= <<"You know everyone? ">>;
+			}
+			case "I have need of your shop. "
+			{
+				bark("Do you? What sort of a commission do you have for me? ");
+				local_m08 += <<"Umm, commission? ">>;
+				local_m08 -= <<"I have need of your shop. ">>;
+			}
+			case "Umm, commission? "
+			{
+				bark("Come now, friend, I don't work for free. If you want me to make something for you, You'll have to pay me. ");
+				local_m08 += <<"No, I want to make something in your shop. ", "Sorry, forget about it. ">>;
+				local_m08 -= <<"Umm, commission? ">>;
+			}
+			case "Sorry, forget about it. "
+			{
+				bark("Very well, my strange friend, whatever you wish. If you change your mind please do come back. Now, if you will pardon me, I have work to do. ");
+				local_m08 -= <<"Sorry, forget about it. ">>;
+				exitConvo();
+				return;
+			}
+			case "No, I want to make something in your shop. "
+			{
+				bark("My friend, what I do here may look like menial labor to some but what I do do is a craft. Shaping metals is more than simply banging away on an anvil. What I do takes a great deal of skill and practice. You can not simply walk in here and and make something. You must have skill and practice. ");
+				local_m08 += <<"I -do- have experience in smithing. ", "Look, this is very damned important! ">>;
+				local_m08 -= <<"No, I want to make something in your shop. ">>;
+			}
+			case "Look, this is very damned important! "
+			{
+				Npc_doAnim(0, 10000, getDir(), 5, this);
+				bark("No, you look! This is my shop and I will not be spoken to in such a manner by -anyone-! Do you understand me? ");
+				local_m08 = <<"I'm sorry, Korick. I didn't mean to be so rude. ", "Out of my way, peasant. I'm busy! ">>;
+				Npc_doAnim(0, 10000, getDir(), 6, this);
+			}
+			case "Out of my way, peasant. I'm busy! "
+			{
+				bark("Not in -my- shop, you're not! ");
+				Npc_doAnim(0, 10000, getDir(), 5, this);
+				local_m08 -= <<"Out of my way, peasant. I'm busy! ">>;
+				Npc_doAnim(0, 10000, getDir(), 6, this);
+			}
+			case "I'm sorry, Korick. I didn't mean to be so rude. "
+			{
+				bark("Your apology\x09is accepted, my friend. There seems to be a great deal of pressure upon you. Would you like to talk about it? ");
+				local_m08 += <<"Thanks, but I really need to make these items. ", "Yes, I would. ">>;
+				local_m08 -= <<"I'm sorry, Korick. I didn't mean to be so rude. ">>;
+			}
+			case "Yes, I would. "
+			{
+				bark("Good! Tell me what's wrong. ");
+				local_m08 += <<"I'm trying to save my world from being destroyed by an evil being. ">>;
+				local_m08 -= <<"Yes, I would. ">>;
+			}
+			case "I'm trying to save my world from being destroyed by an evil being. "
+			{
+				bark("I see. Look, whatever is bothering you is causing you more trouble than I can help you with. I suggest that you seek the Theurgists. I believe that they may be able to help you with your problems. Now if you will excuse me, I am busy. ");
+				local_m08 -= <<"I'm trying to save my world from being destroyed by an evil being. ">>;
+			}
+			case "Thanks, but I really need to make these items. "
+			{
+				bark("Well, I am not accustomed to letting people use my shop. Have you ever forged metal before? ");
+				local_m08 += <<"Yes, I once forged a very mighty sword. ">>;
+				local_m08 -= <<"Thanks, but I really need to make these items. ">>;
+			}
+			case "Yes, I once forged a very mighty sword. "
+			{
+				bark("Even so, you could not be as practiced as I am. This is my living, you know. How about this, what do you say that we make these things together? Would you like to do that? ");
+				local_m08 = <<"Yes, that would be fine. ", "No, thank you. ">>;
+			}
+			case "No, thank you. "
+			{
+				bark("I see. It would seem that no compromise, no matter how generous will suit you. You may not use my shop. I am busy. Farewell. ");
+				local_m08 -= <<"No, thank you. ">>;
+				exitConvo();
+				return;
+			}
+			case "People used to be friendly. "
+			{
+				bark("Oh, aye. Time was when a person had no fears from no one. Now days, folks got to be careful. I suppose that's all them executions've been about. ");
+				local_m08 += <<"Executions? ">>;
+				local_m08 -= <<"People used to be friendly. ">>;
+			}
+			case "Shove off, you windbag! "
+			{
+				bark("Right, that is it! I will not suffer your presence for another moment! Away with you! ");
+				Npc_doAnim(0, 10000, getDir(), 5, this);
+				local_m08 -= <<"Shove off, you windbag! ">>;
+				korickRealPissed = 1;
+				exitConvo();
+				return;
+			}
+			case "Executions? "
+			{
+				bark("There's been quite a few of 'em of late. I suppose that The Lady has gotten plenty tired of scoundrels making life hard for the rest of us and is tryin' to put a stop to it. ");
+				local_m08 -= <<"Executions? ">>;
+			}
+			case "Make me a focus. "
+			{
+				if korickSchedule = 2
+				{
+					bark("I would be glad to. Come by my shop between bloodwatch and daytide and I will make you one. ");
+					local_m08 -= <<"Make me a focus. ">>;
+				}
+				else
+				{
+					korick_forge_focus();
+				}
+			}
+		}
+	}
+	exitConvo();
+}
+
+// Derived: routine 0x6662, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process KORICK::korick_forge_focus()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:String;
+	local_m06:String List;
+	local_m08:U8Bytes2; // X: untouched.
+	[[PT_ACTIVITY, referent]];
+	bark("Do you have a chunk of silver ore? I require one to forge the focus. ");
+	local_m02 = class_0581_askYesNo(0x00000000);
+	if local_m02 = 0
+	{
+		Npc_doAnim(0, 10000, getDir(), 5, this);
+		bark("What! How do you expect me to forge you a silver focus if you don't bring me silver ore! ");
+		Npc_doAnim(0, 10000, getDir(), 6, this);
+		return;
+	}
+	u8goto label_6B87 if not (class_0581_take(1, 586, 0, 0, 1));
+	bark("Good, you have a piece of silver ore. ");
+	bark("Which focus do you require? ");
+	local_m06 = <<"sextant ", "pointing hand ", "open hand ", "bracer ", "chain ", "fist ", "open eye ", "closed eye ", "none ">>;
+	while local_m04 != "none "
+	{
+		local_m04 = ask(local_m06);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "none "
+			{
+				bark("If you don't want a focus, don't ask me to make one! ");
+				class_0581_give(1, 586, 0, 0, 1);
+				return;
+			}
+			case "sextant "
+			{
+				local_m02 = 1;
+				local_m04 = "none ";
+			}
+			case "pointing hand "
+			{
+				local_m02 = 2;
+				local_m04 = "none ";
+			}
+			case "open hand "
+			{
+				local_m02 = 4;
+				local_m04 = "none ";
+			}
+			case "bracer "
+			{
+				local_m02 = 3;
+				local_m04 = "none ";
+			}
+			case "chain "
+			{
+				local_m02 = 7;
+				local_m04 = "none ";
+			}
+			case "fist "
+			{
+				local_m02 = 8;
+				local_m04 = "none ";
+			}
+			case "open eye "
+			{
+				local_m02 = 17;
+				local_m04 = "none ";
+			}
+			case "closed eye "
+			{
+				local_m02 = 5;
+				local_m04 = "none ";
+			}
+		}
+	}
+	if local_m02
+	{
+		turnToFace(0, 0, 10);
+		realDoAnim(55, 0);
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		bark("There, your focus is finished. Mighty fine craftsmanship, no? ");
+		class_0581_give(1, 396, local_m02 - 1, 0, 1);
+	}
+	else
+	{
+		bark("If you don't want a focus, don't ask me to make one! ");
+		class_0581_give(1, 586, 0, 0, 1);
+		return;
+	}
+	return;
+	u8label label_6B87:
+	bark("What! You don't have the ore! I can't make you a focus unless you supply me with the proper materials! ");
+	return;
+}
+

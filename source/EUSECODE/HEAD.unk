@@ -1,0 +1,41 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x016E
+// FLEX slot: 368
+// Original offset: 0x00092DF3
+// Naming evidence: E, exact object-1 linker name `HEAD`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/HEAD.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass HEAD inherits Item
+{
+	process head_use_forward_to_bodypart_hurl_severed_body_part();
+	process head_hit_restart_body_part_hit_animation();
+}
+
+// Derived: routine 0x0080, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process HEAD::head_use_forward_to_bodypart_hurl_severed_body_part()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0594_bodypart_hurl_severed_body_part(0x00000000, referent) -> return;
+}
+
+// Derived: routine 0x00A1, event mask 0x00000020.
+// R: `hit` identifies event 05; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process HEAD::head_hit_restart_body_part_hit_animation()
+{
+	killProcess(referent, PT_FX);
+	if not Kernel_getNumProcesses(522, referent)
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0594_bodypart_animate_body_part_hit(0x00000000, referent) -> return;
+	}
+}
+

@@ -1,0 +1,1045 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x057C
+// FLEX slot: 1406
+// Original offset: 0x000B3224
+// Naming evidence: E, exact object-1 linker name `METHOD`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/METHOD.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+uses "flags";
+uses "snddefs";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine Item::receiveHit(sender:Referent, dir:Number, damage:Number)
+{
+	receiveHit(sender, dir, damage, 1);
+}
+
+// Derived: routine 0x0094, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+unkroutine Item::getDirToCoords(destx:Coord, desty:Coord, truncate:Boolean):Dir
+{
+	return getDirToCoords(destx, desty);
+}
+
+// Derived: routine 0x00A9, event mask 0x00000000.
+// O: recovered callable name.
+// X: BP-bound neutral argument storage views.
+// O: external source-declaration metadata proves this callable kind.
+process Item::ask(arg_04:String List, arg_06:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	spanker:String List;
+	key:String;
+	count:Number;
+	[[PT_DEFAULT, referent]];
+	spanker = arg_04;
+	key = "";
+	count = 0;
+	while key = ""
+	{
+		key = ask(spanker);
+		if count = arg_06
+		{
+			return ((key) : DWord);
+		}
+		else
+		{
+			count++;
+		}
+	}
+	return ((key) : DWord);
+}
+
+// Derived: routine 0x0113, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine Item::toggleStatus(newStatus:ItemStatus)
+{
+	if getStatus() & newStatus
+	{
+		Item_andStatus(~newStatus, this);
+	}
+	else
+	{
+		orStatus(newStatus);
+	}
+}
+
+// Derived: routine 0x013E, event mask 0x00000000.
+// O: recovered callable name.
+// X: BP-bound neutral argument storage views.
+// O: external source-declaration metadata proves this callable kind.
+process Item::legal_moveItemTo(arg_04:U8Word, arg_06:U8Word, arg_08:U8Byte, arg_0A:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	currentP:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05:U8Word;
+	local_m05_w01:U8Bytes1;
+	x:Coord;
+	y:Coord;
+	z:Alti;
+	w:Coord;
+	h:Coord;
+	counter:Number;
+	minor:Number;
+	r:Number;
+	q:Number;
+	oabs:Number;
+	v:Number;
+	ovel:Number;
+	c:Number;
+	axis:Number;
+	ztarg:Number;
+	zcur:Number;
+	dif:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		x = getX();
+		y = getY();
+		z = getZ();
+		w = (arg_04 - x) + 1;
+		h = (arg_06 - y) + 1;
+		counter = 0;
+		minor = 1;
+		ovel = arg_0A;
+		c = 0;
+		axis = 1;
+		if class_0581_abs(w) > class_0581_abs(h)
+		{
+			axis = 0;
+		}
+		if axis = 0
+		{
+			q = class_0581_abs((h / w) * w);
+			r = class_0581_abs(h modulo w);
+			if w < 0
+			{
+				ovel = -1 * arg_0A;
+			}
+			if h < 0
+			{
+				minor = -1;
+			}
+			oabs = class_0581_abs(w);
+		}
+		else
+		{
+			q = class_0581_abs((w / h) * h);
+			r = class_0581_abs(w modulo h);
+			if h < 0
+			{
+				ovel = -1 * arg_0A;
+			}
+			if w < 0
+			{
+				minor = -1;
+			}
+			oabs = class_0581_abs(h);
+		}
+	}
+	process
+	{
+		zcur = z & 255;
+		ztarg = arg_08 & 255;
+		if zcur != ztarg
+		{
+			dif = (class_0581_abs(ztarg - zcur) / 20) + 1;
+			if dif = 0
+			{
+				dif = 1;
+			}
+			if zcur < ztarg
+			{
+				z += dif;
+			}
+			else
+			{
+				zcur -= dif;
+				z = zcur & 255;
+			}
+		}
+		if c >= oabs
+		{
+			if zcur > (ztarg - 2)
+			{
+				if zcur < (ztarg + 2)
+				{
+					return ((1) : DWord);
+				}
+			}
+			local_m05 = x;
+			local_m03 = y;
+			local_m01 = z;
+			if not legal_move(u8_local_address(local_m05_w01), 0, 0)
+			{
+				return ((0) : DWord);
+			}
+			continue; // X: reconstructed process-phase latch transfer.
+		}
+		c += arg_0A;
+		if axis = 0
+		{
+			local_m05 = x;
+			local_m03 = y;
+			local_m01 = z;
+			if not legal_move(u8_local_address(local_m05_w01), 0, 0)
+			{
+				return ((0) : DWord);
+			}
+			x += ovel;
+			for v = 1 to arg_0A
+			{
+				counter += r + q;
+				if counter >= oabs
+				{
+					counter -= oabs;
+					y += minor;
+				}
+			}
+			continue; // X: reconstructed process-phase latch transfer.
+		}
+		local_m05 = x;
+		local_m03 = y;
+		local_m01 = z;
+		if not legal_move(u8_local_address(local_m05_w01), 0, 0)
+		{
+			return ((0) : DWord);
+		}
+		y += ovel;
+		for v = 1 to arg_0A
+		{
+			counter += r + q;
+			if counter >= oabs
+			{
+				counter -= oabs;
+				x += minor;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x03CD, event mask 0x00000000.
+// O: recovered callable name.
+// X: BP-bound neutral argument storage views.
+// O: external source-declaration metadata proves this callable kind.
+process Item::moveItemTo(arg_04:U8Word, arg_06:U8Word, arg_08:U8Byte, arg_0A:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	x:Coord;
+	y:Coord;
+	z:Alti;
+	w:Coord;
+	h:Coord;
+	counter:Number;
+	minor:Number;
+	r:Number;
+	q:Number;
+	oabs:Number;
+	v:Number;
+	ovel:Number;
+	c:Number;
+	axis:Number;
+	ztarg:Number;
+	zcur:Number;
+	dif:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		x = getX();
+		y = getY();
+		z = getZ();
+		w = (arg_04 - x) + 1;
+		h = (arg_06 - y) + 1;
+		counter = 0;
+		minor = 1;
+		ovel = arg_0A;
+		c = 0;
+		axis = 1;
+		if class_0581_abs(w) > class_0581_abs(h)
+		{
+			axis = 0;
+		}
+		if axis = 0
+		{
+			q = class_0581_abs((h / w) * w);
+			r = class_0581_abs(h modulo w);
+			if w < 0
+			{
+				ovel = -1 * arg_0A;
+			}
+			if h < 0
+			{
+				minor = -1;
+			}
+			oabs = class_0581_abs(w);
+		}
+		else
+		{
+			q = class_0581_abs((w / h) * h);
+			r = class_0581_abs(w modulo h);
+			if h < 0
+			{
+				ovel = -1 * arg_0A;
+			}
+			if w < 0
+			{
+				minor = -1;
+			}
+			oabs = class_0581_abs(h);
+		}
+	}
+	process
+	{
+		zcur = z & 255;
+		ztarg = arg_08 & 255;
+		if zcur != ztarg
+		{
+			dif = (class_0581_abs(ztarg - zcur) / 20) + 1;
+			if dif = 0
+			{
+				dif = 1;
+			}
+			if zcur < ztarg
+			{
+				z += dif;
+			}
+			else
+			{
+				zcur -= dif;
+				z = zcur & 255;
+			}
+		}
+		if c >= oabs
+		{
+			if zcur > (ztarg - 2)
+			{
+				if zcur < (ztarg + 2)
+				{
+					return;
+				}
+			}
+			move(x, y, z);
+			continue; // X: reconstructed process-phase latch transfer.
+		}
+		c += arg_0A;
+		if axis = 0
+		{
+			move(x, y, z);
+			x += ovel;
+			for v = 1 to arg_0A
+			{
+				counter += r + q;
+				if counter >= oabs
+				{
+					counter -= oabs;
+					y += minor;
+				}
+			}
+		}
+		else
+		{
+			move(x, y, z);
+			y += ovel;
+			for v = 1 to arg_0A
+			{
+				counter += r + q;
+				if counter >= oabs
+				{
+					counter -= oabs;
+					x += minor;
+				}
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0610, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Item::candleAnim()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	fram:Frame;
+	[[PT_ANIM_UNK, referent]];
+	fram = getFrame();
+	if (fram != 0) and (fram != 4) and (fram != 8) and (fram != 12)
+	{
+		if (fram = 3) or (fram = 7) or (fram = 11) or (fram = 15)
+		{
+			fram -= 2;
+		}
+		else
+		{
+			fram++;
+		}
+		setFrame(fram);
+	}
+}
+
+// Derived: routine 0x0676, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Item::boom(selfDestruct:Boolean)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	x:Coord;
+	y:Coord;
+	itemList:Item List;
+	item:Item;
+	range:Number;
+	lowDam:Number;
+	highDam:Number;
+	bigBomb:Boolean;
+	testme:Number;
+	farthard:Referent;
+	mrAvatar:Npc;
+	local_m15_w01:U8Bytes1;
+	blueFlame:Item;
+	gotFlame:Boolean;
+	[[PT_ANIM_UNK, referent]];
+	x = getX();
+	y = getY();
+	bigBomb = 0;
+	testme = getStatus() & 8;
+	farthard = Item_getRootContainer(this);
+	if testme and (farthard = 1)
+	{
+		Item_bark(u8_string_address("Bye bye!!!!! "), u8_stack_ref(1));
+		mrAvatar = 1;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0594_bodypart_explode_avatar_into_body_parts(u8_local_address(local_m15_w01)) -> return;
+	}
+	else
+	{
+		if getFrame() < 4
+		{
+			range = 6;
+			lowDam = 5;
+			highDam = 20;
+		}
+		else
+		{
+			bigBomb = 1;
+			range = 9;
+			lowDam = 20;
+			highDam = 32;
+		}
+		foreach item within range cells of referent {
+			if item != referent
+			{
+				itemList += <<item>>;
+			}
+		}
+		if bigBomb
+		{
+			playSFX(158, 100);
+			createSprite(578, 0, 17, 17, 1, 1, getX() + 370, getY() + 336, getZ() + 56);
+		}
+		else
+		{
+			playSFX(31, 100);
+			createSprite(578, 40, 65, 65, 1, 1, getX() + 415, getY() + 390, getZ() + 56);
+		}
+		item = referent;
+		[[PT_ANIM_UNK, NULL_REF]];
+		if selfDestruct
+		{
+			item.destroy();
+		}
+		foreach item in itemList {
+			gotFlame = 0;
+			foreach blueFlame where (type = 400) within 1 cells of item {
+				if (blueFlame.getFrame() >= 10) and (blueFlame.getFrame() >= 10)
+				{
+					gotFlame = 1;
+				}
+			}
+			if not gotFlame
+			{
+				item.receiveHit(0, item.getDirToCoords(x, y), class_0581_randRange(lowDam, highDam), 8 | 4);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x087D, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Item::timedBark(time:Number, string:String Reference)
+{
+	[[PT_DEFAULT, referent]];
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn bark(u8_string_local_address(arg_06)) -> return;
+	wait(time);
+	killProcess(referent, PT_BARK);
+}
+
+// Derived: routine 0x08B9, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Item::isInWorld()
+{
+	[[PT_DEFAULT, referent]];
+	if getZ() > 251
+	{
+		return ((0) : DWord);
+	}
+	else
+	{
+		return ((1) : DWord);
+	}
+}
+
+// Derived: routine 0x08E5, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Item::lookBark(s:String Reference)
+{
+	[[PT_LOOK, referent]];
+	if Kernel_getNumProcesses(520, referent) > 2
+	{
+		return;
+	}
+	else
+	{
+		bark(u8_string_local_address(arg_04));
+	}
+}
+
+// Derived: routine 0x091C, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::turnToFace(newDir:Number, forceDir:Number, speed:Number)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	right:Boolean;
+	dir:Number;
+	count:Number;
+	[[PT_ANIM_UNK, referent]];
+	[[PT_ANIM_UNK, referent]];
+	right = 1;
+	newDir = newDir modulo 8;
+	if forceDir = 0
+	{
+		dir = getDir();
+		count = 0;
+		while dir != newDir
+		{
+			if dir = 7
+			{
+				dir = 0;
+			}
+			else
+			{
+				dir++;
+			}
+			count++;
+		}
+		if count > 4
+		{
+			right = 0;
+		}
+		if count = 4
+		{
+			if urandom(100) >= 50
+			{
+				right = 0;
+			}
+		}
+	}
+	if forceDir = 1
+	{
+		right = 0;
+	}
+	u8label label_09AB:
+	suspend;
+	dir = getDir();
+	while dir != newDir
+	{
+		if right
+		{
+			if dir = 7
+			{
+				dir = 0;
+			}
+			else
+			{
+				dir++;
+			}
+		}
+		else if dir = 0
+		{
+			dir = 7;
+		}
+		else
+		{
+			dir--;
+		}
+		class_057C_realDoAnim(this, 2, dir);
+		wait(speed);
+	}
+	if right
+	{
+		return ((2) : DWord);
+	}
+	else
+	{
+		return ((1) : DWord);
+	}
+	u8goto label_09AB;
+}
+
+// Derived: routine 0x0A3E, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::loiter()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	dir:Number;
+	count:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		[[PT_ACTIVITY, referent]];
+		dir = 0;
+		count = 0;
+	}
+	process
+	{
+		count++;
+		if count > 3
+		{
+			dir++;
+			if dir > 6
+			{
+				dir = 0;
+			}
+		}
+		wait(30);
+		Npc_doAnim(0, 10000, dir, 0, this);
+		wait(30);
+	}
+}
+
+// Derived: routine 0x0AC6, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::wander()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	dir:Dir;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		if (isNpc() = 0) or (isDead() = 1) or (isInCombat() = 1)
+		{
+			return;
+		}
+	}
+	process
+	{
+		if random(2)
+		{
+			dir = random(8);
+			if not (dir = getDir())
+			{
+				class_057C_turnToFace(this, random(8), 0, 5);
+			}
+		}
+		class_057C_realDoAnim(this, 0, getDir());
+		if not random(6)
+		{
+			class_057C_realDoAnim(this, 2, getDir());
+			wait(300 + random(300));
+		}
+	}
+}
+
+// Derived: routine 0x0BB7, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::follow()
+{
+	[[PT_ACTIVITY, referent]];
+}
+
+// Derived: routine 0x0BC3, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::lead()
+{
+	[[PT_ACTIVITY, referent]];
+}
+
+// Derived: routine 0x0BCF, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process [[PT_DEFAULT, referent]] Npc::enterConvo()
+{
+	if isDead()
+	{
+		killProcess(referent, 519);
+	}
+	else
+	{
+		class_0581_unkCloseAllGumps();
+		killProcess(referent, PT_ACTIVITY);
+		killProcess(referent, PT_BARK);
+		killProcess(referent, PT_ANIM);
+		killProcess(referent, PT_PATHFIND);
+		if not getAvatarInStasis()
+		{
+			setAvatarInStasis(1);
+		}
+		if (referent = 32) and (Avatar.getMap() = 25)
+		{
+			[[PT_DEFAULT, NULL_REF]];
+		}
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(1, 2, 0, Avatar.getDirToItem(referent)) -> return;
+		class_057C_turnToFace(this, getDirToItem(Avatar:Referent), 0, 2);
+		if Avatar.getStatus() & 16
+		{
+			if urandom(10) > 5
+			{
+				wait(60);
+				bark("Thought I heard someone... ");
+				bark("Oh well... ");
+			}
+			else
+			{
+				bark("Hello...? ");
+				bark("Is someone there...? ");
+			}
+			wait(60);
+			setAvatarInStasis(0);
+			enterFastArea();
+			killProcess(referent, 519);
+		}
+		else
+		{
+			if getDistance(referent, Avatar:Referent) >= 384
+			{
+				scrollTo(getX(), getY(), getZ() + 20, 30);
+			}
+			else
+			{
+				scrollTo(getX(), getY(), getZ() + 20, 25);
+			}
+			Camera::setCenterOn(referent);
+			somebodyTalking = 1;
+		}
+	}
+}
+
+// Derived: routine 0x0E4F, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process [[PT_DEFAULT, referent]] Npc::enterConvo2()
+{
+	if isDead()
+	{
+		killProcess(referent, 519);
+	}
+	else
+	{
+		class_0581_unkCloseAllGumps();
+		killProcess(referent, PT_ACTIVITY);
+		killProcess(referent, PT_BARK);
+		killProcess(referent, PT_ANIM);
+		killProcess(referent, PT_PATHFIND);
+		if not getAvatarInStasis()
+		{
+			setAvatarInStasis(1);
+		}
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_turnToFace(1, 2, 0, Avatar.getDirToItem(referent)) -> return;
+		if Avatar.getStatus() & 16
+		{
+			if urandom(10) > 5
+			{
+				wait(60);
+				bark("Thought I heard someone... ");
+				bark("Oh well... ");
+			}
+			else
+			{
+				bark("Hello...? ");
+				bark("Is someone there...? ");
+			}
+			wait(60);
+			setAvatarInStasis(0);
+			enterFastArea();
+			killProcess(referent, 519);
+		}
+		else
+		{
+			if getDistance(referent, Avatar:Referent) >= 384
+			{
+				scrollTo(getX(), getY(), getZ() + 20, 30);
+			}
+			else
+			{
+				scrollTo(getX(), getY(), getZ() + 20, 25);
+			}
+			Camera::setCenterOn(referent);
+			somebodyTalking = 1;
+		}
+	}
+}
+
+// Derived: routine 0x1090, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process [[PT_DEFAULT, referent]] Npc::exitConvo()
+{
+	enterFastArea();
+	if getDistance(referent, Avatar:Referent) >= 384
+	{
+		scrollBack(30);
+	}
+	else
+	{
+		scrollBack(25);
+	}
+	somebodyTalking = 0;
+	setAvatarInStasis(0);
+}
+
+// Derived: routine 0x10FF, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine focusCheck(item:Item):Number
+{
+	if item.getType() = 397
+	{
+		if ((item.getFrame() >= 0) and (item.getFrame() <= 2)) or (item.getFrame() = 15)
+		{
+			return 2;
+		}
+		else if ((item.getFrame() >= 3) and (item.getFrame() <= 5)) or (item.getFrame() = 16)
+		{
+			return 3;
+		}
+		else if ((item.getFrame() >= 6) and (item.getFrame() <= 8)) or (item.getFrame() = 17)
+		{
+			return 4;
+		}
+		else if ((item.getFrame() >= 9) and (item.getFrame() <= 11)) or (item.getFrame() = 18)
+		{
+			return 5;
+		}
+		else if ((item.getFrame() >= 12) and (item.getFrame() <= 14)) or (item.getFrame() = 19) or (item.getFrame() = 20)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+// Derived: routine 0x1220, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+routine Npc::isMage():Number
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	mage:Item;
+	mage = referent;
+	if referent = 21
+	{
+		return 0;
+	}
+	if (referent = 23) or (referent = 22) or (referent = 25)
+	{
+		return 1;
+	}
+	if (referent = 7) or ((devonInRule = 1) and (referent = 2))
+	{
+		return 2;
+	}
+	if (referent = 27) or (referent = 29) or (referent = 28) or (referent = 31) or (referent = 32) or (mage.getType() = 200)
+	{
+		return 4;
+	}
+	if referent = 33
+	{
+		return 5;
+	}
+	return 0;
+}
+
+// Derived: routine 0x12CE, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::downUp(dir:Number)
+{
+	[[PT_DEFAULT, referent]];
+	if referent = 1
+	{
+		setAvatarInStasis(1);
+	}
+	class_057C_realDoAnim(this, 14, dir);
+	class_057C_realDoAnim(this, 4, dir);
+	class_057C_realDoAnim(this, 2, dir);
+	if referent = 1
+	{
+		setAvatarInStasis(0);
+	}
+}
+
+// Derived: routine 0x133F, event mask 0x00000000.
+// O: recovered callable name.
+// X: BP-bound neutral argument storage views; overlapping names alias bytes.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::safeTeleport(arg_04:U8Bytes5, arg_04_w02:U8Word, arg_06:U8Word, arg_08:U8Byte, arg_09:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	avaP:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	myP:WorldPoint;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	local_m0A_w02:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m05_w02 = Avatar.getX();
+	local_m03 = Avatar.getY();
+	local_m01 = Avatar.getZ();
+	local_m0A_w02 = getX();
+	local_m08 = getY();
+	local_m06 = getZ();
+	if isDead() = 0
+	{
+		if ((Avatar.getMap() = getMap()) and (class_0581_free_get_point_distance(myP, avaP) > 700)) or (Avatar.getMap() != getMap())
+		{
+			if ((Avatar.getMap() = arg_09) and (class_0581_free_get_point_distance(arg_04, avaP) > 700)) or (Avatar.getMap() != arg_09)
+			{
+				teleport(arg_04_w02, arg_06, arg_08, arg_09);
+				return ((1) : DWord);
+			}
+		}
+		return ((0) : DWord);
+	}
+	return ((0) : DWord);
+}
+
+// Derived: routine 0x143A, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::canSafeTeleport(destP:WorldPoint, destMap:MapNum)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	avaP:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	myP:WorldPoint;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	local_m0A_w02:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m05_w02 = Avatar.getX();
+	local_m03 = Avatar.getY();
+	local_m01 = Avatar.getZ();
+	local_m0A_w02 = getX();
+	local_m08 = getY();
+	local_m06 = getZ();
+	if isDead() = 0
+	{
+		if ((Avatar.getMap() = getMap()) and (class_0581_free_get_point_distance(myP, avaP) > 700)) or (Avatar.getMap() != getMap())
+		{
+			if ((Avatar.getMap() = destMap) and (class_0581_free_get_point_distance(destP, avaP) > 700)) or (Avatar.getMap() != destMap)
+			{
+				return ((1) : DWord);
+			}
+		}
+		return ((0) : DWord);
+	}
+	return ((0) : DWord);
+}
+
+// Derived: routine 0x1525, event mask 0x00000000.
+// O: recovered callable name.
+// X: BP-bound neutral argument storage views.
+// O: external source-declaration metadata proves this callable kind.
+process [[PT_DEFAULT, referent]] Npc::pace(arg_04:U8Word, arg_06:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	p1:Item;
+	p2:Item;
+	s:Item;
+	x:Number;
+	times:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		x = 0;
+		times = 0;
+		foreach s where (type = TypePathMarker) within 32 cells of referent {
+			if s.getFrame() = arg_04
+			{
+				p1 = s;
+			}
+			else if s.getFrame() = arg_06
+			{
+				p2 = s;
+			}
+		}
+	}
+	process
+	{
+		times++;
+		if x = 0
+		{
+			pathfind(p1, 20);
+		}
+		if x = 600
+		{
+			pathfind(p2, 20);
+		}
+		x++;
+		if x = 1200
+		{
+			x = 0;
+		}
+		if times = 3
+		{
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x15E7, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Npc::realDoAnim(animSet:Word, dir:Word)
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+	}
+	process
+	{
+		killProcess(referent, PT_ANIM);
+		Npc_doAnim(0, 10000, dir, animSet, this);
+		return;
+	}
+}
+

@@ -1,0 +1,79 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x028A
+// FLEX slot: 652
+// Original offset: 0x000C5974
+// Naming evidence: E, exact object-1 linker name `NSCROPS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/NSCROPS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass NSCROPS inherits Item
+{
+	process nscrops_look_describe_crops();
+	process nscrops_use_harvest_crop_and_spawn_produce();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process NSCROPS::nscrops_look_describe_crops()
+{
+	bark("crops ");
+}
+
+// Derived: routine 0x00A9, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process NSCROPS::nscrops_use_harvest_crop_and_spawn_produce()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Referent;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0D:U8Bytes5;
+	local_m09:U8Byte;
+	local_m0B:U8Word;
+	local_m0D_w02:U8Word;
+	local_m06 = 4;
+	if getFrame() = 0
+	{
+		if urandom(2)
+		{
+			local_m06 = 4;
+		}
+		else
+		{
+			local_m06 = 7;
+		}
+	}
+	else if getFrame() = 1
+	{
+		local_m06 = urandom(3) + 8;
+	}
+	else if getFrame() = 2
+	{
+		local_m06 = urandom(2) + 5;
+	}
+	local_m08 = 0;
+	foreach recursive local_m04 where (type = 538) within 5 cells of referent {
+		local_m08++;
+	}
+	if local_m08 < 10
+	{
+		local_m0D_w02 = getX();
+		local_m0B = getY();
+		local_m09 = getZ();
+		local_m02 = class_0581_createNear(local_m0D, 538, local_m06, 0, 1);
+		if local_m02
+		{
+			local_m04 = local_m02;
+			local_m04.orStatus(128);
+			local_m04.fall();
+		}
+	}
+}
+

@@ -1,0 +1,56 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0329
+// FLEX slot: 811
+// Original offset: 0x0007C1CE
+// Naming evidence: E, exact object-1 linker name `GIRLSSTU`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GIRLSSTU.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass GIRLSSTU inherits Item
+{
+	process girlsstu_look_describe_by_frame();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GIRLSSTU::girlsstu_look_describe_by_frame()
+{
+	if getFrame() = 0
+	{
+		bark("perfume ");
+	}
+	else if getFrame() = 1
+	{
+		bark("perfume ");
+	}
+	else if getFrame() = 2
+	{
+		bark("perfume ");
+	}
+	else if getFrame() = 3
+	{
+		bark("brush ");
+	}
+	else if getFrame() = 4
+	{
+		bark("brush ");
+	}
+	else if getFrame() = 5
+	{
+		bark("brush ");
+	}
+	else if getFrame() = 6
+	{
+		bark("mirror ");
+	}
+	else if getFrame() = 7
+	{
+		bark("mirror ");
+	}
+}
+

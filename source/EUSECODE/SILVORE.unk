@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x024A
+// FLEX slot: 588
+// Original offset: 0x000F552A
+// Naming evidence: E, exact object-1 linker name `SILVORE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/SILVORE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass SILVORE inherits Item
+{
+	process silvore_look_describe_silver_ore();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process SILVORE::silvore_look_describe_silver_ore()
+{
+	bark("silver ore ");
+}
+

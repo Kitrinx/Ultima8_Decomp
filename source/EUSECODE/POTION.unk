@@ -1,0 +1,231 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02FE
+// FLEX slot: 768
+// Original offset: 0x000DB566
+// Naming evidence: E, exact object-1 linker name `POTION`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/POTION.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+uses "npc";
+
+typeclass TypePotion inherits Item
+{
+	process look();
+	process use();
+	process [[PT_DEFAULT, referent]] protection();
+	process [[PT_DEFAULT, referent]] invisible();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process TypePotion::look()
+{
+	bark("potion ");
+}
+
+// Derived: routine 0x00AA, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process TypePotion::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	fram:Number;
+	heal:Number;
+	sub:Item;
+	fram = getFrame();
+	if fram = 0
+	{
+		Item_bark(u8_string_address("it's empty... "), u8_stack_ref(1));
+	}
+	if fram = 1
+	{
+		if Avatar.getHp() >= (Avatar.getStr() * 2)
+		{
+			Avatar.setHp(Avatar.getStr());
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("Augh! "), u8_stack_ref(1)) -> return;
+			setFrame(0);
+			return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("I feel much better! "), u8_stack_ref(1)) -> return;
+			Avatar.setHp(Avatar.getStr() * 2);
+			setFrame(0);
+		}
+	}
+	if fram = 2
+	{
+		heal = urandom(4) + 5;
+		if (heal + Avatar.getMana()) < (Avatar.getInt() * 2)
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("I have regained power! "), u8_stack_ref(1)) -> return;
+			Avatar.setMana(heal + Avatar.getMana());
+		}
+		else
+		{
+			Avatar.setMana(Avatar.getInt() * 2);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("Yummm... "), u8_stack_ref(1)) -> return;
+		}
+		setFrame(0);
+	}
+	if fram = 3
+	{
+		heal = urandom(5) + 5;
+		if (heal + Avatar.getHp()) >= (Avatar.getStr() * 2)
+		{
+			Avatar.setHp(Avatar.getStr() * 2);
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn Item_bark(u8_string_address("I feel better! "), u8_stack_ref(1)) -> return;
+			Avatar.setHp(heal + Avatar.getHp());
+		}
+		setFrame(0);
+	}
+	if fram = 4
+	{
+		class_057C_receiveHit(1, urandom(2) + 5, urandom(7), referent, u8_stack_address(-6));
+		setFrame(0);
+	}
+	if fram = 5
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_02FE_protection(this) -> return;
+	}
+	if fram = 6
+	{
+		sub = referent;
+		[[PT_DEFAULT, NULL_REF]];
+		setAvatarInStasis(1);
+		setFrame(0);
+		Avatar.realDoAnim(14, Avatar.getDir());
+		wait(100);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Zzzzz... "), u8_stack_ref(1)) -> return;
+		wait(500);
+		Avatar.realDoAnim(AS_GET_UP, Avatar.getDir());
+		Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+		Avatar.turnToFace(3, 0, 10);
+		Avatar.realDoAnim(32, Avatar.getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 146) -> return;
+		Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+		Avatar.realDoAnim(33, Avatar.getDir());
+		Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+		Avatar.realDoAnim(32, Avatar.getDir());
+		Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+		Avatar.realDoAnim(33, Avatar.getDir());
+		Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+		Avatar.realDoAnim(32, Avatar.getDir());
+		Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+		setAvatarInStasis(0);
+	}
+	if fram = 7
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_02FE_invisible(this) -> return;
+	}
+}
+
+// Derived: routine 0x059B, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process [[PT_DEFAULT, referent]] TypePotion::protection()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	counter:Number;
+	limit:Number;
+	sub:Item;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		sub = referent;
+		[[PT_DEFAULT, NULL_REF]];
+		setFrame(0);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 189) -> return;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("I feel like fighting! "), u8_stack_ref(1)) -> return;
+		Avatar.realDoAnim(3, Avatar.getDir());
+		Avatar.setImmortal();
+		limit = Avatar.getInt() * 2;
+	}
+	process
+	{
+		wait(60);
+		counter++;
+		if counter > limit
+		{
+			Avatar.clrImmortal();
+			safePlaySFX(57, 200);
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x0687, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process [[PT_DEFAULT, referent]] TypePotion::invisible()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	sub:Item;
+	limit:Number;
+	counter:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		playSFX(191, 200);
+		sub = referent;
+		[[PT_DEFAULT, NULL_REF]];
+		setFrame(0);
+		if Avatar.getStatus() & 4
+		{
+		}
+		else
+		{
+			class_057C_toggleStatus(1, 4, u8_stack_address(-2));
+		}
+		class_057C_toggleStatus(1, 16, u8_stack_address(-2));
+		Avatar.setFrame(Avatar.getFrame());
+		if Avatar.getStatus() & 16
+		{
+			limit = Avatar.getInt() * 2;
+		}
+		else
+		{
+			return;
+		}
+	}
+	process
+	{
+		if Avatar.getStatus() & 16
+		{
+			wait(60);
+			counter++;
+			if counter > limit
+			{
+				class_057C_toggleStatus(1, 16, u8_stack_address(-2));
+				playSFX(57, 200);
+				Avatar.setFrame(Avatar.getFrame());
+				return;
+			}
+		}
+		else
+		{
+			playSFX(57, 200);
+			return;
+		}
+	}
+}
+

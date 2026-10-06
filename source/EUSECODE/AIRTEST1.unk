@@ -1,0 +1,305 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0489
+// FLEX slot: 1163
+// Original offset: 0x00008ACF
+// Naming evidence: E, exact object-1 linker name `AIRTEST1`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/AIRTEST1.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass AIRTEST1 inherits Egg
+{
+	process airtest1_hatch_run_centered_air_trial();
+	process airtest1_play_random_wind_sound();
+	process airtest1_move_avatar_toward_target(arg_04:U8Word, arg_06:U8Word, arg_08:U8Byte, arg_0A:U8Word);
+	process airtest1_animate_avatar_wind_sprite();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process AIRTEST1::airtest1_hatch_run_centered_air_trial()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m09:U8Byte;
+	local_m02 = 0;
+	local_m04 = 0;
+	if passedCenteredTest or (not passedWisdomTest) or (Egg_getEggId(this) > 0)
+	{
+		return;
+	}
+	Egg_setEggId(1, this);
+	class_0581_unkCloseAllGumps();
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 200, 6) -> return;
+	LightningBolt();
+	scrollTo(getX(), getY(), getZ(), 10);
+	wait(100);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0489_airtest1_animate_avatar_wind_sprite(this) -> return;
+	while (Avatar.getZ() > 166) and (local_m02 < 10) and (not local_m09)
+	{
+		local_m06 = (urandom(5) * 15) + 30;
+		local_m08 = (urandom(5) * 15) + 30;
+		wait(60 + urandom(60));
+		if urandom(2)
+		{
+			local_m06 = local_m06 * -1;
+		}
+		if urandom(2)
+		{
+			local_m08 = local_m08 * -1;
+		}
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0489_airtest1_play_random_wind_sound(this) -> return;
+		class_0489_airtest1_move_avatar_toward_target(this, Avatar.getX() + local_m06, Avatar.getY() + local_m08, Avatar.getZ(), 1);
+		if (Avatar.getX() < 14591) or (Avatar.getX() > 14911) or (Avatar.getY() < 18687) or (Avatar.getY() > 19135)
+		{
+			local_m09 = 1;
+		}
+		else
+		{
+			local_m02++;
+		}
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_scrollBack(0x00000000, 10) -> return;
+	if (local_m02 > 9) and (Avatar.getZ() > 166)
+	{
+		passedCenteredTest = 1;
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 6) -> return;
+		LightningBolt();
+		wait(15);
+		playSFX(57, 200);
+		wait(15);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 6) -> return;
+		LightningBolt();
+		Egg_setEggId(0, this);
+		wait(15);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 6) -> return;
+		LightningBolt();
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 53) -> return;
+		Egg_setEggId(0, this);
+	}
+}
+
+// Derived: routine 0x035F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process AIRTEST1::airtest1_play_random_wind_sound()
+{
+	[[PT_DEFAULT, referent]];
+	if urandom(10) > 5
+	{
+		playSFX(115, 150);
+	}
+	else
+	{
+		playSFX(116, 150);
+	}
+}
+
+// Derived: routine 0x0392, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process AIRTEST1::airtest1_move_avatar_toward_target(arg_04:U8Word, arg_06:U8Word, arg_08:U8Byte, arg_0A:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m05:U8Byte;
+	local_m07:U8Word;
+	local_m09:U8Word;
+	local_m0B:U8Word;
+	local_m0D:U8Word;
+	local_m0F:U8Word;
+	local_m11:U8Word;
+	local_m13:U8Word;
+	local_m15:U8Word;
+	local_m17:U8Word;
+	local_m19:U8Word;
+	local_m1B:U8Word;
+	local_m1D:U8Word;
+	local_m1F:U8Word;
+	local_m21:U8Word;
+	local_m23:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		local_m02 = Avatar.getX();
+		local_m04 = Avatar.getY();
+		local_m05 = Avatar.getZ();
+		local_m07 = (arg_04 - local_m02) + 1;
+		local_m09 = (arg_06 - local_m04) + 1;
+		local_m0B = 0;
+		local_m0D = 1;
+		local_m0F = 0;
+		local_m11 = 1;
+		local_m1B = arg_0A;
+		local_m1D = 0;
+		local_m1F = local_m0D;
+		if class_0581_abs(local_m07) > class_0581_abs(local_m09)
+		{
+			local_m1F = local_m0B;
+		}
+		if local_m1F = local_m0B
+		{
+			local_m15 = class_0581_abs((local_m09 / local_m07) * local_m07);
+			local_m13 = class_0581_abs(local_m09 modulo local_m07);
+			if local_m07 < 0
+			{
+				local_m1B = -1 * arg_0A;
+			}
+			if local_m09 < 0
+			{
+				local_m11 = -1;
+			}
+			local_m17 = class_0581_abs(local_m07);
+		}
+		else
+		{
+			local_m15 = class_0581_abs((local_m07 / local_m09) * local_m09);
+			local_m13 = class_0581_abs(local_m07 modulo local_m09);
+			if local_m09 < 0
+			{
+				local_m1B = -1 * arg_0A;
+			}
+			if local_m07 < 0
+			{
+				local_m11 = -1;
+			}
+			local_m17 = class_0581_abs(local_m09);
+		}
+	}
+	process
+	{
+		if local_m05 != arg_08
+		{
+			local_m21 = class_0581_abs(local_m05 - arg_08);
+			if local_m21 <= 20
+			{
+				local_m23 = 1;
+			}
+			else if local_m21 <= 40
+			{
+				local_m23 = 2;
+			}
+			else if local_m21 <= 60
+			{
+				local_m23 = 3;
+			}
+			else if local_m21 <= 80
+			{
+				local_m23 = 4;
+			}
+			else
+			{
+				local_m23 = 5;
+			}
+			if local_m05 < arg_08
+			{
+				local_m05 += local_m23;
+			}
+			if local_m05 > arg_08
+			{
+				local_m05 -= local_m23;
+			}
+		}
+		if (Avatar.getX() < 14591) or (Avatar.getX() > 14911) or (Avatar.getY() < 18687) or (Avatar.getY() > 19135)
+		{
+			Item_hurl(2, 5, 0, 0, u8_stack_ref(1));
+			return;
+		}
+		if local_m1D >= local_m17
+		{
+			return;
+		}
+		local_m1D += arg_0A;
+		if local_m1F = local_m0B
+		{
+			Avatar.move(local_m02, local_m04, local_m05);
+			local_m02 += local_m1B;
+			for local_m19 = 1 to arg_0A
+			{
+				local_m0F += local_m13 + local_m15;
+				if local_m0F >= local_m17
+				{
+					local_m0F -= local_m17;
+					local_m04 += local_m11;
+				}
+			}
+		}
+		else
+		{
+			Avatar.move(local_m02, local_m04, local_m05);
+			local_m04 += local_m1B;
+			for local_m19 = 1 to arg_0A
+			{
+				local_m0F += local_m13 + local_m15;
+				if local_m0F >= local_m17
+				{
+					local_m0F -= local_m17;
+					local_m02 += local_m11;
+				}
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0639, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process AIRTEST1::airtest1_animate_avatar_wind_sprite()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		local_m04 = 0;
+		if Avatar.getZ() < 166
+		{
+			return;
+		}
+		Item_create(0, 481, u8_local_address(local_m02_w01));
+		local_m02.pop(Avatar.getX(), Avatar.getY(), Avatar.getZ() + 20);
+	}
+	process
+	{
+		local_m04++;
+		if (Avatar.getZ() >= 166) and (not passedCenteredTest)
+		{
+			if local_m04 > 24
+			{
+				local_m04 = 12;
+			}
+		}
+		if local_m04 > 34
+		{
+			local_m02.destroy();
+			return;
+		}
+		local_m02.setFrame(local_m04);
+		local_m02.move(Avatar.getX(), Avatar.getY(), Avatar.getZ() + 20);
+	}
+}
+

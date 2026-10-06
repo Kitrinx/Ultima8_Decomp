@@ -1,0 +1,134 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0178
+// FLEX slot: 378
+// Original offset: 0x0007099A
+// Naming evidence: E, exact object-1 linker name `FENALIA`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FENALIA.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass FENALIA inherits Item
+{
+	process fenalia_apply_hallucination_and_hunger();
+	process fenalia_look_bark_description_by_frame();
+	process fenalia_use_consume_for_hallucination_and_hunger();
+}
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process FENALIA::fenalia_apply_hallucination_and_hunger()
+{
+	// X: BP-bound neutral body storage views.
+	local_m01:U8Byte;
+	local_m02:U8Byte;
+	local_m04:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[544, 1]]; // R/X: process type name unproved; numeric VM expression retained.
+		local_m01 = 0;
+		local_m02 = 0;
+		local_m04 = urandom(20) + 15;
+	}
+	process
+	{
+		if local_m04 <= 0
+		{
+			FadeToPalette(0, 32767);
+			return;
+		}
+		else
+		{
+			if (urandom(20) = 1) and (somebodyTalking = 0)
+			{
+				if urandom(5) = 1
+				{
+					Item_bark(u8_string_address("I'm hungry! "), u8_stack_ref(1));
+				}
+				else if urandom(5) = 2
+				{
+					Item_bark(u8_string_address("I'm very hungry. "), u8_stack_ref(1));
+				}
+				else if urandom(5) = 3
+				{
+					Item_bark(u8_string_address("I must eat! "), u8_stack_ref(1));
+				}
+				else if urandom(5) = 4
+				{
+					Item_bark(u8_string_address("I wish I had some chocolate. "), u8_stack_ref(1));
+				}
+				else
+				{
+					Item_bark(u8_string_address("I'm so hungry I could eat a live kith. "), u8_stack_ref(1));
+				}
+			}
+			local_m02 = urandom(7);
+			if local_m02 = local_m01
+			{
+				local_m02 = (local_m02 + 1) modulo 7;
+			}
+			local_m01 = local_m02;
+			FadeToPalette(local_m02, 32767);
+			wait(15 * urandom(6));
+			local_m04--;
+		}
+	}
+}
+
+// Derived: routine 0x0263, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FENALIA::fenalia_look_bark_description_by_frame()
+{
+	if getFrame() = 0
+	{
+		bark("plant bud ");
+	}
+	else if getFrame() = 1
+	{
+		bark("pipe ");
+	}
+}
+
+// Derived: routine 0x02CF, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FENALIA::fenalia_use_consume_for_hallucination_and_hunger()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	if getFrame() = 0
+	{
+		Item_bark(u8_string_address("Yucchh. "), u8_stack_ref(1));
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_wait(0x00000000, 12000) ->
+		spawn class_0178_fenalia_apply_hallucination_and_hunger(0x00000000) -> return;
+		push();
+		destroy();
+	}
+	else
+	{
+		if getFrame() = 1
+		{
+			local_m02 = target();
+			if local_m02 = 0
+			{
+				return;
+			}
+			if (local_m02.getType() = 376) and (local_m02.getFrame() = 0)
+			{
+				local_m02.push();
+				local_m02.destroy();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0178_fenalia_apply_hallucination_and_hunger(0x00000000) -> return;
+			}
+			return;
+		}
+	}
+}
+

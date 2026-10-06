@@ -1,0 +1,300 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0343
+// FLEX slot: 837
+// Original offset: 0x000D8058
+// Naming evidence: E, exact object-1 linker name `PESANT2`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/PESANT2.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass PESANT2 inherits Item
+{
+	process pesant2_leave_fast_area_clear_peasant_process_refs();
+	process pesant2_look_describe_living_or_dead();
+	process pesant2_enter_fast_area_start_library_or_drunk_mutter_loop();
+	process pesant2_cast_report_avatar_attack_to_guard();
+	process pesant2_use_run_map_specific_peasant_dialogue();
+	process pesant2_play_library_mutter_loop();
+	process pesant2_play_drunk_mutter_loop();
+}
+
+// Derived: routine 0x0080, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PESANT2::pesant2_leave_fast_area_clear_peasant_process_refs()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+}
+
+// Derived: routine 0x00C1, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PESANT2::pesant2_look_describe_living_or_dead()
+{
+	if isDead()
+	{
+		bark("dead peasant ");
+	}
+	else
+	{
+		bark("peasant ");
+	}
+}
+
+// Derived: routine 0x011E, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PESANT2::pesant2_enter_fast_area_start_library_or_drunk_mutter_loop()
+{
+	if referent > 250
+	{
+		return;
+	}
+	if isDead()
+	{
+		return;
+	}
+	if getMap() = 41
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0343_pesant2_play_library_mutter_loop(this) -> return;
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0343_pesant2_play_drunk_mutter_loop(this) -> return;
+	}
+}
+
+// Derived: routine 0x0170, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PESANT2::pesant2_cast_report_avatar_attack_to_guard()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = 25;
+	while (not Npc_getTarget(this)) and local_m02
+	{
+		wait(1);
+		local_m02--;
+	}
+	if Npc_getTarget(this) = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_wait(0x00000000, 200) ->
+		spawn class_058B_callTheGuards(this, 0) -> return;
+		clrInCombat();
+		if not isDead()
+		{
+			if urandom(100) > 50
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Help me!!! ") -> return;
+			}
+			else
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Argh! ") -> return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x023F, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PESANT2::pesant2_use_run_map_specific_peasant_dialogue()
+{
+	if referent > 250
+	{
+		return;
+	}
+	killProcess(referent, PT_ACTIVITY);
+	killProcess(referent, PT_BARK);
+	if urandom(100) > 50
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Hello... "), u8_stack_ref(1)) -> return;
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Greetings... "), u8_stack_ref(1)) -> return;
+	}
+	class_057C_enterConvo2(this);
+	wait(30);
+	killProcess(1, PT_BARK);
+	if getMap() = 41
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(this, getDir(), 47) -> return;
+		if urandom(100) > 50
+		{
+			bark("Shhhhh! ");
+		}
+		else
+		{
+			bark("People are trying to read! ");
+		}
+		class_057C_exitConvo(this);
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057C_realDoAnim(this, getDir(), 48) -> return;
+		if urandom(100) > 50
+		{
+			bark("Whhaaaattt? ");
+		}
+		else
+		{
+			bark("Huh !?! ");
+		}
+		if urandom(100) > 50
+		{
+			Item_bark(u8_string_address("Nevermind... "), u8_stack_ref(1));
+		}
+		else
+		{
+			Item_bark(u8_string_address("Forget it... "), u8_stack_ref(1));
+		}
+		class_057C_exitConvo(this);
+	}
+}
+
+// Derived: routine 0x0468, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process PESANT2::pesant2_play_library_mutter_loop()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m04:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		wait(1000);
+	}
+	process
+	{
+		wait(urandom(500) + 1000);
+		local_m02 = urandom(10);
+		local_m04 = getDistance(referent, Avatar:Referent);
+		if (local_m04 > 100) and (local_m04 < 600)
+		{
+			if somebodyTalking
+			{
+				local_m02 = 0;
+			}
+			if local_m02 = 1
+			{
+				bark("That is so strange... ");
+			}
+			if local_m02 = 2
+			{
+				bark("I see where this is heading... ");
+			}
+			if local_m02 = 3
+			{
+				bark("That proves my theory... ");
+			}
+			if local_m02 = 4
+			{
+				bark("I always wondered about that... ");
+			}
+			if local_m02 = 5
+			{
+				bark("Now I get it...! ");
+			}
+			if local_m02 = 6
+			{
+				bark("A Torax...? ");
+				bark("Why...? ");
+			}
+			if local_m02 = 7
+			{
+				bark("Now I am really lost... ");
+			}
+			if local_m02 = 8
+			{
+				bark("This makes no sense... ");
+			}
+		}
+		class_057C_realDoAnim(this, 47, getDir());
+	}
+}
+
+// Derived: routine 0x06CD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process PESANT2::pesant2_play_drunk_mutter_loop()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m04:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		wait(1000);
+	}
+	process
+	{
+		wait(urandom(500) + 1000);
+		local_m02 = urandom(10);
+		class_057C_realDoAnim(this, 4, getDir());
+		local_m04 = getDistance(referent, Avatar:Referent);
+		if (local_m04 > 100) and (local_m04 < 600)
+		{
+			if somebodyTalking
+			{
+				local_m02 = 0;
+			}
+			if local_m02 = 1
+			{
+				bark("More grog... ");
+			}
+			if local_m02 = 2
+			{
+				bark("I feel sick... ");
+			}
+			if local_m02 = 3
+			{
+				bark("I can't even stand... ");
+			}
+			if local_m02 = 4
+			{
+				bark("Oh, my head... ");
+			}
+			if local_m02 = 5
+			{
+				bark("Where is Dicko...? ");
+			}
+			if local_m02 = 6
+			{
+				bark("I should be leaving... ");
+				wait(30);
+				bark("After the next drink... ");
+			}
+			if local_m02 = 7
+			{
+				bark("Make the room stop spinning... ");
+			}
+			if local_m02 = 8
+			{
+				bark("Another round here! ");
+			}
+		}
+		class_057C_realDoAnim(this, 35, getDir());
+	}
+}
+

@@ -1,0 +1,155 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0592
+// FLEX slot: 1428
+// Original offset: 0x0003C55C
+// Naming evidence: E, exact object-1 linker name `BOOKMARK`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BOOKMARK.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_killer_jokes_by_trixter_welcome_reader()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("%KILLER JOKES~%by Trixter ~~Welcome reader and learn the age old art of practical jokes. ~I, Trixter have studied long and hard from the tomes of the ancient masters to achieve the knowledge and wisdom that I may now impart on you, the novice. ~~~~Chapter One: ~Exploding Books ~~Heh, heh..."), this);
+	wait(20);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_boom(this, 1) -> return;
+}
+
+// Derived: routine 0x01EB, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_ear_of_arricorn_vol_iii_by()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("EAR OF ARRICORN: VOL. III~by Kram ~~%The lone stranger slowly rode into the desolate village on the back of his mammoth, white hordax. As he dismounted his beast, he threw the leathery reins over the closest tie rod, then slowly strode to the double doors of the tavern.Though the tavern roared with the laughter of drunken herdsmen, the jovial spirit quickly flattened like fresh manure thrown against a wall. Everyone turned as the caped stranger entered the smoke filled hovel. The darkly robed individual motioned with two fingers for the stiffest grog. The tavern master quickly obeyed, pouring the thick brew with shaky hands.The women folk left, claiming they needed to visit the house of fecal waste. ~%'ShadowLander!' called a nasal tinged voice from the rear of the room, ~'Your type are not welcomed in this acre of the world.' Shortly, a path cleared between the ShadowLander and the owner of the high pitched voice. ~%The voice belonged a squat little Nobbit. He sat with a crooked smile on his smiling face while his hand played with the handle of his jeweled dagger-like sword. On his throat, just above his massive goiter, he openly wore a staff shaped tattoo. Only true herdsmen wore these. ~%A hush fell over the tavern. No one dared to draw breath."), this);
+}
+
+// Derived: routine 0x0700, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_ear_of_arricorn_vol_iv_by()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("EAR OF ARRICORN: Vol. IV~by Kram ~~%The lone stranger turned towards the herdsman, still quaffing his grog. A bloodshot eye stared out from under his dark mask. A nervous twitch pulled at the muscle of his leathery cheek. ~%'Ha!' laughed the herdsman as he waddled up to the bar, 'I do not believe the tall tales told of the ShadowLanders'. I believe them to be lies! I think they have less than half the warrior's blood that flows through my little toe!' The Nobbit snorted at his own remark, but looked disappointed when the others did not laugh with him. ~%He turned back and stared at the stranger straight in the knee. 'For those who do not believe this, I will prove it by shedding some yellow DarkLander blood!' Quickly, he drew his great dagger-like sword. ~%Before the Nobbit could strike, the stranger grabbed the herdsman by the tattoo, and easily lifted him into the air. As the Nobbit began to open his mouth to cry out, the DarkLander shoved his massive fist down the herdsman's gullet.  The stranger took a quick pull, and turned the Nobbit in-side-out. He dropped the bloody mess on the bar. ~%Upon seeing this, some one gave the ancient herdsman warning cry; ~'Let us move the flock out of here!' ~%The tavern was instantly cleared."), this);
+}
+
+// Derived: routine 0x0C03, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_ear_of_arricorn_vol_vi_by()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("EAR OF ARRICORN: VOL. VI~by Kram ~~%The lone stranger dismounted from his mammoth hordax, shaking the heavy drops from his cloak. The cave he had entered was small, its capacity barely providing shelter for his beast from the deluge that poured from the angry sky outside. He ventured deeper into the cavern to find room enough to remove his rain soaked garments. ~%Stepping through a stony portal, he found himself suddenly bathed in the warm glow of a tallow fed lantern. Upon his entry into the cave seven pairs of shocked eyes turned in his direction. ~'Argh! A thief is here to take our gems!' cried one of the little men as he thrust his shovel in the stranger's direction. 'You try it, and I'll cut your eyes out and feed them to the snails!' ~%'Hold your blade, you grumpy old fool!' called one of the others, 'this nice man might be here to help us.' ~%'Nice man?' retorted the other, 'If you were not such a dopey twit you would recognize him as a ShadowLander. He helps no one but himself.' ~%'What shall we do, Doc?' call one of the others, too bashful to show his face in the light. ~%The small man who appeared to be in charge stepped forward to size up the stranger. 'Well, judging from all that trouble we had with that female a while back, I'd say we could save ourselves a pack of trouble and just put a pick up side his head right now!' ~%Suddenly, six shadowy figures leapt forwards. In a flash, the lone stranger's dark blade appeared in his hands. Quietly, it whistled through calm air, practicing its deadly craft. In the blink of an eye, six small heads fell cleft from six small frames. ~%The last midget, the one slowest in wit, made a tasty morsel for the stranger's hordax..."), this);
+}
+
+// Derived: routine 0x12CC, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_the_big_book_of_adventure_by()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("THE BIG BOOK OF ADVENTURE~by Sladek ~~Recorded on these pages are tips I have found while on my adventures. Read well, fellow quester, for your life may well be saved by recalling these in your time of need. ~~Puzzles: You will be in luck if such puzzles are played with levers. These are usually not harmful, and require little time, if you watch your surroundings for clues. Center levers usually reset the puzzle. ~~Traps: If there is a chest sitting innocently in the open, touch it not! Especially if it has many corpses around it! These are the other dolts who fell for it. ~~Chests of Loot: Rarely do chests have anything in them. Open them at your risk. It will serve you well to carry a magic scroll to check for traps within these! ~~Tricks of the Trixter: Judge them by their cover, for they read differently than other books... ~~Mazes: Always mark your path! Use rocks or wood. Never bread crumbs! Beware of treasure! It is there to lead you from the path! ~~SPELL CHITS: Always read the text on the outside of these scrolls to identify them. Once you have opened them, their magic will immediately be released upon reading."), this);
+}
+
+// Derived: routine 0x175F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_brogdan_s_helpful_guide_to_mushrooms()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("BROGDAN'S HELPFUL GUIDE TO MUSHROOMS~by Brogdan ~~%Though many forms of vegetation disappeared after our sun ceased its cycling and our world entered into a state of eternal twilight, many plants, especially mushrooms, have adjusted to the lower levels of sunlight. ~%Mushrooms have prospered and have become the dominant form of vegetation on our landscape. These range from the man-sized Monster Brown Cap all the way down to the finger-sized yellow and red Silent Sleeper. ~%Most mushrooms are edible. Mushrooms like the fist-sized Blue Bulgie and the Green Capper are delicious with any meal, though sometimes they may be confused by the less experienced for the blue and green form of Daemon's Paw which can cause rashes, blisters, and general bladder distress.~%A helpful mushroom known for its healing properties is the yellow and green Adventure's Friend, found in the wild. When consumed these mushroom tend to restore health, as well as give the consumer a general feeling of euphoria. ~%Known to keep monsters at bay is the Stench Mushroom. Applying small quantities of this mushroom to your skin in guaranteed to ward away most creatures, except for those who are undead, who seem quite attracted to its pungent odor. The only way the smell of the mushroom can be removed once it is applied is by bathing in juice of the ammatto plant. ~%A mushroom that you should generally stay away from is the Fire Mushroom. This little mushroom is usually high in sulfous ash and tends to explodes when stepped on. ~%Since never has there been found a mushroom that is instantly lethal it is safe to say that you may experiment with any of the ones you find in the wild. Remember, the mushroom is our friend. "), this);
+}
+
+// Derived: routine 0x1E2E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_stories_to_make_children_sleep_by()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("STORIES TO MAKE CHILDREN SLEEP~by Brother Grim ~~Jelly was a lad who was so hard to please, nothing would he eat, except for plates full of cheese! ~His obsession was strange and no one knew why. He swore cheese was his meal till the day that he died. ~~His father, a strong man who was hearty and pink, was at his wits end, and driven to drink. ~He would stay at the tavern, and tell of his woe, on cheap tankards of grog his money he'd blow. ~~'My son, a good lad, though a little bit chunky, has turned into a ravenous limburger junky!' ~'All my land and my house and the coins in my purse, I will give to the man who can remove this foul curse!' ~~The old man's plea went out and was told near and far, it was whispered by gossips, and made light of in the bar. ~But one day into town strolled a strange little fellow, his robes were all tattered, and his skin a sickly yellow.~~'I can cure your boy!' he told the ripe drunken sod, 'I will make him good as new, this lad you call Todd.' ~The father cried, 'His names not Todd! It's Jelly, you snot! But go on and give it a try... Give it your best shot.' ~~But before he started, the mage asked for first, for a small taste of grog, to quell a quick thirst. ~After slamming four tankards he got back to work, though his eyes did spin, and his hands did jerk. ~~With the boy before him, the mage reared back, while clutching his reagents in a small toad sack. ~He sent out flames of red, green and blue that engulfed the boy, hiding him from all's view. ~~When the flames died away, as well as the stench, To the father's red eyes, his boy-Was a wench! ~'Oh no!' he cried, and he cursed this new fate, 'My hard working boy now looks like dungeon bait!' ~~'How could you do this, you dottering old fool! Did you sleep every day while in wizardry school?' ~With the excitement now over, the father settled down, upon the nearest table, his head he did pound.~~Suddenly, a dark robed figure entered into the grog joint, and at the old mage a withered finger he did point. ~Then with a flash of yellow, the mage disappeared, Everyone dove for cover, for spellcasters they now feared. ~~With an incantation shouted by the figure in black the young boy named Jelly quickly transmuted back. ~As he left the place everyone heard the words of the monk, 'Never let a bad spell caster cast spells, especially drunk!' ~~To this very day the young boy they call Jelly, continues to stuff away cheese in his portly pot belly. ~But his father is content, and he will always smile, 'This beats worrying about a daughter by a country mile.' ~~'Tis not that I don't want a girl,' claims the tired old father, 'But when a boy is young, he is less of a bother.' 'A young boy you must check up on every time and again, 'But! With a young girl, you must watch all the young men..."), this);
+}
+
+// Derived: routine 0x294B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_adventure_quarterly_vol_ix_dear_adventurer()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("ADVENTURE QUARTERLY~VOL. IX~ ~%Dear Adventurer!~%Within these pages lies your path to unimaginable wealth and power. All you must do to gain such is to read and learn of the strange and exotic places that hold the keys to your wildest dreams. Enter into a realm where money, power, and pleasure await you. All you must have to gain them is the courage and the heart for adventure!~~%The Forgotten Riches of Knarl ~%Some say it is an island, while others swear that it deep within the earth. All agree though that the way to Knarl lies somewhere within the lower catacombs, though the way was lost due to a great earthquake. ~%Many generations ago, back before the sun circled over head, there was a passage that led to this place. Traders flocked to and fro, for this was a place of great wealth. ~%It is said the great weapon forges of Knarl created many of the magical weapons that we have today, explaining why we have very few in these times.~%Other riches lie in the forms of spells. Knarl was known to have had a great library in which many of the great spellcasters of the day went to study and record their findings. Some say that the magethief Vermin and the enchanter Varkus studied there in their youth. ~%Some say it was not an earthquake what shut the passage from our world to Knarl, but that it was sealed by magic! There is rumor that a sect was forming at the library, a sect of monks known as the Dark Brothers. It is said that these monks wished to keep the secrets and the treasures of Knarl to themselves. ~%Though this is only a rumor, many of the old books and the tales handed down from father to son mention 'the Brother's Below.' Is this a reference to the Dark Brothers?~%It is said that the way to this magical place lies deep within the heart of the Catacombs. Only there will you find the way to both riches, glory, and power. For he who is of sound heart and of steady sword will be the one\x09to find the passage to Knarl. "), this);
+}
+
+// Derived: routine 0x310D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_adventure_quarterly_volume_xii()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("ADVENTURE QUARTERLY~VOL. XII~ ~%Dear Adventurer!~%Within these pages lies your path to imaginable wealth and power. All you must do to gain such is to read and learn of the strange and exotic places that hold the keys to your wildest dreams. Enter into a realm where money, power, and pleasure await you. All you must have to gain them is the courage and the heart for adventure!~%The Ship of Doom ~Many tales have been handed down from generation to generation about a mighty ship that sailed from the port of Tenebrae. It is said that this ship was so big that it actually dwarfed the palace of the Tempest and needed a crew of hundreds! ~%Many years ago, a bitter winter buried the city up to its roof tops in ice, threatening to destroy all the food supplies, and to freeze to death all the town's inhabitants. Since no one could explain the reason for the foul winter, it was decided that a great ship be sent to find and appease whatever was causing this disaster. The ship was to sail to a distant shore, carrying the wealth of all the citizens in hopes of rescuing the city and its inhabitants.~%This ship it is said departed laden with the wealth of the city just before the water around the port of Tenebrae froze solid. Because the sea was freezing in its wake, no ships could be sent to follow. It sailed away into a dark and forbidding twilight. ~%The ship never did return, and most think that it went to the bottom of the sea. But some say that it found a distant shore and completed its mission, pointing to the fact that the winter storms faded away days after the ship's departure, never to return either. ~%Some old timers say that the ship still sails upon the sea, frozen in a huge block of ice, its riches and crew a silent offering to whatever sent the wintry storms.~%Though most will tell you this is a myth, some of the older ones will swear that the story of the ship is true. To whoever is of sound heart and steady of sword, the riches, and the dangers, await you in the hull of a frozen ship. A ship that has sailed off into, the zone of twilight. "), this);
+}
+
+// Derived: routine 0x394D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_the_official_logbook_of_crimes_and()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("THE OFFICIAL LOGBOOK OF CRIMES AND PUNISHMENTS ~as recorded by Salkind, the Seneshal of Tenebrae during the reign of her Ladyship Mordea. ~~The following is a list of the crimes of known enemies of the state, and of the swift and just punishments as decreed by her ladyship; ~ All evidence against these criminals shall be kept in a a secure location, accessible only by my personal key or the use of magic. ~~Armin; Guilty of inciting and spreading rebellious ideologies counter to the views of the state, inventing and proclaiming malicious slander against her ladyship, provoking treasonous acts in public, and assaulting the captain of the guard, highway robbery, and treachery. ~Punishment: Death by beheading.~~Hermes; Writing many treasonous and slanderous articles against the government, participating in the forging of royal documents, arousing riots and melees and other civil disturbances, resisting formal arrest, and other vile and treacherous acts. ~Punishment: 50 lashes, then death by beheading. ~~Brandem; Guilty of participating in public disturbances aimed at undermining the state, destruction of public property, making threats against prominent members of the community, plotting the assassination of her ladyship, buccaneering, and other vile acts of treachery. ~Punishment: 100 lashes, then death by beheading. ~~~Dibeyer; Guilty of exciting the public to hysteria with controversial rhetoric banned by the state, calling unlawful gatherings and assembles, \x09\x09\x09inciting the youth of Tenebrea to pillage and plunder their own town, damage to state property through the use of arson, committing statutory rape, public intoxication, striking a guardsman with a wooden club, wounding him, pillaging the poor, and an assortment of other treacherous acts. ~Punishment: Death by beheading. Also fined 250 coins.~~Zoch; Guilty of following the rhetoric exposed by Dibeyer, sales of weapons without a permit from the state, passing counterfeit coins, defrauding widows of their inheritance, public intoxication, poaching on the grounds of the palace, brigandage, and many other acts treacherous in nature. ~Punishment: Fined, flogged, then Death by beheading. ~~Toran; Guilty of inciting and spreading ideologies contrary to the state, participating in public disturbances aimed at undermining the government, swindling the public through the sales of fake gems, privateering, purloining, pilfering, pick pocketing, and an assortment of other acts of treachery, too many to mention here. ~Punishment: Death by beheading. "), this);
+}
+
+// Derived: routine 0x4357, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_guard_log_bloodwatch_nothing_to_report()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("GUARD LOG: ~~Bloodwatch: Nothing to report. ~~Firstebb: Nothing to report. ~~DayTide: Nothing to report. ~~Threemoons: Nothing to report. ~~Lastebb: More of the same. ~~Eventide: Take a guess... "), this);
+}
+
+// Derived: routine 0x443C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_guard_log_flogging_and_fight_day()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("GUARD LOG: ~~Bloodwatch: Nothing to report. ~~Firstebb: Flogged some peasants. ~~DayTide: Broke up a fight. Probably broke the sod's nose. ~~Threemoons: Nothing to report. ~~Lastebb: Helped peasant remember where he hid his taxes. Heh, heh... ~~Eventide: Guard changed. "), this);
+}
+
+// Derived: routine 0x456C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_guard_log_bloodwatch_ate_doughnuts_stale()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("GUARD LOG: ~~Bloodwatch: Ate doughnuts. Stale. ~~Firstebb: Helped peasants pay taxes. ~~DayTide: Guard Changed. ~~Threemoons: Arrested somebody. Forget what for... ~~Lastebb: Ate doughnuts. Still Stale. ~~Eventide: Nothing to report. "), this);
+}
+
+// Derived: routine 0x4678, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] bookmark_read_guard_log_bloodwatch_guard_changed_firstebb()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("GUARD LOG: ~~Bloodwatch: Guard changed. ~~Firstebb: Helped take children on tour of the dungeon. ~~DayTide: Ate doughnuts. Stale. ~~Threemoons: Arrested peasant. Resisted arrest. Had to use force. ~~Lastebb Nothing to report. ~~Eventide: Caught kids throwing rocks. None of them damaged too terrible... "), this);
+}
+

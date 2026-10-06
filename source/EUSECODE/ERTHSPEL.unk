@@ -1,0 +1,697 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0586
+// FLEX slot: 1416
+// Original offset: 0x0006C0DB
+// Naming evidence: E, exact object-1 linker name `ERTHSPEL`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ERTHSPEL.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+globalflag doneFallEnd;
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process deathSpeak()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Npc;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent = 1
+	{
+		class_0581_unkCloseAllGumps();
+		if Avatar.getMana() < 1
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		Avatar.setMana(Avatar.getMana() - 1);
+		AccumulateIntelligence(class_0581_randRange(5, 10));
+	}
+	local_m02 = target();
+	if local_m02 = 0
+	{
+		return;
+	}
+	if local_m02.getType() = 623
+	{
+		deathSpeakCast = 1;
+		local_m02.use();
+		deathSpeakCast = 0;
+	}
+	else if local_m02.isNpc()
+	{
+		if local_m02.isDead()
+		{
+			local_m02.bark("Arrrgghhh!");
+		}
+	}
+}
+
+// Derived: routine 0x01AF, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process feignDeath()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent = 1
+	{
+		class_0581_unkCloseAllGumps();
+		if Avatar.getMana() < 1
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		Avatar.setMana(Avatar.getMana() - 1);
+		AccumulateIntelligence(class_0581_randRange(5, 10));
+	}
+	Npc_setFeignDeath(this);
+}
+
+// Derived: routine 0x0263, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process erthspel_apply_rock_flesh_protection()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[544, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+		class_0581_unkCloseAllGumps();
+		Avatar.setImmortal();
+	}
+	process
+	{
+		wait(6000);
+		safePlaySFX(189, 100);
+		Avatar.clrImmortal();
+		return;
+	}
+}
+
+// Derived: routine 0x02BF, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process rockFlesh()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent = 1
+	{
+		class_0581_unkCloseAllGumps();
+		if Avatar.getMana() < 2
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		Avatar.setMana(Avatar.getMana() - 2);
+		AccumulateIntelligence(class_0581_randRange(5, 10));
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0586_erthspel_apply_rock_flesh_protection(0x00000000) -> return;
+}
+
+// Derived: routine 0x0379, event mask 0x00000000.
+// O: recovered callable name.
+// X: BP-bound neutral argument storage views; overlapping names alias bytes.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process summonUndead(arg_04:U8Bytes5, arg_04_w02:U8Word, arg_06:U8Word, arg_08:U8Byte)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m03:U8Byte;
+	local_m05:Item;
+	local_m07:U8Word;
+	local_m09:Npc;
+	local_m09_w01:U8Bytes1;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent = 1
+	{
+		class_0581_unkCloseAllGumps();
+		if Avatar.getMana() < 2
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		Avatar.setMana(Avatar.getMana() - 2);
+		AccumulateIntelligence(class_0581_randRange(5, 10));
+	}
+	class_057C_timedBark(this, 40, u8_string_address("Kal Corp Xen!"));
+	if referent = 1
+	{
+		if not getAvatarInStasis()
+		{
+			setAvatarInStasis(1);
+		}
+		local_m02 = target();
+		if local_m02 = 0
+		{
+			class_0583_firespel_play_sound(this);
+			return;
+		}
+		arg_04_w02 = local_m02.getX();
+		arg_06 = local_m02.getY();
+		arg_08 = local_m02.getZ();
+	}
+	class_057C_turnToFace(this, getDirToCoords(arg_04_w02, arg_06), 0, 6);
+	class_057C_realDoAnim(this, 35, getDir());
+	wait(10);
+	local_m03 = 0;
+	if not canExistAt(119, arg_04_w02, arg_06, arg_08, 1, 0, 0)
+	{
+		arg_08 += 8;
+		if canExistAt(119, arg_04_w02, arg_06, arg_08, 1, 0, 0)
+		{
+			local_m03 = 1;
+		}
+	}
+	else
+	{
+		local_m03 = 1;
+	}
+	u8goto label_088D if not (local_m03);
+	Item_create(0, 511, u8_local_address(local_m05_w01));
+	local_m05.pop(arg_04_w02, arg_06, arg_08);
+	playSFX(27, 200);
+	for local_m07 = 0 to 4
+	{
+		local_m05.setFrame(local_m07);
+		wait(2);
+	}
+	local_m05.destroy();
+	arg_04_w02 += 96;
+	arg_06 += 96;
+	arg_08 += 8;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, arg_04) -> return;
+	wait(25);
+	arg_04_w02 -= 96;
+	arg_06 -= 96;
+	arg_08 -= 8;
+	Npc_create(0, 119, u8_local_address(local_m09_w01));
+	local_m09.orStatus(128);
+	local_m09.setStr(class_0581_randRange(15, 25));
+	Npc_setInt(class_0581_randRange(15, 20), u8_local_address(local_m09_w01));
+	local_m09.setDex(class_0581_randRange(15, 20));
+	local_m09.setHp(class_0581_randRange(30, 50));
+	local_m09.pop(arg_04_w02, arg_06, arg_08);
+	class_057C_toggleStatus(16, u8_local_address(local_m09_w01));
+	class_057C_realDoAnim(u8_local_address(local_m09_w01), 2, local_m09.getDirToItem(referent));
+	class_057C_toggleStatus(16, u8_local_address(local_m09_w01));
+	local_m09.touch();
+	wait(25);
+	temp = u8_process_dependency(u8_spawn_inline(class_0586_erthspel_finish_summon_undead_success_inline_06F9, 2, 5), u8_spawn(class_0581_wait(0x00000000, 25)), 1, 1);
+	u8goto label_0766;
+	u8label label_06F9:
+	u8_inline_frame(0);
+	[[PT_DEFAULT, 1]];
+	suspend;
+	if referent = 1
+	{
+		class_057C_realDoAnim(this, 34, getDir());
+	}
+	else
+	{
+		class_057C_realDoAnim(this, 20, getDir());
+	}
+	class_057C_realDoAnim(this, 2, getDir());
+	return;
+	u8label label_0766:
+	wait(35);
+	class_057C_realDoAnim(u8_local_address(local_m09_w01), 2, local_m09.getDirToItem(referent));
+	if referent = 1
+	{
+		setAvatarInStasis(0);
+		class_057C_timedBark(u8_local_address(local_m09_w01), 60, u8_string_address("Who shall I destroy, Master? "));
+		local_m02 = target();
+		if (local_m02.isNpc() = 1) and (local_m02 != local_m09)
+		{
+			class_057C_timedBark(u8_local_address(local_m09_w01), 40, u8_string_address("Yes, Master? "));
+			local_m09.setTarget(local_m02);
+		}
+		else
+		{
+			class_057C_timedBark(u8_local_address(local_m09_w01), 40, u8_string_address("You will be my victim! "));
+			local_m09.setTarget(1);
+		}
+	}
+	else
+	{
+		local_m09.setTarget(1);
+	}
+	u8goto label_092B;
+	u8label label_088D:
+	class_0583_firespel_play_sound(this);
+	temp = u8_process_dependency(u8_spawn_inline(class_0586_erthspel_finish_summon_undead_failure_inline_08BE, 2, 5), u8_spawn(class_0581_wait(0x00000000, 45)), 1, 1);
+	u8goto label_092B;
+	u8label label_08BE:
+	u8_inline_frame(0);
+	[[PT_DEFAULT, 1]];
+	suspend;
+	if referent = 1
+	{
+		class_057C_realDoAnim(this, 34, getDir());
+	}
+	else
+	{
+		class_057C_realDoAnim(this, 20, getDir());
+	}
+	class_057C_realDoAnim(this, 2, getDir());
+	return;
+	u8label label_092B:
+	if referent = 1
+	{
+		if getAvatarInStasis()
+		{
+			setAvatarInStasis(0);
+		}
+	}
+}
+
+// Derived: routine 0x0947, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process erthspel_animate_open_ground_chasm(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:Item;
+	local_m08:Item;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, arg_00]];
+		local_m02 = arg_00;
+		Item_create(0, 737, u8_local_address(local_m04_w01));
+		local_m04.pop(local_m02.getX() + 350, local_m02.getY() + 140, local_m02.getZ());
+	}
+	process
+	{
+		if local_m04.getFrame() = 9
+		{
+			if not doneFallEnd
+			{
+				doneFallEnd = 1;
+				Item_create(0, 439, u8_local_address(local_m06_w01));
+				Item_create(0, 439, u8_local_address(local_m08_w01));
+				local_m06.pop(local_m04.getX() + 350, local_m04.getY() + 200, local_m04.getZ());
+				local_m08.pop(local_m04.getX() + 330, local_m04.getY() + 240, local_m04.getZ());
+			}
+			wait(2);
+			local_m04.setFrame(5);
+		}
+		if local_m04.getFrame() != 10
+		{
+			wait(2);
+			local_m04.setFrame(local_m04.getFrame() + 1);
+		}
+	}
+}
+
+// Derived: routine 0x0A78, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process erthspel_animate_hydros_water_release(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m01:U8Byte;
+	local_m03:Item;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, arg_00]];
+		local_m03 = arg_00;
+	}
+	process
+	{
+		if local_m03.getFrame() = 14
+		{
+			if not local_m01
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0586_erthspel_animate_open_ground_chasm(0x00000000, arg_00) -> return;
+				local_m01 = 1;
+			}
+			local_m03.setFrame(12);
+		}
+		if local_m03.getFrame() != 15
+		{
+			wait(2);
+			local_m03.setFrame(local_m03.getFrame() + 1);
+		}
+	}
+}
+
+// Derived: routine 0x0AF8, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process openGround()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:U8Word;
+	local_m03:U8Byte;
+	local_m05:Item;
+	local_m07:Item;
+	local_m09:U8Word;
+	local_m0B:U8Word;
+	local_m0C:U8Byte;
+	local_m0E:Item;
+	local_m10:Item;
+	local_m12:U8Word;
+	local_m14:U8Word;
+	local_m16:U8Word;
+	local_m18:U8Word;
+	local_m1A:U8Word;
+	local_m1A_w01:U8Bytes1;
+	local_m1C:U8Word;
+	local_m1C_w01:U8Bytes1;
+	local_m1E:U8Word;
+	local_m1E_w01:U8Bytes1;
+	local_m20:U8Word;
+	local_m20_w01:U8Bytes1;
+	local_m22:U8Word;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent = 1
+	{
+		class_0581_unkCloseAllGumps();
+		if Avatar.getMana() < 3
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		Avatar.setMana(Avatar.getMana() - 3);
+		AccumulateIntelligence(class_0581_randRange(5, 10));
+	}
+	if Avatar.getMap() = 28
+	{
+		if hydrosFree != 1
+		{
+			foreach local_m02 where (type = 350) within 40 cells of Avatar {
+				local_m03 = 1;
+			}
+			if local_m03
+			{
+				if not hydrosFree
+				{
+					hydrosFree = 1;
+					class_0571_storm_start_rain_storm();
+					foreach local_m07 where (type = 736) within 40 cells of Avatar {
+						local_m09 = local_m07.getX();
+						local_m0B = local_m07.getY();
+						local_m0C = local_m07.getZ();
+						local_m07.destroy();
+						Item_create(0, 736, u8_local_address(local_m05_w01));
+						local_m05.pop(local_m09, local_m0B, local_m0C);
+						playMusic(106);
+						// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+						spawn class_0586_erthspel_animate_hydros_water_release(0x00000000, local_m05) -> return;
+						// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+						spawn class_0586_erthspel_run_quake_waves(0x00000000, 1) -> return;
+					}
+				}
+				else
+				{
+					return;
+				}
+			}
+		}
+	}
+	local_m0E = 0;
+	foreach local_m02 where (type = 644) within 40 cells of Avatar {
+		local_m0E = local_m02;
+	}
+	if local_m0E != 0
+	{
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m10 where (type = 521) on surface above local_m0E {
+			local_m12 = local_m10.getX();
+			local_m14 = local_m10.getY();
+			local_m16 = local_m10.getZ();
+			local_m18 = local_m10.getFrame() * 30;
+			local_m10.destroy();
+			if local_m1A.legal_create(519, local_m18, local_m12 - 192, local_m14 - 64, local_m16)
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_020D_collapse_animate_collapsed_rubble(u8_local_address(local_m1A_w01)) -> return;
+			}
+			if local_m1C.legal_create(519, local_m18 + 15, local_m12, local_m14, local_m16)
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_020D_collapse_animate_collapsed_rubble(u8_local_address(local_m1C_w01)) -> return;
+			}
+			if local_m1E.legal_create(520, local_m18, local_m12, local_m14 - 192, local_m16)
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_020D_collapse_animate_collapsed_rubble(u8_local_address(local_m1E_w01)) -> return;
+			}
+			if local_m20.legal_create(520, local_m18 + 15, local_m12 - 64, local_m14, local_m16)
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_020D_collapse_animate_collapsed_rubble(u8_local_address(local_m20_w01)) -> return;
+			}
+			playSFX(48, 100);
+		}
+		local_m0E.destroy();
+	}
+	foreach local_m0E where (type = 566) within 40 cells of Avatar {
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, local_m0E, 100, 49) -> return;
+		for local_m22 = 0 to 14
+		{
+			local_m0E.setFrame(local_m22);
+			wait(5);
+		}
+		local_m0E.destroy();
+		Item_create(0, 728, u8_local_address(local_m0E_w01));
+		local_m0E.pop(7775, 19455, 8);
+		magicWallDone = 1;
+	}
+}
+
+// Derived: routine 0x0E57, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process createGolem()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m02_w01:U8Bytes1;
+	local_m04:Item;
+	local_m06:U8Word;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent = 1
+	{
+		class_0581_unkCloseAllGumps();
+		if Avatar.getMana() < 3
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		Avatar.setMana(Avatar.getMana() - 3);
+		AccumulateIntelligence(class_0581_randRange(5, 10));
+	}
+	local_m04 = target();
+	if local_m04 = 0
+	{
+		class_0583_firespel_play_sound(this);
+	}
+	else
+	{
+		local_m06 = local_m04.getType();
+		if (local_m06 = 3) or (local_m06 = 4) or (local_m06 = 9) or (local_m06 = 470)
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0586_erthspel_run_quake_waves(0x00000000, 1) -> return;
+			if Npc_create(0, 214, u8_local_address(local_m02_w01))
+			{
+				local_m02.orStatus(128);
+				local_m02.pop(local_m04.getX(), local_m04.getY(), local_m04.getZ());
+				class_057C_realDoAnim(u8_local_address(local_m02_w01), 4, 0);
+				local_m02.use();
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0FC9, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process withstandDeath()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent = 1
+	{
+		class_0581_unkCloseAllGumps();
+		if Avatar.getMana() < 4
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		Avatar.setMana(Avatar.getMana() - 4);
+		AccumulateIntelligence(class_0581_randRange(5, 10));
+	}
+	Npc_setWithstandDeath(this);
+}
+
+// Derived: routine 0x107D, event mask 0x00000000.
+// O: recovered callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process grantPeace()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent = 1
+	{
+		class_0581_unkCloseAllGumps();
+		if Avatar.getMana() < 5
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		Avatar.setMana(Avatar.getMana() - 5);
+		AccumulateIntelligence(class_0581_randRange(5, 10));
+	}
+	castGrantPeaceSpell();
+}
+
+// Derived: routine 0x112D, event mask 0x00000000.
+// O: recovered callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process callQuake(arg_04:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	[[544, referent]]; // R/X: process type name unproved; numeric VM expression retained.
+	if referent = 1
+	{
+		class_0581_unkCloseAllGumps();
+		if Avatar.getMana() < 5
+		{
+			class_057C_realDoAnim(this, 27, getDir());
+			safePlaySFX(124, 100);
+			class_057C_realDoAnim(this, 28, getDir());
+			return;
+		}
+		Avatar.setMana(Avatar.getMana() - 5);
+		AccumulateIntelligence(class_0581_randRange(5, 10));
+	}
+	class_0586_erthspel_run_quake_waves(0x00000000, arg_04);
+}
+
+// Derived: routine 0x11F0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process erthspel_run_quake_waves(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Bytes2; // X: untouched.
+	local_m08:Npc;
+	local_m08_w01:U8Bytes1;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[544, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+		if arg_00 < 1
+		{
+			return;
+		}
+		else
+		{
+			local_m04 = 60;
+			Camera_startQuake(1);
+			wait(30);
+			Camera_startQuake(2);
+			wait(30);
+			Camera_startQuake(3);
+			wait(30);
+			Camera_startQuake(5);
+			wait(30);
+			foreach local_m02 where (type = 525) within 40 cells of Avatar {
+				local_m02.gotHit(1, 777);
+			}
+		}
+	}
+	process
+	{
+		u8goto label_12D0 if not (local_m04 = 0);
+		arg_00--;
+		local_m04 = 60;
+		u8goto label_13E2;
+		u8label label_12D0:
+		u8goto label_1373 if not ((local_m04 = 60) or (local_m04 = 45) or (local_m04 = 30) or (local_m04 = 15));
+		foreach local_m02 within 25 cells of Avatar {
+			if (local_m02.isNpc() = 1) and (local_m02.getType() != 214)
+			{
+				local_m08 = local_m02;
+				if (Npc_getLastAnimSet(u8_local_address(local_m08_w01)) != 14) or (Npc_getLastAnimSet(u8_local_address(local_m08_w01)) != 4)
+				{
+					if not local_m08.isBusy()
+					{
+						if not urandom(6)
+						{
+							// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+							spawn class_057C_downUp(u8_local_address(local_m08_w01), urandom(8)) -> return;
+						}
+					}
+				}
+				u8goto label_136A;
+			}
+			u8label label_136A:
+		}
+		u8goto label_13E2;
+		u8label label_1373:
+		if arg_00 = 0
+		{
+			Camera_startQuake(3);
+			wait(30);
+			Camera_startQuake(2);
+			wait(30);
+			Camera_startQuake(1);
+			wait(30);
+			Camera_stopQuake();
+			return;
+		}
+		else
+		{
+		}
+		u8label label_13E2:
+		local_m04--;
+	}
+}
+

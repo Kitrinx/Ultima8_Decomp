@@ -1,0 +1,290 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x023E
+// FLEX slot: 576
+// Original offset: 0x0008AA39
+// Naming evidence: E, exact object-1 linker name `GUARDMAN`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GUARDMAN.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass GUARDMAN inherits Item
+{
+	process guardman_look_describe_living_or_dead();
+	process guardman_enter_fast_area_start_guard_fight_monitor();
+	process guardman_leave_fast_area_clear_guard_process_refs();
+	process guardman_cast_call_guards_to_arms();
+	process guardman_use_run_guard_conversation();
+	process guardman_monitor_fights_and_bark();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARDMAN::guardman_look_describe_living_or_dead()
+{
+	if isDead()
+	{
+		bark("dead guardsman ");
+	}
+	else
+	{
+		bark("guardsman ");
+	}
+}
+
+// Derived: routine 0x00E1, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARDMAN::guardman_enter_fast_area_start_guard_fight_monitor()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	if (isDead() = 1) or (getMap() = 3) or (secondexecution = 1)
+	{
+		return;
+	}
+	foreach recursive local_m02 where (type = TypePathMarker) within container referent {
+		if local_m02.getFrame() = 20
+		{
+			return;
+		}
+	}
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_023E_guardman_monitor_fights_and_bark(this) -> return;
+}
+
+// Derived: routine 0x0185, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARDMAN::guardman_leave_fast_area_clear_guard_process_refs()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+}
+
+// Derived: routine 0x01C6, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARDMAN::guardman_cast_call_guards_to_arms()
+{
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn bark("Guardsmen, to arms! ") -> return;
+}
+
+// Derived: routine 0x01F8, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARDMAN::guardman_use_run_guard_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String List;
+	local_m06:Item;
+	local_m08:U8Word;
+	local_m08 = getDir();
+	foreach recursive local_m06 where (type = TypePathMarker) within container referent {
+		if local_m06.getFrame() = 20
+		{
+			somebodyTalking = 1;
+			wait(30);
+			bark("Away! I will not speak with you. ");
+			somebodyTalking = 0;
+			return;
+		}
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Guardsman! "), u8_stack_ref(1)) -> return;
+	class_057C_enterConvo(this);
+	killProcess(1, PT_BARK);
+	if urandom(100) > 50
+	{
+		bark("What can I do for you? ");
+	}
+	else
+	{
+		bark("How may I be of assistance? ");
+	}
+	local_m04 = <<"Who are you? ", "What is your duty? ", "Bye ">>;
+	u8label label_037B:
+	u8goto label_0955 if not (local_m02 != "Bye ");
+	local_m02 = ask(local_m04);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m02
+	{
+		case "Who are you? "
+		{
+			local_m04 -= <<"Who are you? ">>;
+			if devonInRule
+			{
+				bark("I am a guardsman in the service of our Tempest. ");
+				bark("Proud am I to to serve him. ");
+			}
+			else
+			{
+				bark("I am a guardsman in the service of her ladyship. ");
+			}
+		}
+		case "What is your duty? "
+		{
+			local_m04 -= <<"What is your duty? ">>;
+			u8goto label_05FD if not (devonInRule);
+			if urandom(100) > 50
+			{
+				bark("My duty is to protect Tenebrae. ");
+				bark("I have sworn to die in defense of our city against any horde that should attact. ");
+			}
+			else
+			{
+				bark("My duty is to insure the peace and tranquility of Tenebrea is not disturbed. ");
+			}
+			u8goto label_0797;
+			u8label label_05FD:
+			if urandom(100) > 50
+			{
+				bark("My duty is to control the populus, to insure that the peace is kept for her ladyship. ");
+				u8goto label_0797;
+			}
+			bark("Why are you asking so many questions? ");
+			bark("Did Mordea send you to test me? ");
+			wait(40);
+			bark("I'd best be about my duties... ");
+			class_057C_exitConvo(this);
+			foreach recursive local_m06 where (type = TypePathMarker) within container referent {
+				class_057C_turnToFace(this, local_m08, 0, 10);
+				return;
+			}
+			cSetActivity(0);
+			return;
+			u8label label_0797:
+		}
+		case "Bye "
+		{
+			if devonInRule
+			{
+				if urandom(100) > 50
+				{
+					bark("Nice taling with you. ");
+					bark("In your travels take care you do not step on any ghouls. ");
+				}
+				else
+				{
+					bark("Join me in a drink at Orlok's later if you stop by. ");
+				}
+			}
+			else if urandom(100) > 50
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Fine. I must get back to work. ") -> return;
+			}
+			else
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Stay out of trouble! ") -> return;
+			}
+			class_057C_exitConvo(this);
+			foreach recursive local_m06 where (type = TypePathMarker) within container referent {
+				class_057C_turnToFace(this, local_m08, 0, 10);
+				return;
+			}
+			cSetActivity(0);
+			return;
+		}
+	}
+	u8goto label_037B;
+	u8label label_0955:
+	u8_free_local_string(local_m02);
+	u8_free_local_string_list(local_m04);
+}
+
+// Derived: routine 0x095B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process GUARDMAN::guardman_monitor_fights_and_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Npc;
+	local_m06:Number;
+	local_m08:Number;
+	local_m0A:U8Word;
+	local_m0B:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		wait(200);
+	}
+	process
+	{
+		local_m0B = 0;
+		wait(urandom(100) + 220);
+		local_m06 = urandom(10);
+		local_m08 = getDistance(referent, Avatar:Referent);
+		foreach local_m02 within 20 cells of referent {
+			if local_m02.isNpc()
+			{
+				local_m04 = local_m02;
+				if (local_m04.isInCombat() = 1) and (local_m04 = 1)
+				{
+					local_m0B = 1;
+					local_m0A = getDir();
+					class_057C_turnToFace(this, getDirToItem(local_m04), 0, 10);
+					class_057C_realDoAnim(this, 5, getDir());
+					if urandom(100) > 50
+					{
+						bark("No fighting around here! ");
+					}
+					else
+					{
+						bark("Stop, or else! ");
+					}
+					class_057C_realDoAnim(this, 6, getDir());
+					class_057C_turnToFace(this, local_m0A, 0, 10);
+				}
+			}
+		}
+		if (local_m08 > 600) or (somebodyTalking = 1) or (local_m0B = 1)
+		{
+			local_m06 = 0;
+		}
+		if local_m06 = 1
+		{
+			bark("Move along... ");
+		}
+		else if local_m06 = 2
+		{
+			bark("Stay out of trouble... ");
+		}
+		else if local_m06 = 3
+		{
+			bark("Watch for undead... ");
+		}
+		else if local_m06 = 4
+		{
+			bark("Curse these tight boots... ");
+		}
+		else if local_m06 = 5
+		{
+			class_057C_realDoAnim(this, 5, getDir());
+			bark("Boy, this weapon gets heavy... ");
+			class_057C_realDoAnim(this, 6, getDir());
+		}
+		else if local_m06 = 6
+		{
+			class_057C_realDoAnim(this, 5, getDir());
+			wait(30);
+			class_057C_realDoAnim(this, 6, getDir());
+		}
+	}
+}
+

@@ -1,0 +1,685 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x056F
+// FLEX slot: 1393
+// Original offset: 0x00116360
+// Naming evidence: E, exact object-1 linker name `VARDION2`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/VARDION2.unk`.
+// u8label/u8goto remain invented where emitted.
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] vardion2_run_enclave_gatekeeping_dialogue()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:String;
+	local_m04:String;
+	local_m06:String List;
+	local_m08:String List;
+	local_m0A:U8Bytes2; // X: untouched.
+	local_m0C:U8Word;
+	local_m0E:Number;
+	local_m0C = 0;
+	if not vardionMet
+	{
+		bark("Who are you? ");
+		local_m02 = "I am " + getName() + ".";
+		local_m06 = <<local_m02, "It is of little import. ", "It is my business, not yours. ">>;
+		local_m04 = "nothing ";
+		while local_m04 != ""
+		{
+			local_m04 = ask(local_m06);
+			// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+			switch local_m04
+			{
+				case local_m02
+				{
+					bark("I don't care what your name is. I want to know who you are that you feel free to enter into the Sorcerer's Enclave without -my- permission. ");
+					local_m06 = <<"What do you want from me? ", "I merely seek knowledge. ", "I am a great hero! ", "I go where I will. ", "Why do I need -your- permission? ">>;
+					vardionAvaName = 1;
+				}
+				case "Some call me the Avatar. "
+				{
+					bark("Avatar? Strange title. Now, what I want to know is why you feel free to enter into the Sorcerer's Enclave without -my- permission. ");
+					local_m06 = <<"What do you want from me? ", "I merely seek knowledge. ", "I am a great hero! ", "I go where I will. ", "Why do I need -your- permission? ">>;
+				}
+				case "It is of little import. "
+				{
+					bark("That's as it may be, but I will know who you are if you wish to remain here. ");
+					local_m06 -= <<"It is of little import. ">>;
+					local_m06 ^= <<"Some call me the Avatar. ">>;
+				}
+				case "It is my business, not yours. "
+				{
+					bark("Is that so? You try my patience, and I have no patience. Begone fool! ");
+					vardionMad = 1;
+					local_m04 = "";
+				}
+				case "What do you want from me? "
+				{
+					bark("What I want is an intelligent response, intruder. ");
+					local_m06 -= <<"What do you want from me? ">>;
+				}
+				case "I merely seek knowledge. "
+				{
+					bark("We don't give it away at the Enclave. It is earned. Tell me why you are here. ");
+					local_m06 -= <<"I merely seek knowledge. ">>;
+				}
+				case "Why do I need -your- permission? "
+				{
+					bark("Because I run this place... for all intents and purposes. ");
+					local_m06 -= <<"Why do I need -your- permission? ">>;
+				}
+				case "I go where I will. "
+				{
+					bark("Ah some Fire in you after all! But in truth, while you are here, you go only where I say. Understood? ");
+					if class_0581_askYesNo(0x00000000)
+					{
+						bark("Good. I'm glad we see eye to eye. ");
+					}
+					else
+					{
+						bark("I did not misspeak myself. You go where I allow you or you die. It's that simple. ");
+					}
+					local_m04 = "";
+				}
+				case "I am a great hero! "
+				{
+					bark("Maybe where you come from, but here you're nothing unless I say you're something. ");
+					local_m06 = <<"Ah, I see. ", "No really, I am a great hero. ", "This from one who is nothing. ">>;
+				}
+				case "No really, I am a great hero. "
+				{
+					bark("Yes, yes, yes. I'm sure you are, child. ");
+					local_m04 = "";
+				}
+				case "This from one who is nothing. "
+				{
+					bark("I have no qualms about killing you, fool. In fact, I might gain pleasure from the exercise. ");
+					local_m06 = <<"Ah, I see. ", "You take pleasure in pain? ", "Aye, exercise would do you good. ">>;
+					vardionMad = 1;
+				}
+				case "Ah, I see. "
+				{
+					bark("Good. I'm glad that you do. ");
+					if vardionMad
+					{
+						vardionMad = vardionMad - 1;
+					}
+					local_m04 = "";
+				}
+				case "Aye, exercise would do you good. "
+				{
+					bark("What do you mean by that, knave? I could burn you to ashes, if I had a mind to. ");
+					local_m06 = <<"Ah, I see. ", "I mean, perhaps you should eat less. ", "If only you had a mind. ">>;
+				}
+				case "You take pleasure in pain? "
+				{
+					bark("Only that of my enemies. I was merely saying that you should have a care for your own welfare. Insulting your betters can be hazardous to your health. ");
+					local_m06 = <<"Ah, I see. ", "I didn't know you cared. ", "You think you are my better? ">>;
+				}
+				case "I didn't know you cared. "
+				{
+					bark("I don't. ");
+					local_m04 = "";
+				}
+				case "You think you are my better? "
+				{
+					bark("It is a true fact. You are a stranger, whereas I lead these people... for the most part. ");
+					local_m04 = "";
+				}
+				case "I mean, perhaps you should eat less. "
+				{
+					bark("Are you insinuating that my physique is less than ideal? I could break you like a dry twig. ");
+					local_m06 = <<"Ah, I see. ", "What physique? I see no physique. ", "Your physique is ideal... for a cow. ">>;
+				}
+				case "What physique? I see no physique. "
+				{
+					bark("You play the fool to make jest at my expense, but be wary. I will not take more of your insolence. ");
+					local_m06 = <<"Ah, I see. ", "I am not insolent, merely honest. ", "But I've just begun to be insolent. ">>;
+					vardionMad = 2;
+				}
+				case "Your physique is ideal... for a cow. "
+				{
+					bark("I don't know what this -cow- you speak of is, but I mislike your tone. Run along, boy. ");
+					vardionMad = 2;
+					local_m04 = "";
+				}
+				case "If only you had a mind. "
+				{
+					bark("I am a forgiving man, but you go too far. I will not take more of your isolence. ");
+					local_m06 = <<"Ah, I see. ", "I am not insolent, merely honest. ", "But I've just begun to be insolent. ">>;
+					vardionMad = 2;
+				}
+				case "I am not insolent, merely honest. "
+				{
+					bark("Honesty can be as deadly as deceit if it is not tempered by wisdom. ");
+					local_m06 = <<"Ah, I see. ", "Deceit... a thing you know well? ", "What do you know of wisdom? ">>;
+				}
+				case "But I've just begun to be insolent. "
+				{
+					bark("Your skull will make a fine flagon when I'm done with you. Prepare to meet the Lord of Flame, infidel! ");
+					vardionMad = 3;
+					local_m04 = "";
+				}
+				case "Deceit... a thing you know well? "
+				{
+					bark("Know one thing, infidel, I never -- ever break my word. Why should I defend myself before one such as you? Leave me be. ");
+					vardionMad = 2;
+					local_m04 = "";
+				}
+				case "What do you know of wisdom? "
+				{
+					bark("Your tenure on Pagan has ended, dolt! I remand you into the care of the Lord of Flame. ");
+					vardionMad = 3;
+					local_m04 = "";
+				}
+				default
+				{
+					local_m04 = " ";
+					if not local_m0C
+					{
+						bark("Answer me, stranger. ");
+					}
+					else if local_m0C = 1
+					{
+						bark("You will answer me or you will leave. ");
+					}
+					else if local_m0C = 2
+					{
+						bark("I give you one last chance to answer me promptly. ");
+					}
+					else
+					{
+						bark("I'm not your servant and I refuse to wait upon you! Go now, and do not disturb me again. ");
+						vardionMad = 1;
+						local_m04 = "";
+					}
+					local_m0C++;
+				}
+			}
+		}
+		if not vardionMad
+		{
+			bark("Now then, I am a busy man. What do you want of me? ");
+		}
+		vardionMet = 1;
+	}
+	else
+	{
+		local_m0E = urandom(3);
+		if not vardionMad
+		{
+			if acolyteKilled = 1
+			{
+				if (sponsorTest = 1) or (keyOfTheAcolyte = 1)
+				{
+					return;
+				}
+				if not local_m0E
+				{
+					bark("What do you need, Disciple? ");
+				}
+				else if local_m0E = 1
+				{
+					local_m02 = "How may I aid you, Daemion? ";
+				}
+				else
+				{
+					local_m02 = "Yes? ";
+				}
+			}
+			else if vardionJoined
+			{
+				if not local_m0E
+				{
+					bark("Well, do you have her Truename? ");
+				}
+				else if local_m0E = 1
+				{
+					bark("Do you know what Bane's Truename is? ");
+				}
+				else
+				{
+					bark("Have you accomplished your task? ");
+				}
+			}
+			else if (vardionOffer = 0) or (vardionOffer = 5)
+			{
+				if vardionHome >= 2
+				{
+					if not local_m0E
+					{
+						bark("How can I help you, friend? ");
+					}
+					else if local_m0E = 1
+					{
+						local_m02 = "Good tidings,  ";
+						if vardionAvaName
+						{
+							local_m02 += getName() + ".";
+						}
+						else
+						{
+							local_m02 += "my alien friend. ";
+						}
+						bark(u8_string_local_address(local_m02));
+					}
+					else if vardionHome = 2
+					{
+						bark("Greetings, offworlder. ");
+					}
+					else if vardionHome = 3
+					{
+						bark("Greetings, Earthling. ");
+					}
+					else if vardionHome = 4
+					{
+						bark("Greetings, Britannian. ");
+					}
+				}
+				else if not local_m0E
+				{
+					bark("I have no time for idle conversation. Ask your questions and be done with it. ");
+				}
+				else if local_m0E = 1
+				{
+					bark("What do you want now? ");
+				}
+				else
+				{
+					bark("What?! ");
+				}
+			}
+			else if not local_m0E
+			{
+				bark("Well. Are you prepared to undertake my task? ");
+			}
+			else if local_m0E = 1
+			{
+				bark("Will you undertake my task? ");
+			}
+			else
+			{
+				bark("The task awaits. Are you ready to begin? ");
+			}
+		}
+		if vardionMad = 1
+		{
+			if not local_m0E
+			{
+				bark("Depart now or face my wrath. I do not take kindly to mischievous interlopers. ");
+			}
+			else if local_m0E = 1
+			{
+				bark("Leave this place. You are not needed here. ");
+			}
+			else
+			{
+				bark("Go now, for we have nothing further to discuss. ");
+			}
+		}
+		else if vardionMad = 2
+		{
+			if not local_m0E
+			{
+				bark("You have earned my wrath. I hold back your destruction now only by sheer force of will. ");
+			}
+			else if local_m0E = 1
+			{
+				bark("You tempt your fate by remaining here. ");
+			}
+			else
+			{
+				bark("I find you unfit to walk upon this Enclave's soil. Leave now and your life will be spared. ");
+			}
+		}
+	}
+}
+
+// Derived: routine 0x1DAD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] vardion2_bark_state_based_farewell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Number;
+	local_m04:String;
+	local_m02 = urandom(3);
+	local_m04 = "";
+	if vardionMad = 1
+	{
+		if not local_m02
+		{
+			bark("The foolish are said to die young. I don't expect you'll see your elder years. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("Do not disturb me or my Sorcerers further. ");
+		}
+		else
+		{
+			bark("Leave me be. ");
+		}
+	}
+	else if vardionMad = 2
+	{
+		if not local_m02
+		{
+			bark("I have been lenient up until now. If you so much as breathe in my direction... make no mistake... you will regret it. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("If you return, I will become angered. You won't like me when I'm angry. ");
+		}
+		else
+		{
+			bark("Go now, and do not return. ");
+		}
+	}
+	else if acolyteKilled
+	{
+		if not local_m02
+		{
+			bark("Farewell, Disciple. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("Return when you seek more training. ");
+		}
+		else
+		{
+			bark("If I could only remember where I put the brimstone... ");
+		}
+	}
+	else if vardionJoined
+	{
+		if not local_m02
+		{
+			bark("Leave me and accomplish your task. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("When you have Bane's Truename, return to me. ");
+		}
+		else
+		{
+			bark("Go now. Do not return without her Truename. ");
+		}
+	}
+	else if vardionHome
+	{
+		if not local_m02
+		{
+			local_m04 = "Keep the Fire burning,   ";
+		}
+		else if local_m02 = 1
+		{
+			local_m04 = "Go with the Guardian,   ";
+		}
+		else
+		{
+			local_m04 = "Farewell,  ";
+		}
+		if vardionHome = 2
+		{
+			local_m04 += "offworlder. ";
+		}
+		if vardionHome = 3
+		{
+			local_m04 += "Earthling. ";
+		}
+		if vardionHome = 4
+		{
+			local_m04 += "Britannian. ";
+		}
+		bark(u8_string_local_address(local_m04));
+	}
+	else if not local_m02
+	{
+		bark("Disturb the Sorcerers here at your own risk. ");
+	}
+	else if local_m02 = 1
+	{
+		bark("Now, what was I doing... ");
+	}
+	else
+	{
+		bark("I must remember to replace the wards... ");
+	}
+}
+
+// Derived: routine 0x2347, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] vardion2_bark_interrupted_dialogue_response()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Number;
+	local_m04:String;
+	local_m02 = urandom(3);
+	if vardionHome >= 2
+	{
+		if not local_m02
+		{
+			local_m04 = "I really must be about my business, ";
+		}
+		else if local_m02 = 1
+		{
+			local_m04 = "I must return to my work, ";
+		}
+		else
+		{
+			local_m04 = "When your thoughts are collected come and speak with me, ";
+		}
+		if vardionHome = 3
+		{
+			local_m04 += "Earthling. ";
+		}
+		else if vardionHome = 4
+		{
+			local_m04 += "Britannian. ";
+		}
+		else if vardionAvaName
+		{
+			local_m04 += getName() + ".";
+		}
+		else
+		{
+			local_m04 += "my offworlder friend. ";
+		}
+		bark(u8_string_local_address(local_m04));
+	}
+	else if not local_m02
+	{
+		bark("I grow weary of your games. Leave me be. ");
+	}
+	else if local_m02 = 1
+	{
+		bark("Speak to me only when you have something to say, or not at all. ");
+	}
+	else
+	{
+		bark("I cannot abide your ill manners. Or is it perhaps slow wit? ");
+	}
+}
+
+// Derived: routine 0x25A0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] vardion2_run_anger_reconciliation_dialogue()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:String;
+	local_m04:String List;
+	local_m04 = <<"I must learn to hold my tongue. ", "Forgive me. I have offended you. ">>;
+	if vardionMad = 1
+	{
+		local_m04 ^= <<"Do not turn away from me, rogue. ">>;
+	}
+	else if vardionMad = 2
+	{
+		local_m04 ^= <<"You will do as I say, knave! ">>;
+	}
+	else
+	{
+		setTarget(1);
+		return;
+	}
+	local_m04 ^= <<"Never mind. ">>;
+	while local_m02 != "Never mind. "
+	{
+		local_m02 = ask(local_m04);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "I must learn to hold my tongue. "
+			{
+				bark("I would have to agree. ");
+				local_m02 = "Never mind. ";
+			}
+			case "Forgive me. I have offended you. "
+			{
+				bark("I am not so thin-skinned as to be offended by your remarks, but it shows prudence that you saw them to be offensive and can accept fault for your error. What do you want? ");
+				vardionMad = 0;
+				class_041C_vardion_recruit_disciple(this);
+				return;
+			}
+			case "Do not turn away from me, rogue. "
+			{
+				bark("You will not adress me in such a manner! I am not accustomed to being ordered by inferiors. ");
+				local_m04 -= <<"Do not turn away from me, rogue. ", "Never mind. ">>;
+				local_m04 ^= <<"You will do as I say, knave! ", "Never mind. ">>;
+				vardionMad = 2;
+			}
+			case "You will do as I say, knave! "
+			{
+				bark("By the blood of the Destroyer! I'll have your eyes for a necklace! ");
+				vardionMad = 3;
+				setTarget(1);
+				return;
+			}
+			case "Never mind. "
+			{
+				class_056F_vardion2_bark_state_based_farewell(this);
+			}
+			case ""
+			{
+				class_056F_vardion2_bark_interrupted_dialogue_response(this);
+				local_m02 = "Never mind. ";
+			}
+			default
+			{
+				bark("Something you said was wrong. Giant, blue letters appeared, blazing across the sky. It's a sign from Pyros! ");
+			}
+		}
+	}
+	if not vardionMad
+	{
+		if not acolyteKilled
+		{
+			class_041C_vardion_recruit_disciple(this);
+		}
+		else
+		{
+			class_058A_daemscen_run_sorcery_training_conversation(this);
+		}
+	}
+}
+
+// Derived: routine 0x2B0E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] vardion2_ask_for_bane_truename()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:U8Word;
+	local_m04:String;
+	local_m06:String List;
+	local_m02 = class_0581_askYesNo(0x00000000);
+	if local_m02 = 1
+	{
+		bark("What is it?! You must hurry. We have no time to waste. I must begin the ritual, now. ");
+	}
+	else
+	{
+		bark("There is no time for conversation. You must get her Truename. Only that will allow me to avert the coming disaster, and quite possibly my own death. ");
+		return;
+	}
+	local_m06 = <<"I don't know it yet. ">>;
+	if baneJoined
+	{
+		local_m06 ^= <<" Sabriane.">>;
+	}
+	if not vardionDolt
+	{
+		local_m06 ^= <<" Bane.">>;
+	}
+	if not vardionFool
+	{
+		local_m06 ^= <<" Daemion.">>;
+	}
+	if not vardionStupid
+	{
+		local_m06 ^= <<" Morduin.">>;
+	}
+	local_m04 = ask(local_m06);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case " Bane."
+		{
+			bark("That name has no use to me, dolt. I said get her Truename. Go! Do not return without it. ");
+			vardionDolt = 1;
+			return;
+		}
+		case " Daemion."
+		{
+			bark("Fool! That is most definitely not her Truename. And if you don't get it quickly, you'll have no use for yours. ");
+			vardionFool = 1;
+			return;
+		}
+		case " Morduin."
+		{
+			bark("How can one be so stupid? Must I be surrounded by incompetents? Get Bane's Truename, or face the consequences. ");
+			vardionStupid = 1;
+			return;
+		}
+		case "I don't know it yet. "
+		{
+			if not vardionFalse
+			{
+				bark("Do not waste time with your lies. Get me her Truename or you'll die before she can kill me! ");
+				vardionFalse = 1;
+				return;
+			}
+			else
+			{
+				bark("I have had enough of you, fool! There won't be enough of you left to inter when I'm done with you! ");
+				vardionMad = 3;
+				setTarget(1);
+				return;
+			}
+		}
+		case " Sabriane."
+		{
+			bark("A weak name for a weakling Sorcerer. Watch now what a real Sorcerer can do, my Disciple. ");
+			acolyteKilled = 1;
+			class_058A_daemscen_play_rival_acolyte_assassination(this);
+			class_058A_daemscen_play_avatar_disciple_induction(this);
+			return;
+		}
+		default
+		{
+			bark("If you have her Truename and won't reveal it, you are breaching our contract. If you don't know it, you are insolent. In either case, I will not wait upon your leisure. Return only when you can give me Bane's Truename. ");
+		}
+	}
+}
+

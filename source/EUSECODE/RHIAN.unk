@@ -1,0 +1,1296 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0412
+// FLEX slot: 1044
+// Original offset: 0x000E11EE
+// Naming evidence: E, exact object-1 linker name `RHIAN`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/RHIAN.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+npcclass RHIAN inherits Npc
+{
+	process rhian_look_bark_living_or_dead_identity();
+	process rhian_avatar_stole_something_warn_then_call_guards_for_theft(arg_04:U8Word);
+	process rhian_schedule_update_period_schedule_and_safe_teleport();
+	process rhian_cast_call_guard_execution_when_attacked(arg_04:U8Word);
+	process rhian_enter_fast_area_start_location_schedule();
+	process rhian_leave_fast_area_reset_active_reference();
+	process rhian_sob_while_kneeling();
+	process rhian_sob_while_sitting();
+	process rhian_animate_grieving();
+	process rhian_sit_and_bark();
+	process rhian_play_random_shop_bark();
+	process rhian_run_walk_schedule();
+	process rhian_play_random_walk_bark();
+	process rhian_buy_gems();
+	process rhian_sell_jewelry();
+	process rhian_sell_clothing();
+	process rhian_use_run_conversation();
+	process rhian_resume_grieving_after_dialogue();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process RHIAN::rhian_look_bark_living_or_dead_identity()
+{
+	if isDead()
+	{
+		bark("the body of Rhian ");
+		return;
+	}
+	if rhianName and rhianJob
+	{
+		bark("Rhian the weaver ");
+		return;
+	}
+	if rhianName
+	{
+		bark("Rhian");
+		return;
+	}
+	if rhianJob
+	{
+		bark("weaver ");
+		return;
+	}
+	else
+	{
+		bark("woman ");
+		return;
+	}
+}
+
+// Derived: routine 0x0168, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process RHIAN::rhian_avatar_stole_something_warn_then_call_guards_for_theft(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m05:U8Byte;
+	if rhianSchedule != 1
+	{
+		return;
+	}
+	local_m02 = arg_04;
+	realDoAnim(24, getDir());
+	if ((local_m02.getType() = 596) or (local_m02.getType() = 823)) and (not guardsCalled)
+	{
+		resetRef(referent, PT_ACTIVITY);
+		foreach recursive local_m04 within container 1 {
+			if local_m04 = local_m02
+			{
+				local_m05 = 1;
+			}
+		}
+		if (local_m05 = 1) or (rhianMoveCheck = 3)
+		{
+			if (local_m02.getType() = 823) and (not stolenOnce)
+			{
+				stolenOnce = 1;
+				bark("I would not do that if I were you! ");
+				rhian_enter_fast_area_start_location_schedule();
+				return;
+			}
+			bark("Stop! Thief! ");
+			wait(160);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn callTheGuards(arg_04) -> return;
+		}
+		else if rhianMoveCheck = 0
+		{
+			bark("I saw that! ");
+			rhianMoveCheck = 1;
+		}
+		else if rhianMoveCheck = 1
+		{
+			bark("Stop that, or I'll call the guard! ");
+			rhianMoveCheck = 2;
+		}
+		else if rhianMoveCheck = 2
+		{
+			bark("This is your last warning! ");
+			rhianMoveCheck = 3;
+		}
+	}
+}
+
+// Derived: routine 0x037E, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process RHIAN::rhian_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	local_m09:U8Word;
+	rhianKneeling = 0;
+	if (toranDead = 0) or (isDead() = 1)
+	{
+		return;
+	}
+	if (class_0581_getPeriod() = 0) or (class_0581_getPeriod() = 3) or (class_0581_getPeriod() = 5)
+	{
+		local_m05_w02 = 15935;
+		local_m03 = 8127;
+		local_m01 = 48;
+		local_m09 = 1;
+		local_m07 = 41;
+	}
+	if (class_0581_getPeriod() = 1) or (class_0581_getPeriod() = 4)
+	{
+		local_m05_w02 = 17791;
+		local_m03 = 6879;
+		local_m01 = 48;
+		local_m09 = 2;
+		local_m07 = 41;
+	}
+	if class_0581_getPeriod() = 2
+	{
+		local_m05_w02 = 11167;
+		local_m03 = 10495;
+		local_m01 = 48;
+		local_m09 = 2;
+		local_m07 = 39;
+	}
+	if class_057C_canSafeTeleport(this, local_m05, local_m07)
+	{
+		rhianSchedule = local_m09;
+		class_057C_safeTeleport(this, local_m05, local_m07);
+	}
+}
+
+// Derived: routine 0x0468, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process RHIAN::rhian_cast_call_guard_execution_when_attacked(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = 10;
+	while (not Npc_getTarget(this)) and local_m02
+	{
+		wait(1);
+		local_m02--;
+	}
+	arg_04 = Npc_getTarget(this);
+	if arg_04 = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn callTheGuards(NULL_REF) -> return;
+		if not isDead()
+		{
+			if urandom(100) > 50
+			{
+				bark("Help me, Beren! ");
+			}
+			else
+			{
+				bark("Town Sorcerer! ");
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0536, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process RHIAN::rhian_enter_fast_area_start_location_schedule()
+{
+	if (getMap() = 3) or (isDead() = 1)
+	{
+		return;
+	}
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	if rhianKneeling
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0412_rhian_sob_while_kneeling(this) -> return;
+	}
+	else if rhianSchedule = 1
+	{
+		if rhiangrieving
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0412_rhian_sob_while_sitting(this) -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0412_rhian_sit_and_bark(this) -> return;
+		}
+	}
+	else if rhianSchedule = 2
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0412_rhian_run_walk_schedule(this) -> return;
+	}
+}
+
+// Derived: routine 0x05F0, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process RHIAN::rhian_leave_fast_area_reset_active_reference()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+}
+
+// Derived: routine 0x0631, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_sob_while_kneeling()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		rhianKneeling = 1;
+	}
+	process
+	{
+		if urandom(10) > 5
+		{
+			bark("boo-hoo... ");
+		}
+		else
+		{
+			bark("-sob- ");
+		}
+		realDoAnim(35, 2);
+		wait(60 + urandom(200));
+		killProcess(referent, PT_BARK);
+	}
+}
+
+// Derived: routine 0x06DC, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_sob_while_sitting()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		realDoAnim(AS_CLIMB_4, 2);
+	}
+	process
+	{
+		if urandom(10) > 5
+		{
+			bark("-sob- ");
+		}
+		else
+		{
+			bark("-sniff- ");
+		}
+		realDoAnim(AS_CLIMB_5, 2);
+		wait(60 + urandom(200));
+		killProcess(referent, PT_BARK);
+	}
+}
+
+// Derived: routine 0x0794, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_animate_grieving()
+{
+	[[PT_ACTIVITY, referent]];
+	rhiangrieving = 1;
+	if rhianSitting
+	{
+		realDoAnim(AS_CLIMB_4, getDir());
+		realDoAnim(AS_CLIMB_5, getDir());
+		realDoAnim(AS_CLIMB_4, getDir());
+	}
+}
+
+// Derived: routine 0x0804, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_sit_and_bark()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		rhianSitting = 1;
+	}
+	process
+	{
+		realDoAnim(55, 2);
+		rhian_play_random_shop_bark();
+		wait(120 + urandom(200));
+	}
+}
+
+// Derived: routine 0x0862, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_play_random_shop_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m08:U8Bytes8; // X: untouched.
+	local_m0A:U8Bytes2; // X: untouched.
+	local_m0C:Number;
+	[[PT_ACTIVITY, referent]];
+	resetRef(referent, PT_BARK);
+	u8goto label_0AB0 if not ((getDistance(Avatar:Referent, 18) < 300) and ((Avatar.getStatus() & 16) = 0));
+	local_m0C = urandom(3);
+	if local_m0C = 1
+	{
+		if rhianMet
+		{
+			realDoAnim(24, 2);
+			bark("Why, hello, friend. ");
+			realDoAnim(23, 2);
+			return;
+		}
+		else
+		{
+			realDoAnim(24, 2);
+			bark("What do you want here, stranger? ");
+			realDoAnim(23, 2);
+			return;
+		}
+	}
+	if local_m0C = 2
+	{
+		realDoAnim(24, 2);
+		bark("Looking for something? ");
+		realDoAnim(23, 2);
+		return;
+	}
+	if local_m0C = 3
+	{
+		if rhianMet
+		{
+			realDoAnim(24, 2);
+			bark("Please look around. ");
+			realDoAnim(23, 2);
+			return;
+		}
+		else
+		{
+			realDoAnim(24, 2);
+			bark("Please, do not touch anything. ");
+			realDoAnim(23, 2);
+			return;
+		}
+	}
+	return;
+	u8label label_0AB0:
+	if getDistance(Avatar:Referent, 18) < 700
+	{
+		local_m0C = urandom(8);
+		if local_m0C = 1
+		{
+			realDoAnim(24, 2);
+			bark("What am I to do? ");
+			realDoAnim(23, 2);
+		}
+		else if local_m0C = 2
+		{
+			realDoAnim(24, 2);
+			bark("I must carry on some how. ");
+			realDoAnim(23, 2);
+		}
+		else if local_m0C = 3
+		{
+			realDoAnim(24, 2);
+			bark("Woe is me! ");
+			realDoAnim(AS_CLIMB_4, 2);
+			realDoAnim(AS_CLIMB_5, 2);
+			realDoAnim(AS_CLIMB_3, 2);
+			killProcess(referent, PT_BARK);
+			bark("I must be strong! ");
+			realDoAnim(23, 2);
+			realDoAnim(55, 2);
+		}
+		else if local_m0C = 4
+		{
+			realDoAnim(55, 2);
+			bark("Oh, these tired old hands... ");
+			realDoAnim(55, 2);
+		}
+		else if local_m0C = 5
+		{
+			realDoAnim(24, 2);
+			bark("Perhaps I should take a walk. ");
+			realDoAnim(23, 2);
+			bark("I'm just so tired, maybe later. ");
+		}
+		else if local_m0C = 6
+		{
+			bark("The days are growing longer. ");
+		}
+		else if local_m0C = 7
+		{
+			realDoAnim(24, 2);
+			wait(60);
+			realDoAnim(23, 2);
+		}
+		else if local_m0C = 8
+		{
+			realDoAnim(24, 2);
+			bark("Oh, Toran! ");
+			realDoAnim(AS_CLIMB_4, 2);
+			realDoAnim(AS_CLIMB_5, 2);
+			realDoAnim(AS_CLIMB_5, 2);
+			realDoAnim(AS_CLIMB_3, 2);
+			realDoAnim(23, 2);
+		}
+		else
+		{
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x0EC5, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_run_walk_schedule()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m03:U8Byte;
+	local_m05:U8Word;
+	local_m07:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach local_m02 where (type = TypePathMarker) within 25 cells of 18 {
+			local_m07 = local_m02.getFrame();
+			local_m03 = 1;
+		}
+		if not local_m03
+		{
+			local_m07 = 20;
+		}
+		rhianSitting = 0;
+	}
+	process
+	{
+		for local_m05 = local_m07 to 27
+		{
+			local_m03 = 0;
+			foreach local_m02 where ((type = TypePathMarker) and (frame = local_m05)) within 50 cells of 18 {
+				pathfind(local_m02, 35);
+				local_m03 = 1;
+				if not somebodyTalking
+				{
+					rhian_play_random_walk_bark();
+				}
+				else
+				{
+					realDoAnim(AS_FIDGET, getDir());
+					wait(30);
+				}
+			}
+			if not local_m03
+			{
+				wait(500);
+				realDoAnim(AS_FIDGET, getDir());
+			}
+		}
+		local_m07 = 20;
+	}
+}
+
+// Derived: routine 0x0FFB, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_play_random_walk_bark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m0A:U8Bytes5;
+	local_m06:U8Byte;
+	local_m08:U8Word;
+	local_m0A_w02:U8Word;
+	local_m0C:U8Word;
+	[[PT_ACTIVITY, referent]];
+	local_m05_w02 = Avatar.getX();
+	local_m03 = Avatar.getY();
+	local_m01 = Avatar.getZ();
+	local_m0A_w02 = Item_getX(u8_stack_ref(18));
+	local_m08 = Item_getY(u8_stack_ref(18));
+	local_m06 = Item_getZ(u8_stack_ref(18));
+	local_m0C = class_0581_free_get_point_distance(local_m0A, local_m05);
+	if (getDistance(Avatar:Referent, 18) < 300) and ((Avatar.getStatus() & 16) = 0)
+	{
+		local_m0C = urandom(3);
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		if local_m0C = 1
+		{
+			if rhianMet
+			{
+				bark("Good day, my friend. ");
+				realDoAnim(AS_FIDGET, getDir());
+			}
+			else
+			{
+				bark("Excuse me, please. ");
+			}
+		}
+		if local_m0C = 2
+		{
+			if rhianMet
+			{
+				bark("Need some assistance? ");
+				realDoAnim(AS_FIDGET, getDir());
+			}
+			else
+			{
+				bark("Stranger, are you lost? ");
+			}
+		}
+		if local_m0C = 3
+		{
+			if rhianMet
+			{
+				wait(120);
+				turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+				bark("Pardon me, I did not mean to stare... ");
+				realDoAnim(AS_FIDGET, getDir());
+			}
+		}
+		wait(60);
+		return;
+	}
+	else if getDistance(Avatar:Referent, 18) < 700
+	{
+		local_m0C = urandom(7);
+		turnToFace(urandom(7), 0, 10);
+		if local_m0C = 1
+		{
+			bark("Storm clouds are brewing. ");
+		}
+		if local_m0C = 2
+		{
+			realDoAnim(AS_FIDGET, getDir());
+			bark("The winds are growing colder. ");
+			wait(60);
+		}
+		if local_m0C = 3
+		{
+			bark("I should be going home... ");
+			realDoAnim(AS_FIDGET, getDir());
+			bark("but there is nothing for me there. ");
+			realDoAnim(AS_FIDGET, getDir());
+		}
+		if local_m0C = 4
+		{
+			bark("I can find no beauty in the world anymore. ");
+			realDoAnim(AS_FIDGET, getDir());
+			wait(60);
+		}
+		if local_m0C = 5
+		{
+			realDoAnim(AS_FIDGET, getDir());
+			bark("What am I to do? ");
+			realDoAnim(AS_FIDGET, getDir());
+			bark("I must find a way. ");
+		}
+	}
+}
+
+// Derived: routine 0x1521, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_buy_gems()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m04:U8Word;
+	local_m06:Item;
+	[[PT_DEFAULT, referent]];
+	bark("Well, I'm afraid I do not know much about gems. What do you have to offer? ");
+	bark("Hmmmm... ");
+	foreach recursive local_m06 where (type = 596) within container 1 {
+		local_m02++;
+		local_m04 += (local_m06.getFrame() + 1) * 3;
+	}
+	if local_m02 > 0
+	{
+		if local_m02 = 1
+		{
+			bark("For this gem you have I can only offer you " + numToStr(local_m04) + " coins.");
+		}
+		else
+		{
+			bark("For these " + numToStr(local_m02) + " gems you have I can only offer you " + numToStr(local_m04) + " coins.");
+		}
+		bark("Is this an acceptable offer? ");
+		if class_0581_askYesNo(0x00000000)
+		{
+			bark("Very good. Here is your stone... ");
+			class_0581_give(1, 143, 0, 0, local_m04);
+			bark("...and I'll take this. Thank you. ");
+			foreach recursive local_m06 where (type = 596) within container 1 {
+				local_m06.destroy();
+			}
+			return;
+		}
+		else
+		{
+			bark("That's fine, that's fine. I do not wish to push you. ");
+			return;
+		}
+	}
+	else
+	{
+		bark("Hmmmm... It seems you have misplaced your gems. ");
+		bark("When you find them please bring them by. ");
+	}
+}
+
+// Derived: routine 0x1884, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_sell_jewelry()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String List;
+	local_m04:String;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	[[PT_DEFAULT, referent]];
+	bark("Certainly. I have diamonds, rubies, gemstone necklaces and gemstone rings. In which are you interested? ");
+	local_m02 = <<"A diamond ", "A ruby ", "Gemstone necklace ", "Gemstone ring ", "Nothing, thank you. ">>;
+	local_m04 = ask(local_m02);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "A diamond "
+		{
+			bark("This is lovely. It was one of Toran favorites.-sniff- I'm sorry, I don't really know what it is worth. He was going to sell if for 45 stones. Are you interested? ");
+			local_m06 = 45;
+			local_m08 = 3;
+		}
+		case "A ruby "
+		{
+			bark("Oh, my son, Torwin, liked this one so much. -sob- The price is 20 stones. ");
+			local_m06 = 20;
+			local_m08 = 5;
+		}
+		case "Gemstone necklace "
+		{
+			bark("Oh, I was there when he bought this from a young miner. The price is only 36 blacks. Quite a deal, don't you think? ");
+			local_m06 = 36;
+			local_m08 = 1;
+		}
+		case "Gemstone ring "
+		{
+			bark("This is my favorite piece. -sob- I am loath to part with it, it reminds me of Toran. But times are hard for a -snif- widow. The price is 22 stones. ");
+			local_m06 = 22;
+			local_m08 = 0;
+		}
+		case "Nothing, thank you. "
+		{
+			bark("As you wish. ");
+			return;
+		}
+		default
+		{
+			bark("Perhaps some other time. ");
+			return;
+		}
+	}
+	local_m02 = <<"Here is the amount. ", "Never mind, thank you. ">>;
+	local_m04 = ask(local_m02);
+	if local_m04 = "Here is the amount. "
+	{
+		if class_0581_give(1, 596, local_m08, 0, 1)
+		{
+			if class_0581_take(1, 143, 0, 0, local_m06)
+			{
+				bark("Thank you. Thank you so much. ");
+			}
+			else
+			{
+				bark("Oh. I'm so sorry. It seems times are hard for you, as well. Perhaps this will still be here when you have a little more to spend. ");
+				class_0581_take(1, 596, local_m08, 0, 1);
+				return;
+			}
+		}
+		else
+		{
+			bark("Oh, your hands are full! I will keep this until you have room for it. ");
+		}
+	}
+	else
+	{
+		bark("I understand. Thank you anyway. ");
+		return;
+	}
+	if local_m04 = ""
+	{
+		bark("Perhaps you need time to think about it. ");
+		return;
+	}
+}
+
+// Derived: routine 0x1F3C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_sell_clothing()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String List;
+	local_m04:String;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	[[PT_DEFAULT, referent]];
+	bark("Certainly, I have only rough cloth to work with, so I'm afraid it will be nothing like some of the rich Kith silk you are used to. I have cloaks, shirts, vests and robes. Which would you be interested in? ");
+	local_m02 = <<"A cloak ", "A shirt ", "Vest ", "Nothing, thank you. ">>;
+	local_m04 = ask(local_m02);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "A cloak "
+		{
+			bark("I have a nice warm cloak. The price is 6 stones. ");
+			local_m06 = 6;
+			local_m08 = 8;
+		}
+		case "A shirt "
+		{
+			bark("I have shirts for 4 stones each. ");
+			local_m06 = 4;
+			local_m08 = 20;
+		}
+		case "Vest "
+		{
+			bark("A vest would look very imposing on you. Their cost is 7 stones. ");
+			local_m06 = 7;
+			local_m08 = 10;
+		}
+		case "Nothing, thank you. "
+		{
+			bark("As you wish. ");
+			return;
+		}
+		default
+		{
+			bark("Well, I guess you are really not interested. ");
+			return;
+		}
+	}
+	local_m02 = <<"Here is the amount. ", "Never mind, thank you. ">>;
+	local_m04 = ask(local_m02);
+	if local_m04 = "Here is the amount. "
+	{
+		if class_0581_give(1, 823, local_m08, 0, 1)
+		{
+			if class_0581_take(1, 143, 0, 0, local_m06)
+			{
+				bark("Thank you. Thank you so much. ");
+			}
+			else
+			{
+				bark("Oh. I'm so sorry. It seems times are hard for you, as well. Perhaps this will still be here when you have a little more to spend. ");
+				class_0581_take(1, 823, local_m08, 0, 1);
+				return;
+			}
+		}
+		else
+		{
+			bark("Oh, your hands are full! I will keep this until you have room for it. ");
+		}
+	}
+	else
+	{
+		bark("I understand. Thank you anyway. ");
+		return;
+	}
+	if local_m04 = ""
+	{
+		bark("Perhaps you are not interested after all. ");
+		return;
+	}
+}
+
+// Derived: routine 0x24A5, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process RHIAN::rhian_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String List;
+	local_m07:U8Byte;
+	local_m09:Number;
+	local_m0B:U8Word;
+	if not toranDead
+	{
+		return;
+	}
+	killProcess(referent, PT_BARK);
+	killProcess(referent, PT_ACTIVITY);
+	local_m04 = "I am " + getName() + ".";
+	if not rhianMet
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Excuse me. "), u8_stack_ref(1)) -> return;
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Hello there. "), u8_stack_ref(1)) -> return;
+	}
+	if getMap() = 3
+	{
+		enterConvo2();
+		killProcess(1, PT_BARK);
+		killProcess(1, PT_ACTIVITY);
+		bark("My husband,-sob-  oh, my husband, what shall I do? What shall become of me? Oh no, no, no! -sob- ");
+		exitConvo();
+		return;
+	}
+	if rhianKneeling
+	{
+		enterConvo2();
+		killProcess(1, PT_BARK);
+		killProcess(1, PT_ACTIVITY);
+		if urandom(10) < 5
+		{
+			bark("Oh, forgive me. ");
+			bark("-sob- ");
+			bark("I can not bear such grief. ");
+		}
+		else
+		{
+			bark("Please, leave me. ");
+			bark("I can not talk now. ");
+		}
+		exitConvo();
+		return;
+	}
+	if rhianSitting
+	{
+		enterConvo2();
+		killProcess(1, PT_BARK);
+		killProcess(1, PT_ACTIVITY);
+		realDoAnim(24, 2);
+	}
+	else
+	{
+		enterConvo();
+		killProcess(1, PT_BARK);
+		killProcess(1, PT_ACTIVITY);
+	}
+	if not rhianMet
+	{
+		bark("Yes? ");
+		rhianMet = 1;
+		local_m06 = <<"What is your name? ">>;
+	}
+	else
+	{
+		local_m09 = random(10);
+		if local_m09 < 5
+		{
+			bark("Greetings again. ");
+		}
+		else
+		{
+			bark("Hello. ");
+		}
+		local_m06 ^= <<"Hello, Rhian. ">>;
+		if rhianSchedule = 1
+		{
+			local_m06 ^= <<"What do you sell here? ">>;
+		}
+	}
+	foreach recursive local_m0B where (type = 832) within container 1 {
+		hasRing = 1;
+	}
+	if rhianMet and torwinJumped and (not rhiangrieving)
+	{
+		if hasRing
+		{
+			local_m06 += <<"I found this ring. ">>;
+		}
+		else
+		{
+			local_m06 += <<"I'm sorry, but your son won't be back. ">>;
+		}
+	}
+	if rhianMet and askedAboutTears and askedAboutSon and (not torwinJumped)
+	{
+		local_m06 ^= <<"Tell me again of your son. ">>;
+	}
+	if rhianMet and toldOfTorwinDeath and (not hasRing)
+	{
+		bark("Oh, forgive me. ");
+		bark("-sob- ");
+		bark("I can not bear such grief. ");
+		bark("I can not talk now. ");
+		exitConvo();
+		return;
+	}
+	u8label label_2A0D:
+	u8goto label_4DFC if not (local_m02 != "Farewell. ");
+	local_m06 -= <<"Farewell. ">>;
+	local_m06 += <<"Farewell. ">>;
+	local_m02 = ask(local_m06);
+	u8goto label_2C1F if not (local_m02 = "What is your name? ");
+	if rhianName
+	{
+		bark("Strange, I thought I told you. Oh, in my grief, I must have forgotten to tell you my name. I am so sorry. My name is Rhian, that is it, just Rhian. ");
+		local_m06 -= <<"What is your name? ", "What is your name again? ">>;
+		local_m06 += <<"What do you do? ">>;
+	}
+	else
+	{
+		bark("My name is Rhian, and yours? ");
+		local_m06 -= <<"What is your name? ">>;
+		local_m06 += <<"None of your business. ", local_m04>>;
+		rhianName = 1;
+	}
+	u8goto label_4DF9;
+	u8label label_2C1F:
+	u8goto label_2D2E if not (local_m02 = "Hello, Rhian. ");
+	bark("Hello, my friend. What can I help you with today? ");
+	if askedClothes
+	{
+		local_m06 ^= <<"I am interested in purchasing clothing. ">>;
+	}
+	if askedGems
+	{
+		local_m06 ^= <<"I am interested in gems. ">>;
+	}
+	else
+	{
+		local_m06 ^= <<"What do you do? ">>;
+	}
+	local_m06 -= <<"Hello, Rhian. ">>;
+	u8goto label_4DF9;
+	u8label label_2D2E:
+	u8goto label_2E04 if not (local_m02 = "None of your business. ");
+	bark("I'm sorry if I have offended you. I meant no harm. Please forgive me. I am very sorry. ");
+	local_m06 -= <<"None of your business. ">>;
+	local_m06 ^= <<"What do you do? ">>;
+	u8goto label_4DF9;
+	u8label label_2E04:
+	u8goto label_308A if not (local_m02 = "I found this ring. ");
+	class_0581_take(1, 832, 0, 0, 1);
+	if toldOfTorwinDeath
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0412_rhian_animate_grieving(this) -> return;
+		bark("Oh, oh dear, oh dear dear. -sob- This was my husband's. He gave it to our son upon his 16 birthday.-sob- Torwin never -sniff- took it off, oh, I can hardly bear to look at it. You are so kind to bring it to me. Now I have something to remember them by. Now, if you'll excuse me. ");
+		rhian_resume_grieving_after_dialogue();
+		return;
+	}
+	else
+	{
+		bark("This...this is my son's ring. -sniff- Toran gave it to him for his 16 birthday. Torwin never took it off. How did you come by it? ");
+		local_m06 += <<"I'm sorry, but your son won't be back. ", "I found it. ">>;
+	}
+	local_m06 -= <<"I found this ring. ">>;
+	u8goto label_4DF9;
+	u8label label_308A:
+	u8goto label_31D6 if not (local_m02 = "I found it. ");
+	bark("Oh, this does not bode well. This ring was Torwin's pride and joy. This is not good at all. Something must have happened to him. Oh no, I can not bear the thought. What if something dreadful has happened? What if he is ill or injured? This is just terrible! ");
+	local_m06 -= <<"I found it. ">>;
+	u8goto label_4DF9;
+	u8label label_31D6:
+	u8goto label_3392 if not ((local_m02 = "What do you do? ") or (local_m02 = "What do you sell here? "));
+	bark("I'm a weaver. I make clothing. And...and because of, I, oh I can not say it without crying...-sniff- my husband's -sob- execution -sob sob-, I have taken over the running of my husband's gem shop. ");
+	local_m06 -= <<"What do you do? ", "What do you sell here? ">>;
+	local_m06 ^= <<"Your husband's shop? ", "Do you sell clothing? ">>;
+	if not askedAboutTears
+	{
+		local_m06 ^= <<"Why do you cry? ">>;
+	}
+	rhianJob = 1;
+	u8goto label_4DF9;
+	u8label label_3392:
+	u8goto label_347B if not (local_m02 = "Your husband's shop? ");
+	askedGems = 1;
+	bark("Toran was the gem cutter here in town. As my son is no longer here, I am left to run the shop. ");
+	local_m06 -= <<"Your husband's shop? ">>;
+	local_m06 ^= <<"I am interested in gems. ">>;
+	u8goto label_4DF9;
+	u8label label_347B:
+	u8goto label_3530 if not (local_m02 = "Do you sell clothing? ");
+	askedClothes = 1;
+	bark("I sell those that I make. ");
+	local_m06 -= <<"Do you sell clothing? ">>;
+	local_m06 ^= <<"I am interested in purchasing clothing. ">>;
+	u8goto label_4DF9;
+	u8label label_3530:
+	u8goto label_3679 if not (local_m02 = "I am interested in gems. ");
+	if rhianSchedule = 1
+	{
+		bark("Would you like to buy or sell gems? ");
+		local_m06 ^= <<"buy gems ", "sell gems ">>;
+		local_m06 -= <<"I am interested in gems. ">>;
+	}
+	else
+	{
+		bark("I'm sorry but all my wares are at my shop. Please come by there a little later. ");
+		local_m06 -= <<"I am interested in gems. ">>;
+	}
+	u8goto label_4DF9;
+	u8label label_3679:
+	u8goto label_36B7 if not (local_m02 = "buy gems ");
+	local_m06 -= <<"buy gems ">>;
+	rhian_sell_jewelry();
+	u8goto label_4DF9;
+	u8label label_36B7:
+	u8goto label_36F7 if not (local_m02 = "sell gems ");
+	local_m06 -= <<"sell gems ">>;
+	rhian_buy_gems();
+	u8goto label_4DF9;
+	u8label label_36F7:
+	u8goto label_385B if not (local_m02 = "I am interested in purchasing clothing. ");
+	askedClothes = 1;
+	local_m06 -= <<"I am interested in purchasing clothing. ">>;
+	if rhianSchedule = 1
+	{
+		local_m06 -= <<"I am interested in purchasing clothing. ">>;
+		rhian_sell_clothing();
+	}
+	else
+	{
+		bark("I have many things in my shop. Please come by there when I am open for business. ");
+		local_m06 -= <<"I am interested in purchasing clothing. ">>;
+	}
+	u8goto label_4DF9;
+	u8label label_385B:
+	u8goto label_3941 if not (local_m02 = local_m04);
+	bark("Hello, " + getName() + ", - sob- I am afraid I am not good company at this terrible time.");
+	local_m06 -= <<local_m04, "None of your business. ">>;
+	local_m06 ^= <<"What do you do? ">>;
+	if not askedAboutTears
+	{
+		local_m06 ^= <<"Why do you cry? ">>;
+	}
+	local_m07 = 1;
+	u8goto label_4DF9;
+	u8label label_3941:
+	u8goto label_3A6A if not (local_m02 = "Why do you cry? ");
+	bark("I'm sorry if my tears upset you, but -sob- it is so sad. I was once the wife of Toran. But now he is gone and my son is gone...whatever shall I do? ");
+	local_m06 -= <<"Why do you cry? ">>;
+	local_m06 += <<"Toran was your husband? ", "Where is your son? ">>;
+	askedAboutTears = 1;
+	u8goto label_4DF9;
+	u8label label_3A6A:
+	u8goto label_3B2B if not (local_m02 = "Toran was your husband? ");
+	bark("Yes and he was executed by the Tempest, Lady Mordea. -sob-. ");
+	local_m06 -= <<"Toran was your husband? ">>;
+	local_m06 += <<"Why was he executed? ">>;
+	u8goto label_4DF9;
+	u8label label_3B2B:
+	u8goto label_3C78 if not (local_m02 = "Why was he executed? ");
+	bark("I tried to warn him about speaking his mind so openly, but he would laugh and say that no man need fear the truth. In the end 'twas Mordea's wrath that he should have feared. ");
+	local_m06 -= <<"Why was he executed? ">>;
+	local_m06 += <<"Feared Mordea's wrath? ", "He was an outspoken man? ">>;
+	u8goto label_4DF9;
+	u8label label_3C78:
+	u8goto label_3D74 if not (local_m02 = "Feared Mordea's wrath? ");
+	bark("She does not take kindly to things said about her. It will cost you your life, as it did my poor Toran, -sob- but I should not burden you with my troubles. ");
+	local_m06 -= <<"Feared Mordea's wrath? ">>;
+	u8goto label_4DF9;
+	u8label label_3D74:
+	u8goto label_3F10 if not (local_m02 = "He was an outspoken man? ");
+	bark("Toran feared no one, not even the Tempest. Of late, he had begun to question the need for these executions. He was in the tavern when the guards came for him... oh, I tried to warn him, -sob-  Now I have no one, not even my son. -sob-. ");
+	local_m06 -= <<"He was an outspoken man? ">>;
+	if not askedAboutSon
+	{
+		local_m06 -= <<"Where is your son? ">>;
+		local_m06 ^= <<"Where is your son? ">>;
+	}
+	u8goto label_4DF9;
+	u8label label_3F10:
+	u8goto label_401B if not ((local_m02 = "Where is your son? ") or (local_m02 = "Tell me again of your son. "));
+	bark("My son, Torwin, left home to become a Theurgist. ");
+	local_m06 -= <<"Where is your son? ", "Where is your son? ", "Tell me again of your son. ">>;
+	local_m06 += <<"What is a Theurgist? ">>;
+	askedAboutSon = 1;
+	u8goto label_4DF9;
+	u8label label_401B:
+	u8goto label_4174 if not (local_m02 = "What is a Theurgist? ");
+	bark("A Theurgist is a healer. Oh, please do not misunderstand me, friend " + getName() + ", I think it is grand that my son should want to be a healer. Why I'm thrilled, but I am concerned by the suddenness of his decision.");
+	local_m06 -= <<"What is a Theurgist? ">>;
+	local_m06 += <<"You question his decision? ">>;
+	u8goto label_4DF9;
+	u8label label_4174:
+	u8goto label_43F7 if not (local_m02 = "You question his decision? ");
+	bark("I'm sorry if I appear to be a terrible mother by questioning his decision, but he never showed any sign of wanting to be a healer when he was growing up. He just wanted to be a gemcutter like his father. -sob- And now that he is gone, I am left alone with no one to support me. But, at least I know he is alive and well. -sniffle- I can always hope he will return to his poor widowed mother. ");
+	local_m06 -= <<"You question his decision? ">>;
+	if torwinMet
+	{
+		if torwinJumped
+		{
+			local_m06 ^= <<"I'm sorry, but your son won't be back. ">>;
+		}
+		else
+		{
+			local_m06 += <<"I've met your son. ">>;
+		}
+	}
+	else
+	{
+		local_m06 += <<"I hope he returns to you. ">>;
+	}
+	u8goto label_4DF9;
+	u8label label_43F7:
+	u8goto label_44E2 if not (local_m02 = "I hope he returns to you. ");
+	bark("That would be wonderful. Oh, how I'd love to see him again. Even...even if just for a short visit. -sob-, Oh, to see his face again! ");
+	local_m06 -= <<"I hope he returns to you. ">>;
+	u8goto label_4DF9;
+	u8label label_44E2:
+	u8goto label_4613 if not (local_m02 = "I've met your son. ");
+	bark("Oh, is he well? Does he speak of me? I am sure he must be the finest healer on Argentrock. Oh, -sob- his father would be so proud... if only my husband could hear this, but he never will. He will never know... oh, no, no, no! -sob- ");
+	rhian_resume_grieving_after_dialogue();
+	return;
+	u8goto label_4DF9;
+	u8label label_4613:
+	u8goto label_4712 if not (local_m02 = "I'm sorry, but your son won't be back. ");
+	bark("What?! What do you mean?! ");
+	local_m06 = <<"Your son committed suicide. ", "Your son passed away. ", "Your son had an accident. ">>;
+	local_m06 -= <<"I'm sorry, but your son won't be back. ">>;
+	toldOfTorwinDeath = 1;
+	u8goto label_4DF9;
+	u8label label_4712:
+	if local_m02 = "Your son committed suicide. "
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0412_rhian_animate_grieving(this) -> return;
+		bark("But..but, that can't be true, oh no, no, no, it just can't be. Oh my son, my little boy.... How can this be? -sob-, please tell me! ");
+		local_m06 -= <<"Your son committed suicide. ", "Your son passed away. ", "Your son had an accident. ">>;
+		local_m06 = <<"He was trying to resurrect his father. ", "I do not know. ", "He couldn't pass the Theurgists tests. ">>;
+		u8goto label_4DF9;
+	}
+	u8goto label_4968 if not (local_m02 = "I do not know. ");
+	bark("Oh, I don't think I can bear it. My heart will break in two. -sob- I'm sorry, I fear I can speak no more of it. ");
+	exitConvo();
+	return;
+	u8goto label_4DF9;
+	u8label label_4968:
+	u8goto label_4A56 if not (local_m02 = "You son passed away. ");
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0412_rhian_animate_grieving(this) -> return;
+	bark("He passed away? He was so young! Oh my, I can't believe it, I just can't.-sob- He mustn't be dead. No, no, no, he mustn't. I can't go on! Oh, no,no,no. ");
+	rhian_resume_grieving_after_dialogue();
+	return;
+	u8goto label_4DF9;
+	u8label label_4A56:
+	u8goto label_4B3E if not (local_m02 = "Your son had an accident. ");
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0412_rhian_animate_grieving(this) -> return;
+	bark("An accident? No, I should never have let him go. Oh, now I am alone forever. What ever shall I do? What ever shall I do? No, no, no, no..... ");
+	rhian_resume_grieving_after_dialogue();
+	return;
+	u8goto label_4DF9;
+	u8label label_4B3E:
+	u8goto label_4C22 if not (local_m02 = "He was trying to resurrect his father. ");
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0412_rhian_animate_grieving(this) -> return;
+	bark("Oh, -sob- my brave, sweet boy.-sob- He loved his father so. Now they are both lost to me, what shall I do? What shall I do? ");
+	rhian_resume_grieving_after_dialogue();
+	return;
+	u8goto label_4DF9;
+	u8label label_4C22:
+	u8goto label_4D21 if not (local_m02 = "He couldn't pass the Theurgists tests. ");
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0412_rhian_animate_grieving(this) -> return;
+	bark("I don't believe you! My boy is so smart. He could not have failed! -sob- He could have done it...now he does not have a chance to try again...oh no... ");
+	rhian_resume_grieving_after_dialogue();
+	return;
+	u8goto label_4DF9;
+	u8label label_4D21:
+	bark("Perhaps we shall speak later. ");
+	exitConvo();
+	return;
+	u8goto label_4DF9 if not (local_m02 = "Farewell. ");
+	u8goto label_4DC4 if not (local_m07);
+	bark("Farewell,  " + getName() + ".");
+	exitConvo();
+	u8goto label_4E0C;
+	u8goto label_4DF6;
+	u8label label_4DC4:
+	bark("Farewell ");
+	exitConvo();
+	u8goto label_4E0C;
+	u8label label_4DF6:
+	u8goto label_4DF9;
+	u8label label_4DF9:
+	u8goto label_2A0D;
+	u8label label_4DFC:
+	exitConvo();
+	u8label label_4E0C:
+	u8_free_local_string(local_m02);
+	u8_free_local_string(local_m04);
+	u8_free_local_string_list(local_m06);
+}
+
+// Derived: routine 0x4E14, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process RHIAN::rhian_resume_grieving_after_dialogue()
+{
+	[[PT_DEFAULT, referent]];
+	if rhianSitting
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0412_rhian_sob_while_sitting(this) -> return;
+		if getDistance(referent, Avatar:Referent) >= 384
+		{
+			scrollBack(25);
+		}
+		else
+		{
+			scrollBack(20);
+		}
+		somebodyTalking = 0;
+		setAvatarInStasis(0);
+		return;
+	}
+	else
+	{
+		realDoAnim(AS_STAND, 2);
+		rhianKneeling = 1;
+		realDoAnim(49, getDir());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0412_rhian_sob_while_kneeling(this) -> return;
+		if getDistance(referent, Avatar:Referent) >= 384
+		{
+			scrollBack(25);
+		}
+		else
+		{
+			scrollBack(20);
+		}
+		somebodyTalking = 0;
+		setAvatarInStasis(0);
+		return;
+	}
+}
+

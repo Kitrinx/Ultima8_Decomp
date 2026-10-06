@@ -1,0 +1,168 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x021A
+// FLEX slot: 540
+// Original offset: 0x000B85F4
+// Naming evidence: E, exact object-1 linker name `MOREFOOD`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MOREFOOD.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass MOREFOOD inherits Item
+{
+	process morefood_play_mushroom_palette_trip();
+	process morefood_look_describe_by_frame();
+	process morefood_use_consume_food_and_apply_frame_effect();
+}
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process MOREFOOD::morefood_play_mushroom_palette_trip()
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[547, NULL_REF]]; // R/X: process type name unproved; numeric VM expression retained.
+		shroomPaletteEffectsActive = 1;
+		if (not fireStormActive) and (not rainStormActive)
+		{
+			FadeToPalette(5, 0);
+		}
+	}
+	process
+	{
+		local_m02 = urandom(3);
+		if local_m02 = 0
+		{
+			FadeToPalette(5, 0);
+		}
+		if local_m02 = 1
+		{
+			FadeToPalette(6, 0);
+		}
+		if local_m02 = 2
+		{
+			FadeToPalette(7, 0);
+		}
+		if urandom(16) = 7
+		{
+			FadeToPalette(0, 0);
+			shroomPaletteEffectsActive = 0;
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x0132, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MOREFOOD::morefood_look_describe_by_frame()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m02 = getFrame();
+	if local_m02 = 0
+	{
+		bark("raw kith filet ");
+	}
+	else if local_m02 = 1
+	{
+		bark("kith filet ");
+	}
+	else if local_m02 = 2
+	{
+		bark("cheese ");
+	}
+	else if (local_m02 = 3) or (local_m02 = 14)
+	{
+		bark("cheese ");
+	}
+	else if ((local_m02 >= 4) and (local_m02 <= 10)) or ((local_m02 >= 15) and (local_m02 <= 18))
+	{
+		bark("mushroom ");
+	}
+	else if (local_m02 = 11) or (local_m02 = 12)
+	{
+		bark("tuber ");
+	}
+	else if local_m02 = 13
+	{
+		bark("bread ");
+	}
+	else
+	{
+		bark("food ");
+	}
+}
+
+// Derived: routine 0x02A7, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MOREFOOD::morefood_use_consume_food_and_apply_frame_effect()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn Item_bark(u8_string_address("Mmmm... "), u8_stack_ref(1)) -> return;
+	local_m02 = getFrame();
+	if (local_m02 = 0) or (local_m02 = 2)
+	{
+		FeedAvatar(5);
+	}
+	else if local_m02 = 1
+	{
+		FeedAvatar(4);
+	}
+	else if (local_m02 = 3) or (local_m02 = 13) or (local_m02 = 14)
+	{
+		FeedAvatar(3);
+	}
+	else if (local_m02 >= 4) and (local_m02 <= 10)
+	{
+		FeedAvatar(2);
+		if ((getStatus() & 128) = 0) and (urandom(16) > 13)
+		{
+			if Avatar.getHp() > 2
+			{
+				Avatar.setHp(Avatar.getHp() - 2);
+			}
+			if not shroomPaletteEffectsActive
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_021A_morefood_play_mushroom_palette_trip(0x00000000) -> return;
+			}
+		}
+	}
+	else if (local_m02 = 11) or (local_m02 = 12)
+	{
+		FeedAvatar(2);
+	}
+	else if (local_m02 = 15) or (local_m02 = 16)
+	{
+		if (2 + Avatar.getHp()) > (Avatar.getStr() * 2)
+		{
+			Avatar.setHp(Avatar.getStr() * 2);
+		}
+		else
+		{
+			Avatar.setHp(2 + Avatar.getHp());
+		}
+		destroy();
+	}
+	else if (local_m02 = 17) or (local_m02 = 18)
+	{
+		class_057C_receiveHit(1, 2, Item_getDirFromItem(referent, this), referent, u8_stack_address(-6));
+		destroy();
+	}
+	else
+	{
+		FeedAvatar(1);
+	}
+	destroy();
+}
+

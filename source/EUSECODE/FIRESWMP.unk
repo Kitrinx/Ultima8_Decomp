@@ -1,0 +1,57 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02F7
+// FLEX slot: 761
+// Original offset: 0x000766E6
+// Naming evidence: E, exact object-1 linker name `FIRESWMP`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FIRESWMP.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass FIRESWMP inherits Item
+{
+	process fireswmp_look_describe_a_strange_hole();
+	process fireswmp_got_hit_burst_fire_and_damage_nearby_npc(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIRESWMP::fireswmp_look_describe_a_strange_hole()
+{
+	bark("A strange hole. ");
+}
+
+// Derived: routine 0x00B3, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process FIRESWMP::fireswmp_got_hit_burst_fire_and_damage_nearby_npc(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:Item;
+	local_m07_w01:U8Bytes1;
+	local_m09:Item;
+	local_m07 = arg_04;
+	// X: directional surface search; no Origin spelling is known.
+	foreach local_m09 where (type = 787) on surface below referent {
+		if local_m07.isNpc()
+		{
+			local_m05_w02 = local_m09.getX() + 16;
+			local_m03 = local_m09.getY() + 16;
+			local_m01 = local_m09.getZ();
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m05) -> return;
+			class_057C_receiveHit(5, 8, referent, u8_local_address(local_m07_w01));
+			wait(100);
+		}
+	}
+}
+

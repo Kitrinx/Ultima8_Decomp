@@ -1,0 +1,60 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x033D
+// FLEX slot: 831
+// Original offset: 0x00020F52
+// Naming evidence: E, exact object-1 linker name `BATHSTUF`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BATHSTUF.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass BATHSTUF inherits Item
+{
+	process bathstuf_look_describe_by_frame();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BATHSTUF::bathstuf_look_describe_by_frame()
+{
+	if getFrame() = 0
+	{
+		bark("wash basin ");
+	}
+	else if getFrame() = 1
+	{
+		bark("water jug ");
+	}
+	else if getFrame() = 2
+	{
+		bark("towel ");
+	}
+	else if getFrame() = 3
+	{
+		bark("towel ");
+	}
+	else if getFrame() = 4
+	{
+		bark("towel ");
+	}
+	else if getFrame() = 5
+	{
+		bark("razor ");
+	}
+	else if getFrame() = 6
+	{
+		bark("soap ");
+	}
+	else if getFrame() = 7
+	{
+		bark("soap ");
+	}
+	else if getFrame() = 8
+	{
+		bark("mirror ");
+	}
+}
+

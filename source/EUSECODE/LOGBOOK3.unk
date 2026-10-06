@@ -1,0 +1,324 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x057F
+// FLEX slot: 1409
+// Original offset: 0x000ABDED
+// Naming evidence: E, exact object-1 linker name `LOGBOOK3`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LOGBOOK3.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] logbook3_play_execution_rescue_choice(arg_04:U8Word, arg_06:U8Word, arg_08:U8Word, arg_0A:U8Word)
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m06:U8Bytes6; // X: untouched.
+	local_m08:Npc;
+	local_m08_w01:U8Bytes1;
+	local_m0A:Npc;
+	local_m0A_w01:U8Bytes1;
+	local_m0C:Npc;
+	local_m0C_w01:U8Bytes1;
+	local_m0E:Item;
+	local_m0E_w01:U8Bytes1;
+	local_m10:U8Word;
+	local_m11:U8Byte;
+	local_m13:U8Bytes2; // X: untouched.
+	local_m15:String List;
+	local_m17:String;
+	local_m19:String;
+	local_m1A:U8Byte;
+	[[519, 1]]; // R/X: process type name unproved; numeric VM expression retained.
+	local_m08 = arg_04;
+	local_m0A = arg_06;
+	local_m0C = arg_08;
+	local_m0E = arg_0A;
+	local_m10 = 3;
+	local_m11 = 48;
+	local_m1A = 0;
+	local_m15 = <<"Devon is the rightful heir! ", "The tyrant Mordea has no birthright! ">>;
+	while not local_m1A
+	{
+		local_m17 = ask(local_m15);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m17
+		{
+			case "Devon is the rightful heir! "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn local_m0E.bark("Pardon? ") -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn local_m0C.bark("What? ") -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn local_m08.bark("Huh? ") -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn local_m0A.bark("Ahhh? ") -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m0E_w01), 5, 0, 0) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(5, 5, 0, 2) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(2, 15, 0, 0) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(7, 5, 0, 1) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m08_w01), 5, 0, 2) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m0A_w01), 5, 0, 6) -> return;
+				if not Salkind.isDead()
+				{
+					Salkind.turnToFace(1, 0, 5);
+				}
+				wait(120);
+				killProcess(local_m0E, PT_BARK);
+				killProcess(local_m0C, PT_BARK);
+				killProcess(local_m08, PT_BARK);
+				killProcess(local_m0A, PT_BARK);
+				wait(30);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_realDoAnim(5, 2, 5) -> return;
+				Item_bark(u8_string_address("I should slay you right now for such heresy! "), u8_stack_ref(5));
+				Item_bark(u8_string_address("Stay your hand, Darion. He'll soon feed the Lurker. "), u8_stack_ref(7));
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_realDoAnim(5, 2, 6) -> return;
+				Item_bark(u8_string_address("Yes, my lady. "), u8_stack_ref(5));
+				Item_bark(u8_string_address("Me? A Tempest...? "), u8_stack_ref(2));
+				Item_bark(u8_string_address("Avatar, this is not the time for levity. "), u8_stack_ref(2));
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(7, 16, 0, 2) -> return;
+				Item_bark(u8_string_address("Get on with it! "), u8_stack_ref(7));
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn local_m0E.bark("As you wish, my lady. ") -> return;
+				if not Salkind.isDead()
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_turnToFace(3, 15, 0, 2) -> return;
+				}
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(5, 10, 0, 3) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m08_w01), 5, 0, 4) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m0A_w01), 15, 0, 4) -> return;
+				class_057C_turnToFace(u8_local_address(local_m0E_w01), 6, 0, 10);
+				class_057C_realDoAnim(u8_local_address(local_m0E_w01), 5, 6);
+				wait(120);
+				killProcess(local_m0E, PT_BARK);
+				class_057C_turnToFace(2, 4, 0, 15);
+				local_m15 = <<"I have proof! ", "The tyrant Mordea has no birthright! ">>;
+			}
+			case "The tyrant Mordea has no birthright! "
+			{
+				if not Salkind.isDead()
+				{
+					Salkind.turnToFace(1, 0, 5);
+				}
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(2, 10, 0, 0) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(7, 5, 0, 1) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m0E_w01), 5, 0, 0) -> return;
+				Darion.turnToFace(2, 0, 5);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_realDoAnim(5, 2, 5) -> return;
+				Item_bark(u8_string_address("You shall not blaspheme the Tempest! "), u8_stack_ref(5));
+				Item_bark(u8_string_address("Sheath your weapon, Darion! "), u8_stack_ref(7));
+				Darion.realDoAnim(AS_SHEATH_WEAPON, 2);
+				Item_bark(u8_string_address("I will rid us of this ill-mannered brute! "), u8_stack_ref(7));
+				Mordea.realDoAnim(29, 0);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+				LightningBolt();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 200, 42) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057E_logbook4_play_magic_flash(this, Avatar.getZ(), Avatar.getY(), Avatar.getX()) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_realDoAnim(7, 0, 28) -> return;
+				Avatar.receiveHit(0, 3, Avatar.getHp(), 128);
+				return;
+			}
+			case "I have proof! "
+			{
+				if not Salkind.isDead()
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_turnToFace(3, 10, 0, 1) -> return;
+				}
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(2, 5, 0, 0) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(7, 5, 0, 1) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(5, 15, 0, 2) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m08_w01), 15, 0, 2) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m0A_w01), 5, 0, 6) -> return;
+				class_057C_realDoAnim(u8_local_address(local_m0E_w01), 6, 6);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m0E_w01), 5, 0, 0) -> return;
+				Item_bark(u8_string_address("I have a book that not only proves Devon is the rightful Tempest, "), u8_stack_ref(1));
+				Item_bark(u8_string_address("but also that his powers are stronger than those of Mordea's! "), u8_stack_ref(1));
+				Item_bark(u8_string_address("Mordea and Devon have the same father, but Devon was the first birth! "), u8_stack_ref(1));
+				Item_bark(u8_string_address("He is the rightful Tempest! "), u8_stack_ref(1));
+				if not Salkind.isDead()
+				{
+					Salkind.turnToFace(1, 0, 15);
+					Item_bark(u8_string_address("You lie! "), u8_stack_ref(3));
+					Salkind.turnToFace(0, 0, 10);
+					Item_bark(u8_string_address("Mordea, I locked that book safely away! "), u8_stack_ref(3));
+					wait(30);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_turnToFace(7, 7, 0, 4) -> return;
+					wait(30);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_turnToFace(5, 5, 0, 4) -> return;
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_turnToFace(u8_local_address(local_m0E_w01), 5, 0, 6) -> return;
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_turnToFace(u8_local_address(local_m08_w01), 5, 0, 5) -> return;
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_turnToFace(u8_local_address(local_m0A_w01), 5, 0, 5) -> return;
+					class_057C_turnToFace(2, 5, 0, 10);
+					Item_bark(u8_string_address("Ooops! "), u8_stack_ref(3));
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_realDoAnim(7, 4, 5) -> return;
+					Item_bark(u8_string_address("Fool! Now the whole world knows the secret! "), u8_stack_ref(7));
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_realDoAnim(3, 0, 5) -> return;
+					Item_bark(u8_string_address("Forgive me, Lady Mordea! "), u8_stack_ref(3));
+					Item_bark(u8_string_address("I forgive you. "), u8_stack_ref(7));
+					Mordea.realDoAnim(55, 4);
+					playSFX(85, 200);
+					wait(10);
+					playSFX(39, 200);
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn class_057C_realDoAnim(3, 0, 19) -> return;
+				}
+				else
+				{
+					Item_bark(u8_string_address("That must be the book Salkind kept hidden away in the evidence chamber! "), u8_stack_ref(5));
+					Item_bark(u8_string_address("That explains why he kept it locked in his secret study under the palace! "), u8_stack_ref(5));
+				}
+				wait(60);
+				Mordea.realDoAnim(8, 4);
+				wait(5);
+				Mordea.realDoAnim(8, 4);
+				wait(5);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(2, 5, 0, 4) -> return;
+				Mordea.realDoAnim(8, 2);
+				wait(5);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(5, 5, 0, 4) -> return;
+				Mordea.realDoAnim(8, 2);
+				wait(5);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m0E_w01), 5, 0, 5) -> return;
+				Mordea.realDoAnim(15, 0);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m08_w01), 5, 0, 4) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(u8_local_address(local_m0A_w01), 5, 0, 4) -> return;
+				Item_bark(u8_string_address("Yes! Devon -is- the rightful heir to the throne! "), u8_stack_ref(7));
+				Item_bark(u8_string_address("But the truth will serve him not! "), u8_stack_ref(7));
+				Item_bark(u8_string_address("His head will still rest in the belly of the Lurker! "), u8_stack_ref(7));
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(7, 10, 0, 1) -> return;
+				Item_bark(u8_string_address("Proceed with the execution! "), u8_stack_ref(7));
+				wait(40);
+				local_m0E.bark("No! ");
+				Item_bark(u8_string_address("No? Do you dare to defy me? "), u8_stack_ref(7));
+				local_m0E.bark("I will not execute the true Tempest! ");
+				Mordea.realDoAnim(AS_ENTER_CAST, 0);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+				LightningBolt();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 200, 42) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057E_logbook4_play_magic_flash(this, local_m0E.getZ(), local_m0E.getY(), local_m0E.getX()) -> return;
+				class_057C_realDoAnim(u8_local_address(local_m0E_w01), 14, 3);
+				Mordea.realDoAnim(AS_EXIT_CAST, 0);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(7, 20, 0, 7) -> return;
+				Item_bark(u8_string_address("Darion, do you defy me too? "), u8_stack_ref(7));
+				Item_bark(u8_string_address("I cannot kill him, my Lady. He is -the- Tempest. "), u8_stack_ref(5));
+				Mordea.realDoAnim(AS_ENTER_CAST, 0);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+				LightningBolt();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 200, 42) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057E_logbook4_play_magic_flash(this, Darion.getZ(), Darion.getY(), Darion.getX()) -> return;
+				Darion.realDoAnim(14, 0);
+				Mordea.realDoAnim(AS_EXIT_CAST, 0);
+				class_057C_realDoAnim(u8_local_address(local_m08_w01), 5, 4);
+				class_057C_realDoAnim(u8_local_address(local_m0A_w01), 5, 4);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_turnToFace(7, 20, 0, 0) -> return;
+				Item_bark(u8_string_address("If that is how it must be, you will all suffer my wrath! "), u8_stack_ref(7));
+				Item_bark(u8_string_address("Foolish brother! You think your powers are greater than mine! "), u8_stack_ref(7));
+				Item_bark(u8_string_address("Use them if you dare... To save your miserable life! "), u8_stack_ref(7));
+				Mordea.realDoAnim(AS_ENTER_CAST, 0);
+				Mordea.realDoAnim(29, 0);
+				Mordea.realDoAnim(29, 0);
+				playSFX(6, 100);
+				LightningBolt();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_realDoAnim(7, 0, 29) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+				LightningBolt();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+				LightningBolt();
+				Mordea.realDoAnim(29, 0);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057E_logbook4_play_magic_flash(this, local_m08.getZ(), local_m08.getY(), local_m08.getX()) -> return;
+				Mordea.realDoAnim(29, 0);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057E_logbook4_play_magic_flash(this, local_m0A.getZ(), local_m0A.getY(), local_m0A.getX()) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_realDoAnim(u8_local_address(local_m08_w01), 7, 14) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_realDoAnim(u8_local_address(local_m0A_w01), 4, 14) -> return;
+				LightningBolt();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057E_logbook4_play_magic_flash(this, Avatar.getZ(), Avatar.getY(), Avatar.getX()) -> return;
+				class_057C_realDoAnim(u8_local_address(local_m0C_w01), 1, 0);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_realDoAnim(1, 4, 14) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057C_realDoAnim(u8_local_address(local_m0C_w01), 0, 1) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+				LightningBolt();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0581_safePlaySFX(0x00000000, 200, 42) -> return;
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057E_logbook4_play_magic_flash(this, local_m0C.getZ(), local_m0C.getY(), local_m0C.getX()) -> return;
+				killProcess(local_m0C, PT_ANIM);
+				class_057C_realDoAnim(u8_local_address(local_m0C_w01), 14, 1);
+				local_m08.setDead();
+				local_m0A.setDead();
+				local_m0C.setDead();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_057E_logbook4_play_mordea_devon_duel(this) -> return;
+				local_m1A = 1;
+			}
+		}
+	}
+}
+

@@ -1,0 +1,178 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x007B
+// FLEX slot: 125
+// Original offset: 0x00061304
+// Naming evidence: E, exact object-1 linker name `DART`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/DART.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass DART inherits Item
+{
+	process dart_use_aim_and_shoot_at_target();
+	process dart_look_bark_dart();
+	process dart_hit_bark_and_reward_bullseye(arg_04:U8Word);
+	process dart_animate_avatar_throw();
+}
+
+// Derived: routine 0x0080, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DART::dart_use_aim_and_shoot_at_target()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m03:U8Byte;
+	local_m05:U8Word;
+	local_m07:U8Word;
+	local_m07_w01:U8Bytes1;
+	local_m08:U8Byte;
+	local_m09:U8Byte;
+	local_m0B:U8Word;
+	local_m0D:U8Word;
+	local_m0F:U8Word;
+	local_m0F_w01:U8Bytes1;
+	local_m11:U8Word;
+	local_m02 = target();
+	if local_m02
+	{
+		local_m07 = local_m02.getX();
+		local_m05 = local_m02.getY();
+		local_m03 = local_m02.getZ() + 8;
+		local_m08 = Avatar.getDirToCoords(local_m07, local_m05);
+		local_m0D = Avatar.getX();
+		local_m0B = Avatar.getY();
+		local_m09 = Avatar.getZ() + 16;
+		if local_m08 = 0
+		{
+			local_m0B -= 64;
+		}
+		else if local_m08 = 2
+		{
+			local_m0D += 32;
+		}
+		else if local_m08 = 4
+		{
+			local_m0D -= 32;
+			local_m0B += 32;
+		}
+		else if local_m08 = 6
+		{
+			local_m0D -= 64;
+			local_m0B -= 32;
+		}
+		if canExistAt(123, local_m0D, local_m0B, local_m09, 4, referent, 0)
+		{
+			local_m0F = 1;
+			legal_move(u8_local_address(local_m0F_w01), 0);
+			Avatar.turnToFace(local_m08, 0, 7);
+			setFrame(local_m08);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_007B_dart_animate_avatar_throw(this) -> return;
+			push();
+			wait(4);
+			pop(local_m0D, local_m0B, local_m09);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0581_safePlaySFX(0x00000000, referent, 100, 9) -> return;
+			local_m11 = 30 - Avatar.getDex();
+			if local_m11 > 1
+			{
+				local_m07 += urandom(local_m11);
+				local_m07 -= urandom(local_m11);
+				local_m05 += urandom(local_m11);
+				local_m05 -= urandom(local_m11);
+				local_m03 += urandom(local_m11);
+				local_m03 -= urandom(local_m11);
+			}
+			Item_shoot(1, 64, u8_local_address(local_m07_w01), this);
+		}
+	}
+}
+
+// Derived: routine 0x026E, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DART::dart_look_bark_dart()
+{
+	bark("dart ");
+}
+
+// Derived: routine 0x0296, event mask 0x00000020.
+// R: `hit` identifies event 05; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process DART::dart_hit_bark_and_reward_bullseye(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Npc;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	if arg_04
+	{
+		local_m02 = arg_04;
+		if local_m02.isNpc() = 1
+		{
+			local_m04 = local_m02;
+			if local_m04.isDead() = 0
+			{
+				if local_m04 != 1
+				{
+					playSFX(85, 100, referent);
+					killProcess(local_m02, PT_BARK);
+					killProcess(local_m02, PT_ACTIVITY);
+					if urandom(10) > 5
+					{
+						local_m04.bark("Hey, watch it! ");
+					}
+					else
+					{
+						local_m04.bark("Go play somewhere else! ");
+					}
+					local_m04.enterFastArea();
+				}
+				else
+				{
+					playSFX(85, 100, referent);
+					if urandom(10) > 5
+					{
+						local_m04.bark("Ouch! ");
+					}
+					else
+					{
+						local_m04.bark("Yow! ");
+					}
+				}
+			}
+		}
+		if local_m02.getType() = 702
+		{
+			killProcess(referent, 515);
+			orStatus(4096);
+			playSFX(12, 100, referent);
+			local_m06 = local_m02.getY() - getY();
+			local_m08 = getZ() - local_m02.getZ();
+			if ((local_m08 = 7) or (local_m08 = 8)) and (local_m06 >= -4) and (local_m06 <= 4)
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Bull's eye! ") -> return;
+				AccumulateDexterity(1);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x046A, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process DART::dart_animate_avatar_throw()
+{
+	[[PT_ACTIVITY, referent]];
+	Avatar.realDoAnim(AS_SWING_WEAPON, Avatar.getDir());
+	Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+}
+

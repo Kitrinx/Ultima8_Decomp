@@ -1,0 +1,256 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0594
+// FLEX slot: 1430
+// Original offset: 0x0002E8B0
+// Naming evidence: E, exact object-1 linker name `BODYPART`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BODYPART.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "free";
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process bodypart_explode_avatar_into_body_parts()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m07:U8Byte;
+	[[PT_DEFAULT, referent]];
+	if referent != 1
+	{
+		return;
+	}
+	setAvatarInStasis(1);
+	while isBusy()
+	{
+		wait(1);
+	}
+	local_m04 = getX();
+	local_m06 = getY();
+	local_m07 = getZ();
+	createSprite(578, 0, 17, 2, local_m04 + 336, local_m06 + 336, local_m07 + 56);
+	playSFX(158, 100, referent);
+	wait(20);
+	Item_create(0, 374, u8_local_address(local_m02_w01));
+	local_m02.pop(local_m04 + 45, local_m06 + 17, local_m07);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn local_m02.use() -> return;
+	Item_create(0, 390, u8_local_address(local_m02_w01));
+	local_m02.pop(local_m04 - 19, local_m06 + 17, local_m07);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn local_m02.use() -> return;
+	Item_create(0, 5, u8_local_address(local_m02_w01));
+	local_m02.pop(local_m04, local_m06, local_m07 + 16);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn local_m02.use() -> return;
+	Item_create(0, 372, u8_local_address(local_m02_w01));
+	local_m02.pop(local_m04 + 32, local_m06 - 16, local_m07 + 16);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn local_m02.use() -> return;
+	Item_create(3, 373, u8_local_address(local_m02_w01));
+	local_m02.pop(local_m04 - 66, local_m06 + 2, local_m07 + 16);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn local_m02.use() -> return;
+	Item_create(0, 366, u8_local_address(local_m02_w01));
+	local_m02.pop(local_m04 - 19, local_m06 - 15, local_m07 + 32);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn local_m02.use() -> return;
+	Camera::setCenterOn(0);
+	class_057C_toggleStatus(1, 16, u8_stack_address(-2));
+	teleport(local_m04 - 64, local_m06 - 64, local_m07, getMap());
+	setFrame(8);
+}
+
+// Derived: routine 0x0270, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process bodypart_hurl_severed_body_part(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_FX, arg_00]];
+		local_m02 = arg_00;
+		if local_m02.getType() = 366
+		{
+			wait(10);
+			local_m04 = -5;
+			local_m06 = -7;
+			local_m08 = 10;
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m02.hurl(local_m04, local_m06, local_m08, 1) -> return;
+		}
+		else if local_m02.getType() = 372
+		{
+			wait(20);
+			local_m04 = 10;
+			local_m06 = -2;
+			local_m08 = 7;
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m02.hurl(local_m04, local_m06, local_m08, 1) -> return;
+		}
+		else if local_m02.getType() = 373
+		{
+			wait(30);
+			local_m04 = -10;
+			local_m06 = 2;
+			local_m08 = 7;
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m02.hurl(local_m04, local_m06, local_m08, 1) -> return;
+		}
+		else if local_m02.getType() = 374
+		{
+			wait(80);
+			local_m04 = 4;
+			local_m06 = -7;
+			local_m08 = 5;
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m02.hurl(local_m04, local_m06, local_m08, 1) -> return;
+		}
+		else if local_m02.getType() = 390
+		{
+			wait(90);
+			local_m04 = -2;
+			local_m06 = 5;
+			local_m08 = 5;
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn local_m02.hurl(local_m04, local_m06, local_m08, 1) -> return;
+		}
+	}
+	process
+	{
+		wait(3);
+		if local_m02.getFrame() = 3
+		{
+			local_m02.setFrame(0);
+		}
+		else
+		{
+			local_m02.setFrame(local_m02.getFrame() + 1);
+		}
+	}
+}
+
+// Derived: routine 0x0431, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process bodypart_animate_body_part_hit(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	[[PT_ANIM_UNK, arg_00]];
+	local_m02 = arg_00;
+	playSFX(85, 100);
+	if local_m02.getType() = 360
+	{
+		local_m02.setFrame(1);
+		wait(60);
+		while local_m02.getFrame() != 9
+		{
+			local_m02.setFrame(local_m02.getFrame() + 1);
+			if local_m02.getFrame() <= 5
+			{
+				wait(20);
+			}
+			else
+			{
+				wait(class_0581_randRange(40, 60));
+			}
+		}
+	}
+	else
+	{
+		local_m02.setFrame(4);
+		wait(60);
+		while local_m02.getFrame() != 7
+		{
+			local_m02.setFrame(local_m02.getFrame() + 1);
+			wait(class_0581_randRange(40, 60));
+		}
+		if local_m02.getType() = 373
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0594_bodypart_finish_avatar_dismemberment(0x00000000, local_m02) -> return;
+		}
+	}
+}
+
+// Derived: routine 0x0577, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process bodypart_replace_floating_torso(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:Item;
+	local_m04:Item;
+	[[PT_DEFAULT, NULL_REF]];
+	local_m04 = arg_00;
+	wait(200);
+	Item_create(0, 360, u8_local_address(local_m02_w01));
+	local_m02.pop(local_m04.getX(), local_m04.getY(), local_m04.getZ());
+	local_m04.destroy();
+	local_m02.fall();
+}
+
+// Derived: routine 0x05DC, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process bodypart_finish_avatar_dismemberment(arg_00:U8Word)
+{
+	// X: BP-bound neutral body storage views.
+	local_m02:U8Word;
+	local_m04:Item;
+	[[PT_ANIM_UNK, arg_00]];
+	local_m02 = 35;
+	local_m04 = arg_00;
+	local_m04.setFrame(7);
+	wait(local_m02);
+	while local_m02 >= 0
+	{
+		while local_m04.getFrame() != 11
+		{
+			local_m04.setFrame(local_m04.getFrame() + 1);
+			wait(6);
+		}
+		while local_m04.getFrame() != 9
+		{
+			local_m04.setFrame(local_m04.getFrame() - 1);
+			wait(3);
+		}
+		wait(local_m02);
+		local_m02 -= 10;
+		while local_m04.getFrame() != 11
+		{
+			local_m04.setFrame(local_m04.getFrame() + 1);
+			wait(3);
+		}
+		while local_m04.getFrame() != 9
+		{
+			local_m04.setFrame(local_m04.getFrame() - 1);
+			wait(6);
+		}
+	}
+	while local_m04.getFrame() != 7
+	{
+		local_m04.setFrame(local_m04.getFrame() - 1);
+		wait(9);
+	}
+	Avatar.receiveHit(1, 0, Avatar.getHp(), 128);
+	Kernel::resetRef(1, PT_ANIM);
+}
+

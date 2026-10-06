@@ -1,0 +1,52 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04C0
+// FLEX slot: 1218
+// Original offset: 0x00081502
+// Naming evidence: E, exact object-1 linker name `GRAVEGG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GRAVEGG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass GRAVEGG inherits Egg
+{
+	process gravegg_hatch_teleport_and_replace_magic_wall();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GRAVEGG::gravegg_hatch_teleport_and_replace_magic_wall()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	[[PT_DEFAULT, NULL_REF]];
+	setAvatarInStasis(1);
+	FadeToBlack();
+	teleportToEgg(6, 11, 0);
+	foreach local_m02 where (type = 566) within 32 cells of Avatar {
+		local_m02.destroy();
+		Item_create(0, 728, u8_local_address(local_m02_w01));
+		local_m02.pop(7775, 19455, 8);
+		magicWallDone = 1;
+	}
+	FadeFromBlack();
+	foreach local_m02 where (type = 728) within 32 cells of Avatar {
+		local_m02.destroy();
+		Item_create(14, 566, u8_local_address(local_m02_w01));
+		playSFX(49, 100, local_m02);
+		local_m02.pop(7775, 19455, 8);
+		for local_m04 = 0 to 14
+		{
+			local_m02.setFrame(14 - local_m04);
+			wait(7);
+		}
+		magicWallDone = 0;
+	}
+	setAvatarInStasis(0);
+}
+

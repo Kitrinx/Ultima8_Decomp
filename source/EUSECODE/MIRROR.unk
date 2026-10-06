@@ -1,0 +1,58 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x027C
+// FLEX slot: 638
+// Original offset: 0x000B4BEE
+// Naming evidence: E, exact object-1 linker name `MIRROR`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MIRROR.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass MIRROR inherits Item
+{
+	process mirror_got_hit_forward_to_release();
+	process mirror_release_toggle_linked_mirror_frames_for_nearby_npc();
+}
+
+// Derived: routine 0x0080, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MIRROR::mirror_got_hit_forward_to_release()
+{
+	mirror_release_toggle_linked_mirror_frames_for_nearby_npc();
+}
+
+// Derived: routine 0x009D, event mask 0x00000200.
+// R: `release` identifies event 09; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MIRROR::mirror_release_toggle_linked_mirror_frames_for_nearby_npc()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m01:U8Byte;
+	local_m03:Item;
+	local_m01 = 0;
+	// X: directional surface search; no Origin spelling is known.
+	foreach local_m03 on surface below referent {
+		if local_m03.isNpc()
+		{
+			local_m01 = 1;
+		}
+	}
+	if local_m01
+	{
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m03 where (type = 319) on surface below referent {
+			local_m03.setFrame(local_m03.getFrame() | 4);
+		}
+	}
+	else
+	{
+		// X: directional surface search; no Origin spelling is known.
+		foreach local_m03 where (type = 319) on surface below referent {
+			local_m03.setFrame(local_m03.getFrame() & 3);
+		}
+	}
+}
+

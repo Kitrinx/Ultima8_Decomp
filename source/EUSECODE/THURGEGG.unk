@@ -1,0 +1,48 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04BC
+// FLEX slot: 1214
+// Original offset: 0x0010AC31
+// Naming evidence: E, exact object-1 linker name `THURGEGG`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/THURGEGG.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass THURGEGG inherits Egg
+{
+	process thurgegg_enter_fast_area_spawn_thurgist_and_equipment();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process THURGEGG::thurgegg_enter_fast_area_spawn_thurgist_and_equipment()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m03:U8Byte;
+	local_m05:U8Word;
+	local_m07:Npc;
+	local_m09:Item;
+	local_m05 = Egg_getEggId(this);
+	if urandom(100) > 50
+	{
+		return;
+	}
+	foreach local_m02 where (type = 269) within 30 cells of referent {
+		local_m03 = 1;
+	}
+	if not local_m03
+	{
+		Npc_create(0, 269, u8_local_address(local_m07_w01));
+		local_m07.orStatus(128);
+		local_m07.pop(getX(), getY(), getZ());
+		local_m07.cSetActivity(0);
+		Item_create(urandom(5), 174, u8_local_address(local_m09_w01));
+		local_m09.orStatus(128);
+		local_m09.pop(local_m07);
+	}
+}
+

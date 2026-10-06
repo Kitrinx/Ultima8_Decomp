@@ -1,0 +1,722 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0410
+// FLEX slot: 1042
+// Original offset: 0x0009B7A9
+// Naming evidence: E, exact object-1 linker name `KILANDRA`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/KILANDRA.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "flags";
+uses "free";
+
+npcclass Kilandra inherits Npc
+{
+	process look();
+	process schedule(currentTime:Long);
+	process enterFastArea();
+	process leaveFastArea();
+	process cast(ref:Referent);
+	process AvatarStoleSomething(ref:Referent);
+	process atHome();
+	process randomBarkAtHome();
+	process use();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Kilandra::look()
+{
+	if isDead()
+	{
+		if kilandraName
+		{
+			bark("the body of Kilandra ");
+			return;
+		}
+		else
+		{
+			bark("dead woman ");
+			return;
+		}
+	}
+	if kilandraName and kilandraJob
+	{
+		bark("Kilandra the fisherwoman ");
+		return;
+	}
+	else if kilandraName
+	{
+		bark("Kilandra ");
+		return;
+	}
+	else if kilandraJob
+	{
+		bark("Fisherwoman ");
+		return;
+	}
+	else
+	{
+		bark("woman ");
+	}
+}
+
+// Derived: routine 0x01AD, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Kilandra::schedule(currentTime:Long)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	point:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	map:MapNum;
+	map = 4;
+	if (class_0581_getPeriod() = 3) or (class_0581_getPeriod() = 2) or (class_0581_getPeriod() = 5)
+	{
+		local_m05_w02 = 11743;
+		local_m03 = 16095;
+		local_m01 = 48;
+	}
+	if (class_0581_getPeriod() = 1) or (class_0581_getPeriod() = 4) or (class_0581_getPeriod() = 0)
+	{
+		local_m05_w02 = 11391;
+		local_m03 = 17695;
+		local_m01 = 48;
+	}
+	class_057C_safeTeleport(this, point, map);
+}
+
+// Derived: routine 0x0231, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Kilandra::enterFastArea()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0410_atHome(this) -> return;
+}
+
+// Derived: routine 0x027D, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Kilandra::leaveFastArea()
+{
+	killProcess(referent, PT_ACTIVITY);
+	killProcess(referent, PT_PATHFIND);
+	killProcess(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	if isDead()
+	{
+		teleport(urandom(1000), urandom(1000), 0, 0);
+	}
+}
+
+// Derived: routine 0x02ED, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Kilandra::cast(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	count:Number;
+	count = 10;
+	while (not Npc_getTarget(this)) and count
+	{
+		wait(1);
+		count--;
+	}
+	ref = Npc_getTarget(this);
+	if ref = 1
+	{
+		if not isDead()
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn callTheGuards(NULL_REF) -> return;
+			killProcess(referent, PT_ACTIVITY);
+			killProcess(referent, PT_PATHFIND);
+			killProcess(referent, PT_ANIM);
+			killProcess(referent, PT_BARK);
+			bark("Beren! I am assaulted! ");
+		}
+	}
+}
+
+// Derived: routine 0x03C3, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Kilandra::AvatarStoleSomething(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	if isDead()
+	{
+		return;
+	}
+	item = ref;
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_BARK);
+	resetRef(referent, PT_ANIM);
+	turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+	bark("What are you doing there...? ");
+	wait(100);
+	enterFastArea();
+	return;
+}
+
+// Derived: routine 0x0495, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Kilandra::atHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach pathEgg where (type = TypePathMarker) within 10 cells of Kilandra {
+			counter2 = pathEgg.getFrame();
+		}
+	}
+	process
+	{
+		for counter = counter2 to 4
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter)) within 30 cells of Kilandra {
+				if pathfind(pathEgg, 10)
+				{
+					realDoAnim(AS_STAND, getDir());
+					randomBarkAtHome();
+				}
+				else
+				{
+					realDoAnim(AS_FIDGET, getDir());
+					wait(200);
+					realDoAnim(AS_FIDGET, getDir());
+				}
+			}
+		}
+		counter2 = 0;
+	}
+}
+
+// Derived: routine 0x05AC, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Kilandra::randomBarkAtHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	u8goto label_08FB if not ((getDistance(Avatar:Referent, 18) < 200) and ((Avatar.getStatus() & 16) = 0));
+	ran = urandom(5);
+	if ran = 1
+	{
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		bark("How 'bout some fish, mate? ");
+		realDoAnim(AS_FIDGET, getDir());
+		wait(120);
+	}
+	if ran = 2
+	{
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		if not kilandraMet
+		{
+			bark("Well, what can I do fer ye' stranger...? ");
+			return;
+		}
+		else
+		{
+			bark("Need something, friend? ");
+			return;
+		}
+		realDoAnim(AS_FIDGET, getDir());
+	}
+	if ran = 3
+	{
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		if not kilandraMet
+		{
+			bark("Well, what can I do fer ye' stranger...? ");
+			return;
+		}
+		else
+		{
+			bark("Well, what are ye lookin' at, " + getName() + ".");
+			return;
+		}
+		realDoAnim(AS_FIDGET, getDir());
+		wait(60);
+	}
+	if ran = 4
+	{
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		bark("Ye know, the fish have stories to tell. ");
+		realDoAnim(AS_FIDGET, getDir());
+		bark("Ye should listen to 'em sometime. ");
+		wait(120);
+	}
+	return;
+	u8label label_08FB:
+	u8goto label_0C37 if not (getDistance(Avatar:Referent, 18) < 800);
+	wait(100);
+	ran = urandom(8);
+	turnToFace(urandom(7), 0, 15);
+	if ran = 1
+	{
+		realDoAnim(AS_FIDGET, getDir());
+		bark("I wonder how the fish are running today. ");
+		return;
+		realDoAnim(AS_FIDGET, getDir());
+	}
+	if ran = 2
+	{
+		bark("Hmmmm... ");
+		return;
+		realDoAnim(AS_FIDGET, getDir());
+		wait(60);
+	}
+	if ran = 3
+	{
+		bark("Looks to be a fine day for sailin'. ");
+	}
+	else
+	{
+		if ran = 4
+		{
+			bark("About time to head out to sea. ");
+			wait(60);
+		}
+		if ran = 5
+		{
+			bark("I sure could use a rest. ");
+			realDoAnim(AS_FIDGET, getDir());
+			bark("Maybe I'll take a little nap. ");
+		}
+		if ran = 6
+		{
+			realDoAnim(AS_FIDGET, getDir());
+			bark("A nice bit o' fish would sure taste good. ");
+		}
+		else
+		{
+			if ran = 7
+			{
+				bark("Me bones say there's a storm a brewin'. ");
+				realDoAnim(AS_FIDGET, getDir());
+				wait(100);
+			}
+			return;
+		}
+	}
+	u8label label_0C37:
+}
+
+// Derived: routine 0x0C39, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Kilandra::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	answer:String;
+	askList:String List;
+	avaName:String;
+	avaName = "I am " + getName() + ".";
+	if not kilandraMet
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Excuse me. "), u8_stack_ref(1)) -> return;
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Hello there. "), u8_stack_ref(1)) -> return;
+	}
+	enterConvo();
+	killProcess(1, PT_BARK);
+	if kilandraMet
+	{
+		if gwillimToldDoor
+		{
+			if not (askedFirstTime and (not askedSecondTime))
+			{
+				askList ^= <<"Tell me about ghosts. ">>;
+			}
+			if askedFirstTime and (not askedSecondTime)
+			{
+				askList ^= <<"Do you know of a key? ">>;
+			}
+			if askedFirstTime and askedSecondTime
+			{
+				askList ^= <<"Tell me where the key is! ">>;
+			}
+		}
+		else
+		{
+			askList ^= <<"Hello, Kilandra. ">>;
+		}
+	}
+	else
+	{
+		askList ^= <<"Hello ">>;
+	}
+	if kilandraPissed
+	{
+		askList = <<"Kilandra? ">>;
+	}
+	if deadWalk
+	{
+		askList = <<"Pardon me. ">>;
+	}
+	u8label label_0DDE:
+	u8goto label_4007 if not (answer != "bye ");
+	askList -= <<"bye ">>;
+	askList += <<"bye ">>;
+	answer = ask(askList);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch answer
+	{
+		case "Hello "
+		{
+			bark("Well, what can I do for ye today, stranger? ");
+			askList = <<avaName>>;
+		}
+		case avaName
+		{
+			kilandraMet = 1;
+			kilandraName = 1;
+			bark("Pleased to meet ye, I am Kilandra. I haven't seen ye' here before. Are ye' new in town? ");
+			askList = <<"Yes ", "No ">>;
+		}
+		case "Yes "
+		{
+			bark("Well then, welcome. I don't get into town much, so I'm afraid I would be a poor guide there. But I can tell ye about the Sea of Rains. Been fishin' it for years. I knows it like the back of me hand. ");
+			askList -= <<"Yes ", "No ">>;
+			askList = <<"Tell me of the Sea of Rains. ", "Tell me of Tenebrae. ">>;
+			kilandraJob = 1;
+			if gwillimToldDoor
+			{
+				if not (askedFirstTime and (not askedSecondTime))
+				{
+					askList ^= <<"Tell me about ghosts. ">>;
+				}
+				if askedFirstTime and (not askedSecondTime)
+				{
+					askList ^= <<"Do you know of a key? ">>;
+				}
+				if askedFirstTime and askedSecondTime
+				{
+					askList ^= <<"Tell me where the key is! ">>;
+				}
+			}
+		}
+		case "Tell me about ghosts. "
+		{
+			bark("Ghosts? Ghosts, ye say? Well, why would ye be wanting to know about ghosts? ");
+			askList = <<"I'm looking for a ghost. ", "I heard Orlok's ghost story. ", "No particular reason. ">>;
+			askedFirstTime = 1;
+		}
+		case "I'm looking for a ghost. "
+		{
+			bark("Looking for a ghost, eh? That's a strange thing for a nice young man like yerself to be doing! There is one ghost I'd like to find, that of my daughter. If I could find her ghost, maybe I could find a way to bring her back. ");
+			askList -= <<"I'm looking for a ghost. ", "I heard Orlok's ghost story. ", "No particular reason. ">>;
+		}
+		case "I heard Orlok's ghost story. "
+		{
+			bark("Of course, and ye would be one of those young men thinking to find riches and adventure by disturbing the dead. It's bad business, bad business I say. Why, no one should go about mucking in the affairs of the dead. They don't like it, no sirree. Why I talk to my daughter all the time and she tells me all about being dead, and how much they dislikes the living. ");
+			askList -= <<"I'm looking for a ghost. ", "I heard Orlok's ghost story. ", "No particular reason. ">>;
+			askList += <<"You talk to your daughter? ">>;
+		}
+		case "No particular reason. "
+		{
+			bark("Hmmm, ye're a peculiar one, ye are. ");
+			askList -= <<"I'm looking for a ghost. ", "I heard Orlok's ghost story. ", "No particular reason. ">>;
+		}
+		case "Do you know of a key? "
+		{
+			bark("A key? Well, of course. I have several keys. Was there one in particular you were looking for? ");
+			askList -= <<"Do you know of a key? ">>;
+			askList += <<"A key to the door in the cavern. ", "No key in particular. ">>;
+			askedSecondTime = 1;
+		}
+		case "No key in particular. "
+		{
+			bark("What a strange question. I have only two keys. One to my door and one to my sea chest. My, ye are a strange 'en. ");
+			askList -= <<"A key to the door in the cavern. ", "No key in particular. ">>;
+		}
+		case "A key to the door in the cavern. "
+		{
+			bark("A door in a cavern? Why would there be a door in a cavern? ");
+			askList -= <<"A key to the door in the cavern. ", "No key in particular. ">>;
+			askList ^= <<"It was built by trolls. ", "It leads to the Pit of Death. ", "John Blowhard's treasure is there. ">>;
+		}
+		case "It was built by trolls. "
+		{
+			bark("Built by trolls? That is the silliest story I've ever heard. Built by trolls, ha! Trolls don't know how to build anything. I think ye've been taking a nip of ol' Orlok's private stock there, mate. ");
+			askList -= <<"It was built by trolls. ", "It leads to the Pit of Death. ", "John Blowhard's treasure is there. ">>;
+			askList += <<"You know Orlok? ">>;
+		}
+		case "You know Orlok? "
+		{
+			bark("'Course I know him. That old windbag. His story's are nothing but bunk. ");
+			askList -= <<"You know Orlok? ">>;
+		}
+		case "It leads to the Pit of Death. "
+		{
+			bark("Does not. ");
+			askList ^= <<"How do you know? ">>;
+		}
+		case "How do you know? "
+		{
+			bark("I know because...because my daughter told me. She says there is only one way to the Pit of Death and that is through the Realm of Lithos. ");
+			askList -= <<"How do you know? ">>;
+			askList ^= <<"You talk to your daughter? ">>;
+		}
+		case "John Blowhard's treasure is there. "
+		{
+			bark("No it isn't. ");
+			askList -= <<"John Blowhard's treasure is there. ">>;
+			askList += <<"Where is the treasure, then? ">>;
+		}
+		case "Where is the treasure, then? "
+		{
+			bark("There is no treasure. Orlok's full of hot wind, he is. Tells that tale to everyone, expecting them to believe them. Why my daughter even knows that. ");
+			askList -= <<"Where is the treasure, then? ">>;
+			askList ^= <<"You talk to your daughter? ">>;
+		}
+		case "You talk to your daughter? "
+		{
+			bark("Of course. I sit on her grave and talk with her by the hour. She's a good listener, she is. Why nearly as good as the fish. She gives good advice, too. ");
+			askList -= <<"You talk to your daughter? ">>;
+			askList ^= <<"Good advice? ">>;
+		}
+		case "Good advice? "
+		{
+			bark("Certainly. She tells me when the fish will be running and when there will be a storm. She even offered to guard my house for me. 'Course I told her no. Didn't want no daughter of mine doing lowly guard work! ");
+			askList -= <<"Good advice? ">>;
+		}
+		case "Tell me where the key is! "
+		{
+			bark("The key? Oh, that key! Why my daughter has it. ");
+			askList -= <<"Tell me where the key is! ">>;
+			askList ^= <<"Your daughter?! ">>;
+		}
+		case "Your daughter?! "
+		{
+			bark("Yes, she said she would keep it safe for me. I figure she keeps it with her. Can't get much safer than the grave! ");
+			askList -= <<"Your daughter?! ">>;
+			toldAboutKey = 1;
+		}
+		case "No "
+		{
+			bark("Hmmm, I guess I need to get into town more. I'm a'feared I don't recognize ye. Who's your mama? ");
+			askList -= <<"No ", "Yes ">>;
+			askList = <<"Lady Mordea ", "No one important ", "I'm not from Tenebrae. ">>;
+			if gwillimToldDoor
+			{
+				if not (askedFirstTime and (not askedSecondTime))
+				{
+					askList ^= <<"Tell me about ghosts. ">>;
+				}
+				if askedFirstTime and (not askedSecondTime)
+				{
+					askList ^= <<"Do you know of a key? ">>;
+				}
+				if askedFirstTime and askedSecondTime
+				{
+					askList ^= <<"Tell me where the key is! ">>;
+				}
+			}
+		}
+		case "Tell me of the Sea of Rains. "
+		{
+			bark("Ah, the Sea of Rains. She is a temperamental lady, she is. One day she will give ye enough of her bounty to feed the entire city...then she'll forsake ye for weeks and laugh while ye starve. ");
+			askList -= <<"Tell me of the Sea of Rains. ">>;
+			kilandraJob = 1;
+		}
+		case "Tell me of Tenebrae. "
+		{
+			bark("I don't get into town much...and I likes it that way. The city is no good. ");
+			askList -= <<"Tell me of Tenebrae. ">>;
+			askList += <<"Why is the city no good? ">>;
+		}
+		case "Lady Mordea "
+		{
+			bark("Lady Mordea?! Ack, then I'll have none of ye! Get out of my sight! ");
+			kilandraPissed = 1;
+			exitConvo();
+			return;
+		}
+		case "No one important "
+		{
+			bark("What does ye mean, no one important? Does ye'r mother mean nothing to ye? Oh, ungrateful child! There is nothing that tears my poor heart worse than an ungrateful child! ");
+			kilandraPissed = 1;
+			exitConvo();
+			return;
+		}
+		case "I'm not from Tenebrae. "
+		{
+			bark("What's that? Ye'r not from Tenebrae? Well, then ye are more blessed than ye knows. 'Tis a bad place, Tenebrae. ");
+			askList += <<"Why is Tenebrae bad? ">>;
+			askList -= <<"I'm not from Tenebrae. ", "Lady Mordea ", "No one important ">>;
+		}
+		case "Why is Tenebrae bad? ", "Why is the city no good? "
+		{
+			bark("The Tempest, that's why! Lady Mordea is a selfish, black-hearted woman. Why, taking a bath was more important to her than saving the life of an innocent child! ");
+			askList -= <<"Why is Tenebrae bad? ", "Why is the city no good? ">>;
+			askList = <<"A bath was more important?! ">>;
+		}
+		case "A bath was more important?! "
+		{
+			bark("The child was a little girl with hair of honey gold and eyes the color of the Sea of Rains. She was a beautiful child, but had taken very ill. ");
+			askList -= <<"A bath was more important?! ">>;
+			askList += <<"What happened to the child? ">>;
+		}
+		case "What happened to the child? "
+		{
+			bark("Her mother carried her to the steps of the palace where she begged to see the Tempest. The Tempest has great powers and if anyone could heal the girl, the Tempest could. But that water rat named Salkind came out and told the mother that Lady Mordea was taking a bath and could not be disturbed, especially to help a filthy gutter snipe. ");
+			askList -= <<"What happened to the child? ">>;
+			askList = <<"Did the child recover? ", "filthy gutter snipe!? ">>;
+		}
+		case "filthy gutter snipe!? "
+		{
+			bark("That's what he said. Can you believe that cold hearted weasel? ");
+			askList -= <<"filthy gutter snipe!? ">>;
+		}
+		case "Did the child recover? "
+		{
+			bark("Her mother carried her back to the little shack they shared and tried to doctor her as best she could...but it was no use. The girl passed to Pit of Death that night. ");
+			askList -= <<"Did the child recover? ">>;
+			askList ^= <<"How do you know this? ">>;
+		}
+		case "How do you know this? "
+		{
+			bark("I know this because that little girl was Elaina...my daughter. ");
+			askList -= <<"How do you know this? ">>;
+			askList += <<"I am so sorry. ">>;
+			if mordeaDead
+			{
+				askList += <<"Lady Mordea is dead! ">>;
+			}
+		}
+		case "I am so sorry. "
+		{
+			bark("Well, I appreciate yer thoughts, but ye needn't apologize for sumthin' that ain't yer fault. So, how long are ye plannin' to stay around here? ");
+			askList = <<"Not long ", "Several months, at least. ">>;
+		}
+		case "Not long "
+		{
+			bark("Well, it's smart that ye are. I would leave too, if it weren't for the Sea. Ah, since my little Elaina left me, the Sea is my only love, the sea and all its little critters. Fine companions, those critters are. They mayen't say much, but they are good listeners. ");
+			askList -= <<"Not long ", "Several months, at least. ">>;
+			askList += <<"Who are good listeners? ">>;
+		}
+		case "Who are good listeners? "
+		{
+			bark("Why the fish, 'course. They're wise, they are. Would do ye good to listen to them one day, seek their council. ");
+			askList -= <<"Who are good listeners? ">>;
+		}
+		case "Several months, at least. "
+		{
+			bark("Oh, might want to rethink that, ye might. I told ye, Tenebrae is not a good place. ");
+			askList -= <<"Several months, at least. ">>;
+		}
+		case "Lady Mordea is dead! "
+		{
+			bark("She is dead? Then who is the Tempest? ");
+			askList -= <<"Lady Mordea is dead! ">>;
+			askList += <<"Devon is Tempest. ">>;
+		}
+		case "Devon is Tempest. "
+		{
+			bark("Devon? What great news is this? Devon is a kind and fair man. He'll have no more of those bloody executions, I'm sure! ");
+			askList -= <<"Devon is Tempest. ">>;
+		}
+		case "Hello, Kilandra. "
+		{
+			if kilandraPissed
+			{
+				bark("YE! I thought I told ye to leave! Now I advise ye do it, and do it quick. A'fore I cuts ye into fish bait. ");
+				exitConvo();
+				return;
+			}
+			else
+			{
+				bark("Ah, so ye's returned. What can I do for you? ");
+				askList -= <<"Hello, Kilandra. ">>;
+				askList = <<"Tell me about your daughter. ", "Tell me of the Sea of Rains. ">>;
+				if hydrosFree
+				{
+					askList += <<"The weather is certainly bad. ">>;
+				}
+			}
+		}
+		case "The weather is certainly bad. "
+		{
+			bark("Ye'r telling me! Why I haven't seen rain like this in all my days. I haven't been able to put out to sea since it started. Why, even the fish didn't expect this, or I'm sure they'd have said something to me about it. That Tempest is certainly got a lot of explainin' to do! ");
+			askList -= <<"The weather is certainly bad. ">>;
+			askList = <<"The fish tell you of weather? ", "I caused this weather. ">>;
+			if devonInRule
+			{
+				askList += <<"It is not Devon's fault. ">>;
+			}
+		}
+		case "I caused this weather. "
+		{
+			bark("Ye? Hmmm. No, I don't think I believe ye. Only the Tempest can effect the weather. I don't believe you are the Tempest. ");
+			askList += <<"I released Hydros. ">>;
+			askList -= <<"I caused this weather. ">>;
+		}
+		case "I released Hydros. "
+		{
+			bark("Ye say ye released Hydros, do ye? Well, sure ye did, now lad, sure ye did. And this caused the rains, then? Well, what else have ye done? Been to the Pit of Death? Seen the Shrine of the Ancients? Har, har, har. Oh lad, Ye need to get away, some place calm and quiet, maybe take up fishing. This traveling life has really been a little hard on ye, hasn't it? ");
+			askList -= <<"I released Hydros. ">>;
+		}
+		case "It is not Devon's fault. "
+		{
+			bark("Devon? Is that lad the Tempest then? Oh my. He is a good lad. The fish knew there was something about him. Whispered his name often, they did. ");
+			askList -= <<"It is not Devon's fault. ">>;
+		}
+		case "The fish tell you of weather? "
+		{
+			bark("Of course. They tell me lots of things. In fact, ye ought to take the time out to talk to them yer'self! ");
+			askList -= <<"The fish tell you of weather? ">>;
+		}
+		case "Tell me about your daughter. "
+		{
+			bark("That's something I'ds rather not speak of. The pain is very fresh. ");
+			askList -= <<"Tell me about your daughter. ">>;
+		}
+		case "Kilandra? "
+		{
+			bark("What? Are ye deaf? I want no part of ye! Get out of my sight! ");
+			exitConvo();
+			return;
+		}
+		case "Pardon me. "
+		{
+			bark("I saw her. Oh by the Titans, I saw her! She was wet and covered with slime, and the fish had eaten half of her beautiful face. Oh, how can I bear it? I ask you, how?! ");
+			exitConvo();
+			return;
+		}
+		case "bye "
+		{
+			bark("Farewell. ");
+			exitConvo();
+			return;
+		}
+	}
+	u8goto label_0DDE;
+	u8label label_4007:
+	exitConvo();
+}
+

@@ -1,0 +1,346 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x041B
+// FLEX slot: 1053
+// Original offset: 0x000AFD3F
+// Naming evidence: E, exact object-1 linker name `MALCHIR`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MALCHIR.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+npcclass MALCHIR inherits Npc
+{
+	process malchir_cast_destroy_spell_object_and_run_spell_combat(arg_04:U8Word);
+	process malchir_look_bark_living_or_dead_identity();
+	process malchir_schedule_update_period_schedule_and_safe_teleport();
+	process malchir_enter_fast_area_target_avatar_and_play_idle_animation();
+	process malchir_leave_fast_area_stop_active_process();
+	process malchir_use_toggle_gump_and_run_acolyte_dialogue();
+	process [[PT_DEFAULT, referent]] malchir_conduct_acolyte_test();
+	process [[PT_DEFAULT, referent]] malchir_attack_fortress_intruder();
+	process [[PT_DEFAULT, referent]] malchir_begin_pyros_ceremony();
+	process [[PT_DEFAULT, referent]] malchir_wait_for_test_completion();
+}
+
+// Derived: routine 0x0080, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process MALCHIR::malchir_cast_destroy_spell_object_and_run_spell_combat(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	if MalchirTest >= 6
+	{
+		foreach local_m02 where ((type = 73) and (frame = 0)) within 40 cells of referent {
+			local_m02.destroy();
+			malchir_use_toggle_gump_and_run_acolyte_dialogue();
+		}
+	}
+	malchirMad = 3;
+	class_0574_spelcmbt_run_spell_combat(this, arg_04);
+}
+
+// Derived: routine 0x00F3, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MALCHIR::malchir_look_bark_living_or_dead_identity()
+{
+	if malchirName and malchirJob
+	{
+		if isDead()
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Malchir the late Master Sorcerer ") -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Malchir the Master Sorcerer ") -> return;
+		}
+	}
+	else if malchirName
+	{
+		if isDead()
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Malchir the deceased ") -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Malchir") -> return;
+		}
+	}
+	else if malchirJob
+	{
+		if isDead()
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("dead Master Sorcerer ") -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Master Sorcerer ") -> return;
+		}
+	}
+	else if isDead()
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("dead mage ") -> return;
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("mage ") -> return;
+	}
+}
+
+// Derived: routine 0x0274, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MALCHIR::malchir_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	if isDead()
+	{
+		return;
+	}
+	else if not inDaemonScene
+	{
+		local_m05_w02 = 7519;
+		local_m03 = 2271;
+		local_m01 = 8;
+		if class_057C_canSafeTeleport(this, local_m05, 14)
+		{
+			class_057C_safeTeleport(this, local_m05, 14);
+		}
+	}
+}
+
+// Derived: routine 0x02DF, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MALCHIR::malchir_enter_fast_area_target_avatar_and_play_idle_animation()
+{
+	if isDead()
+	{
+		return;
+	}
+	else if avatarMasterSorcerer
+	{
+		setTarget(1);
+	}
+	else
+	{
+		if not inDaemonScene
+		{
+			realDoAnim(AS_STAND, 2);
+		}
+	}
+}
+
+// Derived: routine 0x0330, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MALCHIR::malchir_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x034B, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MALCHIR::malchir_use_toggle_gump_and_run_acolyte_dialogue()
+{
+	local_m02:U8Bytes2; // X: untouched.
+	if isDead()
+	{
+		if getStatus() & 256
+		{
+			closeGump();
+		}
+		else
+		{
+			Item_openGump(12, this);
+		}
+	}
+	else
+	{
+		enterConvo();
+		malchir_conduct_acolyte_test();
+		if not malchirMet
+		{
+			malchirMet = 1;
+		}
+		else if MalchirTest >= 6
+		{
+			malchir_attack_fortress_intruder();
+		}
+		if not inDaemonScene
+		{
+			exitConvo();
+		}
+	}
+}
+
+// Derived: routine 0x03F2, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MALCHIR::malchir_conduct_acolyte_test()
+{
+	local_m04:U8Bytes4; // X: untouched.
+	if not malchirMet
+	{
+		playMusic(122);
+		bark("Ah, I see you have endured the trials of the Obsidian Fortress, which means that you must have nearly completed your training. I will test you now, Disciple, to see if you are worthy to be an Acolyte. ");
+		bark("In order to become one, you must first cast three spells. You may use my pentacle, one of my staves, and my reagents to prepare them. I will be the target of each. Fear not, for they will do me no harm. ");
+		bark("First, cast the Flame Bolt spell, then the Explosion spell, and finally, summon a Daemon to assault me. Do this in order. Failure at this point will cost your life... and there is no turning back. ");
+		bark("The test begins now... ");
+		MalchirTest = 1;
+		class_0583_armorOfFlames(this);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_041B_malchir_wait_for_test_completion(this) -> return;
+	}
+	else if MalchirTest < 6
+	{
+		if not malchirMad
+		{
+			if MalchirTest = 1
+			{
+				bark("Cast the Flame Bolt spell at me. ");
+			}
+			else if MalchirTest = 2
+			{
+				bark("Cast the Explosion spell at me. ");
+			}
+			else if MalchirTest = 3
+			{
+				bark("Summon a daemon to attack me. ");
+			}
+			else if MalchirTest = 4
+			{
+				bark("Banish the daemon. ");
+			}
+			else if MalchirTest = 5
+			{
+				bark("Drop the staff. ");
+			}
+			malchirMad = 1 + malchirMad;
+		}
+		else if malchirMad = 1
+		{
+			bark("Do it now. ");
+			malchirMad = 1 + malchirMad;
+		}
+		else if malchirMad = 2
+		{
+			bark("This is your last chance. You are about to fail... and that means your death. ");
+			malchirMad = 1 + malchirMad;
+		}
+		else
+		{
+			setTarget(1);
+		}
+	}
+}
+
+// Derived: routine 0x090D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MALCHIR::malchir_attack_fortress_intruder()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	foreach local_m02 where ((type = 73) and (frame = 0)) within 40 cells of referent {
+		local_m02.destroy();
+	}
+	bark("I did not send for you, insolent child. This fortress is my refuge, and for breaking its sanctity, you must die. ");
+	exitConvo();
+	malchirMad = 3;
+	setTarget(1);
+}
+
+// Derived: routine 0x09F2, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MALCHIR::malchir_begin_pyros_ceremony()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:U8Word;
+	local_m02_w01:U8Bytes1;
+	local_m07:U8Bytes5;
+	local_m03:U8Byte;
+	local_m05:U8Word;
+	local_m07_w02:U8Word;
+	[[PT_DEFAULT, NULL_REF]];
+	class_0581_unkCloseAllGumps();
+	setAvatarInStasis(1);
+	bark("Come, Acolyte. We must begin the ceremony. ");
+	inDaemonScene = 1;
+	realDoAnim(AS_ENTER_CAST, getDir());
+	local_m07_w02 = getX() + 96;
+	local_m05 = getY() + 96;
+	local_m03 = getZ() + 8;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m07) -> return;
+	local_m07_w02 = Avatar.getX() + 96;
+	local_m05 = Avatar.getY() + 96;
+	local_m03 = Avatar.getZ() + 8;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0583_firespel_play_fire_burst_at_point(0x00000000, local_m07) -> return;
+	realDoAnim(AS_EXIT_CAST, getDir());
+	class_057C_toggleStatus(16, this);
+	class_057C_toggleStatus(1, 16, u8_stack_address(-2));
+	touch();
+	Avatar.touch();
+	Camera::setCenterOn(0);
+	teleport(128, 128, 0, 14);
+	Avatar.teleport(256, 256, 0, 14);
+	wait(35);
+	FadeToBlack();
+	Camera::setCenterOn(1);
+	Avatar.teleport(17382, 19549, 56, 12);
+	setAvatarInStasis(1);
+	foreach local_m02 where ((type = 124) and (frame = 2)) within 5 cells of Avatar {
+		class_006D_pyros_play_summoning_ritual(u8_local_address(local_m02_w01));
+	}
+}
+
+// Derived: routine 0x0BE7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] MALCHIR::malchir_wait_for_test_completion()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m01:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		local_m01 = 0;
+	}
+	process
+	{
+		u8goto label_0C2C if not ((MalchirTest != 4) and (MalchirTest < 6));
+		turnToFace(getDirToItem(Avatar:Referent), 0, 7);
+		continue; // X: reconstructed process-phase latch transfer.
+		u8label label_0C2C:
+		if MalchirTest >= 6
+		{
+			malchir_begin_pyros_ceremony();
+			return;
+		}
+		else
+		{
+		}
+	}
+}
+

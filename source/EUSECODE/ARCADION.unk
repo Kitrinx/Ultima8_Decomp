@@ -1,0 +1,585 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0439
+// FLEX slot: 1083
+// Original offset: 0x00010298
+// Naming evidence: E, exact object-1 linker name `ARCADION`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ARCADION.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+npcclass ARCADION inherits Npc
+{
+	process arcadion_cast_forward_to_spell_combat(arg_04:U8Word);
+	process arcadion_look_bark_living_or_dead_identity();
+	process arcadion_enter_fast_area_target_avatar_and_return_to_idle_marker();
+	process arcadion_leave_fast_area_stop_active_process();
+	process arcadion_patrol_fortress_gateway();
+	process arcadion_use_toggle_gump_and_run_disciple_dialogue();
+	process [[PT_DEFAULT, referent]] arcadion_greet_disciple();
+	process [[PT_DEFAULT, referent]] arcadion_say_farewell();
+	process [[PT_DEFAULT, referent]] arcadion_respond_to_silence();
+	process [[PT_DEFAULT, referent]] arcadion_ask_avatar_origin();
+	process [[PT_DEFAULT, referent]] arcadion_discuss_fortress_trials();
+}
+
+// Derived: routine 0x0080, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process ARCADION::arcadion_cast_forward_to_spell_combat(arg_04:U8Word)
+{
+	class_0574_spelcmbt_run_spell_combat(this, arg_04);
+}
+
+// Derived: routine 0x00A1, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ARCADION::arcadion_look_bark_living_or_dead_identity()
+{
+	if arcadionName and arcadionJob
+	{
+		if isDead()
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Arcadion the late daemon Sorcerer ") -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Arcadion the daemon Sorcerer ") -> return;
+		}
+	}
+	else if arcadionName
+	{
+		if isDead()
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Arcadion the deceased ") -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Arcadion ") -> return;
+		}
+	}
+	else if arcadionJob
+	{
+		if isDead()
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("dead daemon Sorcerer ") -> return;
+		}
+		else
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("daemon Sorcerer ") -> return;
+		}
+	}
+	else if isDead()
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("dead daemon ") -> return;
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("daemon ") -> return;
+	}
+}
+
+// Derived: routine 0x022B, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ARCADION::arcadion_enter_fast_area_target_avatar_and_return_to_idle_marker()
+{
+	if isDead()
+	{
+		return;
+	}
+	else if avatarMasterSorcerer
+	{
+		setTarget(1);
+	}
+	else
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057B_move_return_to_idle_marker(this) -> return;
+	}
+}
+
+// Derived: routine 0x0269, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ARCADION::arcadion_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x0284, event mask 0x00000000.
+// R: behavior-derived callable name.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process ARCADION::arcadion_patrol_fortress_gateway()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m04:Item;
+	local_m06:Item;
+	local_m08:Item;
+	local_m0A:Item List;
+	local_m0B:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		local_m0B = 1;
+		foreach local_m04 where (type = TypePathMarker) within 40 cells of referent {
+			if local_m04.getFrame() = 0
+			{
+				local_m08 = local_m04;
+			}
+			local_m0A += <<local_m04>>;
+		}
+		if local_m08
+		{
+			if pathfind(local_m06, 20)
+			{
+				local_m08.destroy();
+				turnToFace(1, 0, 7);
+				realDoAnim(AS_FIDGET, getDirToItem(Avatar:Referent));
+			}
+		}
+	}
+	process
+	{
+		local_m02 = 20;
+		local_m06 = 0;
+		foreach local_m04 in local_m0A {
+			if getDistance(57, local_m04) <= local_m02
+			{
+				local_m06 = local_m04;
+				local_m02 = getDistance(57, local_m04);
+			}
+		}
+		if local_m06
+		{
+			if local_m0B
+			{
+				if local_m06.getFrame() != 6
+				{
+					foreach local_m04 in local_m0A {
+						if local_m04.getFrame() = (local_m06.getFrame() + 1)
+						{
+							local_m06 = local_m04;
+						}
+					}
+					if pathfind(local_m06, 20)
+					{
+						bark(numToStr(local_m06.getFrame()));
+					}
+				}
+				else
+				{
+					bark("Back to the entrance. ");
+					local_m0B = 0;
+				}
+			}
+			else if local_m06.getFrame() != 1
+			{
+				foreach local_m04 in local_m0A {
+					if local_m04.getFrame() = (local_m06.getFrame() - 1)
+					{
+						local_m06 = local_m04;
+					}
+				}
+				if pathfind(local_m06, 20)
+				{
+					bark(numToStr(local_m06.getFrame()));
+				}
+			}
+			else
+			{
+				bark("Off to the gateway. ");
+				local_m0B = 1;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x04CA, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ARCADION::arcadion_use_toggle_gump_and_run_disciple_dialogue()
+{
+	if isDead()
+	{
+		if getStatus() & 256
+		{
+			closeGump();
+		}
+		else
+		{
+			Item_openGump(12, this);
+		}
+	}
+	else
+	{
+		enterConvo();
+		arcadion_greet_disciple();
+		arcadion_discuss_fortress_trials();
+		exitConvo();
+	}
+}
+
+// Derived: routine 0x054B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ARCADION::arcadion_greet_disciple()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	if not arcadionMet
+	{
+		bark("You have somehow managed to defeat or evade the first guardians of the Obsidian Fortress, mortal. And now, you have shown an inkling of wisdom in not attempting to attack me. Perhaps you are worthy...* Perhaps not.*Regardless, in reward, I will assist you now by giving you access to the rest of the fortress and offering the use of my pentacle and sundry items you might need in preparing spells. ");
+		arcadionMet = 1;
+	}
+	else
+	{
+		if not gotTheSymbols
+		{
+			local_m02 = random(3);
+			if arcadionAvaName
+			{
+				if not local_m02
+				{
+					bark("What is it you need," + getName() + "?");
+				}
+				else if local_m02 = 1
+				{
+					bark(getName() + ", how can I be of service?");
+				}
+				else
+				{
+					bark("What do you want? ");
+				}
+			}
+			else if not local_m02
+			{
+				bark("What is it you need? ");
+			}
+			else if local_m02 = 1
+			{
+				bark("How can I be of service? ");
+			}
+			else
+			{
+				bark("What do you want? ");
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0868, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ARCADION::arcadion_say_farewell()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m02 = random(3);
+	if not local_m02
+	{
+		bark("Farewell. ");
+	}
+	else if local_m02 = 1
+	{
+		bark("Prepare yourself. ");
+	}
+	else
+	{
+		bark("Seek the Burning Path, Sorcerer. ");
+	}
+}
+
+// Derived: routine 0x0913, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ARCADION::arcadion_respond_to_silence()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m02 = random(3);
+	if not local_m02
+	{
+		bark("Farewell. ");
+	}
+	else if local_m02 = 1
+	{
+		bark("If you do not wish to speak, then do not. ");
+	}
+}
+
+// Derived: routine 0x099F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ARCADION::arcadion_ask_avatar_origin()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m01:U8Byte;
+	local_m03:String;
+	local_m05:String List;
+	local_m01 = 0;
+	bark("Where are you from? ");
+	local_m05 = <<"I am from this place. ", "I come from Earth. ", "Britannia is my home. ", "Most recently, Serpent Isle. ", "It does not matter. ">>;
+	local_m03 = ask(local_m05);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m03
+	{
+		case "I am from this place. "
+		{
+			arcadionMetBefore = 1;
+			bark("You do not have the feel of a Pagan, but if that is what you wish me to believe, I will. ");
+		}
+		case "I come from Earth. "
+		{
+			arcadionMetBefore = 2;
+			bark("Earth. Yes. Quite an interesting place. I visited there long ago. It would seem that there my kind are either revered as kin to the Dark Ones or feared as unholy assistants to some evil being or other. A silly people indeed. ");
+		}
+		case "Britannia is my home. "
+		{
+			arcadionMetBefore = 3;
+			bark("Britannia? I have never heard of such a place. It must be a truly out of the way realm. ");
+			local_m01 = 1;
+		}
+		case "Most recently, Serpent Isle. "
+		{
+			arcadionMetBefore = 4;
+			bark("I have never heard of this isle. It must be a truly out of the way realm. ");
+			local_m01 = 1;
+		}
+		case "It does not matter. "
+		{
+			arcadionMetBefore = 5;
+			bark("Yes. You are right. It does not. ");
+		}
+		default
+		{
+			arcadionMetBefore = 5;
+			bark("I take your silence as a reply. You wish to remain unknown. That is acceptable. ");
+		}
+	}
+	if local_m01
+	{
+		local_m05 = <<"Don't you know me? ", "We have met before. ">>;
+		local_m03 = ask(local_m05);
+		if local_m03 = "Don't you know me? "
+		{
+			local_m03 = "We have met before. ";
+		}
+		if local_m03 = "We have met before. "
+		{
+			bark("No. We have not met. At least, I do not think we have. ");
+			local_m05 = <<"You were bound to Erethian. ", "I crafted the Shade Blade for you. ">>;
+			local_m03 = ask(local_m05);
+			// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+			switch local_m03
+			{
+				case "You were bound to Erethian. "
+				{
+					bark("Erethian? I know of no one by that name. I have never been bound to anyone. Not even the Lord of Flame. I am alone in that respect, amongst daemonkind. ");
+				}
+				case "I crafted the Shade Blade for you. "
+				{
+					bark("Shade Blade? What is that? I think you have mistaken me for another. ");
+				}
+				default
+				{
+					bark("What else would you speak of? ");
+					return;
+				}
+			}
+			bark("Perhaps we shall meet again in the distant future. Time does strange things to those who travel the worlds, as you doubtless know. I shall have to try to remember what you have said. Now then... what can I assist you with? ");
+		}
+		else
+		{
+			bark("What else would you speak of? ");
+			return;
+		}
+	}
+}
+
+// Derived: routine 0x1256, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] ARCADION::arcadion_discuss_fortress_trials()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String;
+	local_m0A:String List;
+	local_m0C:String List;
+	if goToInnerSanctum
+	{
+		local_m02 = random(3);
+		if not local_m02
+		{
+			bark("Go now. Master Malchir is not a patient sort of man. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("Do you wish the master to be displeased with you? Go through the gateway. ");
+		}
+		else
+		{
+			bark("You must not waste time. The Master awaits you. ");
+		}
+		return;
+	}
+	else if gotTheSymbols
+	{
+		bark("You have performed remarkably well, Disciple. Or rather, I should say, Acolyte. For if you please the Master, that is what you shall be. Go to him now. The gateway will take you to his inner sanctum now. ");
+		goToInnerSanctum = 1;
+		return;
+	}
+	local_m0A = <<"Tell me of the Obsidian Fortress. ">>;
+	if not arcadionName
+	{
+		local_m0A += <<"Who are you? ">>;
+	}
+	if not arcadionJob
+	{
+		local_m0A += <<"What are you? Why are you here? ">>;
+	}
+	if not arcadionMetBefore
+	{
+		local_m0A += <<"Do I know you from somewhere? ">>;
+	}
+	while local_m04 != "Farewell. "
+	{
+		if class_0581_countStrList(local_m0A) <= 1
+		{
+			bark("If there is nothing more, you should proceed with the trials. ");
+			local_m0A = <<"Tell me of the Obsidian Fortress. ">>;
+			if not arcadionName
+			{
+				local_m0A += <<"Who are you? ">>;
+			}
+			if not arcadionJob
+			{
+				local_m0A += <<"What are you? Why are you here? ">>;
+			}
+			if not arcadionMetBefore
+			{
+				local_m0A += <<"Do I know you from somewhere? ">>;
+			}
+		}
+		local_m0A = class_0581_free_append_list_line("Farewell. ", local_m0A);
+		local_m04 = ask(local_m0A);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "Tell me of the Obsidian Fortress. "
+			{
+				bark("What would you know about it? ");
+				local_m0A = <<"Are you one of its guardians? ", "How was it created? ", "What are the Trials? ", "Where is Malchir's inner sanctum? ">>;
+			}
+			case "Who are you? "
+			{
+				arcadionName = 1;
+				if not arcadionMetBefore
+				{
+					bark("I am known as Arcadion. And who might you be? ");
+					local_m08 = "I am " + getName() + ".";
+					local_m0C = <<local_m08, "It is not your concern. ">>;
+					local_m06 = ask(local_m0C);
+					if local_m06 = local_m08
+					{
+						arcadionAvaName = 1;
+						bark("I recognize that name... ");
+						arcadion_ask_avatar_origin();
+					}
+					else
+					{
+						bark("As you wish. Proceed with the Trials, and leave me be. ");
+						return;
+					}
+				}
+				else
+				{
+					bark("I am known as Arcadion. ");
+				}
+				arcadionName = 1;
+				local_m0A -= <<"Who are you? ">>;
+			}
+			case "What are you? Why are you here? "
+			{
+				bark("A curious sort, aren't you? I am a daemon Sorcerer. The only daemon Sorcerer as far as I know. I am here at the behest of Master Malchir. He is providing my training as a Sorcerer in exchange for my services. ");
+				local_m0A -= <<"What are you? Why are you here? ">>;
+				local_m0A += <<"Services? What might they be? ">>;
+				arcadionJob = 1;
+			}
+			case "Do I know you from somewhere? "
+			{
+				bark("Perhaps... I have traveled extensively, in this realm and others. ");
+				arcadion_ask_avatar_origin();
+				local_m0A -= <<"Do I know you from somewhere? ">>;
+			}
+			case "Services? What might they be? "
+			{
+				bark("I... welcome those who would attempt the Trials of the Obsidian Fortress. ");
+				local_m0A -= <<"Services? What might they be? ">>;
+			}
+			case "Are you one of its guardians? "
+			{
+				bark("Not really. I am merely a test. As you can see by the bones strewn about... many have not passed this test. ");
+				local_m0A -= <<"Are you one of its guardians? ">>;
+			}
+			case "How was it created? "
+			{
+				bark("The first Sorcerers were revered by the people, but not so later generations. Eventually, fear and mistrust arose on both sides. The Master Sorcerer called upon the might of the Pyros who reluctantly came to his aid. The Lord of Flame in turn called upon his comrade, Lithos, and together they thrust the living rock up through a lake of lava that had formed in Daemon's Crag. Pyros then poured forth the excess lava into a river that blocked the path to the Sorcerer's Enclave. The cavern through which it flows, aptly called the Mouth of the Daemon, is the first obstacle for those who would disturb the mages of Sorcerer's Enclave.");
+				local_m0A -= <<"How was it created? ">>;
+			}
+			case "What are the Trials? "
+			{
+				bark("If I were to reveal that to you they wouldn't be much of a test of your capabilities, would they? Just walk through the pillars at the rear of this chamber, and the gateway will take you to the Trials. It will not bring you back here until you have collected the four special Sorcerer's symbols, so prepare well. ");
+				local_m0A -= <<"What are the Trials? ">>;
+				local_m0A += <<"What do the symbols look like? ">>;
+			}
+			case "Where is Malchir's inner sanctum? "
+			{
+				bark("Through the gateway beyond the pillars in the rear of the chamber, but not until you have succeeded in accomplishing the Trials. When you have done so, I will allow you to go to Malchir's inner sanctum. He awaits you even now, so be quick about your task. ");
+				local_m0A -= <<"Where is Malchir's inner sanctum? ">>;
+				local_m0A += <<"Let me go to him now. ">>;
+			}
+			case "What do the symbols look like? "
+			{
+				bark("You will know them when you see them. ");
+				local_m0A -= <<"What do the symbols look like? ">>;
+			}
+			case "Let me go to him now. "
+			{
+				bark("Of course... What do you take me for? If I were to allow you to go to Malchir untested, he would be displeased. One does not live very long when one has displeased a Master Sorcerer. ");
+				local_m0A -= <<"Let me go to him now. ">>;
+			}
+			case "Farewell. "
+			{
+				arcadion_say_farewell();
+			}
+			case ""
+			{
+				arcadion_respond_to_silence();
+				local_m04 = "Farewell. ";
+			}
+			default
+			{
+				bark("Do not toy with me. What is it you want? ");
+			}
+		}
+	}
+}
+

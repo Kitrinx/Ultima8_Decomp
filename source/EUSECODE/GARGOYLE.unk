@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0103
+// FLEX slot: 261
+// Original offset: 0x0007B9BE
+// Naming evidence: E, exact object-1 linker name `GARGOYLE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GARGOYLE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass GARGOYLE inherits Item
+{
+	process gargoyle_look_bark_gargoyle();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GARGOYLE::gargoyle_look_bark_gargoyle()
+{
+	bark("gargoyle ");
+}
+

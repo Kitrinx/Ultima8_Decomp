@@ -1,0 +1,981 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0417
+// FLEX slot: 1049
+// Original offset: 0x000FAD99
+// Naming evidence: E, exact object-1 linker name `STELLOS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/STELLOS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+uses "snddefs";
+uses "flags";
+
+npcclass Stellos inherits Npc
+{
+	process look();
+	process schedule(currentTime:Long);
+	process enterFastArea();
+	process leaveFastArea();
+	process cast(ref:Referent);
+	process AvatarStoleSomething(ref:Referent);
+	process atMonastery();
+	process randomBarkAtMonastery();
+	process atHome();
+	process randomBarkAtHome();
+	process use();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::look()
+{
+	if Stellos.isDead()
+	{
+		bark("the body of Stellos ");
+		return;
+	}
+	if stellosName and stellosJob
+	{
+		bark("Stellos the monk ");
+		return;
+	}
+	else if stellosName
+	{
+		bark("Stellos");
+		return;
+	}
+	else if stellosJob
+	{
+		bark("monk ");
+		return;
+	}
+	else
+	{
+		bark("man ");
+		return;
+	}
+}
+
+// Derived: routine 0x0170, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::schedule(currentTime:Long)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	point:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	map:MapNum;
+	sched:Number;
+	map = 37;
+	if Stellos.isDead()
+	{
+		return;
+	}
+	if (class_0581_getPeriod() = 4) or (class_0581_getPeriod() = 5)
+	{
+		local_m05_w02 = 18623;
+		local_m03 = 19199;
+		local_m01 = 56;
+		sched = 2;
+	}
+	if class_0581_getPeriod() <= 3
+	{
+		local_m05_w02 = 21790;
+		local_m03 = 19818;
+		local_m01 = 56;
+		sched = 1;
+	}
+	if class_057C_canSafeTeleport(this, point, map)
+	{
+		stellosSchedule = sched;
+		class_057C_safeTeleport(this, point, map);
+	}
+}
+
+// Derived: routine 0x0211, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::enterFastArea()
+{
+	if Stellos.isDead()
+	{
+		return;
+	}
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	if stellosSchedule = 1
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0417_atHome(this) -> return;
+	}
+	else if stellosSchedule = 2
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0417_atMonastery(this) -> return;
+	}
+}
+
+// Derived: routine 0x0293, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::leaveFastArea()
+{
+	stellosJustHealed = 0;
+	killProcess(referent, PT_ACTIVITY);
+	killProcess(referent, PT_PATHFIND);
+	killProcess(referent, PT_ANIM);
+	killProcess(referent, PT_BARK);
+	if isDead()
+	{
+		teleport(urandom(10000), urandom(10000), 0, 0);
+	}
+}
+
+// Derived: routine 0x030A, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::cast(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	count:Number;
+	count = 10;
+	while (not Npc_getTarget(this)) and count
+	{
+		wait(1);
+		count--;
+	}
+	ref = Npc_getTarget(this);
+	if ref = 1
+	{
+		resetRef(referent, PT_ACTIVITY);
+		resetRef(referent, PT_PATHFIND);
+		resetRef(referent, PT_ANIM);
+		resetRef(referent, PT_BARK);
+		bark("Stratos! Preserve me! ");
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 200, 58) -> return;
+		realDoAnim(AS_ENTER_CAST, getDir());
+		realDoAnim(29, getDir());
+		class_057C_toggleStatus(16, this);
+		setFrame(getFrame());
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 100, 116) -> return;
+		realDoAnim(AS_EXIT_CAST, getDir());
+		clrImmortal();
+		setDead();
+		teleport(urandom(10000), urandom(10000), 0, 0);
+	}
+}
+
+// Derived: routine 0x048B, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::AvatarStoleSomething(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	item = ref;
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+	bark("What are you doing there...? ");
+	wait(120);
+	enterFastArea();
+	return;
+}
+
+// Derived: routine 0x054E, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::atMonastery()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		foreach pathEgg where ((type = TypePathMarker) and (quality = 4)) within 10 cells of Stellos {
+			counter2 = pathEgg.getFrame();
+		}
+	}
+	process
+	{
+		for counter = counter2 to 31
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter) and (quality = 4)) within 50 cells of Stellos {
+				if pathfind(pathEgg, 10)
+				{
+					if not somebodyTalking
+					{
+						randomBarkAtMonastery();
+					}
+					else
+					{
+						Npc_doAnim(0, 10000, getDir(), 47, this);
+						wait(30);
+						Npc_doAnim(0, 10000, getDir(), 47, this);
+					}
+				}
+				else
+				{
+					wait(500);
+					Npc_doAnim(0, 10000, getDir(), 47, this);
+				}
+			}
+		}
+		counter2 = 0;
+	}
+}
+
+// Derived: routine 0x06A1, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::randomBarkAtMonastery()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Stellos:Referent);
+	if ran < 200
+	{
+		ran = urandom(8);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Hello? ");
+			Npc_doAnim(0, 10000, getDir(), 47, this);
+			wait(120);
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			bark("Can I help you? ");
+			Npc_doAnim(0, 10000, getDir(), 47, this);
+			wait(120);
+		}
+		if ran = 3
+		{
+			bark("Who goes there? ");
+			wait(60);
+			bark("I can hear your footsteps! ");
+			wait(120);
+		}
+		if ran = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			Npc_doAnim(0, 10000, getDir(), 47, this);
+			bark("Do you require my assistance? ");
+			wait(120);
+			bark("Very well then... ");
+		}
+	}
+	else
+	{
+		ran = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			bark("Where is that Xavier? ");
+		}
+		else
+		{
+			if ran = 2
+			{
+				bark("hmmmm... ");
+				Npc_doAnim(0, 10000, getDir(), 47, this);
+				wait(60);
+			}
+			if ran = 3
+			{
+				bark("No rest for the weary. ");
+			}
+			if ran = 4
+			{
+				bark("Brrrr! There is a chill in the air. ");
+				Npc_doAnim(0, 10000, getDir(), 28, this);
+				wait(60);
+			}
+			if ran = 5
+			{
+				bark("Perhaps...? ");
+				Npc_doAnim(0, 10000, getDir(), 47, this);
+				bark("No, I don't think so... ");
+			}
+			if ran = 6
+			{
+				bark("Oh mighty Stratos, forgive my fragility. ");
+			}
+			if ran = 7
+			{
+				bark("Oh, my aching bones. ");
+				Npc_doAnim(0, 10000, getDir(), 28, this);
+				wait(100);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0BAD, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::atHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	pathEgg:Item;
+	counter:Number;
+	counter2:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		if Npc_getLastAnimSet(this) = 51
+		{
+			Npc_doAnim(0, 10000, getDir(), 52, this);
+		}
+		foreach pathEgg where ((type = TypePathMarker) and (quality = 3)) within 10 cells of Stellos {
+			counter2 = pathEgg.getFrame();
+		}
+	}
+	process
+	{
+		for counter = counter2 to 16
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = counter) and (quality = 3)) within 25 cells of Stellos {
+				pathfind(pathEgg, 10);
+				if counter = 0
+				{
+					turnToFace(2, 0, 10);
+					bark("I must meditate! ");
+					Npc_doAnim(0, 10000, getDir(), 51, this);
+					wait(2000);
+					Npc_doAnim(0, 10000, getDir(), 52, this);
+					bark("I feel refreshed now! ");
+				}
+				else if not somebodyTalking
+				{
+					Npc_doAnim(0, 10000, getDir(), 2, this);
+					randomBarkAtMonastery();
+				}
+				else
+				{
+					Npc_doAnim(0, 10000, getDir(), 47, this);
+				}
+				wait(60 + urandom(100));
+			}
+		}
+		counter2 = 0;
+	}
+}
+
+// Derived: routine 0x0DC5, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::randomBarkAtHome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	ran = getDistance(Avatar:Referent, Stellos:Referent);
+	if ran < 200
+	{
+		ran = urandom(8);
+		if ran = 1
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			bark("Can I help you? ");
+			wait(120);
+			Npc_doAnim(0, 10000, getDir(), 47, this);
+			bark("Oh, well. ");
+			wait(100);
+		}
+		if ran = 2
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			bark("Yes? ");
+			Npc_doAnim(0, 10000, getDir(), 47, this);
+			wait(120);
+		}
+		if ran = 3
+		{
+			turnToFace(7 - getDirToItem(Avatar:Referent), 0, 15);
+			bark("Who goes there? I feel your presence. ");
+			wait(100);
+		}
+		if ran = 4
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 15);
+			bark("Speak! Who is there? ");
+			wait(120);
+			Npc_doAnim(0, 10000, getDir(), 47, this);
+		}
+	}
+	else
+	{
+		ran = urandom(12);
+		turnToFace(urandom(7), 0, 10);
+		if ran = 1
+		{
+			if torwinJumped
+			{
+				bark("I must have a talk with the acolytes. ");
+			}
+			else
+			{
+				bark("I must have a talk with Torwin. ");
+			}
+		}
+		if ran = 2
+		{
+			bark("hmmmm... ");
+			Npc_doAnim(0, 10000, getDir(), 47, this);
+			wait(60);
+		}
+		if ran = 3
+		{
+			bark("The flowers smell sweet today. ");
+		}
+		if ran = 4
+		{
+			bark("Where is that focus? ");
+			wait(100);
+		}
+		if ran = 5
+		{
+			bark("Ahh, fresh air. ");
+			wait(100);
+		}
+		if ran = 6
+		{
+			bark("Oh, my bones feel tired today. ");
+			Npc_doAnim(0, 10000, getDir(), 28, this);
+		}
+		if ran = 7
+		{
+			Npc_doAnim(0, 10000, getDir(), 47, this);
+			bark("Those noisy monks. ");
+			wait(60);
+		}
+	}
+}
+
+// Derived: routine 0x12CF, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Stellos::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	answer:String;
+	askList:String List;
+	item2:Item;
+	if not stellosMet
+	{
+		Item_bark(u8_string_address("Pardon me, good sir. "), u8_stack_ref(1));
+		enterConvo();
+	}
+	else
+	{
+		Item_bark(u8_string_address("Pardon me. "), u8_stack_ref(1));
+		enterConvo();
+	}
+	if Npc_getLastAnimSet(this) = 51
+	{
+		killProcess(referent, PT_ANIM);
+		Npc_doAnim(0, 10000, getDir(), 52, this);
+	}
+	enterConvo();
+	killProcess(1, PT_BARK);
+	if stellosMet
+	{
+		bark("Welcome, my friend. ");
+		askList = <<"Hello again, Stellos. ", "bye ">>;
+	}
+	else
+	{
+		bark("Welcome, stranger. ");
+		askList = <<"Good day to you. ", "bye ">>;
+	}
+	if attemptedWisdomTest and (not passedWisdomTest)
+	{
+		askList ^= <<"Tell me of the Test of Wisdom. ">>;
+	}
+	if passedWisdomTest
+	{
+		askList ^= <<"I have passed the Test of Wisdom. ">>;
+		askList -= <<"Tell me of the Test of Wisdom. ">>;
+	}
+	if passedWisdomTest and attemptedCenteredTest and (not passedCenteredTest)
+	{
+		askList ^= <<"What do you know of the Test of Centeredness? ">>;
+		askList -= <<"I have passed the Test of Wisdom. ", "Tell me of the Test of Wisdom. ">>;
+	}
+	if passedWisdomTest and passedCenteredTest
+	{
+		askList ^= <<"I have passed the first two tests. ", "bye ">>;
+		askList -= <<"I have passed the Test of Wisdom. ", "Tell me of the Test of Wisdom. ", "What do you know of the Test of Centeredness? ">>;
+	}
+	if hasOwnFoci
+	{
+		askList ^= <<"I have constructed my Foci. ">>;
+		askList -= <<"I have passed the Test of Wisdom. ", "Tell me of the Test of Wisdom. ", "I have passed the first two tests. ", "What do you know of the Test of Centeredness? ", "I passed the Test of Centeredness. ">>;
+	}
+	if passedThirdTest and (not hasOwnFoci)
+	{
+		askList ^= <<"I have completed the Third Test. ">>;
+		askList -= <<"I have passed the Test of Wisdom. ", "Tell me of the Test of Wisdom. ", "I have passed the first two tests. ", "What do you know of the Test of Centeredness? ", "I have constructed my Foci. ", "I passed the Test of Centeredness. ">>;
+	}
+	if passedThirdTest and hasOwnFoci
+	{
+		askList ^= <<"I have passed the third test. ">>;
+		askList -= <<"I have passed the Test of Wisdom. ", "Tell me of the Test of Wisdom. ", "I have passed the first two tests. ", "What do you know of the Test of Centeredness? ", "I have constructed my Foci. ", "I passed the Test of Centeredness. ">>;
+	}
+	if passedThirdTest and hasOwnFoci and torwinMet
+	{
+		askList ^= <<"I have met Torwin. ">>;
+		askList -= <<"I have passed the Test of Wisdom. ", "Tell me of the Test of Wisdom. ", "I have passed the first two tests. ", "What do you know of the Test of Centeredness? ", "I have constructed my Foci. ", "I passed the Test of Centeredness. ">>;
+	}
+	if passedThirdTest and hasOwnFoci and xavierMet
+	{
+		askList ^= <<"I have spoken with Brother Xavier. ">>;
+		askList -= <<"I have passed the Test of Wisdom. ", "Tell me of the Test of Wisdom. ", "I have passed the first two tests. ", "What do you know of the Test of Centeredness? ", "I have constructed my Foci. ", "I passed the Test of Centeredness. ">>;
+	}
+	if passedThirdTest and hasOwnFoci and cyrrusMet
+	{
+		askList ^= <<"I spoke with Holy Cyrrus. ">>;
+		askList -= <<"I have passed the Test of Wisdom. ", "Tell me of the Test of Wisdom. ", "I have passed the first two tests. ", "What do you know of the Test of Centeredness? ", "I have constructed my Foci. ", "I passed the Test of Centeredness. ">>;
+	}
+	if passedThirdTest and hasOwnFoci and torwinJumped
+	{
+		askList ^= <<"Poor Torwin. ">>;
+		askList -= <<"I have passed the Test of Wisdom. ", "Tell me of the Test of Wisdom. ", "I have passed the first two tests. ", "What do you know of the Test of Centeredness? ", "I have constructed my Foci. ", "I spoke with Holy Cyrrus. ", "I have spoken with Brother Xavier. ", "I have met Torwin. ", "I passed the Test of Centeredness. ">>;
+	}
+	if stratosMet and (not hasBreath)
+	{
+		askList = <<"I have heard the Mystic Voice. ", "bye ">>;
+		askList -= <<"I have passed the Test of Wisdom. ", "Tell me of the Test of Wisdom. ", "I have passed the first two tests. ", "What do you know of the Test of Centeredness? ", "I have constructed my Foci. ", "I spoke with Holy Cyrrus. ", "I have spoken with Brother Xavier. ", "I have met Torwin. ", "I passed the Test of Centeredness. ">>;
+	}
+	if hasBreath
+	{
+		askList = <<"I have the Breath of Wind. ", "bye ">>;
+	}
+	if torwinJumped and hasRing and (not spokeAboutRing)
+	{
+		askList ^= <<"I found this ring. ">>;
+	}
+	if passedCenteredTest and (not passedWisdomTest)
+	{
+		askList ^= <<"I passed the Test of Centeredness. ">>;
+		askList -= <<"I have passed the Test of Wisdom. ">>;
+	}
+	if (Avatar.getHp() < (Avatar.getStr() * 2)) and stellosJob
+	{
+		askList += <<"I need healing. ">>;
+	}
+	u8label label_217C:
+	u8goto label_6390 if not (answer != "bye ");
+	answer = ask(askList);
+	askList -= <<"bye ">>;
+	askList += <<"bye ">>;
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch answer
+	{
+		case "Hello again, Stellos. "
+		{
+			bark("It is good to hear your voice again, friend. ");
+			askList -= <<"Hello again, Stellos. ">>;
+			askList ^= <<"Who is Stratos? ", "What do you do? ">>;
+		}
+		case "I need healing. "
+		{
+			if stellosJustHealed
+			{
+				bark("I am sorry, but I do not have the strength to perform such a service. Come back later after I have rested. ");
+				exitConvo();
+				return;
+			}
+			else
+			{
+				bark("That is certainly no problem. ");
+				class_0596_restoration(this, 1);
+				stellosJustHealed = 1;
+				bark("Please leave me now, I need to rest. ");
+				exitConvo();
+				return;
+			}
+		}
+		case "Good day to you. "
+		{
+			bark("And a good day to you, my friend. How may I help you? ");
+			askList -= <<"Good day to you. ">>;
+			askList = <<"By what are you called? ">>;
+		}
+		case "By what are you called? "
+		{
+			bark("I am Stellos. I have lived here for many, many years. ");
+			stellosMet = 1;
+			askList -= <<"By what are you called? ">>;
+			askList += <<"What do you do? ", "How many years? ">>;
+			stellosName = 1;
+		}
+		case "What do you do? "
+		{
+			bark("I am the leader of the Order of Enlightenment. ");
+			askList -= <<"What do you do? ">>;
+			askList ^= <<"Leader? ", "Order of Enlightenment ">>;
+		}
+		case "Leader? "
+		{
+			bark("Well, it really isn't an official title. Most of the younger members come to me for guidance because I am the oldest member of the Order. ");
+			askList -= <<"Leader? ">>;
+		}
+		case "Order of Enlightenment "
+		{
+			bark("That is the name of those of us who follow the Great Air Titan, Stratos. ");
+			askList -= <<"Order of Enlightenment ">>;
+		}
+		case "How many years? "
+		{
+			bark("Through the grace of the Great Air Titan, Stratos, I have lived over 200 years. ");
+			askList -= <<"How many years? ">>;
+			askList ^= <<"Who is Stratos? ", "200 years! ">>;
+		}
+		case "Who is Stratos? "
+		{
+			bark("Stratos is the greatest of the Titans, for it is through the power of Stratos that we of the Order gain our ability to heal the hurts of the world. However, this gift is not without cost. ");
+			askList -= <<"Who is Stratos? ">>;
+			askList ^= <<"Tell me of healing. ", "What is the cost? ">>;
+		}
+		case "Tell me of healing. "
+		{
+			stellosJob = 1;
+			bark("The healing is done by using a Focus to channel the powers of Stratos to the patient. This is a delicate procedure for if the healer is not steady in his ability or disciplined in his art, he may reach too deeply into the power and destroy himself and the patient. ");
+			askList -= <<"Tell me of healing. ">>;
+			askList += <<"I would like to learn to heal. ">>;
+			if Avatar.getHp() < (Avatar.getStr() * 2)
+			{
+				askList ^= <<"I need healing. ">>;
+			}
+		}
+		case "I would like to learn to heal. "
+		{
+			bark("To do that you will have to join the Order. ");
+			askList -= <<"I would like to learn to heal. ">>;
+			askList = <<"Then I will join your order. ", "I am sorry, I cannot join your order. ">>;
+		}
+		case "Then I will join your order. "
+		{
+			bark("The first steps to joining the Order of Enlightenment are to pass the Tests of Wisdom and Centeredness. Brother Xavier can tell you more. I suggest you seek him out. Of course, I encourage you to spend time speaking to -all- of the Theurgists here, for every member of our order is likely to have some wisdom which might help you reach enlightenment. ");
+			askList -= <<"Then I will join your order. ">>;
+			exitConvo();
+			return;
+		}
+		case "I am sorry, I cannot join your order. "
+		{
+			bark("I'm sorry you are not interested. Should you change your mind, Brother Xavier is the one to speak to in order to begin your journey down the path to Enlightenment. ");
+			exitConvo();
+			return;
+		}
+		case "What is the cost? "
+		{
+			bark("As you can see by the clouding in my eyes, I am blind. It is the price I pay for being able to serve Stratos so completely. ");
+			askList -= <<"What is the cost? ">>;
+		}
+		case "200 years! "
+		{
+			bark("It is a long time for anyone to live. Stratos must have need for me to keep me here so long. ");
+			askList -= <<"200 years! ">>;
+		}
+		case "I have passed the Test of Wisdom. "
+		{
+			bark("Your time studying was well spent then. Until you arrived, I was impressed with Torwin's speed, but we've never had a student succeed at the rate you are progressing. Stratos will be so pleased with you. ");
+			askList -= <<"I have passed the Test of Wisdom. ">>;
+			askList += <<"Stratos will be pleased? ">>;
+		}
+		case "Stratos will be pleased? "
+		{
+			bark("I commune daily with the Giver of Life. Recently she has been speaking of one who would come and be the greatest healer Argentrock Isle has ever seen. She described this great healer to me. When Torwin arrived here, I thought it was he she spoke of, but now I realize it is you. Oh, she has looked forward to your arrival and all the great things you will do as one of her healers! ");
+			askList -= <<"Stratos will be pleased? ">>;
+		}
+		case "I passed the Test of Centeredness. "
+		{
+			bark("I am pleased you have come through it unharmed. So many times we have lost initiates to it. ");
+			askList -= <<"I passed the Test of Centeredness. ">>;
+		}
+		case "Tell me of the Test of Wisdom. "
+		{
+			bark("Ah, so you have begun the road to Enlightenment. Stratos will be pleased. She sets great store by you. What do you wish to know? ");
+			askList += <<"Tell me the answers, please. ", "Where can I find the answers? ">>;
+			askList -= <<"Tell me of the Test of Wisdom. ">>;
+		}
+		case "Tell me the answers, please. "
+		{
+			bark("It is forbidden for anyone to give away the answers to the Test of Wisdom. The answers you must find for yourself, " + getName() + ", for they must come from your heart.");
+			askList -= <<"Tell me the answers, please. ", "Where can I find the answers? ">>;
+		}
+		case "Where can I find the answers? "
+		{
+			bark("You must go to the library in the monastery. There you will find many old texts that discuss at great lengh the philosophy of Stratos. Read these and apply them to your own feelings. Only then will you find the right answers. ");
+			askList -= <<"Where can I find the answers? ", "Tell me the answers, please. ">>;
+		}
+		case "What do you know about the Test of Centeredness? "
+		{
+			bark("The Test of Centeredness is an important test as it tests your stamina and courage. Why even our most prized pupil, Torwin, took several tries before he managed to succeed. And he is one of the lucky ones. We've had many fall to their deaths. ");
+			askList -= <<"What do you know about the Test of Centeredness? ">>;
+		}
+		case "I have passed the first two tests. "
+		{
+			bark("Yes, I know. You have proven yourself worthy to wear the title Initiate. Now you are ready to begin learning the spells that Stratos grants us. However, before you do that, you must construct your Foci. ");
+			askList -= <<"I have passed the first two tests. ">>;
+			askList = <<"What are Foci? ", "How do I construct the Foci? ">>;
+		}
+		case "I have completed the Third Test. "
+		{
+			bark("That is wonderful. Now you must construct your Foci. ");
+			askList -= <<"I have completed the Third Test. ">>;
+			askList ^= <<"How do I construct the Foci? ">>;
+		}
+		case "How do I construct the Foci? "
+		{
+			bark("The construction of the Foci is the most important task an Initiate in the Order of Enlightenment can undertake. The Foci are wrought of the finest silver, found only in the caverns under our monastery. These caverns are dark and fraught with fearsome creatures. ");
+			if not silverMineKeyGiven
+			{
+				if class_0581_give(1, 82, 1, 8, 1)
+				{
+					bark("Using this key, you will be able to open the door where the silver may be found. ");
+					silverMineKeyGiven = 1;
+				}
+				else
+				{
+					bark("I would give you the key to the mine, but I see that your hands are full. Maybe later. ");
+				}
+			}
+			else
+			{
+				bark("Using the key I gave you earlier, you may use it to unlock the door to the mine. After you have removed enough silver ore to construct your focuses, please lock the door again. There are more than a few curious souls who have found that mine to be their final resting place, so please seal it when you are done. ");
+			}
+			askList -= <<"How do I construct the Foci? ">>;
+			askList += <<"What do I do with the silver? ">>;
+		}
+		case "What do I do with the silver? "
+		{
+			bark("You must take the silver to the blacksmith, Korick, in Tenebrae. Only he has the skill to forge the Foci. But these Foci will be without power. You must return here, place them upon the Altar of Focus in the monastary and call upon the name of Stratos. If you have met with her approval, she will fill them with her power. ");
+			askList -= <<"What do I do with the silver? ">>;
+		}
+		case "What are Foci? "
+		{
+			bark("A Focus is a talisman of great magical power. It is a channel. It allows the wielder to touch a small part of the great power of Stratos and use it for the specific purpose for which the Focus was designed such as healing. It is a powerful item, but in the hands of the inexperienced or weak, it can kill. ");
+			askList -= <<"What are Foci? ">>;
+		}
+		case "I have constructed my Foci. "
+		{
+			bark("Very good. You are well on your way to becoming a full Adept. The next step is a test of all you have learned. You must return to the caverns under the monastery. You will know what to do when you arrive there. ");
+			if not madeToraxForTest
+			{
+				Item_create(0, 209, u8_local_address(local_m06_w01));
+				item2.pop(3282, 3190, 8);
+				madeToraxForTest = 1;
+			}
+			exitConvo();
+			return;
+		}
+		case "I have passed the third test. "
+		{
+			if fociReturned
+			{
+				bark("That is a wonderful thing! ");
+			}
+			else
+			{
+				bark("That is a wonderful thing. However, you will have to excuse me. I do not have the time to further your education. We have had a terrible thing happen. ");
+				askList = <<"What has happened? ">>;
+			}
+			askList -= <<"I have passed the third test. ">>;
+		}
+		case "What has happened? "
+		{
+			bark("Brother Xavier has lost his Focus of healing. ");
+			askList -= <<"What has happened? ">>;
+			askList += <<"How did that happen? ">>;
+			focusMissing = 1;
+		}
+		case "How did that happen? "
+		{
+			bark("No one is sure. Poor Brother Xavier is beside himself with grief. It is very unlikely that an Adept would simply misplace something like that. Ah well, if he knows more, he is not telling me. ");
+			askList -= <<"How did that happen? ">>;
+			askList += <<"Do you think it was stolen? ">>;
+		}
+		case "Do you think it was stolen? "
+		{
+			bark("It wounds me deeply to think that one of our own would stoop so low as to steal from another enlightened one. It goes against all of Stratos' teachings. But, she also teaches mercy and compassion, so if it was stolen by one of our own, I will not hold it against that person, but rather, will help him find the path of Enlightenment again. ");
+			askList -= <<"Do you think it was stolen? ">>;
+		}
+		case "I have met Torwin. "
+		{
+			if torwinJumped
+			{
+				bark("I was saddened to learn of his tragedy. ");
+			}
+			else
+			{
+				bark("He is one of our newest Initiates. He has shown tremendous progress. Until you, he was the finest student we had ever trained. Recently he was been doing some interesting research. ");
+				askList += <<"What research is Torwin doing? ", "One of your finest? ">>;
+			}
+			askList -= <<"I have met Torwin. ">>;
+		}
+		case "What research is Torwin doing? "
+		{
+			bark("He has been looking into the possibility of combining Foci to increase their power. Although I don't believe there is much chance, I don't like to stifle creativity and individuality. ");
+			spokeAboutTorwinS = 1;
+			askList -= <<"What research is Torwin doing? ">>;
+		}
+		case "One of your finest? "
+		{
+			bark("Certainly. He finished the Test of Wisdom in record time. He also successfully completed the Test of Centeredness with virtually no mishaps. We have been very proud of him. ");
+			askList -= <<"One of your finest? ">>;
+		}
+		case "I have spoken with Brother Xavier. "
+		{
+			bark("He is such a fine man, and such a wonderful healer. His brusque manner has put some people off at times, but he really is a kind man at heart. ");
+			askList -= <<"I have spoken with Brother Xavier. ">>;
+		}
+		case "I spoke with Holy Cyrrus. "
+		{
+			bark("Good Cyrrus. He is such a kind and gentle soul. In the beginning I was not sure he would be able to withstand the rigors of life here on Argentrock. But he has a core of iron, he does. He is truly a joy to work with. ");
+			askList -= <<"I spoke with Holy Cyrrus. ">>;
+		}
+		case "Poor Torwin. "
+		{
+			bark("Loss of life is always a tragedy, however, the loss of one so gifted is even a greater loss for those who will not receive his healing powers. However, I am glad the Focus was found. You have plainly shown yourself to be ready to pass the final test and become a full Adept. ");
+			askList -= <<"Poor Torwin ">>;
+			askList += <<"Adept? ", "Final test? ">>;
+		}
+		case "Adept? "
+		{
+			bark("Yes. When you become an Adept, you will have full use of all the spells Stratos gives her followers. ");
+			askList -= <<"Adept? ">>;
+		}
+		case "Final test? "
+		{
+			permissionToAirWalk = 1;
+			bark("In the final test there are no creatures for you to fight, no riddles to answer nor problems to solve. There is simply you and your belief. You must rely upon your own ability and your faith in Stratos' power. ");
+			askList -= <<"Final test? ">>;
+			askList += <<"How do I take this test? ">>;
+		}
+		case "How do I take this test? "
+		{
+			bark("You must travel to Windy Point where you will find two black pillars. Stand between those pillars. If you truly wish to hear the Mystic Voice, you must then take a leap of faith. ");
+			askList -= <<"How do I take this test? ">>;
+		}
+		case "I have heard the Mystic Voice. "
+		{
+			bark("Then you are truly an Adept. Your work and dedication have made it possible for you to reach enlightenment in less time than it has taken any other. You have done quite well. ");
+			askList -= <<"I have heard the Mystic Voice. ">>;
+			askList = <<"What do you know of the Breath of Wind? ">>;
+		}
+		case "What do you know of the Breath of Wind? "
+		{
+			bark("Ah, the Breath of Wind is that through which Stratos gives her power to her chosen children. Why do you ask? ");
+			askList -= <<"What do you know of the Breath of Wind? ">>;
+			askList += <<"I must have it. ", "I was just curious. ">>;
+		}
+		case "I was just curious. "
+		{
+			bark("Ah, it is good for a Child of Stratos to seek knowledge. Continue on the path and you will soon gain the wisdom you seek. ");
+			askList -= <<"I was just curious. ">>;
+			exitConvo();
+			return;
+		}
+		case "I must have it. "
+		{
+			bark("Ah, I was afraid it would come to this. The Breath of Wind is found with Stratos. Although you will find it with Stratos, you cannot see it with only your eyes. There are many ways to see things. ");
+			askList -= <<"I must have it. ", "I was just curious. ">>;
+		}
+		case "I have the Breath of Wind. "
+		{
+			bark("You are to be congratulated, for you have achieved that which no other has. You will have to excuse me, however, if I seem to lack some enthusiasm at your accomplishment. ");
+			askList -= <<"I have the Breath of Wind. ">>;
+			askList = <<"Why are you lacking enthusiasm? ", "No other has done this? ">>;
+		}
+		case "Why are you lacking enthusiasm? "
+		{
+			bark("Taking the Breath of Wind is not without repercussion. ");
+			askList -= <<"Why are you lacking enthusiasm? ">>;
+			askList += <<"What repercussions? ">>;
+		}
+		case "No other has done this? "
+		{
+			bark("Even I have not dared such a feat. You are truly one of unparalleled character and bravery. ");
+			askList -= <<"No other has done this? ">>;
+		}
+		case "What repercussions? "
+		{
+			bark("I understand you are doing what must be done, however, without the Breath of Wind to draw from, we of Argent Rock will be without our healing spells. So, I hope that you know what you do, for if you are in error, the entire population will suffer. As will I. ");
+			askList -= <<"What repercussions? ">>;
+			askList += <<"Why will you suffer? ">>;
+		}
+		case "I found this ring. "
+		{
+			bark("Here let me feel it. ");
+			bark("Ah, yes. This is Torwin's. It is not very valuable, but he was very proud of it. He said it belonged to his father. I am afraid it is all that is left of poor Torwin. This must be returned to his mother. You will return it, won't you? ");
+			askList -= <<"I found this ring. ">>;
+			askList += <<"Yes, I will. ", "No, I won't. ">>;
+			spokeAboutRing = 1;
+		}
+		case "Yes, I will. "
+		{
+			bark("Ah, there is a good fellow. Stratos was right in trusting you. ");
+			askList -= <<"Yes, I will. ", "No, I won't. ">>;
+		}
+		case "No, I won't. "
+		{
+			bark("But you found it and were the last to see Torwin alive. It is your duty, nay, your honor to take it to his mother. Won't you? ");
+			askList -= <<"No, I won't. ">>;
+			askList += <<"I said no! ">>;
+		}
+		case "I said no! "
+		{
+			bark("It seems then, that I've severly misjudged you. ");
+			exitConvo();
+			return;
+		}
+		case "Why will you suffer? "
+		{
+			bark("It was with the power of Stratos that I was able to stay alive. Now that the link has been severed, I will no longer receive those blessings which prolong my life. Even now, I feel the years creeping up on me. I am afraid I can last no longer. Goodbye, my friend, use the power well, for it comes at great cost. ");
+			turnToFace(4, 0, 20);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+			LightningBolt();
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0581_safePlaySFX(0x00000000, 100, 116) -> return;
+			Npc_doAnim(0, 10000, getDir(), 14, this);
+			Stellos.clrImmortal();
+			safePlaySFX(115, 100);
+			Stellos.setDead();
+			exitConvo();
+			return;
+		}
+		case "bye "
+		{
+			bark("May you be well. ");
+			exitConvo();
+			return;
+		}
+	}
+	u8goto label_217C;
+	u8label label_6390:
+	u8_free_local_string(answer);
+	u8_free_local_string_list(askList);
+}
+

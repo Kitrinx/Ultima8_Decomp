@@ -1,0 +1,68 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x049F
+// FLEX slot: 1185
+// Original offset: 0x0006A539
+// Naming evidence: E, exact object-1 linker name `ENDLITH`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ENDLITH.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass ENDLITH inherits Egg
+{
+	process endlith_hatch_run_lithos_betrayal_sequence();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ENDLITH::endlith_hatch_run_lithos_betrayal_sequence()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m02_w01:U8Bytes1;
+	local_m04:Npc;
+	local_m04_w01:U8Bytes1;
+	local_m06:Item;
+	foreach local_m02 where (type = 433) within 20 cells of referent {
+		playMusic(117);
+		setAvatarInStasis(1);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_scrollTo(0x00000000, Avatar.getMap(), local_m02.getZ(), local_m02.getY() - 80, local_m02.getX()) -> return;
+		Avatar.turnToFace(7, 0, 1);
+		safePlaySFX(49, 100);
+		Camera_startQuake(5);
+		playSFX(48, 100);
+		playSFX(49, 100);
+		class_01B1_lithos_animate_emergence(u8_local_address(local_m02_w01));
+		wait(200);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_01B1_lithos_animate_long_speech_loop(u8_local_address(local_m02_w01)) -> return;
+		local_m02.bark("You have betrayed me, live one, and for that you must die! ");
+		class_01B1_lithos_stop_speech_animation(u8_local_address(local_m02_w01));
+		Camera_stopQuake();
+		scrollBack(15);
+		setAvatarInStasis(0);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0586_erthspel_run_quake_waves(0x00000000, 1) -> return;
+		foreach local_m06 where (type = TypePathMarker) within 100 cells of referent {
+			if Npc_create(0, 214, u8_local_address(local_m04_w01))
+			{
+				local_m04.orStatus(128);
+				local_m04.pop(local_m06.getX(), local_m06.getY(), local_m06.getZ());
+				class_057C_realDoAnim(u8_local_address(local_m04_w01), 4, 0);
+				local_m04.setInCombat();
+				local_m04.setTarget(1);
+			}
+		}
+		while 1
+		{
+			class_01B1_lithos_animate_small_gesture(u8_local_address(local_m02_w01));
+		}
+		playMusic(121);
+	}
+}
+

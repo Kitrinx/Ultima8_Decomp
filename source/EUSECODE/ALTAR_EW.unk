@@ -1,0 +1,130 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00CE
+// FLEX slot: 208
+// Original offset: 0x0000929E
+// Naming evidence: E, exact object-1 linker name `ALTAR_EW`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ALTAR_EW.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass ALTAR_EW inherits Item
+{
+	process altar_ew_look_bark_altar_of_focus();
+	process altar_ew_got_hit_forward_to_altar_ew_animate_mini_air_titan(arg_04:U8Word);
+	process altar_ew_animate_mini_air_titan(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ALTAR_EW::altar_ew_look_bark_altar_of_focus()
+{
+	bark("Altar of Focus ");
+}
+
+// Derived: routine 0x00B2, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process ALTAR_EW::altar_ew_got_hit_forward_to_altar_ew_animate_mini_air_titan(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	if arg_04 = 0
+	{
+		return;
+	}
+	local_m02 = arg_04;
+	local_m06 = Avatar.getDir();
+	if ((local_m02.getType() = 396) and (local_m02.getFrame() < 8)) or ((local_m02.getType() = 396) and (local_m02.getFrame() = 16))
+	{
+		playSFX(116, 200);
+		if local_m02.getFrame() = 5
+		{
+			return;
+		}
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_00CE_altar_ew_animate_mini_air_titan(this, local_m02) -> return;
+		wait(60);
+		Npc_doAnim(0, 10000, local_m06, 27, u8_stack_ref(1));
+		Item_create(0, 202, u8_local_address(local_m04_w01));
+		playSFX(58, 200);
+		Npc_doAnim(0, 10000, local_m06, 29, u8_stack_ref(1));
+		local_m04.pop(local_m02.getX() + 110, local_m02.getY() + 110, local_m02.getZ() + 5);
+		playSFX(15, 200);
+		hasOwnFoci = 1;
+		for local_m08 = 0 to 13
+		{
+			local_m04.setFrame(local_m08);
+			wait(10);
+			if local_m08 = 5
+			{
+				if local_m02.getFrame() < 8
+				{
+					local_m02.setFrame(local_m02.getFrame() + 8);
+				}
+				else
+				{
+					local_m02.setFrame(17);
+				}
+			}
+		}
+		local_m04.destroy();
+		Npc_doAnim(0, 10000, local_m06, 28, u8_stack_ref(1));
+	}
+}
+
+// Derived: routine 0x0270, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process ALTAR_EW::altar_ew_animate_mini_air_titan(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ANIM, referent]];
+		local_m04 = arg_04;
+		local_m06 = 0;
+		local_m08 = 0;
+		Item_create(0, 481, u8_local_address(local_m02_w01));
+		local_m02.pop(local_m04.getX(), local_m04.getY(), local_m04.getZ() + 5);
+	}
+	process
+	{
+		local_m06++;
+		local_m08 = local_m04.getFrame();
+		if (local_m06 > 24) and (local_m04.getFrame() < 7)
+		{
+			local_m06 = 12;
+			if urandom(1)
+			{
+				playSFX(115, 100);
+			}
+			else
+			{
+				playSFX(116, 100);
+			}
+		}
+		if local_m06 > 35
+		{
+			local_m02.destroy();
+			return;
+		}
+		local_m02.setFrame(local_m06);
+		wait(5);
+	}
+}
+

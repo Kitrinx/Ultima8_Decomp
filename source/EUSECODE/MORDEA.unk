@@ -1,0 +1,935 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0407
+// FLEX slot: 1033
+// Original offset: 0x000B5488
+// Naming evidence: E, exact object-1 linker name `MORDEA`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: O, external path `classes/MORDEA.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "flags";
+uses "free";
+uses "npc";
+uses "snddefs";
+
+npcclass Mordea inherits Npc
+{
+	process look();
+	process schedule(currentTime:Long);
+	process enterFastArea();
+	process leaveFastArea();
+	process AvatarStoleSomething(ref:Referent);
+	process cast(ref:Referent);
+	process use();
+	process walkInCircles();
+	process throwArms();
+	process onThrone();
+	process chowDown();
+	process chowBark();
+	process randomBark();
+	process salkindAnswerMordea();
+	process fireBlast();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::look()
+{
+	if mordeaName and mordeaJob
+	{
+		bark("Mordea the Tempest ");
+		return;
+	}
+	else if mordeaName
+	{
+		bark("Mordea");
+		return;
+	}
+	else if mordeaJob
+	{
+		bark("Tempest ");
+		return;
+	}
+	else
+	{
+		bark("woman ");
+		return;
+	}
+}
+
+// Derived: routine 0x013B, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::schedule(currentTime:Long)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	point:WorldPoint;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	sched:Number;
+	if (toranDead = 0) or (secondexecution = 1) or (isDead() = 1)
+	{
+		return;
+	}
+	if class_0581_getPeriod() = 0
+	{
+		local_m05_w02 = 13151;
+		local_m03 = 7999;
+		local_m01 = 0;
+		if class_057C_canSafeTeleport(this, point, 40)
+		{
+			resetRef(referent, PT_ACTIVITY);
+			resetRef(referent, PT_PATHFIND);
+			resetRef(referent, PT_ANIM);
+			resetRef(referent, PT_BARK);
+			mordeaSchedule = 1;
+			class_057C_safeTeleport(this, point, 40);
+			if Avatar.getMap() = 40
+			{
+				realDoAnim(AS_STAND, 2);
+			}
+			local_m05_w02 = 16735;
+			local_m03 = 16127;
+			local_m01 = 48;
+			if class_057C_canSafeTeleport(13, point, 41)
+			{
+				resetRef(13, PT_ACTIVITY);
+				resetRef(13, PT_PATHFIND);
+				resetRef(13, PT_ANIM);
+				resetRef(13, PT_BARK);
+				araminaSchedule = 1;
+				class_057C_safeTeleport(13, point, 41);
+			}
+			local_m05_w02 = 20191;
+			local_m03 = 12639;
+			local_m01 = 72;
+			if class_057C_canSafeTeleport(3, point, 41)
+			{
+				resetRef(3, PT_ACTIVITY);
+				resetRef(3, PT_PATHFIND);
+				resetRef(3, PT_ANIM);
+				resetRef(3, PT_BARK);
+				SalkindSchedule = 1;
+				class_057C_safeTeleport(3, point, 41);
+			}
+		}
+	}
+	if (class_0581_getPeriod() = 2) or (class_0581_getPeriod() = 3) or (class_0581_getPeriod() = 4)
+	{
+		local_m05_w02 = 13119;
+		local_m03 = 8637;
+		local_m01 = 48;
+		if class_057C_canSafeTeleport(this, point, 40)
+		{
+			resetRef(referent, PT_ACTIVITY);
+			resetRef(referent, PT_PATHFIND);
+			resetRef(referent, PT_ANIM);
+			resetRef(referent, PT_BARK);
+			mordeaSchedule = 2;
+			class_057C_safeTeleport(this, point, 40);
+			if Avatar.getMap() = 40
+			{
+				realDoAnim(AS_SIT_DOWN, 4);
+			}
+			local_m05_w02 = 12927;
+			local_m03 = 8575;
+			local_m01 = 48;
+			if class_057C_canSafeTeleport(13, point, 40)
+			{
+				resetRef(13, PT_ACTIVITY);
+				resetRef(13, PT_PATHFIND);
+				resetRef(13, PT_ANIM);
+				resetRef(13, PT_BARK);
+				araminaSchedule = 2;
+				class_057C_safeTeleport(13, point, 40);
+			}
+			local_m05_w02 = 13279;
+			local_m03 = 8575;
+			local_m01 = 48;
+			if class_057C_canSafeTeleport(3, point, 40)
+			{
+				resetRef(3, PT_ACTIVITY);
+				resetRef(3, PT_PATHFIND);
+				resetRef(3, PT_ANIM);
+				resetRef(3, PT_BARK);
+				SalkindSchedule = 2;
+				class_057C_safeTeleport(3, point, 40);
+			}
+		}
+	}
+	if (class_0581_getPeriod() = 1) or (class_0581_getPeriod() = 5)
+	{
+		local_m05_w02 = 13540;
+		local_m03 = 9916;
+		local_m01 = 48;
+		if class_057C_canSafeTeleport(this, point, 40)
+		{
+			resetRef(referent, PT_ACTIVITY);
+			resetRef(referent, PT_PATHFIND);
+			resetRef(referent, PT_ANIM);
+			resetRef(referent, PT_BARK);
+			mordeaSchedule = 3;
+			class_057C_safeTeleport(this, point, 40);
+			if Avatar.getMap() = 40
+			{
+				realDoAnim(AS_CLIMB_4, 4);
+			}
+			local_m05_w02 = 14111;
+			local_m03 = 11007;
+			local_m01 = 48;
+			if class_057C_canSafeTeleport(13, point, 40)
+			{
+				resetRef(13, PT_ACTIVITY);
+				resetRef(3, PT_PATHFIND);
+				resetRef(3, PT_ANIM);
+				resetRef(3, PT_BARK);
+				araminaSchedule = 3;
+				class_057C_safeTeleport(13, point, 40);
+			}
+			local_m05_w02 = 20191;
+			local_m03 = 12639;
+			local_m01 = 72;
+			if class_057C_canSafeTeleport(3, point, 41)
+			{
+				resetRef(3, PT_ACTIVITY);
+				resetRef(3, PT_PATHFIND);
+				resetRef(3, PT_ANIM);
+				resetRef(3, PT_BARK);
+				SalkindSchedule = 1;
+				class_057C_safeTeleport(3, point, 41);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x065C, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::enterFastArea()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	bed:Item;
+	if (toranDead = 0) or (secondexecution = 1) or (isDead() = 1)
+	{
+		return;
+	}
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+	if mordeaSchedule = 1
+	{
+		return;
+	}
+	if mordeaSchedule = 2
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0407_onThrone(this) -> return;
+	}
+	else if mordeaSchedule = 3
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0407_chowDown(this) -> return;
+	}
+}
+
+// Derived: routine 0x06FC, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::leaveFastArea()
+{
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_ANIM);
+	resetRef(referent, PT_BARK);
+}
+
+// Derived: routine 0x073D, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::AvatarStoleSomething(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	item:Item;
+	item = ref;
+	if (item.getType() = TypePlateWithFood) and (mordeaSchedule = 3)
+	{
+		resetRef(referent, PT_BARK);
+		resetRef(referent, PT_ACTIVITY);
+		setAvatarInStasis(1);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_scrollTo(0x00000000, 35, Mordea.getZ() + 40, Mordea.getY(), Mordea.getX()) -> return;
+		bark("Playing with my food, eh? ");
+		realDoAnim(AS_CLIMB_4, 4);
+		Avatar.turnToFace(Avatar.getDirToItem(referent), 0, 10);
+		bark("You need to be taught some manners! ");
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0407_fireBlast(this) -> return;
+	}
+	if (item.getType() = 82) and (mordeaSchedule = 2)
+	{
+		resetRef(referent, PT_BARK);
+		resetRef(referent, PT_ACTIVITY);
+		setAvatarInStasis(1);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_scrollTo(0x00000000, 35, Mordea.getZ() + 40, Mordea.getY(), Mordea.getX()) -> return;
+		if (Npc_getLastAnimSet(this) = 2) or (Npc_getLastAnimSet(this) = 0) or (Npc_getLastAnimSet(this) = 53)
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(29, getDir());
+			bark("I saw you with that key! ");
+			Avatar.turnToFace(Avatar.getDirToItem(referent), 0, 10);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0407_fireBlast(this) -> return;
+			realDoAnim(AS_EXIT_CAST, getDir());
+		}
+		else
+		{
+			bark("I saw you with that key! ");
+			Avatar.turnToFace(Avatar.getDirToItem(referent), 0, 10);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0407_fireBlast(this) -> return;
+		}
+	}
+	if (item.getType() = 812) and (mordeaSchedule = 2)
+	{
+		resetRef(referent, PT_BARK);
+		resetRef(referent, PT_ACTIVITY);
+		if (Npc_getLastAnimSet(this) = 2) or (Npc_getLastAnimSet(this) = 0) or (Npc_getLastAnimSet(this) = 53)
+		{
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		}
+		scrollTo(Mordea.getX(), Mordea.getY(), Mordea.getZ() + 40, 35);
+		bark("Do not touch that! ");
+		scrollBack(35);
+		enterFastArea();
+	}
+}
+
+// Derived: routine 0x0B4C, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::cast(ref:Referent)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	count:Number;
+	if hydrosFree
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn callTheGuards(NULL_REF) -> return;
+		clrInCombat();
+		killProcess(referent, PT_ACTIVITY);
+		killProcess(referent, PT_BARK);
+		bark("Beren! I am assaulted! ");
+	}
+	else
+	{
+		count = 10;
+		while (not Npc_getTarget(this)) and count
+		{
+			wait(1);
+			count--;
+		}
+		ref = Npc_getTarget(this);
+		if ref = 1
+		{
+			if (Npc_getLastAnimSet(this) = 2) or (Npc_getLastAnimSet(this) = 0) or (Npc_getLastAnimSet(this) = 53)
+			{
+				turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+				bark("You will pay for that! ");
+				realDoAnim(AS_ENTER_CAST, getDir());
+				realDoAnim(29, getDir());
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0407_fireBlast(this) -> return;
+				realDoAnim(AS_EXIT_CAST, getDir());
+			}
+			else
+			{
+				bark("You will pay for that! ");
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0407_fireBlast(this) -> return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x0D1F, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::use()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	askList:String List;
+	answer:String;
+	name:String;
+	ran:Number;
+	ranNum:Number;
+	if not toranDead
+	{
+		return;
+	}
+	if getMap() = 3
+	{
+		if not devonJailed
+		{
+			bark("Imbecile! Do you wish to join Toran? Get out of my way! ");
+			exitConvo();
+			return;
+		}
+	}
+	if not mordeaMet
+	{
+		Item_bark(u8_string_address("Greetings! "), u8_stack_ref(1));
+	}
+	else
+	{
+		Item_bark(u8_string_address("Greetings, your Ladyship! "), u8_stack_ref(1));
+	}
+	if Npc_getLastAnimSet(this) = 51
+	{
+		enterConvo2();
+	}
+	else
+	{
+		enterConvo();
+	}
+	if not mordeaMet
+	{
+		bark("Are you speaking to me? ");
+		askList = <<"Yes, I am. ", "bye ">>;
+		mordeaMet = 1;
+	}
+	else
+	{
+		if mordeaPissed
+		{
+			bark("Oh, no. 'Tis you again... ");
+			mordeaPissed = 0;
+		}
+		else
+		{
+			ran = urandom(10);
+			if ran < 5
+			{
+				bark("Greeting's again. ");
+			}
+			else
+			{
+				bark("How can I help you, " + getName() + "?");
+			}
+		}
+		askList ^= <<"May I speak with you? ", "bye ">>;
+	}
+	name = "I am " + getName() + ".";
+	while answer != "bye "
+	{
+		askList -= <<"bye ">>;
+		askList += <<"bye ">>;
+		answer = ask(askList);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch answer
+		{
+			case "Yes, I am. "
+			{
+				mordeaJob = 1;
+				bark("Who are you that you dare address the Tempest? ");
+				askList -= <<"Yes, I am. ">>;
+				askList = <<name, "That is not your concern. ", "May I speak with you? ", "Who are you? ", "Tempest? ", "Tell me of the Tempestry. ">>;
+			}
+			case name
+			{
+				bark("I know not your name nor your face. I think you are not from Tenebrae. Where are you from? ");
+				askList = <<"I am from Britannia. ", "I am from Earth. ", "I am from far away. ", "I am from Tenebrae. ">>;
+			}
+			case "I am from Tenebrae. "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0407_throwArms(this) -> return;
+				bark("You are a liar. I know all my subjects...and they know me. I will not tolerate such impudence. ");
+				exitConvo();
+				return;
+			}
+			case "Tempest? ", "Tell me of the Tempestry. "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0407_throwArms(this) -> return;
+				bark("Know you not of the Tempestry and its great power? Perhaps, then you should like a taste of it. -When I feed you to the Lurker!- ");
+				exitConvo();
+				return;
+			}
+			case "May I speak with you? "
+			{
+				bark("I am not familiar with your name or your face. I think you are not from Tenebrae. Where are you from? ");
+				mordeaPissed = 0;
+				askList -= <<"By what are you called? ">>;
+				askList = <<"I am from Britannia. ", "I am from far away. ", "I am from Earth. ", "I am from Tenebrae. ">>;
+			}
+			case "I am from Britannia. "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0407_throwArms(this) -> return;
+				bark("I've never heard of such a place. You are either a liar or a fool. You don't look smart enough to be a liar and I will not tolerate a fool. ");
+				exitConvo();
+				return;
+			}
+			case "Who are you? "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0407_throwArms(this) -> return;
+				mordeaName = 1;
+				bark("Fool! I am the Lady Mordea, the Tempest of Tenebrae. You will use reverence when dealing with me in the future or I shall have you thrown to the Lurker! ");
+				exitConvo();
+				return;
+			}
+			case "That is not your concern. "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0407_throwArms(this) -> return;
+				bark("Knave! Keep a civil tongue in your head or I shall have it cut out and fed to the fishes! ");
+				exitConvo();
+				return;
+			}
+			case "I am from far away. "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0407_throwArms(this) -> return;
+				bark("Do not toy with me, rogue. I will not tolerate such rudeness. Begone from my sight. ");
+				mordeaPissed = 1;
+				exitConvo();
+				return;
+			}
+			case "I am from Earth. "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0407_throwArms(this) -> return;
+				bark("Earth? What sort of nonsense is this? A place called Earth? There is no such place by that name. You are nothing more than a simpleminded fool. Begone. ");
+				exitConvo();
+				return;
+			}
+			default
+			{
+				ranNum = urandom(10);
+				if ranNum < 5
+				{
+					bark("Waste not my time! ");
+				}
+				else
+				{
+					bark("I have better things to do... ");
+					bark("Leave me now. ");
+				}
+				exitConvo();
+				return;
+			}
+		}
+	}
+	bark("Begone! I wish to be alone. ");
+	exitConvo();
+}
+
+// Derived: routine 0x19A4, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::walkInCircles()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	dir:Number;
+	count:Number;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		dir = 0;
+		count = 0;
+	}
+	process
+	{
+		count++;
+		if count > 3
+		{
+			dir++;
+			if dir > 6
+			{
+				dir = 0;
+			}
+		}
+		realDoAnim(AS_WALK, dir);
+	}
+}
+
+// Derived: routine 0x19F4, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::throwArms()
+{
+	[[PT_ACTIVITY, referent]];
+	if not (Npc_getLastAnimSet(this) = 51)
+	{
+		realDoAnim(AS_ENTER_CAST, getDir());
+		realDoAnim(AS_EXIT_CAST, getDir());
+	}
+	mordeaPissed = 1;
+}
+
+// Derived: routine 0x1A50, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::onThrone()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	chair:Item;
+	pathEgg:Item;
+	counter:Number;
+	dir:Number;
+	ran:Number;
+	chairThere:Boolean;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+	}
+	process
+	{
+		chairThere = 0;
+		if Npc_getLastAnimSet(this) = 51
+		{
+			realDoAnim(AS_SIT_UP, 4);
+			foreach pathEgg where (type = 223) within 5 cells of Mordea {
+				chairThere = 1;
+			}
+			if not chairThere
+			{
+				Item_create(4, 223, u8_local_address(local_m02_w01));
+				chair.pop(Mordea.getX() + 10, Mordea.getY() - 50, Mordea.getZ());
+			}
+			realDoAnim(AS_STAND, 4);
+		}
+		for counter = 0 to (urandom(3) + 1)
+		{
+			ran = urandom(3) + 1;
+			if ran = 1
+			{
+				dir = 1;
+			}
+			else if ran = 2
+			{
+				dir = 0;
+			}
+			else if ran = 3
+			{
+				dir = 1;
+			}
+			else if ran = 4
+			{
+				dir = 7;
+			}
+			foreach pathEgg where ((type = TypePathMarker) and (frame = ran)) within 30 cells of Mordea {
+				pathfind(pathEgg, 10);
+				turnToFace(dir, 0, 1);
+				randomBark();
+				wait(urandom(200) + 200);
+			}
+		}
+		if urandom(10) > 8
+		{
+			foreach pathEgg where ((type = TypePathMarker) and (frame = 0)) within 50 cells of Mordea {
+				pathfind(pathEgg, 10);
+				turnToFace(6, 0, 4);
+				realDoAnim(AS_STAND, 6);
+				bark("What an ugly painting! ");
+				wait(urandom(50) + 200);
+			}
+		}
+		foreach pathEgg where ((type = TypePathMarker) and (frame = 5)) within 50 cells of Mordea {
+			pathfind(pathEgg, 10);
+			turnToFace(0, 0, 4);
+			randomBark();
+		}
+		foreach pathEgg where ((type = TypePathMarker) and (frame = 6)) within 50 cells of Mordea {
+			pathfind(pathEgg, 5);
+		}
+		foreach pathEgg where ((type = TypePathMarker) and (frame = 7)) within 50 cells of Mordea {
+			if pathfind(pathEgg, 5)
+			{
+				teleport(13119, 8605, 48, 40);
+				turnToFace(4, 0, 4);
+				wait(60);
+				realDoAnim(AS_SIT_DOWN, 4);
+			}
+			else
+			{
+				turnToFace(getDirToItem(Avatar:Referent), 0, 5);
+				bark("Away from there! ");
+			}
+		}
+		wait(urandom(50) + 200);
+	}
+}
+
+// Derived: routine 0x1E62, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::chowDown()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	plate:Item;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		realDoAnim(AS_CLIMB_5, 4);
+	}
+	process
+	{
+		if somebodyTalking
+		{
+			foreach plate where (type = TypePlateWithFood) within 10 cells of Mordea {
+				if plate.getFrame() > 0
+				{
+					realDoAnim(AS_CLIMB_4, 4);
+					plate.setFrame(plate.getFrame() - 1);
+					realDoAnim(AS_CLIMB_5, 4);
+				}
+				else
+				{
+					realDoAnim(AS_CLIMB_4, 4);
+					realDoAnim(AS_CLIMB_5, 4);
+				}
+			}
+			wait(urandom(250) + 400);
+		}
+		else
+		{
+			chowBark();
+		}
+	}
+}
+
+// Derived: routine 0x1F62, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::chowBark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	plate:Item;
+	p:Item;
+	foundPlate:Boolean;
+	foundFullPlate:Boolean;
+	[[PT_ACTIVITY, referent]];
+	foreach p where (type = TypePlateWithFood) within 10 cells of Mordea {
+		foundPlate = 1;
+		plate = p;
+		if plate.getFrame() > 0
+		{
+			foundFullPlate = 1;
+		}
+	}
+	if foundPlate
+	{
+		if foundFullPlate
+		{
+			realDoAnim(AS_CLIMB_4, 4);
+			plate.setFrame(plate.getFrame() - 1);
+			realDoAnim(AS_CLIMB_5, 4);
+			ran = urandom(5);
+			if ran = 1
+			{
+				bark("Where's the butter? ");
+			}
+			if ran = 2
+			{
+				bark("Aramina, my cup is empty! ");
+			}
+			if ran = 3
+			{
+				bark("Who cooked this slop? ");
+			}
+			if ran = 4
+			{
+				bark("Too much salt! ");
+			}
+			if ran = 5
+			{
+				bark("The torax is undercooked! ");
+			}
+			wait(urandom(150) + 200);
+			return;
+		}
+		else
+		{
+			if urandom(10) > 5
+			{
+				bark("Hey! People are starving here! ");
+			}
+			else
+			{
+				bark("My plate is empty! ");
+			}
+			wait(urandom(150) + 200);
+			return;
+		}
+	}
+	else
+	{
+		if urandom(10) > 5
+		{
+			bark("I need a plate! ");
+		}
+		else
+		{
+			bark("I can not eat off the table! ");
+		}
+		wait(urandom(150) + 200);
+	}
+}
+
+// Derived: routine 0x2250, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::randomBark()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	if somebodyTalking
+	{
+		return;
+	}
+	ran = urandom(8);
+	if ran = 1
+	{
+		bark("Off with his head! ");
+	}
+	if ran = 2
+	{
+		bark("Feed them all to the Lurker! ");
+	}
+	if ran = 3
+	{
+		bark("More executions! ");
+		wait(45);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0407_salkindAnswerMordea(this) -> return;
+	}
+	if ran = 4
+	{
+		bark("Flog the peasants! ");
+		wait(45);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0407_salkindAnswerMordea(this) -> return;
+	}
+	if ran = 5
+	{
+		bark("More work for less pay! ");
+		wait(45);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0407_salkindAnswerMordea(this) -> return;
+	}
+	if ran = 6
+	{
+		bark("Double the taxes! ");
+		wait(45);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0407_salkindAnswerMordea(this) -> return;
+	}
+	if ran = 7
+	{
+		bark("No more days of rest! ");
+		wait(45);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0407_salkindAnswerMordea(this) -> return;
+	}
+}
+
+// Derived: routine 0x2481, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::salkindAnswerMordea()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	bandito:Item;
+	ran:Number;
+	[[PT_ACTIVITY, referent]];
+	if somebodyTalking
+	{
+		return;
+	}
+	foreach bandito where (type = 404) within 20 cells of Mordea {
+		ran = urandom(8);
+		if ran = 1
+		{
+			Item_bark(u8_string_address("You are correct! "), u8_stack_ref(3));
+		}
+		if ran = 2
+		{
+			Item_bark(u8_string_address("Yes! Yes! "), u8_stack_ref(3));
+		}
+		if ran = 3
+		{
+			Item_bark(u8_string_address("You are so generous! "), u8_stack_ref(3));
+		}
+		if ran = 4
+		{
+			Item_bark(u8_string_address("I will attend to it! "), u8_stack_ref(3));
+		}
+		if ran = 5
+		{
+			Item_bark(u8_string_address("Yes, your Ladyship! "), u8_stack_ref(3));
+		}
+		if ran = 6
+		{
+			Item_bark(u8_string_address("Pure genius! "), u8_stack_ref(3));
+		}
+		if ran = 7
+		{
+			Item_bark(u8_string_address("I agree completely! "), u8_stack_ref(3));
+		}
+	}
+}
+
+// Derived: routine 0x261B, event mask 0x00000000.
+// O: recovered callable name.
+// O: external source-declaration metadata proves this callable kind.
+process Mordea::fireBlast()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	fire:Item;
+	lightning:Item;
+	counter:Number;
+	offSet:Number;
+	[[PT_DEFAULT, referent]];
+	offSet = (250 - Avatar.getZ()) * 4;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	LightningBolt();
+	scrollBack(35);
+	Item_create(0, 511, u8_local_address(local_m04_w01));
+	lightning.pop(Avatar.getX() + offSet, Avatar.getY() + offSet, 250);
+	playSFX(27, 200);
+	for counter = 0 to 4
+	{
+		lightning.setFrame(counter);
+		wait(4);
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	lightning.destroy();
+	Item_create(0, 480, u8_local_address(local_m02_w01));
+	fire.pop(Avatar.getX() + offSet, Avatar.getY() + offSet, 249);
+	Avatar.receiveHit(referent, 4, Avatar.getHp(), 128);
+	for counter = 0 to 9
+	{
+		fire.setFrame(counter);
+		wait(10);
+	}
+	fire.destroy();
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	LightningBolt();
+}
+

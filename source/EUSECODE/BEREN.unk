@@ -1,0 +1,1598 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0420
+// FLEX slot: 1058
+// Original offset: 0x00025852
+// Naming evidence: E, exact object-1 linker name `BEREN`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BEREN.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+globalflag berenWarned:2;
+globalflag startedQuestions;
+globalflag finishedQuestions;
+
+npcclass BEREN inherits Npc
+{
+	process beren_cast_forward_to_spell_combat(arg_04:U8Word);
+	process beren_avatar_stole_something_warn_then_call_guards_for_theft(arg_04:U8Word);
+	process beren_look_bark_living_or_dead_identity();
+	process beren_schedule_update_period_schedule_and_safe_teleport();
+	process beren_enter_fast_area_target_avatar_and_return_to_idle_marker();
+	process beren_leave_fast_area_stop_active_process();
+	process beren_use_toggle_gump_and_run_sorcerer_dialogue();
+	process [[PT_DEFAULT, referent]] beren_greet_avatar();
+	process [[PT_DEFAULT, referent]] beren_say_farewell();
+	process [[PT_DEFAULT, referent]] beren_end_stalled_dialogue();
+	process [[PT_DEFAULT, referent]] beren_resolve_argument();
+	process [[PT_DEFAULT, referent]] beren_discuss_acolyte_outcome();
+	process [[PT_DEFAULT, referent]] beren_grovel_to_master();
+	process [[PT_DEFAULT, referent]] beren_discuss_sorcerers_enclave();
+}
+
+// Derived: routine 0x0080, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process BEREN::beren_cast_forward_to_spell_combat(arg_04:U8Word)
+{
+	if getMap() = 41
+	{
+		class_058B_callTheGuards(this, 0);
+		return;
+	}
+	else
+	{
+		berenMad = 3;
+		class_0574_spelcmbt_run_spell_combat(this, arg_04);
+	}
+}
+
+// Derived: routine 0x00D0, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process BEREN::beren_avatar_stole_something_warn_then_call_guards_for_theft(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	if not arg_04
+	{
+		return;
+	}
+	local_m02 = arg_04;
+	if (Avatar.getZ() > (local_m02.getZ() + 32)) or (Avatar.getZ() < (local_m02.getZ() - 32))
+	{
+		return;
+	}
+	local_m02 = 0;
+	killProcess(referent, PT_ACTIVITY);
+	turnToFace(getDirToItem(Avatar:Referent), 0, 5);
+	if getMap() = 12
+	{
+		foreach recursive local_m02 within container 1 {
+			if local_m02 = arg_04
+			{
+				setAvatarInStasis(1);
+				bark("You little thief! I will destroy you! ");
+				setTarget(1);
+				setAvatarInStasis(0);
+				return;
+			}
+		}
+		if not berenWarned
+		{
+			berenWarned = 1 + berenWarned;
+			bark("Stop that. ");
+		}
+		else if berenWarned = 1
+		{
+			berenWarned = 1 + berenWarned;
+			bark("Leave my things alone! ");
+		}
+		else if berenWarned = 2
+		{
+			berenWarned = 1 + berenWarned;
+			bark("This is your last warning! ");
+		}
+		else
+		{
+			setAvatarInStasis(1);
+			bark("That is all I will take! ");
+			setTarget(1);
+			setAvatarInStasis(0);
+			return;
+		}
+	}
+	else
+	{
+		foreach recursive local_m02 within container 1 {
+			if local_m02 = arg_04
+			{
+				class_058B_callTheGuards(this, local_m02);
+				return;
+			}
+		}
+		if not berenWarned
+		{
+			berenWarned = 1 + berenWarned;
+			bark("I represent the entire Cabal here. ");
+		}
+		else if berenWarned = 1
+		{
+			berenWarned = 1 + berenWarned;
+			bark("Do you know who I am? ");
+		}
+		else if berenWarned = 2
+		{
+			berenWarned = 1 + berenWarned;
+			bark("I will kill you if you diturb my things again. ");
+		}
+		else
+		{
+			class_058B_callTheGuards(this, local_m02);
+			return;
+		}
+	}
+	beren_enter_fast_area_target_avatar_and_return_to_idle_marker();
+}
+
+// Derived: routine 0x0436, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BEREN::beren_look_bark_living_or_dead_identity()
+{
+	if berenName and berenJob
+	{
+		if isDead()
+		{
+			bark("Beren the late Sorcerer ");
+		}
+		else
+		{
+			bark("Beren the Sorcerer ");
+		}
+	}
+	else if berenName
+	{
+		if isDead()
+		{
+			bark("Beren the deceased ");
+		}
+		else
+		{
+			bark("Beren");
+		}
+	}
+	else if berenJob
+	{
+		if isDead()
+		{
+			bark("dead Sorcerer ");
+		}
+		else
+		{
+			bark("Sorcerer ");
+		}
+	}
+	else if isDead()
+	{
+		bark("dead mage ");
+	}
+	else
+	{
+		bark("mage ");
+	}
+}
+
+// Derived: routine 0x05BB, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BEREN::beren_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	if isDead()
+	{
+		return;
+	}
+	else if not inDaemonScene
+	{
+		if (Avatar.getMap() = 41) and (pyrosFree = 0)
+		{
+			if class_0581_getPeriod() <= 2
+			{
+				local_m05_w02 = 19265;
+				local_m03 = 6411;
+				local_m01 = 48;
+				if class_057C_canSafeTeleport(this, local_m05, 41)
+				{
+					berenSchedule = 0;
+					class_057C_safeTeleport(this, local_m05, 41);
+				}
+			}
+			else
+			{
+				local_m05_w02 = 19261;
+				local_m03 = 6487;
+				local_m01 = 0;
+				if class_057C_canSafeTeleport(this, local_m05, 41)
+				{
+					berenSchedule = 1;
+					class_057C_safeTeleport(this, local_m05, 41);
+				}
+			}
+		}
+		else
+		{
+			local_m05_w02 = 19755;
+			local_m03 = 18559;
+			local_m01 = 56;
+			if class_057C_canSafeTeleport(this, local_m05, 12)
+			{
+				berenSchedule = 2;
+				class_057C_safeTeleport(this, local_m05, 12);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x06E5, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BEREN::beren_enter_fast_area_target_avatar_and_return_to_idle_marker()
+{
+	if isDead()
+	{
+		return;
+	}
+	else if avatarMasterSorcerer
+	{
+		setTarget(1);
+	}
+	else if (inDaemonScene = 0) and (Avatar.getMap() != 25)
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_057B_move_return_to_idle_marker(this) -> return;
+	}
+}
+
+// Derived: routine 0x073F, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BEREN::beren_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x075A, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process BEREN::beren_use_toggle_gump_and_run_sorcerer_dialogue()
+{
+	if isDead()
+	{
+		if getStatus() & 256
+		{
+			closeGump();
+		}
+		else
+		{
+			Item_openGump(12, this);
+		}
+	}
+	else
+	{
+		enterConvo();
+		if acolyteKilled = 0
+		{
+			beren_greet_avatar();
+		}
+		if Npc_getMap(u8_stack_ref(32)) = 25
+		{
+			class_04A7_berenhch_warn_mouth_of_daemon_intruder(this);
+		}
+		else if berenMad
+		{
+			beren_resolve_argument();
+		}
+		else if acolyteKilled = 0
+		{
+			beren_discuss_sorcerers_enclave();
+		}
+		else if not Malchir.isDead()
+		{
+			beren_discuss_acolyte_outcome();
+		}
+		else
+		{
+			beren_grovel_to_master();
+		}
+		exitConvo();
+	}
+}
+
+// Derived: routine 0x0862, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] BEREN::beren_greet_avatar()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String List;
+	local_m08:U8Bytes2; // X: untouched.
+	local_m0A:Number;
+	if Npc_getMap(u8_stack_ref(32)) = 25
+	{
+		return;
+	}
+	else
+	{
+		if not berenMet
+		{
+			bark("Greetings stranger. I am called Beren, and you? ");
+			berenName = 1;
+			local_m02 = "My name is " + getName() + ".";
+			local_m06 = <<local_m02, "It does not matter. ", "I cannot tell you. ">>;
+			local_m04 = ask(local_m06);
+			// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+			switch local_m04
+			{
+				case local_m02
+				{
+					local_m02 = "Well met, " + getName() + ". ";
+					berenAvaName = 1;
+				}
+				case "It does not matter. "
+				{
+					local_m02 = "As you say. It does not matter to me either. ";
+				}
+				case "I cannot tell you. "
+				{
+					local_m02 = "Interesting, you wish to remain a mystery. I like mysteries, to a point. ";
+				}
+				default
+				{
+					local_m02 = "I see. Perhaps the question was a little too intellectual for you. Ah, well. It matters not to me. ";
+				}
+			}
+			local_m02 += "And what do you seek of me? ";
+			bark(u8_string_local_address(local_m02));
+			berenMet = 1;
+			return;
+		}
+		local_m0A = urandom(3);
+		if berenMad = 1
+		{
+			if berenAvaName
+			{
+				if not local_m0A
+				{
+					local_m02 = "Yes, " + getName() + ", is there something you want?";
+				}
+				else if local_m0A = 1
+				{
+					local_m02 = "Alas, never to have a moment of peace. What do you want, " + getName() + "?";
+				}
+				else
+				{
+					local_m02 = "Did you forget something, " + getName() + "? It does tend to happen when the mind is over-taxed.";
+				}
+			}
+			else if not local_m0A
+			{
+				local_m02 = "Yes, is there something you want? ";
+			}
+			else if local_m0A = 1
+			{
+				local_m02 = "Alas, never to have a moment of peace. What do you want? ";
+			}
+			else
+			{
+				local_m02 = "Did you forget something? It does tend to happen when the mind is over-taxed. ";
+			}
+			u8goto label_127D;
+		}
+		if berenMad = 2
+		{
+			if berenAvaName
+			{
+				if not local_m0A
+				{
+					local_m02 = "I believe you have over-stayed your welcome. Unwanted guests are not treated with kindness here, " + getName() + ".";
+				}
+				else if local_m0A = 1
+				{
+					local_m02 = "My patience is at an end. Whatever you want, be quick about it. ";
+				}
+				else
+				{
+					local_m02 = "This is unbearable. Have you never heard of polite behavior, " + getName() + "? It has the wonderful benefit of allowing differing peoples to exist together harmoniously. The alternative is strife. You seem to choose the latter.";
+				}
+			}
+			else if not local_m0A
+			{
+				local_m02 = "I believe you have over-stayed your welcome. Unwanted guests are not treated with kindness here, stranger. ";
+			}
+			else if local_m0A = 1
+			{
+				local_m02 = "My patience is at an end. Whatever you want, be quick about it. ";
+			}
+			else
+			{
+				local_m02 = "This is unbearable. Have you never heard of polite behavior? It has the wonderful benefit of allowing differing peoples to exist together harmoniously. The alternative is strife. You seem to choose the latter. ";
+			}
+			u8goto label_127D;
+		}
+		if berenMad = 3
+		{
+			bark("I will now give you the most important lesson of your life. Learn it well, I'll only be able to teach it to you once, fool! ");
+			setTarget(1);
+			return;
+		}
+		else
+		{
+			if berenAvaName
+			{
+				if not local_m0A
+				{
+					local_m02 = "Ah, " + getName() + ". ";
+				}
+				if local_m0A = 1
+				{
+					local_m02 = "Greetings once again, " + getName() + ". ";
+				}
+				else
+				{
+					local_m02 = "What brings you here, ";
+					local_m02 += getName() + "? ";
+				}
+			}
+			else
+			{
+				if not local_m0A
+				{
+					local_m02 = "Ah, the stranger returns. ";
+				}
+				if local_m0A = 1
+				{
+					local_m02 = "Greetings once again. ";
+				}
+				else
+				{
+					local_m02 = "What brings you here, ";
+					local_m02 += "stranger? ";
+				}
+			}
+			local_m0A = urandom(3);
+			if not local_m0A
+			{
+				local_m02 += "How may I be of assistance? ";
+			}
+			else if local_m0A = 1
+			{
+				local_m02 += "And what can I do for you? ";
+			}
+		}
+		u8label label_127D:
+		bark(u8_string_local_address(local_m02));
+	}
+}
+
+// Derived: routine 0x1296, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] BEREN::beren_say_farewell()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m02 = urandom(3);
+	if berenMad = 1
+	{
+		if berenAvaName
+		{
+			if not local_m02
+			{
+				bark("Your manners could do with some refinement, " + getName() + ".");
+			}
+			else if local_m02 = 1
+			{
+				bark("I am a Sorcerer. If you cannot adress me as such, do not adress me at all. ");
+			}
+			else
+			{
+				bark("Until you can be civil, " + getName() + ", I suggest that you do not speak to me. I have been known to lose my temper on occasion.");
+			}
+		}
+		else if not local_m02
+		{
+			bark("Your manners could do with some refinement. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("I am a Sorcerer. If you cannot adress me as such, do not adress me at all. ");
+		}
+		else
+		{
+			bark("Until you can be civil, I suggest that you do not speak to me. I have been known to lose my temper. ");
+		}
+	}
+	else if berenMad = 2
+	{
+		if berenAvaName
+		{
+			if not local_m02
+			{
+				bark("You have a simple choice to make, " + getName() + ". Leave here or die.");
+			}
+			else if local_m02 = 1
+			{
+				bark("Do you seek death? If so, you are dealing with the right mage, " + getName() + ". I will gladly oblige you.");
+			}
+			else
+			{
+				bark("You are like the torax, being led to slaughter, " + getName() + ". Except that you should have the reasoning to avoid it. I suggest that you think carefully before we resume our discourse.");
+			}
+		}
+		else if not local_m02
+		{
+			bark("You have a simple choice to make. Leave here or die. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("Do you seek death? If so, you are dealing with the right mage. I will gladly oblige you. ");
+		}
+		else
+		{
+			bark("You are like the torax, being led to slaughter. Except you should have the reasoning to avoid it. I suggest that you think carefully before we resume our discourse. ");
+		}
+	}
+	else if berenAvaName
+	{
+		if not local_m02
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Farewell, " + getName() + ".") -> return;
+		}
+		else if local_m02 = 1
+		{
+			bark("I will see you anon. Fare well until then, " + getName() + ".");
+		}
+		else
+		{
+			bark("Goodbye. May the Fire of Pyros always burn brightly within you, " + getName() + ".");
+		}
+	}
+	else if not local_m02
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Farewell. ") -> return;
+	}
+	else if local_m02 = 1
+	{
+		bark("I will see you anon. Fare well until then. ");
+	}
+	else
+	{
+		bark("Goodbye. May the Fire of Pyros always burn brightly within you. ");
+	}
+}
+
+// Derived: routine 0x1A56, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] BEREN::beren_end_stalled_dialogue()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m02 = urandom(3);
+	if berenMad = 1
+	{
+		if berenAvaName
+		{
+			if not local_m02
+			{
+				bark("I tire of our dicussion. Farewell, " + getName() + ".");
+			}
+			else if local_m02 = 1
+			{
+				bark("Come back when you really wish to speak to me, " + getName() + ".");
+			}
+		}
+		else if not local_m02
+		{
+			bark("I tire of our dicussion. Farewell. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("Come back when you really wish to speak to me. ");
+		}
+	}
+	else if berenMad = 2
+	{
+		if berenAvaName
+		{
+			if not local_m02
+			{
+				bark("Your perceptions are shallow, " + getName() + ", if you cannot see that you approach the point at which I will cease to tolerate your existence.");
+			}
+			else if local_m02 = 1
+			{
+				bark("If you were to die at this point, I do not believe there would be anyone to mourn your passing. Farewell, " + getName() + ".");
+			}
+		}
+		else if not local_m02
+		{
+			bark("Your perceptions are shallow, if you cannot see that you approach the point at which I will cease to tolerate your existence. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("If you were to die at this point, I do not believe there would be anyone to mourn your passing. Farewell. ");
+		}
+	}
+	else if berenAvaName
+	{
+		if not local_m02
+		{
+			bark("Please do return when you wish to discuss something, " + getName() + ".");
+		}
+		else if local_m02 = 1
+		{
+			bark("If I can be of assistance to you in future, " + getName() + ", don't hesitate to ask.");
+		}
+	}
+	else if not local_m02
+	{
+		bark("Please do return when you wish to discuss something. ");
+	}
+	else if local_m02 = 1
+	{
+		bark("If I can be of assistance to you in future, don't hesitate to ask. ");
+	}
+}
+
+// Derived: routine 0x1FD1, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] BEREN::beren_resolve_argument()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String List;
+	local_m0A:Number;
+	local_m0C:U8Word;
+	local_m0A = urandom(3);
+	local_m08 = <<"I am a stranger here, please forgive me. ", "Did I say something wrong? ">>;
+	if berenMad = 1
+	{
+		local_m08 ^= <<"If I want your opinion, I'll give you one. ">>;
+	}
+	else if berenMad = 2
+	{
+		local_m08 ^= <<"You are beneath my contempt. ">>;
+	}
+	else
+	{
+		if berenMad = 3
+		{
+			setTarget(1);
+			return;
+		}
+		else
+		{
+		}
+	}
+	local_m08 ^= <<"Nevermind. ">>;
+	u8label label_20ED:
+	u8goto label_31B8 if not (local_m04 != "Nevermind. ");
+	local_m04 = ask(local_m08);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m04
+	{
+		case "I am a stranger here, please forgive me. "
+		{
+			bark("Forgiven. What can I help you with? ");
+			berenMad = 0;
+			beren_discuss_sorcerers_enclave();
+			return;
+		}
+		case "Did I say something wrong? "
+		{
+			bark("Did you say something right? Farewell, O' Confused One. ");
+			return;
+		}
+		case "You are beneath my contempt. "
+		{
+			bark("-Me-? Beneath -your- contempt? I don't believe I've ever been spoken to that way. How refreshing. But, I can't let this go unpunished, you understand. ");
+			berenMad = 1 + berenMad;
+			local_m08 = <<"Get used to being spoken to that way. ", "I understand no such thing. ", "I'm sorry, I really meant no offense. ">>;
+		}
+		case "If I want your opinion, I'll give you one. "
+		{
+			bark("And if I want yours, I'll burn it out of you! If you ever speak to me again, I won't be responsible for my actions. ");
+			berenMad = 1 + berenMad;
+			return;
+		}
+		case "Get used to being spoken to that way. "
+		{
+			bark("No, I don't think I ever will. And you won't get used to speaking to me that way, or any way, for that matter.* Now, be so kind as to die! ");
+			setTarget(1);
+			return;
+		}
+		case "I understand no such thing. "
+		{
+			bark("Well, with your limited understanding, I can see how that might be.*Nevertheless,... I must now destroy you. ");
+			setTarget(1);
+			return;
+		}
+		case "I'm sorry, I really meant no offense. "
+		{
+			bark("What a shame. I am truly sorry for you. For I cannot allow your actions to remain unanswered. If I were to forgive this heinous crime, the people of Tenebrae would think us weak. We can't let that happen, now can we? ");
+			local_m08 = <<"No, I guess not. ", "Yes! We can! ", "What crime? You -are- beneath my contempt. ", "You pitiful excuse for a mage! Kneel before me. ">>;
+		}
+		case "No, I guess not. "
+		{
+			bark("I'm glad to see that you're taking this so well. Strangely rational for you. Perhaps you're not such a bad sort, after all. ");
+			local_m08 = <<"No. I really am. ", "Must we really battle? ", "Thank you. It is sad to have to die, though. ">>;
+		}
+		case "Yes! We can! "
+		{
+			bark("No, I'm afraid we can't. And stop simpering like that. I just can't tolerate weakness in others.*Now then, It's time for your sad life to end... Goodbye. ");
+			setTarget(1);
+			return;
+		}
+		case "What crime? You -are- beneath my contempt. "
+		{
+			bark("And for that, you will pay with your life! ");
+			setTarget(1);
+			return;
+		}
+		case "You pitiful excuse for a mage! Kneel before me. "
+		{
+			bark("Alright, that's it. -You- die! ");
+			setTarget(1);
+			return;
+		}
+		case "No. I really am. "
+		{
+			bark("I am also glad to see that you face your death with some humor. I for one would not. Prepare yourself for battle! ");
+			setTarget(1);
+			return;
+		}
+		case "Must we really battle? "
+		{
+			bark("Yes, I'm afraid so. ");
+			setTarget(1);
+			return;
+		}
+		case "Thank you. It is sad to have to die, though. "
+		{
+			bark("Perhaps you won't... It is possible, however unlikely, that you might defeat me. Don't you think? ");
+			local_m08 = <<"No, you are a Sorcerer. ", "Yes, I suppose your're right! ">>;
+		}
+		case "No, you are a Sorcerer. "
+		{
+			bark("I suppose you're right. Well, that's no challenge. What do you want of me? ");
+			local_m08 = <<"Aren't you going to kill me? ", "Umm... Nothing right now. ", "Wait, I thought we were going to battle! ">>;
+			berenMad = 0;
+		}
+		case "Yes, I suppose your're right! "
+		{
+			bark("I have a habit of doing that. Being right I mean. Anyway, What did you want, anyway? ");
+			local_m08 = <<"Aren't you going to kill me? ", "Umm... Nothing right now. ", "Wait, I thought we were going to battle! ">>;
+			berenMad = 0;
+		}
+		case "Aren't you going to kill me? "
+		{
+			bark("Well I was, but I have reconsidered. Unless you want me to, of course... ");
+			local_m0C = class_0581_askYesNo(0x00000000);
+			if local_m0C = 1
+			{
+				bark("Very well, then. I grant your wish. Prepare for your death. ");
+				berenMad = 3;
+				setTarget(1);
+				return;
+			}
+			else if local_m0C = 0
+			{
+				bark("I didn't think so. Now, then. With what may I assist you? ");
+				beren_discuss_sorcerers_enclave();
+				return;
+			}
+			else
+			{
+				bark("I do not like to be ignored, and if you're not ignoring me, you are slow-witted. I do not like slow-witted people either. ");
+				berenMad = 3;
+				setTarget(1);
+				return;
+			}
+		}
+		case "Wait, I thought we were going to battle! "
+		{
+			bark("So we were. Have at you! ");
+			berenMad = 3;
+			setTarget(1);
+			return;
+		}
+		case "Umm... Nothing right now. "
+		{
+			beren_say_farewell();
+			return;
+		}
+		case "Nevermind."
+		{
+			return;
+		}
+		default
+		{
+			if berenMad = 3
+			{
+				setTarget(1);
+			}
+			else
+			{
+				beren_end_stalled_dialogue();
+			}
+			return;
+		}
+	}
+	u8goto label_20ED;
+	u8label label_31B8:
+	u8_free_local_string(local_m02);
+	u8_free_local_string(local_m04);
+	u8_free_local_string(local_m06);
+	u8_free_local_string_list(local_m08);
+}
+
+// Derived: routine 0x31C2, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] BEREN::beren_discuss_acolyte_outcome()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Number;
+	local_m02 = random(3);
+	if acolyteKilled = 1
+	{
+		if not tickedOff
+		{
+			bark("I know that you have no idea what you have done, but let me tell you. You have allowed Vardion to destroy one of the most powerful, resourceful, and beautiful Sorcerers this isle has ever known. I shall never forgive you for it, even though Malchir has. Leave me be. ");
+		}
+		else if tickedOff = 1
+		{
+			bark("Go! You have killed my closest comrade! What else would you have of me? Leave me alone! ");
+		}
+		else if tickedOff = 2
+		{
+			bark("If you speak to me again, I shall allow you to feel the agony that you visited upon my lover! Leave or die! ");
+		}
+		else
+		{
+			setTarget(1);
+		}
+		tickedOff = 1 + tickedOff;
+	}
+	else
+	{
+		if not local_m02
+		{
+			bark("Now that you have joined us, you should busy yourself learning as much as you can about Sorcery. ");
+		}
+		else if local_m02 = 1
+		{
+			bark("I must commend you on destroying that lumbering torax, Vardion. He would have driven the Sorcerers into obscurity. ");
+		}
+		else if MalchirTest >= 6
+		{
+			bark("I am sure that there is something you should be doing. Run along now, I have much to do. ");
+		}
+		else
+		{
+			bark("Prepare well for the Trials of the Obsidian Fortress. You cannot leave once you have entered. ");
+		}
+		bark("I have no time to speak at the moment, matters press upon my time... Farewell. ");
+	}
+}
+
+// Derived: routine 0x369B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] BEREN::beren_grovel_to_master()
+{
+	realDoAnim(49, getDir());
+	if not berenGroveled
+	{
+		bark("Whatever you need, Master, please take with my blessings. I will not disturb you unless you have need of my presence. Until then, I shall remain your humble servant. ");
+		berenGroveled = 1;
+	}
+	else
+	{
+		bark("I would not presume to speak to you unless I had something worthy of discussion. As I do not, I will bother you no longer. ");
+	}
+	wait(100);
+	realDoAnim(50, getDir());
+}
+
+// Derived: routine 0x3856, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] BEREN::beren_discuss_sorcerers_enclave()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String;
+	local_m0A:String List;
+	local_m0C:String List;
+	local_m0E:U8Word;
+	local_m0F:U8Byte;
+	local_m10:U8Byte;
+	local_m11:U8Byte;
+	local_m12:U8Byte;
+	local_m13:U8Byte;
+	local_m14:U8Byte;
+	local_m0F = 0;
+	local_m10 = 0;
+	local_m11 = 0;
+	local_m12 = 0;
+	local_m13 = 0;
+	local_m14 = 0;
+	u8goto label_4D5B if not (getMap() != 12);
+	if berenAvaName
+	{
+		local_m02 = getName();
+	}
+	else
+	{
+		local_m02 = "stranger ";
+	}
+	local_m0A = <<"Farewell. ">>;
+	if not berenName
+	{
+		local_m0A ^= <<"Who are you? ">>;
+	}
+	else if not berenJob
+	{
+		local_m0A ^= <<"What do you do here? ">>;
+	}
+	else if (startedQuestions = 1) and (finishedQuestions = 0)
+	{
+		bark("Now then. Where were we? Let's start from the top. Why are you here? ");
+		local_m0A = <<"Why are any of us here? ", "Because I wish to be! ", "I have been banished here. ">>;
+	}
+	else
+	{
+		local_m0A ^= <<"How are you? ">>;
+	}
+	while local_m04 != "Farewell. "
+	{
+		if class_0581_countStrList(local_m0A) <= 1
+		{
+			bark("If there is aught else you would discuss? ");
+			local_m0A = <<"Farewell. ">>;
+			if not berenName
+			{
+				local_m0A ^= <<"Who are you? ">>;
+			}
+			else if not berenJob
+			{
+				local_m0A ^= <<"What do you do here? ">>;
+			}
+			else
+			{
+				local_m0A ^= <<"How are you? ">>;
+			}
+		}
+		local_m0A = class_0581_free_append_list_line("Farewell. ", local_m0A);
+		local_m04 = ask(local_m0A);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "Who are you? "
+			{
+				u8goto label_3DAD if not (not berenAvaName);
+				bark("My name is Beren. And yours is? ");
+				berenName = 1;
+				local_m08 = "I am called " + getName() + ".";
+				local_m0C = <<local_m08, "Call me what you like. ", "Nevermind that. What do you do? ">>;
+				local_m06 = ask(local_m0C);
+				// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+				switch local_m06
+				{
+					case local_m08
+					{
+						bark("Well met, " + getName() + ". What do you want?");
+						local_m02 = getName();
+						berenAvaName = 1;
+					}
+					case "Call me what you like. "
+					{
+						bark("Fine then. I shall call you... stranger. What do you want? ");
+					}
+					case "Nevermind that. What do you do? "
+					{
+						bark("Well, I can tell you one thing. I don't talk to nosy strangers who won't even give me a name. ");
+						// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+						spawn bark("Goodbye. ") -> return;
+						berenMad = 1 + berenMad;
+						return;
+					}
+					default
+					{
+						beren_end_stalled_dialogue();
+						return;
+					}
+				}
+				u8goto label_3DD5;
+				u8label label_3DAD:
+				bark("My name is Beren. ");
+				u8label label_3DD5:
+				berenName = 1;
+				local_m0A -= <<"Who are you? ">>;
+				if not berenJob
+				{
+					local_m0A ^= <<"What do you do here? ">>;
+				}
+				else
+				{
+					local_m0A ^= <<"How are you? ">>;
+				}
+			}
+			case "What do you do here? "
+			{
+				bark("I am a mage. ");
+				local_m0A -= <<"What do you do here? ">>;
+				local_m0A ^= <<"How are you? ">>;
+			}
+			case "How are you? "
+			{
+				u8goto label_4206 if not (not finishedQuestions);
+				bark("I am fine. Now that you have asked your questions, it is my turn to ask you mine. ");
+				if not berenAvaName
+				{
+					bark("For what reason do you refuse to tell me your name? ");
+					local_m08 = "No reason. I am " + getName() + ".";
+					local_m0C = <<local_m08, "That is my own affair. ", "I don't talk to nosy strangers. ">>;
+					local_m06 = ask(local_m0C);
+					// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+					switch local_m06
+					{
+						case local_m08
+						{
+							bark("Thank you. I appreciate your candor, even if it was not offered initially. ");
+							berenAvaName = 1;
+						}
+						case "That is my own affair. "
+						{
+							bark("I don't like your answer, but I will accept it, stranger. ");
+						}
+						case "I don't talk to nosy strangers. "
+						{
+							// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+							spawn bark("Then leave! ") -> return;
+							berenMad = 1 + berenMad;
+							return;
+						}
+						default
+						{
+							beren_end_stalled_dialogue();
+							return;
+						}
+					}
+				}
+				bark("Why are you here? ");
+				local_m0A = <<"Why are any of us here? ", "Because I wish to be! ", "I have been banished here. ">>;
+				startedQuestions = 1;
+				u8goto label_42DE;
+				u8label label_4206:
+				bark("As well as can be expected. ");
+				bark("I really do have a lot on my mind. We have no business to conduct, so I see no reason why we should continue our discussion. ");
+				beren_say_farewell();
+				return;
+				u8label label_42DE:
+			}
+			case "Why are any of us here? "
+			{
+				bark("Please. There is no reason for philosophizing. Just answer my question. ");
+				local_m0A -= <<"Why are any of us here? ">>;
+			}
+			case "Because I wish to be! "
+			{
+				bark("Do not take that tone with me! Perhaps we will speak again when you can keep a civil tongue in your head. ");
+				berenMad = 1 + berenMad;
+				return;
+			}
+			case "I have been banished here. "
+			{
+				bark("Oh really? Who has banished you here? ");
+				local_m0A = <<"An evil being of immense power. ", "Why should I tell you? ", "A big red guy called the Guardian. ">>;
+			}
+			case "An evil being of immense power. "
+			{
+				bark("What is this evil being called? ");
+				local_m0A -= <<"An evil being of immense power. ", "A big red guy called the Guardian. ">>;
+				local_m0A ^= <<"He is called the Guardian. ">>;
+			}
+			case "Why should I tell you? "
+			{
+				bark("Because, I hold your life in my hands like a kith holds its prey in silk. ");
+				local_m0A -= <<"Why should I tell you? ">>;
+			}
+			case "A big red guy called the Guardian. "
+			{
+				bark("If the Guardian has sent you here, then you are not banished, but blessed. The Guardian will protect you as he has protected us. ");
+				local_m0A = <<"That's what scares me. ", "What do you mean by protected? ">>;
+				finishedQuestions = 1;
+			}
+			case "He is called the Guardian. "
+			{
+				bark("You speak blasphemy! The Guardian is the power that opposes the evil. When the Destroyer came, it was only through the Guardian's advice that we survived at all. ");
+				local_m0A -= <<"He is called the Guardian. ">>;
+				berenMad = 1 + berenMad;
+				finishedQuestions = 1;
+			}
+			case "That's what scares me. "
+			{
+				bark("What did you say? ");
+				local_m0A -= <<"That's what scares me. ">>;
+				local_m0C = <<"Do you think he cares about me. ", "Nothing, nevermind. ">>;
+				local_m06 = ask(local_m0C);
+				// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+				switch local_m06
+				{
+					case "Do you think he cares about me. "
+					{
+						bark("Of course. The Guardian is the provider of all good things. It is he who protected us in our time of need. ");
+					}
+					case "Nothing, nevermind. "
+					{
+						bark("I see. I could have sworn you said something, but it doesn't matter. ");
+					}
+					default
+					{
+						beren_end_stalled_dialogue();
+						return;
+					}
+				}
+			}
+			case "What do you mean by protected? "
+			{
+				if benticCacked
+				{
+					bark("I am not a historian and since ours is dead, go to the library and search out the knowledge in the books there. ");
+				}
+				else
+				{
+					bark("I am not a historian so I suggest you seek out Bentic, as he is very knowledgeable. Go to the library and search out the knowledge in the books there. I'm sure Bentic would just -love- to discuss the past with you. ");
+				}
+				local_m0A -= <<"What do you mean by protected? ">>;
+			}
+			case "Farewell. "
+			{
+				beren_say_farewell();
+			}
+			case ""
+			{
+				beren_end_stalled_dialogue();
+				local_m04 = "Farewell. ";
+			}
+			default
+			{
+				bark("I do not understand. What did you say? ");
+			}
+		}
+		if berenMad
+		{
+			local_m04 = "Farewell. ";
+		}
+	}
+	return;
+	u8label label_4D5B:
+	local_m0A = <<"Farewell. ">>;
+	if not berenJob
+	{
+		local_m0A ^= <<"What can you say of yourself? ">>;
+	}
+	local_m0A ^= <<"Tell me of this place? ">>;
+	while local_m04 != "Farewell. "
+	{
+		if class_0581_countStrList(local_m0A) <= 1
+		{
+			bark("If there is naught else you would discuss, I would return to my studies... Is there anything you would speak on further? ");
+			local_m0A = <<"Farewell. ">>;
+			if not berenJob
+			{
+				local_m0A ^= <<"What can you say of yourself? ">>;
+			}
+			local_m0A ^= <<"Tell me of this place? ">>;
+		}
+		local_m0A = class_0581_free_append_list_line("Farewell. ", local_m0A);
+		local_m04 = ask(local_m0A);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m04
+		{
+			case "What can you say of yourself? "
+			{
+				bark("I could as well ask you that question,... but I shall speak first. I am a Sorcerer, Acolyte of the Cabal. What do you do? ");
+				local_m0A = <<"Farewell. ">>;
+				if not local_m10
+				{
+					local_m0A ^= <<"What is a Sorcerer? ">>;
+				}
+				local_m0A ^= <<"Tell me of the Acolytes. ", "The Cabal. What is that? ">>;
+				berenJob = 1;
+				local_m0C = <<"I am a warrior. ", "I seek to leave this place. ", "I cannot reveal that. ">>;
+				local_m06 = ask(local_m0C);
+				// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+				switch local_m06
+				{
+					case "I am a warrior. "
+					{
+						bark("I could tell by the marks on your hands that you were familiar with weapons. Have you also an interest in magic? ");
+						local_m0C = <<"Aye, I do. ", "Nay, I do not. ", "What magic do you speak of? ">>;
+						while local_m06 != "Done. "
+						{
+							local_m06 = ask(local_m0C);
+							// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+							switch local_m06
+							{
+								case "Aye, I do. "
+								{
+									bark("Then you have come to the right place to learn. I suggest you seek out Bane. She is the most knowledgeable Sorcerer I have had the privilege to know. ");
+									if not local_m0F
+									{
+										if not baneMet
+										{
+											local_m0A ^= <<"Who is this Bane you speak of? ">>;
+										}
+										else
+										{
+											local_m0A ^= <<"I have met Bane. ">>;
+										}
+									}
+									local_m06 = "Done. ";
+								}
+								case "Nay, I do not. "
+								{
+									bark("'Tis your loss then. More's the pity. ");
+									local_m06 = "Done. ";
+								}
+								case "What magic do you speak of? "
+								{
+									bark("Sorcery, of course. As a practitioner of the craft, I know of its immense power. Would you learn of it as well? ");
+									local_m0A ^= <<"What is Sorcery? ">>;
+									local_m0C -= <<"What magic do you speak of? ">>;
+								}
+								default
+								{
+									beren_end_stalled_dialogue();
+									local_m06 = "Done. ";
+									local_m04 = "Farewell. ";
+								}
+							}
+						}
+					}
+					case "I seek to leave this place. "
+					{
+						bark("Do you? Why? Does our land or people displease you so? ");
+						local_m0C = <<"Your people are cruel. ", "This land is unforgiving. ", "Both are contrary. ", "No, I would return to -my- land and people. ">>;
+						local_m06 = ask(local_m0C);
+						// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+						switch local_m06
+						{
+							case "Your people are cruel. "
+							{
+								bark("The times are hard. I pray, do not judge us so harshly. ");
+							}
+							case "This land is unforgiving. "
+							{
+								bark("'Tis true, but we manage to survive, nonetheless. ");
+							}
+							case "Both are contrary. "
+							{
+								bark("The times are hard. I pray, do not judge us so harshly. And as for the land... well, you are right. But we survive, nonetheless. ");
+							}
+							case "No, I would return to -my- land and people. "
+							{
+								bark("An honorable goal. Perhaps we Sorcerers can be of assistance. ");
+								local_m0C = <<"How so? ", "I think not. ", "I do not need your help. ">>;
+								local_m06 = ask(local_m0C);
+								// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+								switch local_m06
+								{
+									case "How so? "
+									{
+										bark("Seek out Bane. She will be able to help you. She is the most intellectual of us all. ");
+										if not local_m0F
+										{
+											if not baneMet
+											{
+												local_m0A ^= <<"Who is this Bane you speak of? ">>;
+											}
+											else
+											{
+												local_m0A ^= <<"I have met Bane. ">>;
+											}
+										}
+									}
+									case "I think not. "
+									{
+										bark("Give us a chance. I am sure that Bane can help you. She is wise in the ways of Sorcery. ");
+										if not local_m0F
+										{
+											if not baneMet
+											{
+												local_m0A ^= <<"Who is this Bane you speak of? ">>;
+											}
+											else
+											{
+												local_m0A ^= <<"I have met Bane. ">>;
+											}
+										}
+										local_m0A ^= <<"What is Sorcery? ">>;
+									}
+								}
+								if local_m06 = "I do not need your help. "
+								{
+									bark("Then you shall not have it. Farewell. ");
+									berenMad = 1 + berenMad;
+									local_m04 = "Farewell. ";
+								}
+								else
+								{
+									beren_end_stalled_dialogue();
+									local_m04 = "Farewell. ";
+								}
+							}
+							default
+							{
+								beren_end_stalled_dialogue();
+								local_m04 = "Farewell. ";
+							}
+						}
+					}
+					case "I cannot reveal that. "
+					{
+						if not berenAvaName
+						{
+							bark("Ah, so the mystery deepens. I ask only out of curiosity. But then I can curb my curiosity, as well as the information I give you. ");
+						}
+						else
+						{
+							bark(" Interesting, you wish to remain a mystery. I like mysteries, to a point. ");
+						}
+					}
+					default
+					{
+						beren_end_stalled_dialogue();
+						local_m04 = "Farewell. ";
+					}
+				}
+			}
+			case "Tell me of this place? "
+			{
+				bark("Of course. This is the Sorcerer's Enclave. It sits in Daemon's Crag, upon the isle of Morgaelin. ");
+				local_m0A = <<"What can you say of the Enclave? ">>;
+				if not local_m10
+				{
+					local_m0A ^= <<"What is a Sorcerer? ">>;
+				}
+				local_m0A ^= <<"Tell me of Daemon's Crag and Morgaelin. ">>;
+			}
+			case "What is a Sorcerer? "
+			{
+				bark("A Sorcerer is a practitioner of the magic of Sorcery. I am an Acolyte Sorcerer of the Cabal. ");
+				local_m0A = <<"Farewell. ">>;
+				if not local_m11
+				{
+					local_m0A ^= <<"What is Sorcery? ">>;
+				}
+				if not local_m13
+				{
+					local_m0A ^= <<"Tell me of the Acolytes. ">>;
+				}
+				if not local_m14
+				{
+					local_m0A ^= <<"The Cabal. What is that? ">>;
+				}
+				local_m10 = 1;
+			}
+			case "Tell me of the Acolytes. "
+			{
+				bark("Well, there are four of us... Vardion, First Acolyte, Gorgrond, his faithful pet, Bane the Red, and myself. We are the ones that Master Malchir calls upon to aid in his great rituals. ");
+				local_m0A = <<"Farewell. ">>;
+				if not local_m12
+				{
+					local_m0A ^= <<"Tell me of Vardion and his position. ">>;
+				}
+				local_m0A ^= <<"Who is Gorgrond. ">>;
+				if not local_m0F
+				{
+					if not baneMet
+					{
+						local_m0A ^= <<"Who is this Bane you speak of? ">>;
+					}
+					else
+					{
+						local_m0A ^= <<"I have met Bane. ">>;
+					}
+				}
+				local_m0A ^= <<"Who is Master Malchir? ", "What rituals do you mean? ">>;
+			}
+			case "The Cabal. What is that? "
+			{
+				bark("It is all Sorcerers, combined. ");
+				local_m0A -= <<"The Cabal. What is that? ">>;
+			}
+			case "Who is this Bane you speak of? "
+			{
+				bark("She is my mentor. I was taught of my power by her tender hand. It is to her that you should go for answers. I am a mere shadow of her abilities and wit. ");
+				local_m0A -= <<"Who is this Bane you speak of? ">>;
+				local_m0F = 1;
+			}
+			case "I have met Bane. "
+			{
+				bark("Ah, then you know of her intelligence, her beauty, and her power. She is like a guiding beacon in a dark and stormy night. ");
+				local_m0A -= <<"I have met Bane. ">>;
+				local_m0F = 1;
+			}
+			case "What is Sorcery? "
+			{
+				bark("Sorcery is the art and craft of Fire. The Element that I have come here to study. Pyros, the Lord of Flame, is a powerful force in this world, and I would partake of that power. ");
+				local_m0A = <<"Element of Fire. What is it? ", "Tell me of this Lord of Flame. ">>;
+				local_m11 = 1;
+			}
+			case "What can you say of the Enclave? "
+			{
+				bark("Naught of great import. It is where we live. ");
+				local_m0A -= <<"What can you say of the Enclave? ">>;
+			}
+			case "Tell me of Daemon's Crag and Morgaelin. "
+			{
+				bark("Very well. Daemon's Crag is a lava-filled ravine, that flows from Mt. Morgaelin. This volcano is what the island takes its name from. ");
+				bark("There is a tale that tells of the forming of the volcano. Would you hear it? ");
+				local_m0E = class_0581_askYesNo(0x00000000);
+				if local_m0E = 1
+				{
+					bark("Long ago, it is written, before Pagans warred with Zealans, a voice came to our people. He named himself the Guardian, and spoke of a time when a great Destroyer would come, bringing despair to all. ");
+					bark("The Guardian showed our ancestors how to make our Elements into Titanic forces that could defeat this Destroyer. They sacrificed and gave adoration to the Elements at a temple built on the top of this mountain. ");
+					bark("A great black obelisk was built there, and the Elements grew in power. At long last, the day came... The Day of the Destroyer. The Guardian warned our people that they must leave the temple. That the battle between the Destroyer and the Titans would take place there. ");
+					bark("So they fled into the forests around. Huge, glowing yellow eyes appeared in the sky above the mountain then. Surrounding them, a face of red. Manlike in form, his body came into being, but red as his face it was. ");
+					bark("He stood upon the mountain, and roared out his challenge to our world. It was met by the shaking of the Earth, the lashing of the Air, the rising of the Water, and the burning of Fire. ");
+					bark("When the sky once again cleared somewhat, most of my people were dead. The sea had taken some, fire others, the land swallowed yet more... But we survived! Only by the grace of the Guardian. ");
+					local_m0C = <<"Your ancestors were deceived. ", "Quite an interesting tale. ">>;
+					local_m06 = ask(local_m0C);
+					// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+					switch local_m06
+					{
+						case "Your ancestors were deceived. "
+						{
+							bark("What?... What do you mean? ");
+							local_m0C = <<"Nothing. Nevermind. ", "The Titans are evil. ", "The Guardian is the Destroyer. ">>;
+							local_m06 = ask(local_m0C);
+							// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+							switch local_m06
+							{
+								case "The Titans are evil. "
+								{
+									bark("No, not evil, just... independent. But we have come to terms with them, each in a different way. ");
+								}
+								case "The Guardian is the Destroyer. "
+								{
+									bark("You know not of what you speak. I will hear no more about it. ");
+									local_m0C = <<"But where I am from... ", "You do not understand... ", "Wait. You must hear me out... ">>;
+									local_m06 = ask(local_m0C);
+									if local_m06 = ""
+									{
+										bark("Thank you for respecting my wishes. What else can I help you with? ");
+									}
+									else
+									{
+										bark("I said I would hear no more on the subject. Is there anything else you would ask me? ");
+									}
+								}
+								default
+								{
+									bark("Very well. What else would you know? ");
+								}
+							}
+						}
+						case "Quite an interesting tale. "
+						{
+							bark("Thank you. What else would you know? ");
+						}
+						default
+						{
+							bark("I hope this tale has entertained you. What else would you know? ");
+						}
+					}
+				}
+				else if local_m0E = 0
+				{
+					bark("I see. Ah, well. What else would you know? ");
+				}
+				local_m0A -= <<"Tell me of Daemon's Crag and Morgaelin. ">>;
+			}
+			case "Tell me of Vardion and his position. "
+			{
+				bark("Vardion is a petty overlord. He is loathe to give up any of his power to those better suited to run certain details. He cannot seem to delegate his authority, therefore we suffer. ");
+				local_m0A -= <<"Tell me of Vardion and his position. ">>;
+				local_m12 = 1;
+			}
+			case "Who is Gorgrond. "
+			{
+				bark("An Acolyte of no consequence. He is strong in magical resource, but his mental shortcomings more than belittle his magical prowess. ");
+				local_m0A -= <<"Who is Gorgrond. ">>;
+			}
+			case "Who is Master Malchir? "
+			{
+				bark("He leads us in all things. Well,... he would if he were around more often. He remains busy with his own studies, leaving Vardion to lead us poorly. ");
+				local_m0A -= <<"Who is Master Malchir? ">>;
+				if not local_m12
+				{
+					local_m0A ^= <<"Tell me of Vardion and his position. ">>;
+				}
+			}
+			case "What rituals do you mean? "
+			{
+				bark("That is a subject best left to discuss if you become one of us. Speak to Bane. She will assist you in these matters. ");
+				local_m0A -= <<"What rituals do you mean? ">>;
+				if not local_m0F
+				{
+					if not baneMet
+					{
+						local_m0A ^= <<"Who is this Bane you speak of? ">>;
+					}
+					else
+					{
+						local_m0A ^= <<"I have met Bane. ">>;
+					}
+				}
+			}
+			case "Element of Fire. What is it? "
+			{
+				bark("Are you daft? It is flame itself. It runs through the land as blood does in your veins. ");
+				local_m0A -= <<"Element of Fire. What is it? ">>;
+			}
+			case "Tell me of this Lord of Flame. "
+			{
+				bark("Pyros was the last Titan to be brought to terms. He was bound by my kind, long ago and is now at the beck and call of Master Malchir. A dangerous servant, to be sure, but a servant nonetheless. ");
+				local_m0A -= <<"Tell me of this Lord of Flame. ">>;
+				local_m0A ^= <<"What is a Titan. ">>;
+			}
+			case "What is a Titan. "
+			{
+				bark("A Titan is the personification of one of the four Elements. They are Earth, Water, Air, and of course Fire. I know little of the others, and Fire I study. ");
+				local_m0A -= <<"What is a Titan. ">>;
+			}
+			case "Farewell. "
+			{
+				beren_say_farewell();
+			}
+			case ""
+			{
+				beren_end_stalled_dialogue();
+				local_m04 = "Farewell. ";
+			}
+			default
+			{
+				bark("I do not understand. What did you say? ");
+			}
+		}
+		if berenMad
+		{
+			local_m04 = "Farewell. ";
+		}
+	}
+}
+

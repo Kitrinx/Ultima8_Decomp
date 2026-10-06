@@ -1,0 +1,339 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x01B1
+// FLEX slot: 435
+// Original offset: 0x000A8CCF
+// Naming evidence: E, exact object-1 linker name `LITHOS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/LITHOS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass LITHOS inherits Item
+{
+	process lithos_look_bark_earth_titan();
+	process lithos_use_run_lithos_dialogue();
+	process lithos_animate_emergence();
+	process lithos_animate_small_gesture();
+	process lithos_animate_medium_gesture();
+	process lithos_animate_short_gesture();
+	process lithos_animate_large_gesture();
+	process lithos_animate_departure();
+	process lithos_animate_long_speech_loop();
+	process lithos_animate_medium_speech_loop();
+	process lithos_animate_short_speech_loop();
+	process lithos_stop_speech_animation();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LITHOS::lithos_look_bark_earth_titan()
+{
+	bark("Earth Titan ");
+}
+
+// Derived: routine 0x00AF, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process LITHOS::lithos_use_run_lithos_dialogue()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	if Avatar.getMap() != 31
+	{
+		return;
+	}
+	playMusic(117);
+	setAvatarInStasis(1);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_scrollTo(0x00000000, Avatar.getMap(), getZ(), getY() - 80, getX()) -> return;
+	foreach local_m02 where (type = TypePathMarker) within 30 cells of Avatar {
+		Npc_pathfind(12, local_m02, u8_stack_ref(1));
+	}
+	Avatar.turnToFace(7, 0, 1);
+	Npc_clrInCombat(u8_stack_ref(41));
+	Npc_clrInCombat(u8_stack_ref(42));
+	Npc_clrInCombat(u8_stack_ref(43));
+	Npc_clrInCombat(u8_stack_ref(44));
+	Npc_clrInCombat(u8_stack_ref(6));
+	Npc_clrInCombat(u8_stack_ref(30));
+	Npc_clrInCombat(u8_stack_ref(34));
+	Npc_clrInCombat(u8_stack_ref(35));
+	Npc_clrInCombat(u8_stack_ref(36));
+	Npc_clrInCombat(u8_stack_ref(37));
+	Npc_clrInCombat(u8_stack_ref(38));
+	Npc_clrInCombat(u8_stack_ref(39));
+	wait(100);
+	lithos_animate_emergence();
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_01B1_lithos_animate_long_speech_loop(this) -> return;
+	bark("What human is this who comes before me? ");
+	lithos_stop_speech_animation();
+	Item_bark(u8_string_address("I have business before you, lord. "), u8_stack_ref(1));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_01B1_lithos_animate_medium_speech_loop(this) -> return;
+	bark("What business could a living one have that concerns Me? ");
+	lithos_stop_speech_animation();
+	Item_bark(u8_string_address("Vividos is now the Necromancer. "), u8_stack_ref(1));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_01B1_lithos_animate_long_speech_loop(this) -> return;
+	bark("I am very well aware of that, living one. And now Lothian must be interred. ");
+	lithos_stop_speech_animation();
+	Item_bark(u8_string_address("Lothian must be interred? "), u8_stack_ref(1));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_01B1_lithos_animate_short_speech_loop(this) -> return;
+	bark("Yes, the scent of her rotting flesh shall perfume my garden of delight. ");
+	lithos_stop_speech_animation();
+	Item_bark(u8_string_address("Lord, I beg a boon. "), u8_stack_ref(1));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_01B1_lithos_animate_long_speech_loop(this) -> return;
+	bark("Bold you are to beg a boon from me, mortal. What is this boon? ");
+	lithos_stop_speech_animation();
+	Item_bark(u8_string_address("I wish to become Vividos' apprentice. "), u8_stack_ref(1));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_01B1_lithos_animate_medium_speech_loop(this) -> return;
+	bark("You wish to apprentice to the Necromancer? Then fall before me and serve your master! ");
+	lithos_stop_speech_animation();
+	wait(30);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 49) -> return;
+	Camera_startQuake(5);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 48) -> return;
+	wait(30);
+	Avatar.realDoAnim(14, urandom(7));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 49) -> return;
+	Avatar.realDoAnim(AS_GET_UP, Avatar.getDir());
+	wait(200);
+	Camera_stopQuake();
+	foreach local_m02 where (type = TypePathMarker) within 30 cells of Avatar {
+		Npc_pathfind(12, local_m02, u8_stack_ref(1));
+	}
+	Avatar.turnToFace(7, 0, 1);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_01B1_lithos_animate_short_speech_loop(this) -> return;
+	bark("Now, kneel before me, worm. ");
+	lithos_stop_speech_animation();
+	Npc_doAnim(0, 10000, 7, 35, u8_stack_ref(1));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_01B1_lithos_animate_long_speech_loop(this) -> return;
+	bark("To become the apprentice, you must inter Lothian into my clay. ");
+	lithos_stop_speech_animation();
+	Item_bark(u8_string_address("How do I do this, lord? "), u8_stack_ref(1));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_01B1_lithos_animate_medium_speech_loop(this) -> return;
+	bark("Ask this of the Necromancer. He will teach you for it is his task to serve me. ");
+	lithos_stop_speech_animation();
+	Item_bark(u8_string_address("Farewell, my lord. "), u8_stack_ref(1));
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_01B1_lithos_animate_short_speech_loop(this) -> return;
+	bark("You may now leave my presence, live one. Do not come before me again until you yourself are the Necromancer. ");
+	lithosMet = 1;
+	lithos_stop_speech_animation();
+	lithos_animate_departure();
+	wait(30);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_scrollBack(0x00000000, 16) -> return;
+	Npc_doAnim(0, 10000, 7, 34, u8_stack_ref(1));
+	playMusic(121);
+	Avatar.turnToFace(3, 0, 15);
+	setAvatarInStasis(0);
+}
+
+// Derived: routine 0x09B2, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITHOS::lithos_animate_emergence()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, referent]];
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 48) -> return;
+	Camera_startQuake(1);
+	for local_m02 = 0 to 14
+	{
+		setFrame(local_m02);
+		wait(7);
+	}
+	Camera_stopQuake();
+}
+
+// Derived: routine 0x0A14, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITHOS::lithos_animate_small_gesture()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, referent]];
+	for local_m02 = 16 to 17
+	{
+		setFrame(local_m02);
+		wait(5);
+	}
+	wait(10);
+	for local_m02 = 0 to 1
+	{
+		setFrame(17 - local_m02);
+		wait(5);
+	}
+	setFrame(14);
+	wait(10);
+}
+
+// Derived: routine 0x0AC8, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITHOS::lithos_animate_medium_gesture()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, referent]];
+	for local_m02 = 19 to 22
+	{
+		setFrame(local_m02);
+		wait(5);
+	}
+	wait(10);
+	for local_m02 = 0 to 3
+	{
+		setFrame(22 - local_m02);
+		wait(5);
+	}
+	setFrame(14);
+	wait(10);
+}
+
+// Derived: routine 0x0B7C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITHOS::lithos_animate_short_gesture()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, referent]];
+	for local_m02 = 24 to 25
+	{
+		setFrame(local_m02);
+		wait(10);
+	}
+	wait(15);
+	for local_m02 = 0 to 1
+	{
+		setFrame(25 - local_m02);
+		wait(10);
+	}
+	setFrame(14);
+	wait(10);
+}
+
+// Derived: routine 0x0C30, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITHOS::lithos_animate_large_gesture()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, referent]];
+	for local_m02 = 27 to 35
+	{
+		setFrame(local_m02);
+		wait(5);
+	}
+	wait(15);
+	for local_m02 = 0 to 8
+	{
+		setFrame(35 - local_m02);
+		wait(5);
+	}
+	setFrame(14);
+}
+
+// Derived: routine 0x0CCD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITHOS::lithos_animate_departure()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	[[PT_DEFAULT, referent]];
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 48) -> return;
+	Camera_startQuake(1);
+	for local_m02 = 0 to 14
+	{
+		setFrame(14 - local_m02);
+		wait(10);
+	}
+	setFrame(15);
+	Camera_stopQuake();
+}
+
+// Derived: routine 0x0D3C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITHOS::lithos_animate_long_speech_loop()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ANIM_UNK, referent]];
+	}
+	process
+	{
+		lithos_animate_medium_gesture();
+		lithos_animate_short_gesture();
+		lithos_animate_large_gesture();
+	}
+}
+
+// Derived: routine 0x0D7C, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITHOS::lithos_animate_medium_speech_loop()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ANIM_UNK, referent]];
+	}
+	process
+	{
+		lithos_animate_medium_gesture();
+		lithos_animate_short_gesture();
+	}
+}
+
+// Derived: routine 0x0DAC, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITHOS::lithos_animate_short_speech_loop()
+{
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ANIM_UNK, referent]];
+	}
+	process
+	{
+		lithos_animate_short_gesture();
+		lithos_animate_medium_gesture();
+	}
+}
+
+// Derived: routine 0x0DDC, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process LITHOS::lithos_stop_speech_animation()
+{
+	[[PT_ANIM, referent]];
+	resetRef(referent, PT_ANIM_UNK);
+	setFrame(14);
+	wait(30);
+}
+

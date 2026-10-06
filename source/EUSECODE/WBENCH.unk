@@ -1,0 +1,38 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x00E2
+// FLEX slot: 228
+// Original offset: 0x0012449D
+// Naming evidence: E, exact object-1 linker name `WBENCH`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/WBENCH.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass WBENCH inherits Item
+{
+	process wbench_look_bark_bench();
+	process wbench_got_hit_change_frame(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process WBENCH::wbench_look_bark_bench()
+{
+	bark("bench ");
+}
+
+// Derived: routine 0x00A9, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process WBENCH::wbench_got_hit_change_frame(arg_04:U8Word)
+{
+	if not arg_04
+	{
+		setFrame(1);
+	}
+}
+

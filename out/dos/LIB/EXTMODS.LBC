@@ -1,0 +1,27 @@
+*setargv.obj &
+*wild.obj &
+*segheap.obj &
+*farheap.obj &
+*loadprog.obj &
+*doscmd.obj &
+*ctrlbrk.obj &
+*system.obj &
+*spawn.obj &
+*crtinit.obj &
+*ioctl.obj &
+*int86.obj &
+*intr.obj &
+*signal.obj &
+*strchr.obj &
+*strchrx.obj &
+*delay.obj &
+*harderr.obj &
+*hard.obj &
+*fcorelft.obj &
+*brk.obj &
+*h_pada.obj &
+*h_padd.obj &
+*h_pina.obj &
+*h_psbh.obj &
+*ioerror.obj &
+*pcmp.obj

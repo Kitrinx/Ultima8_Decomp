@@ -1,0 +1,43 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0114
+// FLEX slot: 278
+// Original offset: 0x00072FDD
+// Naming evidence: E, exact object-1 linker name `FIREPLEW`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FIREPLEW.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass FIREPLEW inherits Item
+{
+	process fireplew_look_bark_fireplace();
+	process fireplew_enter_fast_area_start_ambient_sound();
+	process fireplew_leave_fast_area_stop_ambient_sound();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREPLEW::fireplew_look_bark_fireplace()
+{
+	bark("fireplace ");
+}
+
+// Derived: routine 0x00AD, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREPLEW::fireplew_enter_fast_area_start_ambient_sound()
+{
+	playAmbientSFX(134, 50, referent);
+}
+
+// Derived: routine 0x00C9, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREPLEW::fireplew_leave_fast_area_stop_ambient_sound()
+{
+	stopSFX(134, referent);
+}
+

@@ -1,0 +1,54 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04A5
+// FLEX slot: 1191
+// Original offset: 0x0006B7AC
+// Naming evidence: E, exact object-1 linker name `ENDSTRAT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/ENDSTRAT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+uses "free";
+
+eggclass ENDSTRAT inherits Egg
+{
+	process endstrat_hatch_run_stratos_punishment_sequence();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process ENDSTRAT::endstrat_hatch_run_stratos_punishment_sequence()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Npc;
+	local_m06:U8Word;
+	foreach local_m02 where (type = 385) within 20 cells of referent {
+		setAvatarInStasis(1);
+		scrollTo(local_m02.getX(), local_m02.getY(), local_m02.getZ() + 20, 25);
+		wait(30);
+		local_m02.bark("Wicked wicked child! You have tried my patience and now I shall punish you! ");
+		setAvatarInStasis(0);
+		scrollBack(15);
+		while 1
+		{
+			LightningBolt();
+			playSFX(91);
+			local_m06 = 0;
+			foreach local_m04 where (type = 377) within 50 cells of referent {
+				local_m06 = local_m06 + 1;
+			}
+			if local_m06 < 4
+			{
+				Npc_create(0, 377, u8_local_address(local_m04_w01));
+				local_m04.pop(urandom(500) + getX(), urandom(500) + getY(), getZ() + 16);
+				local_m04.setInCombat();
+				local_m04.setTarget(1);
+			}
+			wait(urandom(10) * 30);
+		}
+	}
+}
+

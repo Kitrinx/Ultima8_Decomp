@@ -1,0 +1,32 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0255
+// FLEX slot: 599
+// Original offset: 0x0000B12A
+// Naming evidence: E, exact object-1 linker name `APASTAT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/APASTAT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass APASTAT inherits Item
+{
+	process apastat_look_describe_by_state();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process APASTAT::apastat_look_describe_by_state()
+{
+	if ancientOnesMet
+	{
+		bark("Apathas");
+	}
+	else
+	{
+		bark("male statue ");
+	}
+}
+

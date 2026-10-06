@@ -1,0 +1,870 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0402
+// FLEX slot: 1028
+// Original offset: 0x000623EE
+// Naming evidence: E, exact object-1 linker name `DEVON`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/DEVON.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+globalflag devonHeardLurker;
+globalflag devonComplained;
+
+npcclass DEVON inherits Npc
+{
+	process devon_look_bark_identity_description();
+	process devon_schedule_update_period_schedule_and_safe_teleport();
+	process devon_enter_fast_area_set_npc_activity();
+	process devon_leave_fast_area_stop_active_process();
+	process devon_avatar_stole_something_warn_thief_and_restart_schedule(arg_04:U8Word);
+	process devon_cast_restrain_avatar_and_apply_lightning_execution(arg_04:U8Word);
+	process devon_use_run_conversation();
+	process devon_apply_lightning_execution();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DEVON::devon_look_bark_identity_description()
+{
+	if devonName
+	{
+		bark("Devon");
+		return;
+	}
+	else if devonJob
+	{
+		bark("fisherman ");
+		return;
+	}
+	else
+	{
+		bark("man ");
+		return;
+	}
+}
+
+// Derived: routine 0x00FF, event mask 0x00000100.
+// O: `schedule` identifies event 08; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DEVON::devon_schedule_update_period_schedule_and_safe_teleport()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m05:U8Bytes5;
+	local_m01:U8Byte;
+	local_m03:U8Word;
+	local_m05_w02:U8Word;
+	local_m07:U8Word;
+	if (not toranDead) or secondexecution
+	{
+		return;
+	}
+	if devonInRule
+	{
+		if (class_0581_getPeriod() = 2) or (class_0581_getPeriod() = 1)
+		{
+			local_m05_w02 = 13535;
+			local_m03 = 9823;
+			local_m01 = 48;
+			local_m07 = 40;
+		}
+		else if (class_0581_getPeriod() = 0) or (class_0581_getPeriod() = 1)
+		{
+			local_m05_w02 = 13151;
+			local_m03 = 8031;
+			local_m01 = 48;
+			local_m07 = 40;
+		}
+		else
+		{
+			local_m05_w02 = 13151;
+			local_m03 = 8031;
+			local_m01 = 48;
+			local_m07 = 40;
+		}
+	}
+	else if devonJailed
+	{
+		local_m05_w02 = 2431;
+		local_m03 = 3839;
+		local_m01 = 0;
+		local_m07 = 40;
+	}
+	else
+	{
+		if (class_0581_getPeriod() = 3) or (class_0581_getPeriod() = 2)
+		{
+			local_m05_w02 = 11775;
+			local_m03 = 4607;
+			local_m01 = 48;
+			local_m07 = 3;
+		}
+		if class_0581_getPeriod() = 5
+		{
+			local_m05_w02 = 15615;
+			local_m03 = 12031;
+			local_m01 = 48;
+			local_m07 = 39;
+		}
+		if class_0581_getPeriod() = 4
+		{
+			local_m05_w02 = 15743;
+			local_m03 = 12543;
+			local_m01 = 48;
+			local_m07 = 39;
+		}
+		if class_0581_getPeriod() = 1
+		{
+			local_m05_w02 = 10655;
+			local_m03 = 8415;
+			local_m01 = 48;
+			local_m07 = 39;
+		}
+		if class_0581_getPeriod() = 0
+		{
+			local_m05_w02 = 10655;
+			local_m03 = 8415;
+			local_m01 = 48;
+			local_m07 = 39;
+		}
+	}
+	class_057C_safeTeleport(this, local_m05, local_m07);
+}
+
+// Derived: routine 0x0261, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DEVON::devon_enter_fast_area_set_npc_activity()
+{
+	if (not toranDead) or secondexecution
+	{
+		return;
+	}
+	cSetActivity(0);
+}
+
+// Derived: routine 0x028F, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DEVON::devon_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x02AA, event mask 0x00080000.
+// O: `AvatarStoleSomething` identifies event 13; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process DEVON::devon_avatar_stole_something_warn_thief_and_restart_schedule(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	if getMap() = 3
+	{
+		return;
+	}
+	local_m02 = arg_04;
+	resetRef(referent, PT_ACTIVITY);
+	resetRef(referent, PT_PATHFIND);
+	resetRef(referent, PT_BARK);
+	turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+	bark("What are you doing there...? ");
+	devon_enter_fast_area_set_npc_activity();
+	return;
+}
+
+// Derived: routine 0x035B, event mask 0x00020000.
+// O: `cast` identifies event 11; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process DEVON::devon_cast_restrain_avatar_and_apply_lightning_execution(arg_04:U8Word)
+{
+	if arg_04 = 1
+	{
+		setAvatarInStasis(1);
+		if devonInRule
+		{
+			clrInCombat();
+			turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+			realDoAnim(AS_ENTER_CAST, getDir());
+			realDoAnim(29, getDir());
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0402_devon_apply_lightning_execution(this) -> return;
+			realDoAnim(AS_EXIT_CAST, getDir());
+		}
+		else
+		{
+			if not isDead()
+			{
+				clrInCombat();
+				killProcess(referent, PT_ACTIVITY);
+				killProcess(referent, PT_BARK);
+				bark("Beren! I am assaulted! ");
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn callTheGuards(NULL_REF) -> return;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x047A, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process DEVON::devon_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String;
+	local_m06:String;
+	local_m08:String;
+	local_m09:U8Byte;
+	local_m0A:U8Byte;
+	local_m0B:U8Byte;
+	local_m0C:U8Byte;
+	local_m0D:U8Byte;
+	local_m0E:U8Byte;
+	local_m0F:U8Byte;
+	local_m11:U8Word;
+	local_m13:Number;
+	local_m15:Item;
+	local_m17:U8Word;
+	local_m19:U8Bytes2; // X: untouched.
+	local_m1B:String;
+	local_m1D:String List;
+	local_m1F:String;
+	local_m20:U8Byte;
+	local_m22:U8Word;
+	local_m24:U8Word;
+	local_m25:U8Byte;
+	local_m27:U8Word;
+	local_m29:U8Word;
+	local_m2B:String;
+	enterConvo();
+	if hasHeart
+	{
+		local_m11++;
+	}
+	if pyrosFree
+	{
+		local_m11++;
+	}
+	if local_m11 > 1
+	{
+		bark("Oh dear, " + getName() + ". It seems quite a stir has been created. I hope you are well.");
+	}
+	else if hasHeart
+	{
+		bark("Oh dear, " + getName() + ". For a moment I thought you were one of the ghouls who seem to have begun wandering the city. I am glad to see you are alive.");
+	}
+	else if devonMet
+	{
+		local_m1B = "Hello there, ";
+		local_m1B += getName();
+		local_m1B += ".";
+		bark(u8_string_local_address(local_m1B));
+	}
+	else
+	{
+		bark("Hello there. ");
+	}
+	if needTear and (not devonMentionedTear)
+	{
+		if devonJailed
+		{
+			if not (helpDevon or refusedDevon)
+			{
+				local_m1D += <<"What is going on? ">>;
+			}
+			else
+			{
+				local_m1D += <<"Greetings, Devon. ">>;
+			}
+		}
+		else if devonInRule
+		{
+			local_m1D += <<"I need the Blackrock fragment. ">>;
+		}
+	}
+	else if hydrosFree
+	{
+		if devonJailed and (not devonInRule)
+		{
+			if not (helpDevon or refusedDevon)
+			{
+				local_m1D += <<"What is going on? ">>;
+			}
+			else
+			{
+				local_m1D += <<"Greetings, Devon. ">>;
+			}
+		}
+		else if devonHeardLurker
+		{
+			local_m1D += <<"Hello, Devon. ">>;
+		}
+		else
+		{
+			local_m1D += <<"The Lurker is free! ">>;
+		}
+	}
+	else if devonInRule
+	{
+		local_m1D += <<"Hello, Devon. ">>;
+	}
+	else if devonJailed
+	{
+		if not (helpDevon or refusedDevon)
+		{
+			local_m1D += <<"What is going on? ">>;
+		}
+		else
+		{
+			local_m1D += <<"Greetings, Devon. ">>;
+		}
+	}
+	else if devonName
+	{
+		local_m1D += <<"Hello, Devon. ">>;
+	}
+	else
+	{
+		local_m1D += <<"Who are you? ">>;
+	}
+	local_m1D += <<"Goodbye. ">>;
+	while local_m02 != "Goodbye. "
+	{
+		if (local_m0D = 0) and (local_m0C = 0)
+		{
+			local_m1D -= <<"Goodbye. ">>;
+			local_m1D += <<"Goodbye. ">>;
+		}
+		local_m02 = ask(local_m1D);
+		// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+		switch local_m02
+		{
+			case "Who are you? "
+			{
+				local_m1F = "I am Devon, my strange friend. And I am glad to see you are feeling better, ";
+				devonName = 1;
+				local_m1F += getName();
+				local_m1F += ".";
+				bark(u8_string_local_address(local_m1F));
+				local_m1D -= <<"Who are you? ">>;
+				if toranDead = 0
+				{
+					local_m1D ^= <<"Where am I? ">>;
+					local_m0E = 1;
+				}
+				else
+				{
+					local_m1D ^= <<"Where did you find me? ">>;
+					local_m0F = 1;
+				}
+				local_m1D ^= <<"How do you know my name? ">>;
+			}
+			case "Where am I? ", "Where did you find me? "
+			{
+				bark("Why, on the shore, friend, safe now and thankfully alive. ");
+				if local_m0E
+				{
+					local_m1D -= <<"Where am I? ">>;
+				}
+				if local_m0F
+				{
+					local_m1D -= <<"Where did you find me? ">>;
+				}
+				local_m1D ^= <<"What happened to me? ", "Shore of what? ">>;
+			}
+			case "Shore of what? "
+			{
+				bark("Shore of what? Why, the shore of Tenebrae, upon the Sea of Rains. ");
+				local_m1D -= <<"Shore of what? ">>;
+				local_m1D = <<"Tenebrae? ", "Sea of Rains? ", "Goodbye. ">>;
+			}
+			case ""
+			{
+				if local_m0A = 0
+				{
+					bark("Oh. I am sorry. I thought you were still speaking to me. ");
+					local_m0A = 1;
+				}
+				else
+				{
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("I see you otherwise occupied. I shall not waste any more of your time. Farewell. ") -> return;
+					exitConvo();
+					return;
+				}
+			}
+			case "Sea of Rains? "
+			{
+				local_m1D -= <<"Sea of Rains? ">>;
+				bark("Obviously you do not spend any time away from the city to ask such a question. Why, 'tis nothing more than the name of the sea. The story goes that the rains are quite heavy the farther you go from the shore. It is supposed to have something to do with Mordea's powers. Part of her role as ruling Tempest is to control the rain over the city, but she feels no obligation to extend that in the distant waters. Of course, I have never had an unwanted cloud while out to sea, myself, so I suspect the name is more rumor than truth. ");
+			}
+			case "Tenebrae? "
+			{
+				bark("Aye, Tenebrae, the City of Eternal Twilight. They say you'll never find a more lovely place and I do not disagree, save for one place. But I will say this, the farther I am from the Lady, the better I feel. I can tell by your questions that you are not from this land. Come you from another island? Or perhaps some place that is an even greater distance away. ");
+				local_m1D -= <<"Tenebrae? ", "Sea of Rains? ">>;
+				local_m1D ^= <<"What is the lovelier place? ", "Who is the Lady? ", "I am from far away. ">>;
+			}
+			case "I am from far away. "
+			{
+				bark("I suspected as much, my friend, for your questions are most unusual. I must inform you that, a simple fisherman, I am a poor source of information about our local customs and such. I am sure there must be someone else who can tell you more. Why, I know just the person. When you get to town, visit Bentic in the library in east Tenebrae. My good friend knows practically all there is to know about our land and its people. Yes, he can certainly help you. ");
+				devonSaidBentic = 1;
+				local_m1D -= <<"I am from far away. ">>;
+			}
+			case "What is the lovelier place? "
+			{
+				bark("Why, the open sea, of course! I can think of nothing more reassuring than the smell of the salt and the feel of a taut net as it fills with fish. And the weather! I hear others complain it is as fickle as the Lady, but I know no such thing. I can think of no day on the sea when the sky was not clear and the waves as gentle as a baby's hand. ");
+				local_m1D -= <<"What is the lovelier place? ">>;
+			}
+			case "Who is the Lady? "
+			{
+				bark("You mean the Lady Mordea, my friend. She is Tempest and ruler of the city. Others call her a tyrant in whispered corners, though I held no opinion myself. Until recently, that is. ");
+				local_m1D -= <<"Who is the Lady? ">>;
+				local_m1D ^= <<"What is a Tempest? ", "What changed your opinion? ">>;
+			}
+			case "What changed your opinion? "
+			{
+				bark("Lately the Lady has taken to eliminating dissension by eliminating the dissenters. She has them executed, beheaded on the docks. At first no one was killed but true criminals, but soon, any who showed disagreement was put to the block. I fear for the freedom of the people. ");
+				local_m1D -= <<"What changed your opinion? ">>;
+			}
+			case "What is a Tempest? "
+			{
+				bark("Indeed, you ask unusual questions. However, I know so little about them, myself. In town you might find others who can offer so much more assistance. ");
+				local_m09 = 1;
+				local_m1D -= <<"What is a Tempest? ">>;
+				local_m1D = <<"What happened to me? ", "Goodbye. ">>;
+			}
+			case "What happened to me? ", "Found me? "
+			{
+				bark("I am unsure, my friend. All I know is that I found your water-logged body in the depths of The Lurker's domain. What happened before remains a mystery. I pulled in my nets and within one I discovered you. ");
+				devonJob = 1;
+				local_m1D -= <<"What happened to me? ", "Found me? ", "Tenebrae? ">>;
+				local_m1D = <<"The Lurker's domain? ", "Goodbye. ">>;
+			}
+			case "The Lurker's domain? "
+			{
+				bark("Aye, 'tis what we sometimes call the sea. You were drowning in it, my friend. A fate twice bad to be certain! ");
+				if not local_m09
+				{
+					local_m1D ^= <<"What is the Lurker? ">>;
+				}
+				local_m1D -= <<"The Lurker's domain? ">>;
+				local_m1D ^= <<"Twice bad? ">>;
+			}
+			case "Twice bad? "
+			{
+				bark("Aye! Not only would it have meant death for you, but then you would have been doomed to walk the ocean floor, unable to fulfill the pact with Lithos. ");
+				local_m1D -= <<"Twice bad? ">>;
+				local_m1D ^= <<"What pact? ", "Who is Lithos? ">>;
+			}
+			case "What pact? "
+			{
+				bark("Ages ago, our people forged a covenant with Lithos. If he would still the shaking earth, we would commend to him our dead at the time of their passing. ");
+				local_m1D -= <<"What pact? ">>;
+				if not local_m0B
+				{
+					local_m1D += <<"Commend to him? ">>;
+				}
+			}
+			case "Commend to him? ", "Rules death? "
+			{
+				bark("Through his Necromancers, Lithos takes the dead to serve him for the remainder of their existence. ");
+				local_m0B = 1;
+				local_m1D -= <<"Commend to him? ", "Rules death? ">>;
+				local_m1D ^= <<"Who are the Necromancers? ">>;
+			}
+			case "Who are the Necromancers? "
+			{
+				bark("I am amazed at how little you know, friend. The Necromancers are the keepers of the cemetery. They have the rather distasteful duty of burying the dead, thus honoring the pact and sending the dead to Lithos. ");
+				local_m1D -= <<"Who are the Necromancers? ">>;
+			}
+			case "Who is Lithos? "
+			{
+				bark("We call him the Mountain King. He rules the grass, the stones, the hills -- all that we walk upon. He also rules death. ");
+				local_m1D -= <<"Who is Lithos? ">>;
+				if not local_m0B
+				{
+					local_m1D += <<"Rules death? ">>;
+				}
+			}
+			case "What is the Lurker? "
+			{
+				bark("The Lurker? That is our name for Hydros, Titan of water. She is a crafty and treacherous one, always ready to pull unwilling victims to their deaths at the depths of the sea... much like what nearly happened to you. ");
+				local_m1D -= <<"What is the Lurker? ">>;
+			}
+			case "How do you know my name? "
+			{
+				bark("I am sorry. I did not mean to pry, but when I found you, I knew not who you were. I am afraid I read through your logbook and discovered your name. Please forgive me. ");
+				local_m1D -= <<"How do you know my name? ">>;
+				local_m1D += <<"Found me? ">>;
+			}
+			case "Hello, Devon. "
+			{
+				local_m13 = urandom(3);
+				if local_m13 = 0
+				{
+					bark("Good day. ");
+				}
+				else if local_m13 = 1
+				{
+					local_m06 = "All is well, I hope. ";
+					bark(u8_string_local_address(local_m06));
+				}
+				else
+				{
+					if local_m13 = 2
+					{
+						local_m06 = "Hail, friend. ";
+						bark(u8_string_local_address(local_m06));
+						u8goto label_23D9;
+					}
+				}
+				u8label label_23D9:
+				if toranDead
+				{
+					local_m1D ^= <<"Any news? ">>;
+				}
+				else
+				{
+					local_m1D ^= <<"What should I do? ">>;
+				}
+				local_m1D -= <<"Hello, Devon. ">>;
+			}
+			case "Any news? "
+			{
+				if (talkedAboutToran = 0) and (devonInRule = 0)
+				{
+					bark("I was just about to ask you the same, friend. Nay, there is nothing new to tell. 'Tis a shame about Toran, though, is it not? ");
+					talkedAboutToran = 1;
+					local_m1D += <<"What about Toran? ", "Who is Toran? ">>;
+					if not devonSaidBentic
+					{
+						local_m1D ^= <<"What should I do? ">>;
+					}
+				}
+				else if benticCacked
+				{
+					if devonInRule
+					{
+						if devonComplained
+						{
+							local_m13 = urandom(2);
+						}
+						else
+						{
+							local_m13 = urandom(3);
+						}
+						if local_m13 = 0
+						{
+							bark("Nay, there is nothing new to tell. There has been little else on my mind than undoing what Mordea had wrought with her tyranny. ");
+						}
+						else if local_m13 = 1
+						{
+							bark("Only that Mordea was more corrupt than I ever thought possible. I am spending all of my time undoing her wrongs. ");
+						}
+						else
+						{
+							if local_m13 = 2
+							{
+								bark("As a simple fisherman, I never wanted the life of a ruler. I always believed it would be a difficult and troublesome position. Now that I -am- responsible for the citizens of Tenebrae, I am certain of the difficuties and troubles. ");
+								devonComplained = 1;
+								u8goto label_27CA;
+							}
+						}
+						u8label label_27CA:
+					}
+					else
+					{
+						bark("I was just about to ask you the same, friend. Nay, there is nothing new to tell. ");
+					}
+				}
+				else
+				{
+					bark("I was just about to ask you the same, friend. Nay, there is nothing new to tell. But perhaps Bentic's eyes and ears have observed up some information of importance. ");
+					devonSaidBentic = 1;
+				}
+				local_m1D -= <<"Any news? ">>;
+			}
+			case "Who is Toran? "
+			{
+				local_m1D -= <<"Who is Toran? ">>;
+				if (mordeaMet = 1) or (shaanaMet = 1) or (orlokMet = 1) or (darionMet = 1) or (rhianMet = 1)
+				{
+					bark("A good man, he was. Toran was the gemcutter. His works were quite good. I can tell you, his wife and son are quite distraught. Who can blame them? ");
+					local_m1D += <<"His wife? ", "His son? ">>;
+				}
+				else
+				{
+					bark("A good man, I would say. He is the gemcutter. His works are considered quite good. ");
+				}
+			}
+			case "His wife? "
+			{
+				bark("Ah, Poor Rhian. She did not handle the execution well. They had been married for more than 20 years. All she does now is sit by her loom and weep, so I hear tell. Pity. ");
+				local_m1D -= <<"His wife? ">>;
+			}
+			case "His son? "
+			{
+				if devonInRule
+				{
+					bark("His son does not handle grief like his mother. Torwin has decided to take matters into his own hands. I hear he has joined the Order of Enlightenment, though his impetuous nature may give him difficulties. Perhaps with hard work he will persevere. ");
+				}
+				else
+				{
+					bark("His son does not handle grief like his mother. Torwin has decided to take matters into his own hands, though only the Titans know what he will do. I suppose violence would not be out of the question. I can only hope that is not the case, for even if he could get past the guards, Mordea's abilities are more than adequate to stave off his assault. ");
+				}
+				local_m1D -= <<"His son? ">>;
+			}
+			case "What about Toran? "
+			{
+				if (mordeaMet = 1) or (shaanaMet = 1) or (orlokMet = 1) or (darionMet = 1) or (rhianMet = 1)
+				{
+					bark("He was killed, he was. Executed at the Lady's command. I know the reasons they gave, but Toran was no blasphemer. There is tyranny in this city, that's for sure. Be careful what you speak to others. ");
+				}
+				else
+				{
+					bark("I hear he is to be killed. Executed at the Lady's command. I know the reasons they give, but Toran is no blasphemer.  There is tyranny in this city, that's for sure. Be careful what you speak to others. ");
+				}
+				local_m1D -= <<"What about Toran? ">>;
+			}
+			case "What should I do? "
+			{
+				if hydrosFree
+				{
+					bark("All I am concerned about now is pacifying the Lurker, my friend. I am sorry, but I have no time for anything else. ");
+				}
+				else
+				{
+					bark("Well, I suppose now that you are better, you should consider visiting Tenebrae. Here there is nothing, unless you wish to join me in fishing. But in Tenebrae, there is a wealth of activities and information for a soul such as yourself. Why, I know just the person there who can help you. When you get to town, visit Bentic in the library in east Tenebrae. The good sage knows practically all there is to know about our land and its people. Yes, he can certainly help you. ");
+					devonSaidBentic = 1;
+				}
+				local_m1D = <<"Goodbye. ">>;
+			}
+			case "Goodbye. "
+			{
+				if devonMet
+				{
+					local_m06 = "Farewell, friend " + getName() + ", and good luck.";
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark(u8_string_local_address(local_m06)) -> return;
+				}
+				else
+				{
+					bark("Farewell, friend " + getName() + ", and good luck. You are welcome to stay with me for as long as you need. My food and provisions are yours until you wish to head to the city. And be careful in your travels, for I fear you will encounter much violence.");
+					turnToFace(6, 10, 15);
+					bark("I can already see a crowd gathering there on the docks.");
+					// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+					spawn bark("That can mean only trouble.") -> return;
+				}
+				local_m1D -= <<"Goodbye. ">>;
+				devonMet = 1;
+				exitConvo();
+				return;
+			}
+			case "What is going on? "
+			{
+				local_m08 = "I am not sure, my friend, though I must admit I am pleased to see you.  My good friend, Bentic, has been... executed. And I, myself, jailed. Yet no one will tell me why. Why, " + getName() + ". Why are these needless deaths happening? Please, " + getName() + ", you must find this out for me. I beg your assistance. What was Bentic doing that warranted death? Certainly Salkind has some explanation. He will not speak to me here, but perhaps you will find him in kind enough spirits to answer a few questions.";
+				bark(u8_string_local_address(local_m08));
+				metDevonInJail = 1;
+				local_m0D = 1;
+				local_m1D -= <<"What is going on? ">>;
+				local_m1D = <<"I will help. ", "I am sorry. ">>;
+			}
+			case "I am sorry. "
+			{
+				refusedDevon = 1;
+				local_m0D = 0;
+				bark("You are sorry? I understand. You are too busy with your own troubles. ");
+				local_m1D -= <<"I am sorry. ">>;
+				local_m1D = <<"I will help. ", "Goodbye. ">>;
+			}
+			case "I will help. "
+			{
+				bark("At the moment, I can offer you only my eternal gratitude. But I hope one day to repay you for the kindness and courage you are sharing. Good luck, my friend. ");
+				local_m1D -= <<"I will help. ">>;
+				local_m1D -= <<"I am sorry. ">>;
+				local_m1D ^= <<"Goodbye. ">>;
+				helpDevon = 1;
+				local_m0D = 0;
+			}
+			case "Greetings, Devon. "
+			{
+				if helpDevon
+				{
+					bark("Well met, friend. I hope your luck is holding out. I do not know how much longer they will keep me here, and I fear the chopping block is not out of the question. Please, continue with your quest. ");
+					local_m1D -= <<"Greetings, Devon. ">>;
+					local_m1D = <<"Goodbye. ">>;
+				}
+				else
+				{
+					if refusedDevon
+					{
+						bark("You will forgive me if I do not respond politely. The bitter taste left in my mouth from our last encounter is quite foul. Unless you are here to offer assistance, please be on your way. ");
+						local_m1D = <<"I will assist you. ", "Farewell. ">>;
+						local_m0C = 1;
+						u8goto label_3C0E;
+					}
+				}
+				u8label label_3C0E:
+			}
+			case "Farewell. "
+			{
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Begone, coward. ") -> return;
+				exitConvo();
+				return;
+			}
+			case "I will assist you. "
+			{
+				helpDevon = 1;
+				bark("I cannot tell you how pleased I am to see your change of heart. I found it difficult to so often curse the name of one I knew to be kind and courageous. At the moment, I can but offer you my eternal gratitude. But I hope one day to repay you for your deeds. Good luck, my friend. ");
+				local_m1D -= <<"I will assist you. ">>;
+				local_m1D = <<"Goodbye. ">>;
+			}
+			case "I need the Blackrock fragment. "
+			{
+				bark("I am sorry, my friend, but for once it is me who does not understand you. What is this Blackrock fragment? ");
+				local_m1D -= <<"I need the Blackrock fragment. ">>;
+				local_m1D ^= <<"The Tear of the Seas. ", "Who would know its location? ">>;
+			}
+			case "Who would know its location? "
+			{
+				bark("To answer that, I must know what it is you are talking about. ");
+				local_m1D -= <<"Who would know its location? ">>;
+			}
+			case "The Tear of the Seas. "
+			{
+				bark("I have not heard of this item.  What exactly is this Blackrock Tear? ");
+				local_m1D -= <<"The Tear of the Seas. ">>;
+				local_m1D ^= <<"It is a large, dark stone. ">>;
+			}
+			case "It is a large, dark stone. "
+			{
+				bark("Your description is rather vague. Considering the once-active state of the volcano, I do not think you will get far asking for a large black-colored rock. I would even be suprised if -- wait! Despite my words I might be able to assist you. Years ago, I found myself casting my nets in a new area. The catch was plentiful, I remember, and when I pulled in my nets one time, I found such a stone within. The rock was made of an unusually hard substance, even more resistant than obsidian. I thought it so peculiar at the time that I kept it. I still have it if you wish to see it.");
+				local_m1D -= <<"It is a large, dark stone. ">>;
+				local_m1D = <<"Yes, I do. ", "No, I do not. ", "May you farewell. ">>;
+				local_m0C = 1;
+				devonMentionedTear = 1;
+			}
+			case "Yes, I do. "
+			{
+				bark("I believe it is locked away in a chest in my study, in the southwest corner of the palace. Here is the key. You may take it for whatever purpose you need.~ Oh, yes, there is something else I wanted to mention to you. You have been here for sometime and yet I do not know where you have managed to find accomodations. The least I can do is have you stay at Salkind's house. There you should find food and lodging, and most likely even a little money. You have done so much for the city, I feel that we owe you no less.");
+				local_m1D -= <<"Yes, I do. ", "No, I do not. ">>;
+				local_m24 = Avatar.getX();
+				local_m22 = Avatar.getY();
+				local_m20 = Avatar.getZ();
+				if class_0581_give(1, 82, 0, 90, 1)
+				{
+					bark("I hope this key helps. ");
+				}
+				else
+				{
+					Item_create(0, 82, u8_local_address(local_m15_w01));
+					local_m15.setQuality(90);
+					local_m17 = Avatar.getEquip(6);
+					local_m15.pop(local_m17);
+					bark("I hope this key helps. ");
+				}
+			}
+			case "No, I do not. "
+			{
+				bark("Very well, though I find it odd that you mentioned it then. Should you change your mind, I believe it is locked away in a chest in my study, in the southwest corner of the palace. Here is the key. You may take it for whatever purpose you need.~ Oh, yes, there is something else I wanted to mention to you. You have been here for sometime and yet I do not know where you have managed to find accomodations. The least I can do is have you stay at Salkind's house. There you should find food and lodging, and most likely even a little money. You have done so much for the city, I feel that we owe you no less.");
+				local_m1D -= <<"Yes, I do. ", "No, I do not. ">>;
+				local_m29 = Avatar.getX();
+				local_m27 = Avatar.getY();
+				local_m25 = Avatar.getZ();
+				if class_0581_give(1, 82, 0, 90, 1)
+				{
+					bark("I hope this key helps. ");
+				}
+				else
+				{
+					Item_create(0, 82, u8_local_address(local_m15_w01));
+					local_m15.setQuality(90);
+					local_m17 = Avatar.getEquip(6);
+					local_m15.pop(local_m17);
+					bark("I hope this key helps. ");
+				}
+			}
+			case "May you farewell. "
+			{
+				local_m2B = "Goodbye, " + getName() + ", and good luck!";
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark(u8_string_local_address(local_m2B)) -> return;
+				exitConvo();
+				return;
+			}
+			case "The Lurker is free! "
+			{
+				if devonJailed and (not devonInRule)
+				{
+					bark("While terrible as that might be, I am more concerned with my current situation. Perhaps later, my friend, I will be more interested in that. ");
+				}
+				else
+				{
+					bark("I had feared as much. When the torrential rains began and the people came to me, I could not stop it. Then I knew something was wrong. At first, I had hopes that you simply found another Tempest, one who was older. Yet somehow\x09I knew, I felt, that was not the case. Tell me, friend, how did this come to pass? ");
+					local_m1D = <<"Twas my fault. ", "I know not. ", "Goodbye. ">>;
+				}
+				devonHeardLurker = 1;
+				local_m1D -= <<"The Lurker is free! ">>;
+			}
+			case "Twas my fault. "
+			{
+				bark("That does not surprise me. From the day I cut you free of my fishing nets, I knew of the luck that followed you. Whether it is good luck or bad I did not know. Nor, for that matter, am I sure now. Nevertheless, the rains must cease or the land will flood again, as in the days of Kalen and the wars with the Zealans. And, my friend, I believe it is up to you to end this cataclysm. Though I am loath to suggest this, perhaps the Sorcerers who dwell across the river of lava in the catacombs can help. ");
+				local_m1D -= <<"Twas my fault. ", "I know not. ">>;
+			}
+			case "I know not. "
+			{
+				bark("This is terrible. With Hydros free and the rain falling in torrents, the land will surely flood. We have not the time nor the ability to move to the safety of higher ground! ");
+				local_m1D -= <<"Twas my fault. ", "I know not. ">>;
+			}
+		}
+	}
+}
+
+// Derived: routine 0x5079, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process DEVON::devon_apply_lightning_execution()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m08 = (250 - Avatar.getZ()) * 4;
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	LightningBolt();
+	Item_create(0, 511, u8_local_address(local_m04_w01));
+	local_m04.pop(Avatar.getX() + local_m08, Avatar.getY() + local_m08, 250);
+	playSFX(27, 200);
+	for local_m06 = 0 to 4
+	{
+		local_m04.setFrame(local_m06);
+		wait(4);
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	local_m04.destroy();
+	Item_create(0, 480, u8_local_address(local_m02_w01));
+	local_m02.pop(Avatar.getX() + local_m08, Avatar.getY() + local_m08, 249);
+	Avatar.receiveHit(referent, Avatar.getDir(), Avatar.getHp(), 128);
+	for local_m06 = 0 to 9
+	{
+		local_m02.setFrame(local_m06);
+		wait(10);
+	}
+	local_m02.destroy();
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	LightningBolt();
+}
+

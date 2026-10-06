@@ -1,0 +1,1 @@
+#include "SKIPDRAW\IWRITSKP.C"

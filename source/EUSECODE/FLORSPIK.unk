@@ -1,0 +1,69 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x033A
+// FLEX slot: 828
+// Original offset: 0x000776E8
+// Naming evidence: E, exact object-1 linker name `FLORSPIK`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FLORSPIK.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass FLORSPIK inherits Item
+{
+	process florspik_got_hit_extend_spikes_and_damage_or_hurl_striker(arg_04:U8Word);
+}
+
+// Derived: routine 0x0080, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process FLORSPIK::florspik_got_hit_extend_spikes_and_damage_or_hurl_striker(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:Npc;
+	local_m06_w01:U8Bytes1;
+	local_m02 = arg_04;
+	if Item_getQ(this)
+	{
+		return;
+	}
+	Item_setQ(1, this);
+	if arg_04
+	{
+		setType(825);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, referent, 200, 16) -> return;
+		for local_m04 = 0 to 4
+		{
+			setFrame(local_m04);
+			wait(2);
+		}
+		if local_m02.isNpc()
+		{
+			local_m06 = arg_04;
+			if local_m06.isDead() = 0
+			{
+				class_057C_receiveHit(urandom(2) + 3, urandom(7), referent, u8_local_address(local_m06_w01));
+			}
+		}
+		else
+		{
+			local_m02.hurl(urandom(50) - 25, urandom(50) - 25, 15, 4);
+		}
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, referent, 200, 9) -> return;
+		for local_m04 = 0 to 4
+		{
+			setFrame(4 - local_m04);
+			wait(2);
+		}
+		setType(826);
+	}
+	Item_setQ(0, this);
+}
+

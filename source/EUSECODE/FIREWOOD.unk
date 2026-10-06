@@ -1,0 +1,25 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0346
+// FLEX slot: 840
+// Original offset: 0x00076843
+// Naming evidence: E, exact object-1 linker name `FIREWOOD`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FIREWOOD.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass FIREWOOD inherits Item
+{
+	process firewood_look_describe_firewood();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREWOOD::firewood_look_describe_firewood()
+{
+	bark("firewood ");
+}
+

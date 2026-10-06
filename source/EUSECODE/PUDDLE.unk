@@ -1,0 +1,33 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02BB
+// FLEX slot: 701
+// Original offset: 0x000DBFC8
+// Naming evidence: E, exact object-1 linker name `PUDDLE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/PUDDLE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+
+typeclass PUDDLE inherits Item
+{
+	process puddle_enter_fast_area_create_puddle_during_rainstorm();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process PUDDLE::puddle_enter_fast_area_create_puddle_during_rainstorm()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	if rainStormActive
+	{
+		if local_m02.legal_create(698, getFrame(), getX(), getY(), getZ())
+		{
+			local_m02.orStatus(128);
+		}
+	}
+}
+

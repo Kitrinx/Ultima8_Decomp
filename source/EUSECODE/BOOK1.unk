@@ -1,0 +1,475 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0593
+// FLEX slot: 1429
+// Original offset: 0x0002F516
+// Naming evidence: E, exact object-1 linker name `BOOK1`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/BOOK1.unk`.
+// u8label/u8goto remain invented where emitted.
+
+// Derived: routine 0x0080, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_what_the_fish_tell_me_by()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("WHAT THE FISH TELL ME ~by Kilandra ~~Oh the fish tell me all sorts of things, ~like when there's sun and when there's rain, ~They are so nice and very smart, ~and bubbles come up when they fart. ~~Oh the fish tell me all sorts of things, ~I like to listen to them sing. ~They sing of life beneath the sea ~But never mention if they pee. ~~Oh the fish tell me all sorts of things, ~Like where they are and where they've been. ~I guess it all just goes to prove ~You can have your friends and eat them too!"), this);
+}
+
+// Derived: routine 0x029A, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_no_op_entry()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+}
+
+// Derived: routine 0x02A6, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_there_once_was_a_story_bout()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("There once was a story 'bout a demon named Fred...* Poor demonic force barely kept his minions fed...* Then one day while killin Pagan fools...* Up from the depths came some grumbling ghouls...* Growling that is, smellin bad, lookin mean...* "), this);
+}
+
+// Derived: routine 0x03BA, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_one_day_a_man_named_jely()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("One day a man named Jely came across a piece of cheese. At first, he knew not what to make of this piece of aged milk. So he pondered over it for some time. He then gave it a sniff. Mmmm, delightful it was. The scent was quite pleasing, somewhat like a strained fart. But a dark thought grew in the back of Jely's head. 'What whould it taste like.' he thought. Never is anything as bad tasting as it smells. 'CHOMP! Mmmmm' It tasted very good. Then Jely noticed the heat began to rise. 'Whew! Damn hot today.' Jely began to sweat. The moral of the story... Eat Cheese and Perspire!"), this);
+}
+
+// Derived: routine 0x0621, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_long_ago_before_the_time_in()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("Long ago, before the time in which the Titans came to the world, there were people who were vile and unclean. These people called themselves Zealans and they worshipped their own emotions and therefore tried to make themselves as gods. Then came a man named Kalen who saw that such behaviour was false and an affront to nature. Kalen preached to the people that they should not set themselves above the natural forces who are eternal and more powerful than man. In time, people began to see the wisdom in Kalen's words and followed his teachings. These people called themselves Pagans and they turned aside from the worship of emotions. In time, those who followed the old worship of emotions, those who were called Zealans began to hate the Pagans. For the Pagans, the practitioners of the one true church had begun to grow strong in their numbers. The Zealans feared that the Pagans would overwhelm them. Then did the Zealans persecute the Pagans. Though persecuted, the Pagans continued to spread the word of the power of the natural forces, and the divinity therein. Because of the danger of being killed or enslaved by Zealans, the Pagans were driven  out of the cities and into the wilderness. Kalen then took his followers up to the peak of the great mountain, Morgaelin. There they built a great altar where they could worship the forces of nature in peace. The construction of the altar took a very long time, for it was built from a sacred black stone that is very rare. Not long after the altar was built, the Zealans attacked the Pagans so that the true religion would be driven out of the world. However, the natural divinities saw that that their children were being assailed and were saddened. In the ensuing battle, the Zealan soldiers drove the Pagans before them and seemed to the peaceful to be unstoppable. But in one great act of blasphemy, the Zealans destroyed the Holy Altar which the Pagans had built. In one great blast of foul magic, the altar was shattered. Its many pieces were scattered about the mountain top. Seeing such blasphemy, the natural divinities came down from the heavens and destroyed the Zealan army. After the battle, the natural divinities saw that what had once been a place of holy worship had now been defiled by Zealan hatred.  Therefore, the natural divinities destroyed the top of the mountain, and exposed a seething volcano.  When the natural divinities saw that Kalen had been killed and that the Pagans had no leader, they decided to liven up the world. The divinities then manifested themselves as the Titans of the elements and poured out their wrath upon the Zealans. When the Pagans lost their way and did not give proper thanks and worship to the Titans, they too received the Titans' wrath."), this);
+}
+
+// Derived: routine 0x1103, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_so_that_none_may_forget_the()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("So that none may forget the origins of the Necromantic order I, Galious do now put pen to paper, and hereby record the acts of Moriens the Necromancer. Before the time of the Necromancers, the Titans wreaked havoc upon the world as was their want. The people suffered and many were killed at the hands of the immortal Titans. The most terrible and powerful of all of the Titans was Lithos, the Titan of Earth, called The Mountain King. Lithos shook the world and destroyed all that man built. He ripped open the ground and into His maw the people did tumble and satisfy The Mountain King's hunger. The people lived in darkness and were afraid of the Titans. Therefore, none dared to confront Them. Then one day, a very brave and wise man named Moriens came forth. 'Why does the Mountain King kill our people?' asked Moriens. No one could answer Moriens' question, so Moriens sought out the Mountain King to find out why He did loose His wrath upon the land. Long did Moriens seek the mighty Titan and did finally meet the Lord of Earth in the Hall of the Mountain King. There, in the Mountain King's hall did Lithos, the Lord of the Netherworld, tell Moriens of the people's failure to properly worship the greatest of all Titans. Then did Lithos command Moriens to return to his surface world and from that day on, Moriens was to offer up the dead to Lithos, so that the Mountain King might be served as befits a mighty Titan. Moriens returned to his surface world and carried Lithos' message to the people. Since that day, the people of the world may choose to worship which ever Titan they so desire while they live upon the surface of the world. Yet when they enter the grave, all become Lithos' subject for the rest of eternity. The people accepted Lithos' command, and the Earth Titan did cease to ravage the land and the people who did live upon His back. The Mountain King did make Moriens His Necromancer and thus did teach Moriens the magic and the power of the Necromancer. Long did the wise and brave Moriens serve Lithos. But, as is the way for all mortals, Moriens did grow old and sick. Knowing that he too must enter into the grave and join his lord in the Netherworld, Moriens consulted Lithos on who should follow him as the Necromancer. The Lord of Earth did instruct His servant to find a suitable and worthy person to follow in Moriens' path and to become Moriens' successor when Moriens did die. Thereby did Galious of Tenebrae become the first Scion in the Necromantic line. Before Moriens' death, the Mountain King chose to reward Moriens for his service. Lithos taught the Necromancer the Ceremony of Eternity, by which, the Necromancer would be allowed passage into Hall of Eternity, and sit at the right hand of the Titan and counsel his eternal Lord. Then, Moriens did return to the surface for the last time. He did teach me the Ceremony of Eterity and I, in turn did send him to the Mountain King. This is so done and written by my hand upon my day of confirmation by Lithos, Lord of the Netherworld, the Mountain King, mightiest of all Titans. -Galious of Tenebrae, Necromancer."), this);
+}
+
+// Derived: routine 0x1D4A, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_on_sorcerous_ways()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" % On Sorcerous Ways...~ %Corodin of Argentrock~~ Foreword:~~ %Sorcery is the magic of Fire. Destruction is the Sorcerer's bailiwick. Being first and foremost an Adept Theurgist of the Order of Enlightenment, I find it hard to reconcile this power with my training as a healer. However, were it not for the Cabal's efforts, our island would have long since perished beneath the ash and lava pouring from the volcano.~ %Some of my Acolytes feel that having this power gives us an elevated status. I cannot agree. Our power gives us the ability to fulfill a duty to our people. No more, no less. * The Pentacle:~~ %This is the first instrument we of the Cabal found to use in dealing with the Lord of Flame. It can contain and bind him if properly prepared and administered. Fire flows first through the medium of the pentacle, before being shaped by the Sorcerer.~ %The lines of the pentacle serve different purposes in the web of an enchantment. The outer ring, called the periferon, is a barrier, or ward if you will, that allows a Sorcerer to conjure with safety. The lines of the interior are divided into two groups: the conducia that touch points on the periferon, and the inner pentagon, called the locus. %The points where the conducia touch periferon each have a designation that relates to their distance from the volcano. The farthest point is called the aphelion, the middle two are mesostelae. Mesostel pa sits to the right of the aphelion, while mesostel ze is to the left. The final points, closest to the volcano are appropriately named perivolcanae. Perivolcan pa is on the right and perivolcan ze is on the left. * The Candle:~~ %The basis for the use of candles in Sorcery is merely to aid in focusing the Sorcerer's will upon the proper enchantment. A black candle incorporates ash with wax to temper the will with order, while red candles, use blood and wax to free the Sorcerer's imagination. * The Reagent:~~ %The relevance that reagents have to a spell are two-fold. They provide additional energies for the Sorcerer's use as well as assisting in the formation of the proper spell. Their portions and proximity to each of the candles around the periferon are extremely important and not to be tampered with. Experimentation is only to be attempted in the presence of a full complement of assisting Acoytes. * The Focus:~~ %A focus in Theurgy is a purified icon of the spell that the Theurgist concentrates upon to release his inner power. Not so in Sorcery. A focus is merely a receptacle of power. Great amounts of energy are spent to attune a spell to a focus and empower it, but once it is infused, only a minor exertion of willpower unleashes the charge of the spell. Depending upon the size, makeup, and configuration of the focus, as well as the energy of the caster, a number of these charges will be available upon a successful binding."), this);
+}
+
+// Derived: routine 0x289F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_art_of_flame_by_maedron()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %The Art of Flame~~ by Maedron,~ First Acolyte of the Cabal~~ %Fire is the crucible of Life. Before it, all impurities are burned away. All that remains is a pure, unclouded will. A Sorcerer should revel in this and know that power is his servant. * %The will of the Sorcerer is the crucible of the reagents. But I speak herein not of the reagents, but instead, of the foci of Sorcery.~~ %The first focus we Sorcerers created was made by casting a metal disk with shavings of a black, rock-like substance.This substance was found to be throughout the island, and in fact, all of our foci use this substance, to a greater or lesser degree.~ %The disk was then engraved with the pentagram, symbol of Fire. This dedicates it to our purposes. No Sorcerer should be without his symbol, as it is the outward token of our superiority.* %A note about the Sorcerer's pentagram symbol: It may cast several of the Ignite or Extinguish cantrips. Any other power, it may cast but once. * %The symbol, while versatile, lacked power. So we crafted a wand. It was only stable with less of the blackrock, but a gem from the core of the volcano gave it the power necessary. These Fire gems focused the will of the Sorcerer's own inner Fire.* %Casting capacity of the Sorcerer's wand: It has the power to focus the Ignite and Extinguish spells in quantity, as well as the Flash and Flame Bolt spells to a slightly lesser degree. * %In attempt to further increase the prowess of our spells, we created a rod, suffused with blackrock, with a Fire gem at either end, as well as the center. This focus allowed the casting of spells of defensive nature, in addition to those of the wand.* %Casting capacity of the Sorcerer's rod: This focus can cast the wand spells in greater measure, and is empowered to cast the Endure Heat, Fire Shield, and Armor of Flames spells. * %Master Corodin, continued upon the work of the others by making another focus in a similar vein.~ %It is formed mostly of solid blackrock, fused into the shape of a staff by the power of Pyros. At either end, it holds a Fire gem, capped within blackrock metal.* %Casting capacity of the Master's Staff: Unknown, but it can cast create Fire and cause explosions as well. * %I myself, becoming consumed with the idea that a more efficient, more powerful focus was possible, crafted the most powerful focus of all.~ %Using the bones of Pyros' daemonic servants, I made a fine powder. Then, mixing this powder with clay and the blood said deamon, I fashioned a small replica of its skull. With Fire gems as its eyes, and baked in the heat of lava, it hardened to the strength of good masonry. With this talisman, I was able to summon daemons to do my bidding, and banish them with mere words.~ %The wielder of this focus should truly be considered the Master of the Enclave."), this);
+}
+
+// Derived: routine 0x33C4, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_tongue_of_flame_this_object()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %%The Tongue~ %% of Flame~~ %This object, named by Corodin, the first Master Sorcerer, has been handed down from Master to Master since the Binding of Pyros. It is the key to the power of the Sorcerers. If you are reading this book then most likely you are now the Master Sorcerer, having either outlived or killed the Master. As such, I admonish you to keep both this book and the Tongue always in a safe place, away from prying eyes.~ %The Tongue was used in the Binding to house a portion of Pyros' being. This allows all Sorcerers to call upon His powers in the ways that we have defined as spells. The rituals involved are used to provide protection for the Sorcerer creating the enchantment. Another power that the Tongue imparts to the one who wields it is the ability to amplify the power of spells and spell foci. %Perhaps it's most important purpose is it's capability to summon forth and banish Pyros Himself. This is a truly dangerous excercise and requires four Acolytes, but the rewards can be great. His knowledge is often useful, and His power is seemingly limitless, as is His temper. Should He become free in this Ritual of Fire, as is quite possible, know that you have most likely doomed Morgaelin to a flaming death. %A final warning, should the Tongue of Flame ever enter the Great Pentacle, the fate of all Pagans will be sealed. The Lord of Flame shall be rejoined with the power in the Tongue and as a result, He will be forever unbound.~~ written by:~ Tordaem, Master of the Cabal"), this);
+}
+
+// Derived: routine 0x39C9, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_extinguish_by_use_of_this_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %%Extinguish~~ %By use of this spell, the caster attempts to douse a Fire. When focused upon the Sorcerer himself all fires within a certain range will be quenched, otherwise it will douse the fire upon which it is specifically focused. * Runes:~ - An Flam~~ Red Candles:~ - All black~~ Reagents:~ - Pumice at both Perivolcanae and the Aphelion "), this);
+}
+
+// Derived: routine 0x3B45, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_ignite_this_invocation_brings_fire_into()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %%Ignite~~ %This invocation brings fire into existence upon a substance that will accept it. It can be used to light a single candle, or if the Sorcerer focuses the energy upon himself, it can light all within a range determined by the power of the Sorcerer. * Runes:~ - In Flam~~ Red Candles:~ - Aphelion~~ Reagents:~ - Ash at the Aphelion~ - Pumice at both Perivolcanae~~ "), this);
+}
+
+// Derived: routine 0x3CDE, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_endure_heat_this_spell_creates_a()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %%Endure Heat~~ %This spell creates a shimmering field around the Sorcerer that will allow him to touch any non-magical flame and remain unhurt. A Sorcerer with this spell active can even endure the heat of lava if it is solid enough to support his weight. * Runes:~ - Sanct Flam~~ Red Candles:~ - Both Perivolcanae~~ Reagents:~ - Obsidian at both Perivolcanae~ - Iron at the Aphelion "), this);
+}
+
+// Derived: routine 0x3E82, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_flash_by_means_of_this_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %%Flash~~ %By means of this spell, the Sorcerer can move from one visible place to another without actually traversing the intervening space. * Runes:~ - Flam Por~~ Red Candles:~ - Both Perivolcanae and the Aphelion~~ Reagents:~ - Ash at both Mesostelae~ - Pumice at the Aphelion "), this);
+}
+
+// Derived: routine 0x3FBD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_flame_bolt_a_bolt_of_flame()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %%Flame Bolt~~ %A bolt of flame is released when the Sorcerer invokes this spell, shooting forth, unerringly to the object of the Sorcerer's ire. Upon reaching its destination, it explodes, causing moderate damage to all things caught within its range. * Runes:~ - In Ort Flam~~ Red Candles:~ - Perivolcan Ze, Mesostel Pa, and the Aphelion~~ Reagents:~ - Ash at Mesostel Pa~ - Pumice at Perivolcan Ze~ - Iron at Mesostel Ze~ "), this);
+}
+
+// Derived: routine 0x4189, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_fire_shield_flames_circle_the_sorcerer()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %%Fire Shield~~ %Flames circle the Sorcerer at the casting of this spell. Only creatures of Daemonic origin can cross this barrier. Not even the Sorcerer can cross this protective ward. Anyone foolish enough will be thrown back and burned in the bargain. * Runes:~ - In Flam An Por~~ Red Candles:~ - Both Perivolcanae and Mesostel Pa~~ Reagents:~ - Ash at Mesostel Pa~ - Obsidian at both Perivolcanae~ - Iron at the Aphelion "), this);
+}
+
+// Derived: routine 0x4355, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_create_fire_fire_erupts_at_the()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %%Create Fire~~ %Fire erupts at the location or beneath the victim of the Sorcerers focused will. This fire remains for a time, then dissipates. * Runes:~ - In Flam Ylem~~ Red Candles:~ - Both Mesostelae~~ Reagents:~ - Ash at both Mesostelae~ - Pumice at Perivolcan Ze~ - Obsidian at Perivolcan Pa "), this);
+}
+
+// Derived: routine 0x44A2, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_armor_of_flames_the_sorcerer_is()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %Armor of Flames~~ %The Sorcerer is bathed in a corona of flames that ward off Fire of a magical nature. These flames will protect the Sorcerer for a time, then vanish. * Runes:~ - Vas Sanct Flam~~ Red Candles:~ - Both Perivolcanae and Mesostel Ze~~ Reagents:~ - Ash at Mesostel Pa~ - Obsidian at both Perivolcanae~ - Iron at the Aphelion~ - Brimstone at Mesostel Ze "), this);
+}
+
+// Derived: routine 0x4634, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_explosion_a_bolt_of_flame_is()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %%Explosion~~ %A bolt of flame is released when the Sorcerer invokes this spell, shooting forth, unerringly to the object of the Sorcerer's ire. Upon reaching its destination, it explodes, causing heavy damage to all things caught within its range. * Runes:~ - Vas Ort Flam~~ Red Candles:~ - Perivolcan Pa, Mesostel Ze, and the Aphelion~~ Reagents:~ - Ash at Mesostel Ze~ - Pumice at Perivolcan Pa~ - Iron at Mesostel Pa~ - Brimstone at the Aphelion "), this);
+}
+
+// Derived: routine 0x4819, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_summon_daemon_spell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %Summon Daemon~~ This dangerous ritual of binding will summon a daemon to attack a foe of the Sorcerer's choosing. The danger of this spell lies in the fact that if no victim is specified, the daemon will attack the summoner.~~ Runes:~ - Kal Flam Corp Xen * Red Candles:~ - Both Perivolcanae, Mesostel Pa, and the Aphelion~~ Reagents:~ - Ash at Mesostel Ze~ - Pumice at Mesostel Pa~ - Obsidian at both Perivolcanae~ - Daemon Bone at the Aphelion "), this);
+}
+
+// Derived: routine 0x49FA, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_banish_daemon_this_spell_attempts_to()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %Banish Daemon~~ %This spell attempts to force a Daemon to return to the plane of Fire from which it was summoned. Although not always successful, this is a Sorcerer's best defense against these beasts.~~ Runes:~ - An Flam Corp Xen * Red Candles:~ - Both Perivolcanae, Mesostel Ze, and the Aphelion~~ Reagents:~ - Ash at Mesostel Pa~ - Pumice at Mesostel Ze~ - Iron at both Perivolcanae~ - Daemon Bone at the Aphelion "), this);
+}
+
+// Derived: routine 0x4BBF, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_conflagration_this_summoning_will_temporarily_bring()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address(" %Conflagration~~ %This summoning will temporarily bring into our realm a daemonic force of destructive nature. All foes, and indeed everything around, will feel its wrath while the Sorcerer will remain unharmed.~~ Runes:~ - Kal Vas Flam Corp Xen * Red Candles:~ - All red~~ Reagents:~ - Ash at Mesostel Ze~ - Pumice at Perivolcan Ze~ - Osidian at Perivolcan Pa~ - Iron at Mesostel Pa~ - Brimstone at the Aphelion~ - Daemon Bone at both Perivolcanae and the Aphelion "), this);
+}
+
+// Derived: routine 0x4DB4, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_destruction_of_the_temple_by()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("%The Destruction of the Temple~ %%by Nadayr of Tenebrae~~ %The early days of the Great Temple were a dark time. The blood from the wars flowed freely as Pagan fought Zealan in the grand struggle of religious cleansing. Battles were planned and executed. Lives were lost all in the name of archaic beliefs. All the while, Pagans toiled daily to construct the Great Temple on the apex of Mount Morgaelin, as commanded by the benevolent being called the Guardian. The fear of the Destroyer was strong.~%Years of sweat ultimately resulted the Temple's completion. There the Pagan leaders met to focus their energies into the worship of the Elementals. Tremendous magical forces were used to collect a strange black mineral and shape it into a large, dark obelisk. From inside the Temple, the followers channeled their thoughts through the obelisk to the four elements, giving them even greater power. Soon they had amassed enough energy to become the great Titans of Earth, Water, Air, and Fire.~%The war continued, but now the Pagans had considerable assistance. Lithos moved the lands to trap the Zealans, while Hydros removed her waters from their reach. Pyros' fires raged and grew, fueled by the winds of Stratos. It was only a matter of attrition before the Zealans and their petty beliefs fell.~%Then came the Guardian's final words of warning: `Take your people and depart from the Temple. The Destroyer has come.~'%As the Pagans left the Temple, the red head of the Destroyer filled the darkened sky, its yellow orb-like eyes staring malevolently at the mountain top. Then, out from those very eyes lightning shot out, striking the Temple. A few moments later and the great edifice was no more.~%The cry of shock was heard throughout the land. The Pagans pleaded for the aid of the Titans. They were not disappointed. The four Titans appeared to challenge the invader. The land was  all but destroyed as rock, rain, wind, and fire hailed down from above. The battle was long and fierce.~Finally, however, the Titans returned victorious. The land, though scarred from the terrible fight, was still theirs.~%There was nothing left of the Temple -- no ruins, no stones, no dust. However, there are legends that claim the great obelisk was shattered into several fragments, spewn across the island when the mountain was hit by the Destroyer's bolts of lightning. The locations of the fragments are known only as rumors. Such stories indicate that each of the Titans possess one of the fragments, either as a source of power or to keep the other Titans in check (since the black stone seems to be an anathema to the Titans).~%The first fragment, called the Heart of Earth, fell to Lithos, who keeps it in the fabled Pit of Death. Hydros set hers, the Tear of the Seas, on the floor of the ocean in a deep undersea city. The third fragment, the Breath of Air, is said to be on the island of Stratos' followers. A fourth fragment fell to the lands that became the cemetery, though many years later it was given to the first five Sorcerers and used to bind the Titan of Fire to their will.~%There is considerable speculation about a fifth fragment. Apparently the tip of the great obelisk was seen hurling through the air almost entirely intact. However, no one ever saw the item land, so its location remains a mystery.~%Were all of the fragments to be gathered together and taken to an area near the location of the ancient Temple, it might be possible to recreate the effects of the obelisk. Of course, it to would still be necessary to fabricate a magical field of some sort to channel the energy from whatever source first gave the obelisk power."), this);
+	blackLoreSeen = 1;
+	needBreath = 1;
+	needTear = 1;
+	needHeart = 1;
+}
+
+// Derived: routine 0x5C2E, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_confusion_blast_in_quas_wis_with()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:U8Word;
+	if getFrame() = 11
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0585_confusionBlast(1, local_m02) -> return;
+		setFrame(1);
+	}
+	else
+	{
+		Book_read(u8_string_address("%%Confusion Blast~~ %In Quas Wis~ %With these words the caster releases a wave of etheric emanations that cause all opponents to forget not only the current combat in which they are involved, but also any hostile dispositions towards the caster.~~ The necessary components are the spellbook and the following reagents: Eye of Newt, Bat Wing, Serpent Scale, Obsidian, and Brimstone."), this);
+		class_0587_enchant_apply_spellbook_enchantment(0x00000000, referent);
+	}
+}
+
+// Derived: routine 0x5E13, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_meteor_shower_kal_des_flam_ylem()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	if getFrame() = 11
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0585_meteorShower(1) -> return;
+		setFrame(11);
+	}
+	else
+	{
+		Book_read(u8_string_address("%%Meteor Shower~~ %Kal Des Flam Ylem~ %By intoning these words the caster calls down from the sky great flaming boulders, as if the material was spewn from the lip of a volcano.~~ The necessary components are the spellbook and the following reagents: Ash, Dirt, Serpent Scale, Brimstone, and Blackmoor."), this);
+		class_0587_enchant_apply_spellbook_enchantment(0x00000000, referent);
+	}
+}
+
+// Derived: routine 0x5FA5, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_summon_creature_kal_xen_speaking_these()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m05:U8Bytes5;
+	if getFrame() = 11
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0585_summonCreature(1, local_m05) -> return;
+		setFrame(11);
+	}
+	else
+	{
+		Book_read(u8_string_address("%%Summon Creature~~ Kal Xen~ Speaking these words of power calls a creature to arrive and defend the caster. What creature appears is determined not so much by the caster's wishes, but by the caster's power and the proximity of the summoned creature.~~ The necessary components are the spellbook and the following reagents: Bat Wing, Pumice, Obsidian, Bone."), this);
+		class_0587_enchant_apply_spellbook_enchantment(0x00000000, referent);
+	}
+}
+
+// Derived: routine 0x6173, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_call_destruction_kal_vas_grav_por()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	if getFrame() = 11
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0585_callDestruction(1) -> return;
+		setFrame(11);
+	}
+	else
+	{
+		Book_read(u8_string_address("%%Call Destruction~~ %Kal Vas Grav Por~ %From the utterance of these words comes the power to call down from the sky great bolts of lightning which cascade about the caster and strike down his or her foes. Note that the resultant fiery explosions will unerringly hit visible targets, but will not be able to affect invisible targets.~~ The necessary components are the spellbook and the following reagents: Serpent Scale, Dragon Blood, Ash, Pig Iron, and Executioner's Hood."), this);
+		class_0587_enchant_apply_spellbook_enchantment(0x00000000, referent);
+	}
+}
+
+// Derived: routine 0x63B1, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_devastation_in_vas_ort_corp_warning()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	if getFrame() = 11
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0585_devastation(1) -> return;
+		setFrame(11);
+	}
+	else
+	{
+		Book_read(u8_string_address("%%Devastation~~ %In Vas Ort Corp~ %Warning... This power contained within the words of this spell render it worthy of its name. The very nature of the energies released is designed to disrupt the very fabric of living existence on a plane, thus annihilating all life save that of the mage who casts this spell. To know this spell, obviously formulated by a violently deranged wizard bent on world domination, is a tremendous responsibility, for invoking the words is a constant temptation for any experimenter. Fortunately, no one who knows the spell has yet shirked that responsibility, as far as I can tell...~~ The necessary components are the spellbook, a hatred for all things living, and the following reagents: Bat Wing, Serpent Scale, Dragon Blood, Pig Iron, Executioner's Hood, Blackmoor, Brimstone."), this);
+		class_0587_enchant_apply_spellbook_enchantment(0x00000000, referent);
+	}
+}
+
+// Derived: routine 0x673D, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_ethereal_travel_ort_grav_por_invoking()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	local_m02:U8Word;
+	local_m04:U8Bytes2; // X: untouched.
+	local_m06:U8Word;
+	if getFrame() = 11
+	{
+		local_m06 = 0;
+		foreach recursive local_m02 where (type = 442) within container 1 {
+			local_m06++;
+		}
+		if local_m06 = 5
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0585_etherialTravel(1) -> return;
+		}
+		setFrame(11);
+	}
+	else
+	{
+		Book_read(u8_string_address("%%Ethereal Travel~~ %Ort Grav Por %Invoking this powerful ritual permits the caster to traverse the interdimensional realm known as the Ether. A mage's first few castings of this spell will prove awkward, for inexperienced mages will have difficulty determining their destination. With time, however, the mage will be able to dictate an arrival point and appear there. Note that this spell should not be confused with a spell of teleportation, for the former permits travel only between dimensions, while the latter permits travel only within a dimension.~~The necessary components for this spell are hard to specify, for they seem to change depending on both the casting location and the destination. Usually the components include material native to one or both of the dimensions.~~There are two ways to use these components. In general, setting five pieces\x09of the material -- no piece smaller than a man's head -- on the ground in the form of a pentacle and concentrating on one of the chunks, all while speaking the words of power, should permit the\x09dimensional gate to transport the caster.~~However, should the caster possess a tome that is already imbued with the power, such as this one, then it is only necessary to carry the five pieces on one's person. Rather than array the pieces in a pattern, the caster simply needs to invoke the power of the tome.~~Note: I suspect the material of the initial gate created in the ancient temple of the first Pagans would suffice while in this dimension, though the location of any of the fragments as well as the destination is a mystery to me.~%%Mythran"), this);
+		class_0587_enchant_apply_spellbook_enchantment(0x00000000, referent);
+	}
+}
+
+// Derived: routine 0x6E14, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_reagents_of_thaumaturgy_by_mythran()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("%The Reagents of Thaumaturgy~ %by Mythran~~%Reading through the many tomes of Thaumaturgy, the perceptive student is likely to notice something unusual about a few of the reagents. While a novice to any school of magic will find the names of most reagents unrecognizable, the reagents of Thaumaturgy are confusing for a simple reason. A universal collection of words and rituals must also have a universal set of material reagents, components that cannot be limited to a single dimension.~%Thus, the unusual reagents. The casual reader will focus on the obvious questions:  What are these creatures? A Dragon? A Newt? How many wings does one of these bats have? However, the trained mage will know that such details are irrelevant. Since magic is simply the manifestation of the caster's will rewriting the present, it stands to reason that the methods for bringing this will to the surface are not limited by the caster's plane of existence, dispelling magic notwithstanding.~%Therefore, as it is possible to cast spells through a variety of means, the physical representation of the components are not relevant, assuming they enable access to the necessary energies. In such an instance, the thorn of a rose may very well be a reasonable substitute for the scales of a serpent."), this);
+}
+
+// Derived: routine 0x7335, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_mythology_of_the_zealan_deities()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("%The Mythology of the Zealan Deities~ %by Yradan the Scholar~~ %Throughout the ages our people have looked beyond themselves to find the answers to the many mysteries of life. Today we know that the Titans, masters of the four elements, control our destinies and direct the many forces that affect our lives.~ %However, such was not always the case. Our Zealan forebears know not of the power of the Titans. Instead they worshipped the common emotions. Not realizing that feelings are popular sensations experienced by all people, the Zealans elevated the three primary emotions -- love, hate, and apathy -- to the ranks of deities.~%The goddess of love they named Amoras, giving her the powers of nurturing happiness. To the one called Odion the Zealans attributed the emotions of hate and grief, giving him the role of warrior and protector.  To stand between them, our ancestors assigned the role of arbiter and balance to Apathas, ruler of indifference.~ %Even older texts indicate that the Zealans initially believed in not three, but six such deities! In addition to the rulers of love, hate, and apathy, Felicitar controlled joy, Doloras ruled grief, and Timyra was the patron of fear.\x09Though anthropomorphic in nature, some of them had animalistic features, such as Doloras and his torax head. Through time, however, the Zealans found it difficult and inconvenient to pay homage to so many gods and goddesses,\x09so they elected to combine the aspects into three.~%A confusing aspect of the Zealan gods serves to display the fickle nature of our ancestors' beliefs. The Zealans believed that, while the deities ruled the emotions,\x09they were also subject to them. The more Zealans who experience a particular feeling, the stronger that deity's power grew. Conversly, discarded emotions, however temporary, meant a weakened deity, forcing some to enter near-catatonic states until they gained enough followers to  re-emerge. Thus, an improbable cycle took place. As Odion planted the seed of\x09hate within one of his subjects, and as that seed grew and took root in other warriors, Odion would become more powerful, spreading the hatred even further.~~%Though most Zealans believed\x09they had contact with their gods through their thoughts and emotions, only the priests and a select few were allowed to\x09speak directly to them. The Zealans constructed great mountain-side\x09temples housing gaudy shrines to the three or six patrons. Several labyrinths were excavated and filled with deadly traps. Secret passages were made for the priests to enter, while the few Zealans who dared to seek an audience with the gods were forced to overcome the foils of the dungeons. Many died trying, few succeeded.~%Once before the Zealan deities, the worshipper still had to present one of the ancient seals before gaining permission to speak. These seals were round shields of wrought metal, embossed into a triad of sections, one depicting a reddish scimitar, another  showing an open palm displaying a heart, and the third revealing an image of balanced scales.~ %Having passed through the test of the great shrines and offered the appropriate icon, a Zealan follower would then be allowed to pray for a boon from one or all of the gods. Regardless of whether the plea was heeded, considerable sacrifices of animals and valuables were required. Rarely did these acts lead to any benefit, though some stories claim that the legendary Khumash-Gor first conferred with his patrons before he was able to unify the warring tribes.~%There is much to be learned from studying the mythology of the past. Although we know today that the powers of the Titans are -- unlike the deities of our forbears -- quite real, we can learn much about the violent and emotional personalities of our ancestors."), this);
+}
+
+// Derived: routine 0x8213, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_final_sunlight()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("%The Final Sunlight~ %by Nolandru the blind idiot of Tenebrae~~ The final moments of sunlight were glorious moments, ones we would have cherished had we known they were to be our last.~ %The war against our very kindred seemed never ending, day after day of bloodshed. In their eyes burned the hatred of intolerance. And these flames kindled the fire of violence. After a while, it became easy to forget the faces of those you had slain -- a sister with one chop, an uncle with another. Yet still they came, outraged that we dared to listen to the voice of warning.~%By the time the Destroyer came we were ready. Not for the Destroyer, but for an end to the fighting. Too many had not heeded, so we thought. To many refused to acknowledge the might of the Titans. We were doomed to devastation, but with the doom came the sickening thought of peace and silence. In the end, we wondered, would Pagan and Zealan know one from the other as lifeless corpses filling the pyres, the result of the Destroyer's carnage.~%But then came the Titans. First rose Lithos, the Mountain King. Then came Stratos, the Mystic Voice, and her sister Hydros, the Lurker. Finally, the blazing image of Pyros, Lord of Flame, appeared to challenge the Destroyer. On the ground, both Pagan and Zealan alike ceased battle, awed by the presence of the these Titanic Elements. The sky became a whirlwind of smoke and dust and hail as the Titans joined forces to and began to rise up.~%As the battle was fought above, the very lands upon which we stood we rended piece from piece. Mountains shifted, rose, and spewed fiery death. Wind ripped through buildings and torrents of water cascaded over the walls of the cities. The very enemies who stood against each other, bared fangs and flashing eyes, were unable to face off, blinded by the smoke, tumbled by the quakes, scorched by the searing flames.~ %There was naught but chaos.~%And when the fight ended and the Destroyer vanquished, there was naught but ruin.~ %The quakes ceased, the wind slowed, the waters calmed, and the smoke cleared. Pagan again saw Pagan. Despite the recent tumult, the moment was one of serenity.~ %But the sun was no more.~%There is no knowledge of where the light of the sky has gone. There is no true night, but there is no true day. And the Titans, demanding ever-increasing sacrifices in payment for their deed, offer no answers."), this);
+}
+
+// Derived: routine 0x8B84, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_objective_history_of_pagan_by()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("%The Objective History of Pagan~ %by Mythran~~%Ages ago, in what is called First Epoch, there was considerably more land upon which mankind could walk. The Zealans, forebears to the Pagans, worshipped three who ruled the emotions. Amoras, beautiful and spirited, was the goddess of love and joy. Her counterpart was angry Odion, ruler of war, hate, and grief. Between them stood Apathas, he who controlled indifference, representing both the balance and absence of his two comrades.%According to legend, these three gods and goddesses were responsible for bringing the emotions to light in their followers, though sometimes I think it was the people's emotions that resulted in the appearance of these Ancient Ones, as they are now called.%Though the Zealans were not known for valuing peace between their various tribes, one leader did step forward to unite them for some time. He was known as Khumash-Gor, and was considered a great warrior. He brought his people together by conquering most of the other tribes and then integrating them into his own. The unified community grew and prospered under his rule, until he was assassinated several decades into his reign.%After the death of Khumash-Gor, the Zealans fell again into quarrelling tribes. However, not until the coming of the Titans was their culture ever truly threatened.%Many centuries after the fall of Khumash-Gor, a strange entity known only as The Guardian began to speak in the minds of several of the people. At first those who claimed to hear the unusual voice were ridiculed, but when the message began to foretell danger, others found a reason to listen.%The words of warning from the mysterious Guardian came much as a shock to the Zealans and to the Ancient Ones. No one had ever heard of the champion of evil called the Destroyer, nor were they certain of his designs upon the world. However, the few people who learned of the Destroyer spread their message quickly. They constructed the Great Temple and the black obelisk, while the Ancient Ones commanded those who still obeyed to wage war against this new religion.%The followers of the new order became known as Pagans. As they were directed, they began to concentrate their worship, through the black obelisk, choosing the very elements of earth, water, air, and fire as the objects of this worship. Soon the elements began to form into actual beings of tremendous power. When the Destroyer finally appeared, the four beings, the four Titans as we call them today, rose up to fight it.%During the terrible battle, the world was ravaged as the skies darkened overhead, the lands were torn apart by earthquakes and liquid fire, and the seas overcome by raging storms. The battle was long, but the Titans emerged victorious -- the Destroyer was no more. However, the world still lay in ruin. The few people who remained gathered on this isle, which they named after the island's volcano, Morgaelin.%It was a dismal time. The Titans began to fight among themselves for power. The wars between the few surviving Zealans and the Pagans continued. It was apparent that something had to be done, yet the question of what filled everyone's mind.%After the defeat of the Destroyer, the people were faced with a great many problems. The wars between the Pagans and the Zealans were costing many lives, while the bickering Titans seemed almost worse than the Destroyer threat they had so mightily eliminated.%Foremost on the minds of the Pagans was how to handle the Titans -- no simple task, I assure you. Knowing they could not best the four, nor wanting to since they considered the Titans their saviors, the elders elected instead to bargain with the elementals. They built four areas and made them sacred to the Titans, one for each.%A man named Moriens went to the Hall of the Mountain King, the sanctuary of Lithos. He spoke to Lithos and begged for the quakes to end. Lithos agreed, but demanded that he receive a boon in exchange. He bade that the people would be given to him upon their deaths to serve him eternally in his Pit of Death.%The idea of burial was first introduced as a means for the people to be conveyed to Lithos. Both sides accepted the pact, with Moriens granted the magical powers necessary to honor the Pagan half of the bargain. But as Moriens began to feel the effects of aging, another pact was formed, whereby Moriens could pass on his abilities to subsequent Necromancers -- the term given to the mages responsible for sending the dead to Lithos.%Much time passed before Hydros could be placated. The hero and Necromancer Kalen found love with his Apprentice. Yet the Lurker, displeased that, unlike her brother Titan, Lithos, she had not the worship of the people, chose to take from Kalen his beloved. The angry Kalen sought the assistance of his patron, who was quite willing to assist in vengeance. Lithos told of a substance called Blackrock which could be used to seal Hydros within her Temple, for Hydros could not use her waves to wear down the mineral.%Using his Necromantic powers, Kalen reshaped the Blackrock around the Temple and trapped Hydros inside. Preparing to use the substance to completely remove all traces of water around the Titan, Kalen was stopped by the Lurker's pleas. In exchange for her life, Hydros agreed to return the body of Kalen's betrothed and confer some of the powers of Tempestry, the magic of storms and water, upon Kalen and all of his descendants. In addition, offered the Titan, she would end the torrential rains. Trapped even still in the defiled Temple of Flowing Waters, Hydros remains appeased.%More years passed and a wise man named Stellos was contacted by Stratos, Titan of Air, in the form of a mystic voice. She gave him the power to heal the sick and wounded. Kalen learned of Stellos' abilities and visited the elderly man. He brought with him the hopes of returning life to his beloved. Stellos spoke with Stratos and was told that much time had passed since the spirit was with the body. Only a great cost could she be resurrected. A giving man, Stellos agreed to pay the unknown fee.%He sent his spirit deep into the realm of Air and saw many unusual things. Finally, as the wizened man came upon a great brilliance, his body's mouth opened on the ground below breathed life into Kalen's beloved. He returned to his material form only to learn that he had forever lost his vision. So thankful was Kalen that he called upon the ground to form the foundation for a building, which Stellos opened as a place of study for those who wished to learn the tenets of Air.%In addition, Stratos granted one further boon to the kind and gentle Stellos -- that of immortality! To this day, Stellos aids and teaches the magic of Theurgy upon the formation at Argentrock Isle.%Centuries after the great miracle of Stellos, five Theurgists sought to quel the raging fires of Pyros, Titan of Fire. They took their knowledge of history -- never forget the value of studying the past, my friend -- and speculated that Blackrock might be used against Pyros as well as Hydros. They set about gathering as much of the dark material that they could, as well as collecting knowledge about the magics necessary to shape it. Drawing a pentagram upon the ground, the five began to call upon the Lord of Flame as ready to offer a sacrifice.%When Pyros appeared, however, they instead used a large chunk of Blackrock to bind him within. Trapped within the fragment, Pyros was unable to hurl fire from the great volcano, and to this day must perform the minor requests of those who possess the Blackrock. I am saddened to say that the Sorcerers, as they are now called, are misunderstood and feared -- nay, loathed -- by most Pagans. Considering the dangerous tasks performed by their predecessors, it is a pity that such people would be hated so. Ah, the effects of ignorance..."), this);
+}
+
+// Derived: routine 0xAA5B, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_mysteries_of_lithos_the_mysteries()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("%The Mysteries of Lithos~ %The mysteries of the Mountain King are great and varied. How can one fathom the power of a force which is at once a living thing and the very surface of one's world? The human mind is simply not capable of dealing with scope that is the Mountain King.~%However limited we are in our capabilities of fathoming the Mountain King, we must, in order to better serve His needs, attempt to do so. The more that we learn of Lithos, the better we are able to serve Him and interpret His word. Therefore, it is a sacred duty of the Necromancer to study our lord. The more knowledge of the Mountain King that we are able to accumulate, the greater His glory will appear to us. Having\x09stated the need for learning not only from, but -of- Lithos, I now add this warning: Be cautious and show restraint in your research. Lithos is the greatest power known to Pagan kind, and as such can be fickle. Know that there are some secrets which the Mounain King wishes to keep. Delving into these areas can result into great disaster for a student whos zeal or ambition over rides his good judgement and devotion to Lithos.~%A student of the mysteries of Lithos could very well be studying an aspect of Lithos' mysteries which the Mountain King wishes to remain secret and not even know it. Should such a situation occur, the Mountain King shall issue a gentle warning to the student. A small quake or landslide in the student's vicinity while he is studying should alert the student that his research is to be abandoned at once. Following such a warning, the student is subject to the wrath of the Mountain King.~%There are, of course, some subjects which we now know are forbidden to study. One such subject is the Heart of Earth. Little is known about this holy artifact other than its resting place, the Pit of Death, and that Lithos gaurds this treasure very jealously.\x09Any student of the mysteries of Lithos must know that the Heart of Earth must not be disturbed or studied. further. Delving into this subject would only serve to bring wrath of the Mountain down upon the unwise student.~%This does end Volume One of the Mysteries of Lithos.~ Vintros, Necromancer"), this);
+}
+
+// Derived: routine 0xB2FD, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_it_is_important_to_keep_in()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("It is important to keep in mind Stratos' teachings while raising your child. When you are angry at some small transgression your child has committed, remember that Stratos says there are no bad children, merely high-spirited or rebellious ones. Sooner or later all children will return to their home. And they should always be welcomed back, for all children are, indeed, precious. As there are no bad children, then it follows that a child who performs an act with which you disagree should be taught the wrong of the action, rather than receive punishment. As Stratos says, spare the rod and speak with the child. An unhappy child, however, requires different care, for what are words when sadness fills the heart.\x09Take time to offer comfort and soothing immediatly, for a sad child makes a sad world."), this);
+}
+
+// Derived: routine 0xB642, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_wisdom_of_stratos_is_not()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The wisdom of Stratos is not difficult to find. It will come to any who follow the ways of the Great Air Titan. You need only find a quiet place to relax and open your mind. I have found that a breezy evening on my porch is the perfect place for me to seek respite from the day. Once there, I merely close my eyes and breath deeply of the sweet air, the gift of Stratos, and allow the glory of Stratos to soothe my weary mind. I seek Stratos in this way for several reasons. Stratos is a quiet Titan. She cares not for gain and glory for herself, rather, she cares only for what is good for her children. She abhors production and pomp. While the other Titans may encourage their children to stand out from the crowds and boast loudly of their accomplishments, Stratos prefers her children do her bidding in a quiet, unassuming manner."), this);
+}
+
+// Derived: routine 0xB9A7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_way_of_stratos_is_the()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The way of Stratos is the way of truth. There are none that can deny this. Above all, the follower of Stratos loves the way of truth and will seek it above all else in companions. Beware the way of lies and falsehoods. It's path is broad and its lure is sweet. The way of truth is the harder road, its brambles will tear at your heart. You may feel you are ready for this hardship, but it will strike you close to your heart. Once a follower of Stratos was called before the town magistrate to give testimony against a thief who had stolen bread. When the thief entered the room and was unmasked, the Acolyte was horrified to find it was her brother. She felt she had to lie and claim no knowledge of the theft, for to tell the truth would cost her brother\x09his right hand. Her false words bought her brother his freedom, yet the child of Stratos still felt a heavy heart. Not more than three days later her brother was slain while trying to steal more food. Had she only reached to Stratos for guidance and found the strength to speak the truth before the magistrate, her brother would have lost only his hand, not his life. Truth is the only way of Stratos."), this);
+}
+
+// Derived: routine 0xBE4F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_the_way_of_stratos_is_never()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("The way of Stratos is never easy, for the trait Stratos requires most above all in her followers is honesty. A great battle was raging and the king was gravely wounded. A follower of Stratos was called to administer healing. On the way to the king's tent the Acolyte saw the battle was going quite badly for the king's men. When the Acolyte arrived at the king's side, the king was already breathing his last. There was little the Acolyte could do. In a whisper the king asked how his troops fared. With little hesitation the Acolyte told him it was going badly. The king gripped the Acolyte's arm and thanked him for speaking honestly, for though lies would have given him strength for the moment, the truth made him stronger for a lifetime. Thus we see that the way of truth may not be the easiest, but it is the best."), this);
+}
+
+// Derived: routine 0xC1A5, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_dear_new_acolyte_it_is_with()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("Dear New Acolyte:~ It is with great gladness I welcome you to the family of Stratos. She has welcomed you home and has given you the greatest power of all, the power to heal.~ This gift is not without price, however, and it is important that you learn the responsibilites that come with the power.~ The first lesson you must learn is the lesson of impartiality. The gift of healing is given to all who need it, without favoritism, malice, or greed. Should you come across a battle field, your first duty is to the injured. If you hesitate even one moment, even to see the outcome of the battle or determine which side is 'correct', then you are failing in your calling as an Acolyte of Stratos.~ While there is great joy in the gift of healing, there can also be great cost. For to bring a life back from the edge of the Pit of Death will cost you more than your energy, or a spell of healing. Stratos will give you the power to restore life, but you, in turn, must give her your sight. This is the greatest cost, but I think it is a fair one, for what value does a single sense hold when compared to whole of the body and spirit.~ All these things you must keep close to you heart, for you are about to embark upon one of the most fulfilling callings known, an Acolyte of Stratos.~~~ Stellos"), this);
+}
+
+// Derived: routine 0xC6D3, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] book1_read_good_reader_i_wish_to_tell()
+{
+	// X: `this` binds the compiler-carried current-object receiver.
+	this:U8DWord;
+	Book_read(u8_string_address("Good reader,~ I wish to tell you a story I heard about a warrior named Yevaud. He was a mighty fighter and was never bested in battle. Challengers came from across the land and they all fell before him. One day an Acolyte of Stratos was healing the wounds Yevaud had inflicted upon a challenger. As the Acolyte worked, Yevaud approached.~ 'You there,' Yevaud said. 'You will surely agree that there is no one better than I.'~ The Acolyte looked up at the warrior. 'That is not true.'~ 'What?!' roared the big man.~ 'This is one who is better than you,' the Acolyte said.~ 'Who?! Who is better than me?' he bellowed.~ 'Meet me here tomorrow and I will make him known to you,' said the Acolyte.~ When the next day came, Yevaud arrived at the appointed spot. He found the Acolyte sitting beneath a tree.~ 'I am here. Lead me to the upstart,' Yevaud said.~ The Acolyte got to his feet. 'Follow me and I will take you where you may find him.~ Yevaud followed the Acolyte as they walked toward the mountains. When they reached the sheer face of the cliffs, the Acolyte pointed to a cavern opening.~ 'In there you will find one who is better than you.' said the Acolyte.~ Yevaud drew his mighty sword and bravely entered the cave.~ All was silent for a moment, then a horrible bellowing was heard and\x09the buzzing of many Mandril.~ A short while later, Yevaud emerged from the cavern. He was exhausted and bloody.~ 'Acolyte!' he cried. 'There were only Mandril in that cave!'~ 'Yes,' the Acolyte answered. 'Those mandril have been plaguing this area for quite some time. Why, just last week they killed a small child.'~ 'But you said in there I would find one who was better than I!' said the fighter.~ 'There was, for by killing those Mandril, you used your sword for a good purpose rather than destruction. Therefore, the man who walked out of the cave was a better man than the one who walked into the cave.'~ And that is my story, friend. For you see, weapons destroy, but wit builds."), this);
+}
+

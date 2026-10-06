@@ -1,0 +1,696 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0050
+// FLEX slot: 82
+// Original offset: 0x00093465
+// Naming evidence: E, exact object-1 linker name `HYDROS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/HYDROS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass HYDROS inherits Item
+{
+	process hydros_look_bark_water_titan();
+	process hydros_use_run_hydros_dialogue();
+	process hydros_spawn_animate_water_patch(arg_04:U8Word, arg_06:U8Word, arg_08:U8Byte);
+	process hydros_animate_emergence();
+	process hydros_animate_emerged_idle();
+	process hydros_animate_departure_cleanup();
+	process hydros_animate_release_effect_a_intro();
+	process hydros_animate_release_effect_a_cycle();
+	process hydros_animate_release_effect_a_outro();
+	process hydros_animate_release_effect_b_intro();
+	process hydros_animate_release_effect_b_cycle();
+	process hydros_animate_release_effect_b_outro();
+	process hydros_spawn_release_effects();
+	process [[PT_DEFAULT, referent]] hydros_announce_escape();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process HYDROS::hydros_look_bark_water_titan()
+{
+	bark("Water Titan ");
+}
+
+// Derived: routine 0x00AF, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process HYDROS::hydros_use_run_hydros_dialogue()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Bytes2; // X: untouched.
+	local_m03:U8Byte;
+	local_m07:U8Bytes4; // X: untouched.
+	local_m09:U8Word;
+	local_m0B:String;
+	local_m0D:String;
+	local_m0E:U8Bytes1; // X: untouched.
+	local_m10:String List;
+	setAvatarInStasis(1);
+	playMusic(103);
+	foreach local_m09 where (type = 80) within 100 cells of Avatar {
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0050_hydros_animate_emergence(this) -> return;
+	}
+	local_m10 = <<"Goodbye. ">>;
+	if hydrosFree = 1
+	{
+		hydros_announce_escape();
+		return;
+	}
+	else if metHydros
+	{
+		if getPowerAO
+		{
+			if (hydrosBegged = 1) or (hydrosPissed = 1)
+			{
+				local_m10 ^= <<"Hydros? ">>;
+			}
+			else
+			{
+				local_m10 ^= <<"I wish the power of Tempestry. ">>;
+			}
+		}
+		else
+		{
+			local_m10 ^= <<"Hydros? ">>;
+		}
+	}
+	else
+	{
+		local_m10 += <<"Are you... Hydros? ">>;
+	}
+	bark("Who dares? ");
+	u8label label_01EE:
+	u8goto label_0D57 if not (local_m0B != "Goodbye. ");
+	local_m10 -= <<"Goodbye. ">>;
+	local_m10 += <<"Goodbye. ">>;
+	local_m0B = ask(local_m10);
+	u8goto label_03F0 if not (local_m0B = "Are you... Hydros? ");
+	metHydros = 1;
+	bark("Indeed, piteous mortal, I am Hydros. Know that it is into -my- domain that you have trespassed. ");
+	if getPowerAO
+	{
+		bark("Why do you disturb my rest? ");
+		local_m10 ^= <<"I wish the power of Tempestry. ">>;
+		u8goto label_03CB;
+	}
+	bark("And I do not like intrusions. Begone! ");
+	setFrame(28);
+	setAvatarInStasis(0);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0050_hydros_animate_departure_cleanup(this) -> return;
+	scrollBack(20);
+	playMusic(102);
+	return;
+	u8goto label_0D57;
+	u8label label_03CB:
+	local_m10 -= <<"Are you... Hydros? ">>;
+	u8goto label_0D54;
+	u8label label_03F0:
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m0B
+	{
+		case "Hydros? "
+		{
+			if hydrosPissed
+			{
+				bark("I hope you have come to make amends. ");
+				local_m10 = <<"I apologize. ", "Never! ", "Goodbye. ">>;
+				u8goto label_05AF;
+			}
+			if hydrosBegged
+			{
+				bark("There will be time for conversation when I am free. ");
+				setFrame(28);
+				setAvatarInStasis(0);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0050_hydros_animate_departure_cleanup(this) -> return;
+				scrollBack(20);
+				playMusic(102);
+				return;
+			}
+			else
+			{
+				bark("I have no desire for idle chatter. Find me when you are worthy of conversation. ");
+				setFrame(28);
+				setAvatarInStasis(0);
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0050_hydros_animate_departure_cleanup(this) -> return;
+				scrollBack(20);
+				playMusic(102);
+				return;
+			}
+			u8label label_05AF:
+			local_m10 -= <<"Hydros? ">>;
+		}
+		case "I apologize. "
+		{
+			bark("Very well, groundling, I accept your submission. Now go and reflect upon my generosity. ");
+			hydrosPissed = 0;
+			local_m10 -= <<"I apologize. ", "Never! ", "Goodbye. ">>;
+			setAvatarInStasis(0);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_animate_departure_cleanup(this) -> return;
+			scrollBack(20);
+			playMusic(102);
+			return;
+		}
+		case "I wish the power of Tempestry. "
+		{
+			bark("Ah, a wise request from one who has made the difficult journey to my current home. But alas, your desire must go unfulfilled. Trapped here as I am, I cannot help you. ");
+			local_m10 -= <<"I wish the power of Tempestry. ">>;
+			local_m10 ^= <<"What can I do? ", "Too bad. ">>;
+		}
+		case "Too bad. "
+		{
+			bark("You do not care for my plight? Why, I should... ");
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_spawn_release_effects(this) -> return;
+			wait(300);
+			bark("Perhaps I was unclear. You see, should I become free, I would be able to grant you any powers you wish. ");
+			local_m03 = 1;
+			local_m10 -= <<"Too bad. ">>;
+			local_m10 ^= <<"I will not help you. ">>;
+		}
+		case "Never! "
+		{
+			bark("You do not know what you say, groundling! Begone! ");
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_spawn_release_effects(this) -> return;
+			wait(300);
+			setAvatarInStasis(0);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_animate_departure_cleanup(this) -> return;
+			scrollBack(20);
+			playMusic(102);
+			return;
+		}
+		case "I will not help you. "
+		{
+			bark("You do not know what you say, groundling! Begone! ");
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_spawn_release_effects(this) -> return;
+			wait(300);
+			hydrosPissed = 1;
+			setAvatarInStasis(0);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_animate_departure_cleanup(this) -> return;
+			scrollBack(20);
+			playMusic(102);
+			return;
+		}
+		case "What can I do? ", "Could you repeat those instructions? "
+		{
+			bark("Ah, you will assist me then. My gratitude will be boundless, mortal. The task is a simple one. Merely open the ground next to the gravestone of my captor's beloved, releasing the waters on the cliffside. Do that and I shall be free. ");
+			local_m10 -= <<"What can I do? ", "Too bad. ">>;
+			local_m10 ^= <<"Could you repeat those instructions? ">>;
+			if local_m03 = 1
+			{
+				local_m03 = 0;
+				local_m10 -= <<"I will not help you. ">>;
+			}
+			hydrosBegged = 1;
+		}
+		case "Goodbye. "
+		{
+			if hydrosBegged
+			{
+				bark("Farewell, my mortal friend. ");
+			}
+			else
+			{
+				bark("Begone, foolish mortal! ");
+			}
+			setAvatarInStasis(0);
+			setFrame(28);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_animate_departure_cleanup(this) -> return;
+			scrollBack(20);
+			playMusic(102);
+		}
+	}
+	u8label label_0D54:
+	u8goto label_01EE;
+	u8label label_0D57:
+	u8_free_local_string(local_m0B);
+	u8_free_local_string(local_m0D);
+	u8_free_local_string_list(local_m10);
+}
+
+// Derived: routine 0x0D5F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// X: BP-bound neutral argument storage views.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_spawn_animate_water_patch(arg_04:U8Word, arg_06:U8Word, arg_08:U8Byte)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	[[PT_DEFAULT, referent]];
+	local_m02.legal_create(476, 0, arg_04, arg_06, arg_08);
+	local_m04 = 0;
+	u8label label_0D7F:
+	suspend;
+	if local_m02 = 0
+	{
+		return;
+	}
+	local_m04++;
+	u8goto label_0D9D if not (local_m04 != 25);
+	u8goto label_0D7F;
+	u8label label_0D9D:
+	local_m04 = 0;
+	if local_m02 != 0
+	{
+		local_m06 = local_m02.getFrame();
+		if local_m06 = 6
+		{
+			local_m02.setFrame(0);
+		}
+		else
+		{
+			local_m02.setFrame(local_m06 + 1);
+		}
+	}
+	u8goto label_0D7F;
+}
+
+// Derived: routine 0x0DDB, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_animate_emergence()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m04:U8Bytes4; // X: untouched.
+	local_m06:U8Word;
+	local_m08:U8Bytes2; // X: untouched.
+	local_m0A:Item;
+	local_m0C:U8Word;
+	local_m0E:U8Word;
+	local_m0F:U8Byte;
+	local_m10:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		leaving = 0;
+		setFrame(0);
+	}
+	process
+	{
+		if local_m10 = 0
+		{
+			foreach local_m0A where (type = 80) within 100 cells of Avatar {
+				local_m10 = 1;
+				local_m0C = local_m0A.getX() + 150;
+				local_m0E = local_m0A.getY() + 140;
+				local_m0F = local_m0A.getZ();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn class_0050_hydros_spawn_animate_water_patch(this, local_m0F, local_m0E, local_m0C) -> return;
+			}
+		}
+		local_m06 = getFrame();
+		if local_m06 = 21
+		{
+			setFrame(22);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_animate_emerged_idle(this) -> return;
+			return;
+		}
+		if local_m06 != 23
+		{
+			setFrame(getFrame() + 1);
+		}
+	}
+}
+
+// Derived: routine 0x0EA7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_animate_emerged_idle()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m04:U8Bytes4; // X: untouched.
+	local_m06:U8Word;
+	local_m08:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		local_m08 = 50;
+	}
+	process
+	{
+		if leaving = 1
+		{
+			return;
+		}
+		local_m06 = getFrame();
+		if local_m06 = 27
+		{
+			setFrame(22);
+		}
+		wait(2);
+		setFrame(getFrame() + 1);
+	}
+}
+
+// Derived: routine 0x0F0F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_animate_departure_cleanup()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Bytes2; // X: untouched.
+	local_m03:U8Byte;
+	local_m05:U8Bytes2; // X: untouched.
+	local_m07:U8Word;
+	local_m09:U8Word;
+	local_m0B:Item;
+	local_m0D:Item;
+	local_m0F:Item;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		local_m09 = 50;
+		leaving = 1;
+	}
+	process
+	{
+		local_m07 = getFrame();
+		// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+		foreach local_m0B where (type = 80) within 1024 units of 1 {
+			if (local_m0B.getFrame() > 21) or (local_m0B.getFrame() < 28)
+			{
+				local_m03 = 1;
+			}
+		}
+		if local_m03 = 1
+		{
+			if local_m07 = 40
+			{
+				setFrame(0);
+				// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+				foreach local_m0D where (type = 476) within 1024 units of 1 {
+					local_m0D.destroy();
+				}
+				// X: `units` preserves the direct VM search radius; no Origin spelling is known.
+				foreach local_m0F where (type = 80) within 1024 units of 1 {
+					local_m0F.destroy();
+				}
+				return;
+			}
+			if local_m07 < 21
+			{
+				setFrame(28);
+			}
+			if local_m07 != 40
+			{
+				setFrame(getFrame() + 1);
+			}
+		}
+	}
+}
+
+// Derived: routine 0x1003, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_animate_release_effect_a_intro()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m04:U8Bytes4; // X: untouched.
+	local_m06:U8Word;
+	local_m0A:U8Bytes4; // X: untouched.
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		leaving = 0;
+	}
+	process
+	{
+		local_m06 = getFrame();
+		if local_m06 = 21
+		{
+			setFrame(22);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_animate_release_effect_a_cycle(this) -> return;
+			return;
+		}
+		if local_m06 != 23
+		{
+			setFrame(getFrame() + 1);
+		}
+	}
+}
+
+// Derived: routine 0x105F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_animate_release_effect_a_cycle()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m04:U8Bytes4; // X: untouched.
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Bytes2; // X: untouched.
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		local_m08 = 0;
+	}
+	process
+	{
+		if leaving = 1
+		{
+			return;
+		}
+		local_m06 = getFrame();
+		if local_m08 = 2
+		{
+			setFrame(28);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_animate_release_effect_a_outro(this) -> return;
+			return;
+		}
+		if local_m06 = 27
+		{
+			setFrame(22);
+			local_m08++;
+		}
+		wait(3);
+		setFrame(getFrame() + 1);
+	}
+}
+
+// Derived: routine 0x10EE, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_animate_release_effect_a_outro()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m04:U8Bytes4; // X: untouched.
+	local_m06:U8Word;
+	local_m08:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		local_m08 = 50;
+	}
+	process
+	{
+		local_m06 = getFrame();
+		if local_m06 = 40
+		{
+			setFrame(0);
+			return;
+		}
+		if local_m06 < 27
+		{
+			setFrame(28);
+		}
+		if local_m06 != 40
+		{
+			setFrame(getFrame() + 1);
+		}
+	}
+}
+
+// Derived: routine 0x114F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_animate_release_effect_b_intro()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m04:U8Bytes4; // X: untouched.
+	local_m06:U8Word;
+	local_m0A:U8Bytes4; // X: untouched.
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		leaving = 0;
+	}
+	process
+	{
+		local_m06 = getFrame();
+		if local_m06 = 19
+		{
+			setFrame(21);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_animate_release_effect_b_cycle(this) -> return;
+			return;
+		}
+		if local_m06 != 25
+		{
+			setFrame(getFrame() + 1);
+		}
+	}
+}
+
+// Derived: routine 0x11AB, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_animate_release_effect_b_cycle()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m04:U8Bytes4; // X: untouched.
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Bytes2; // X: untouched.
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		local_m08 = 0;
+	}
+	process
+	{
+		if leaving = 1
+		{
+			setFrame(28);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_animate_release_effect_b_outro(this) -> return;
+			return;
+		}
+		local_m06 = getFrame();
+		if local_m08 = 2
+		{
+			setFrame(28);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0050_hydros_animate_release_effect_b_outro(this) -> return;
+			return;
+		}
+		if local_m06 = 27
+		{
+			setFrame(21);
+			local_m08++;
+		}
+		wait(3);
+		setFrame(getFrame() + 1);
+	}
+}
+
+// Derived: routine 0x124F, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_animate_release_effect_b_outro()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m04:U8Bytes4; // X: untouched.
+	local_m06:U8Word;
+	local_m08:U8Word;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_DEFAULT, referent]];
+		local_m08 = 50;
+	}
+	process
+	{
+		local_m06 = getFrame();
+		if local_m06 = 40
+		{
+			setFrame(0);
+			return;
+		}
+		if local_m06 < 27
+		{
+			setFrame(28);
+		}
+		if local_m06 != 40
+		{
+			setFrame(getFrame() + 1);
+		}
+	}
+}
+
+// Derived: routine 0x12B0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process HYDROS::hydros_spawn_release_effects()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m04:U8Word;
+	local_m06:U8Word;
+	local_m08:U8Word;
+	local_m0A:U8Word;
+	local_m0C:U8Word;
+	local_m0D:U8Byte;
+	local_m0E:U8Byte;
+	local_m12:U8Bytes4; // X: untouched.
+	local_m14:Item;
+	local_m14_w01:U8Bytes1;
+	local_m16:Item;
+	local_m16_w01:U8Bytes1;
+	[[PT_DEFAULT, referent]];
+	foreach local_m04 where (type = 80) within 100 cells of Avatar {
+		local_m02 = local_m04;
+	}
+	Item_create(0, 570, u8_local_address(local_m14_w01));
+	local_m14.pop(local_m02.getX() + 300, local_m02.getY() + 100, local_m02.getZ());
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0050_hydros_animate_release_effect_a_intro(u8_local_address(local_m14_w01)) -> return;
+	local_m06 = local_m02.getX() + 450;
+	local_m08 = local_m02.getY() + 240;
+	local_m0D = local_m02.getZ();
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0050_hydros_spawn_animate_water_patch(this, local_m0D, local_m08, local_m06) -> return;
+	wait(90);
+	Item_create(0, 573, u8_local_address(local_m16_w01));
+	class_057C_toggleStatus(32, u8_local_address(local_m16_w01));
+	local_m16.pop(local_m02.getX() - 250, local_m02.getY() + 150, local_m02.getZ());
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0050_hydros_animate_release_effect_b_intro(u8_local_address(local_m16_w01)) -> return;
+	local_m0A = local_m02.getX() - 80;
+	local_m0C = local_m02.getY() + 290;
+	local_m0E = local_m02.getZ();
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0050_hydros_spawn_animate_water_patch(this, local_m0E, local_m0C, local_m0A) -> return;
+}
+
+// Derived: routine 0x13FB, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process [[PT_DEFAULT, referent]] HYDROS::hydros_announce_escape()
+{
+	bark("Ah, I am now free! Thank you, foolish one, for your actions. Consider my gift of your wretched life as payment for your part. Now I will have my vengeance upon your pathetic kind! I will slay the descendant of my jailer! Let us see who can reach Devon first, groundling. ");
+	hydrosFree = 2;
+	scrollBack(20);
+	setAvatarInStasis(0);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0050_hydros_animate_departure_cleanup(this) -> return;
+	return;
+}
+

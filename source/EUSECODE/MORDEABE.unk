@@ -1,0 +1,147 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0237
+// FLEX slot: 569
+// Original offset: 0x000B7C46
+// Naming evidence: E, exact object-1 linker name `MORDEABE`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MORDEABE.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass MORDEABE inherits Item
+{
+	process mordeabe_look_describe_by_frame();
+	process mordeabe_enter_fast_area_set_bed_frame_from_mordea_schedule();
+	process mordeabe_use_wake_mordea_and_run_tempest_retaliation();
+	process mordeabe_strike_avatar_with_tempest_magic();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MORDEABE::mordeabe_look_describe_by_frame()
+{
+	if getFrame() = 11
+	{
+		bark("Mordea's bed ");
+	}
+	else if mordeaName and mordeaJob
+	{
+		bark("Mordea the Tempest ");
+	}
+	else if mordeaName
+	{
+		bark("Mordea");
+	}
+	else if mordeaJob
+	{
+		bark("Tempest ");
+	}
+	else
+	{
+		bark("sleeping woman ");
+	}
+}
+
+// Derived: routine 0x016D, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MORDEABE::mordeabe_enter_fast_area_set_bed_frame_from_mordea_schedule()
+{
+	if (mordeaSchedule = 1) and (Mordea.isDead() = 0)
+	{
+		setFrame(10);
+	}
+	else
+	{
+		setFrame(11);
+	}
+}
+
+// Derived: routine 0x01AA, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MORDEABE::mordeabe_use_wake_mordea_and_run_tempest_retaliation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m08:U8Bytes8; // X: untouched.
+	local_m09:U8Bytes1; // X: untouched.
+	local_m0B:U8Word;
+	if getFrame() != 10
+	{
+		return;
+	}
+	setAvatarInStasis(1);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_scrollTo(0x00000000, 10, Mordea.getZ() + 40, Mordea.getY(), Mordea.getX()) -> return;
+	Avatar.turnToFace(Avatar.getDirToItem(referent), 0, 10);
+	Avatar.realDoAnim(AS_WALK, Avatar.getDir());
+	Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+	Mordea.realDoAnim(AS_EXIT_CAST, 2);
+	for local_m0B = 0 to 10
+	{
+		wait(6);
+		setFrame(10 - local_m0B);
+	}
+	setFrame(11);
+	Mordea.teleport(13224, 7968, 48, 40);
+	Mordea.turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+	Item_bark(u8_string_address("Who dares to awaken the Tempest! "), u8_stack_ref(7));
+	Item_bark(u8_string_address("Ahhh, Sorry... "), u8_stack_ref(1));
+	Item_bark(u8_string_address("Sorry!?! Feel a touch of a Tempest's power! "), u8_stack_ref(7));
+	Mordea.realDoAnim(AS_ENTER_CAST, Mordea.getDir());
+	Mordea.realDoAnim(29, Mordea.getDir());
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0237_mordeabe_strike_avatar_with_tempest_magic(this) -> return;
+	Mordea.realDoAnim(AS_EXIT_CAST, Mordea.getDir());
+	Mordea.turnToFace(2, 0, 10);
+	Mordea.realDoAnim(AS_STAND, 2);
+	wait(50);
+	Mordea.teleport(13224, 7968, 0, 40);
+	for local_m0B = 0 to 10
+	{
+		setFrame(local_m0B);
+		wait(6);
+	}
+	scrollBack(20);
+}
+
+// Derived: routine 0x04C0, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process MORDEABE::mordeabe_strike_avatar_with_tempest_magic()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	local_m04:Item;
+	local_m06:U8Word;
+	[[PT_DEFAULT, referent]];
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	LightningBolt();
+	Item_create(0, 511, u8_local_address(local_m04_w01));
+	local_m04.pop(Avatar.getX() - 50, Avatar.getY() - 50, Avatar.getZ());
+	playSFX(27, 200);
+	for local_m06 = 0 to 4
+	{
+		local_m04.setFrame(local_m06);
+		wait(4);
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0581_safePlaySFX(0x00000000, 100, 6) -> return;
+	local_m04.destroy();
+	Item_create(0, 480, u8_local_address(local_m02_w01));
+	local_m02.pop(Avatar.getX() + 10, Avatar.getY() + 10, Avatar.getZ());
+	Avatar.receiveHit(referent, 4, Avatar.getHp(), 128);
+	for local_m06 = 0 to 9
+	{
+		local_m02.setFrame(local_m06);
+		wait(10);
+	}
+	local_m02.destroy();
+	LightningBolt();
+}
+

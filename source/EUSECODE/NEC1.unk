@@ -1,0 +1,233 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x026F
+// FLEX slot: 625
+// Original offset: 0x000C3321
+// Naming evidence: E, exact object-1 linker name `NEC1`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/NEC1.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass NEC1 inherits Item
+{
+	process nec1_look_describe_necromancer();
+	process nec1_use_run_necromancer_test_sequence();
+	process nec1_focus_camera_on_necromancer();
+	process nec1_restore_avatar_camera();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process NEC1::nec1_look_describe_necromancer()
+{
+	bark("Necromancer ");
+}
+
+// Derived: routine 0x00AF, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process NEC1::nec1_use_run_necromancer_test_sequence()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	if not deathSpeakCast
+	{
+		return;
+	}
+	setAvatarInStasis(1);
+	scrollTo(getX(), getY(), getZ(), 25);
+	for local_m02 = 1 to 8
+	{
+		setFrame(local_m02);
+		wait(5);
+	}
+	if getQuality() = 1
+	{
+		if metNec1
+		{
+			bark("I will help you no further, live one. You must continue with your test. ");
+		}
+		else
+		{
+			bark("You who would join me here at the right hand of Lithos. You who seek my knowledge. You who have taken but your first steps upon the path of Necromancy. Come closer, living one, so that we may speak. ");
+			Item_bark(u8_string_address("Are you a Necromancer? "), u8_stack_ref(1));
+			bark("But of course I am. You have done well to find me, yet there is much left for you to find. You have not yet been truly tested. ");
+			Item_bark(u8_string_address("In what manner will I be tested, Necromancer? "), u8_stack_ref(1));
+			bark("Your testing has already begun. The rest is for you to discover. If you prove yourself worthy, you will learn enough of our magical art to gain an audience with Lithos. ");
+			Item_bark(u8_string_address("Yes, I need to speak with Lithos! "), u8_stack_ref(1));
+			bark("Yes, and so your testing has begun. You will meet other Necromancers here.  Each of us will in turn teach you a spell. You will need to use each new spell in order to reach the next Necromancer. ");
+			Item_bark(u8_string_address("What will happen if I don't learn the spells properly? "), u8_stack_ref(1));
+			bark("Then you will die before you meet the next Necromancer. Do not falter, apprentice. You have come this far, there is no going back. In order to return to the surface world you must go forward. ");
+			Item_bark(u8_string_address("I am ready, Necromancer. "), u8_stack_ref(1));
+			bark("Good. The first spell that you will learn was written by my hand many generations ago. It is called Mask of Death. When you cast this spell upon yourself, your enemies shall think that you are dead. To cast this spell, you will need Wood and Executioner's Hood. Speak the words Quas Corp, and you appear to all who behold you as dead. ");
+			Item_bark(u8_string_address("And this will help me in some manner? "), u8_stack_ref(1));
+			bark("Leave your doubts behind, young one, and trust in your elders. If, per chance, you did find a barrier of stalagmites upon a short wall which did block your way; you will now find that the stalagmites are gone. Your way to the next Necromancer is clear. Now, be gone. There is much for you to do. ");
+			metNec1 = 1;
+		}
+	}
+	else if getQuality() = 2
+	{
+		if metNec2
+		{
+			bark("You have learned the spell that you needed from me, live one. There is nought else for you here. Go now and complete your journey. If you are unable to do that, then you are unfit to be a Necromancer and will meet your deserved fate. Be gone. ");
+		}
+		else
+		{
+			bark("So you have survived your test long enough to meet me. I am Bentos, seventh Necromancer of Lithos. ");
+			Item_bark(u8_string_address("Greetings, Bentos. I have come to learn from you. "), u8_stack_ref(1));
+			bark("And so you shall. The way of the Necromancer is difficult. You will be assailed in many ways. And so will this happen before you next meet a Necromancer. Learn these words, Rel Sanct Ylem. Those words, and Wood and Dirt, will make you become as hard as stone. Now you must continue upon your way. May Lithos smile upon you. ");
+			metNec2 = 1;
+		}
+	}
+	else if getQuality() = 3
+	{
+		if metNec3
+		{
+			nec1_focus_camera_on_necromancer();
+			bark("I can not help you. You know this to be true, so be gone from here. ");
+			nec1_restore_avatar_camera();
+		}
+		else
+		{
+			nec1_focus_camera_on_necromancer();
+			bark("Well, well...You are progressing well, student. Please forgive those who attacked you. Your test must be a difficult one. Already you have learned Mask of Death and Rock Flesh from the Necromancers who wrote them. Are you now ready to learn my spell? ");
+			Item_bark(u8_string_address("Yes, Necromancer. "), u8_stack_ref(1));
+			bark("Very well, always remember that no matter how mighty you may feel, everyone eventually needs help in battle. Take Blood, Bone, and Wood. Speak the words Kal Corp Xen. Focus this power and help will arrive. ");
+			Item_bark(u8_string_address("What kind of help will this bring, Necromancer? "), u8_stack_ref(1));
+			bark("This spell will summon your deceased brethren to your aid. It may also help you find that which you seek. ");
+			Item_bark(u8_string_address("Deceased brethren? "), u8_stack_ref(1));
+			bark("Yes, student. Once you have joined the Necromantic order, you will never again be alone. You shall always have company of the dead to comfort you. But enough talk. You must continue on your journey. Fare well. ");
+			metNec3 = 1;
+			nec1_restore_avatar_camera();
+			FadeToBlack();
+			Avatar.teleport(2207, 2399, 112, 62);
+			FadeFromBlack();
+		}
+	}
+	else if getQuality() = 4
+	{
+		if metNec4
+		{
+			nec1_focus_camera_on_necromancer();
+			bark("You have returned in vain. I can not help you any further. Go your own way. ");
+			nec1_restore_avatar_camera();
+		}
+		else
+		{
+			nec1_focus_camera_on_necromancer();
+			bark("You are coming closer to your goal, live one. ");
+			Item_bark(u8_string_address("I have worked hard to do so, Necromancer. "), u8_stack_ref(1));
+			bark("Do not think that the rest of your path will be an easy one, apprentice!  There is something about you that I do not trust. I doubt your devotion to the Mountain King. ");
+			Item_bark(u8_string_address("I am devoted, Necromancer. "), u8_stack_ref(1));
+			bark("Silence! I did not ask to hear your hollow voice. I was told to give my spell unto you and I will do so. But know that if Lithos consults me, I will tell Him that I do not trust you. ");
+			Item_bark(u8_string_address("I understand, Necromancer. "), u8_stack_ref(1));
+			bark("I do not care that you understand, meat. Listen to me then be gone. Often will you be assailed by enemies. Carry with you Executioner's Hood and Blackmoor. Blend the reagents and focus your magic on the ground. Say the words, In Vas Corp and grant eternal peace\x09upon your enemy. ");
+			Item_bark(u8_string_address("Thank you, Necromancer. "), u8_stack_ref(1));
+			bark("Go now, and Pray to the Mountain King that you are worthy. ");
+			metNec4 = 1;
+			nec1_restore_avatar_camera();
+			FadeToBlack();
+			Avatar.teleport(22879, 5823, 0, 62);
+			FadeFromBlack();
+		}
+	}
+	else if getQuality() = 5
+	{
+		if metNec5
+		{
+			nec1_focus_camera_on_necromancer();
+			bark("Surely you must realize that I can not help you any further. The path is yours alone to follow. You must walk it alone. Fare well. ");
+			nec1_restore_avatar_camera();
+		}
+		else
+		{
+			nec1_focus_camera_on_necromancer();
+			bark("Well, apprentice, you have nearly completed your test. You seem to have fared well, young one. ");
+			Item_bark(u8_string_address("Thank you, Necromancer. The road has been hard. "), u8_stack_ref(1));
+			bark("And harder still will it become, live one. Your final test is at hand. The next Necromancer you seek is Galious. If you prove yourself worthy, Galious will provide you with that which you need to gain an audience with the Mountain King. ");
+			Item_bark(u8_string_address("I am ready, Necromancer. "), u8_stack_ref(1));
+			bark("Galious will be the judge of that, live one. Now, listen carefully. For without my knowledge, you will never live to see Galious. A Necromancer deals always with death. Yet sometimes the Necromancer must be able to resist death in order to continue to serve his master. Therefore, when the time arrives, take Wood, Dirt and Blackmoor. Say the words Vas An Corp and focus this magic upon yourself. ");
+			Item_bark(u8_string_address("How will I know when to use this spell? "), u8_stack_ref(1));
+			bark("That I can not tell you. You must decide this for yourself, but be warned: You may only use this spell once. Therefore; use it wisely. You must now go. Good fortune upon you, apprentice. ");
+			metNec5 = 1;
+			nec1_restore_avatar_camera();
+			FadeToBlack();
+			Avatar.teleport(9471, 30975, 0, 62);
+			FadeFromBlack();
+		}
+	}
+	else if getQuality() = 6
+	{
+		if metNec6
+		{
+			nec1_focus_camera_on_necromancer();
+			bark("You know that I can not help you. Nor would I choose to do so if I could. You have the spell which I have given you. If, for whatever reason, you can not raise the Golem, that is your burden. You alone must shoulder it or solve it. Farewell. ");
+			nec1_restore_avatar_camera();
+		}
+		else
+		{
+			nec1_focus_camera_on_necromancer();
+			bark("You have reached me and therefore proven yourself worthy. Lithos has instructed me to give a spell which would allow you to gain entrance to the Hall of the Mountain King. ");
+			Item_bark(u8_string_address("Is that where Lithos resides? "), u8_stack_ref(1));
+			bark("You already know that, apprentice. Do not let your excitement cloud your mind. The Hall is guarded by doors which no living creature may open. In order to gain entrance, you must raise a golem of the very element which is our lord, Lithos. ");
+			Item_bark(u8_string_address("A golem made of earth. "), u8_stack_ref(1));
+			bark("Yes. Now listen carefully, for like the other Necromancers, I will only tell you this spell once. Blood, Bone, Wood, Dirt and Blackmoor. Say these words of power; In Ort Ylem Xen. Focus this magic upon a broad space of mud and the golem will be created. Seek out Stone Cove. You shall reach it by way of the catacombs. Once you have found Stone Cove, there you shall need to create your golem. Only the golem shall be able to open the door which shall stand before you. ");
+			Item_bark(u8_string_address("I understand, Necromancer. "), u8_stack_ref(1));
+			bark("It is good that you do. Now, be gone. Go to the Mountain King. ");
+			metNec6 = 1;
+			nec1_restore_avatar_camera();
+		}
+	}
+	for local_m02 = 1 to 8
+	{
+		setFrame(9 - local_m02);
+		wait(5);
+	}
+	setAvatarInStasis(0);
+	scrollBack(25);
+}
+
+// Derived: routine 0x2311, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process NEC1::nec1_focus_camera_on_necromancer()
+{
+	[[PT_DEFAULT, referent]];
+	if not getAvatarInStasis()
+	{
+		setAvatarInStasis(1);
+	}
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_057C_turnToFace(1, 10, 0, Avatar.getDirToItem(referent)) -> return;
+	if getDistance(referent, Avatar:Referent) >= 384
+	{
+		scrollTo(getX(), getY(), getZ() + 20, 25);
+	}
+	else
+	{
+		scrollTo(getX(), getY(), getZ() + 20, 20);
+	}
+	Camera::setCenterOn(referent);
+}
+
+// Derived: routine 0x23DB, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process NEC1::nec1_restore_avatar_camera()
+{
+	[[PT_DEFAULT, referent]];
+	if getDistance(referent, Avatar:Referent) >= 384
+	{
+		scrollBack(25);
+	}
+	else
+	{
+		scrollBack(20);
+	}
+	setAvatarInStasis(0);
+}
+

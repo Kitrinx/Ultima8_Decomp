@@ -1,0 +1,294 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x0404
+// FLEX slot: 1030
+// Original offset: 0x00084B52
+// Naming evidence: E, exact object-1 linker name `GUARD1`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/GUARD1.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "npc";
+uses "free";
+
+npcclass GUARD1 inherits Npc
+{
+	process guard1_look_bark_living_or_dead_identity();
+	process guard1_enter_fast_area_start_location_schedule();
+	process guard1_leave_fast_area_stop_active_process();
+	process guard1_use_run_conversation();
+	process guard1_run_patrol_route();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD1::guard1_look_bark_living_or_dead_identity()
+{
+	if Npc_isDead(u8_stack_ref(4))
+	{
+		bark("dead guardsman ");
+	}
+	else
+	{
+		bark("guardsman ");
+	}
+}
+
+// Derived: routine 0x00E3, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD1::guard1_enter_fast_area_start_location_schedule()
+{
+	if Npc_isDead(u8_stack_ref(4))
+	{
+		return;
+	}
+	killProcess(referent, PT_ACTIVITY);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_0404_guard1_run_patrol_route(this) -> return;
+}
+
+// Derived: routine 0x011A, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD1::guard1_leave_fast_area_stop_active_process()
+{
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x0135, event mask 0x00000002.
+// O: `use` identifies event 01; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process GUARD1::guard1_use_run_conversation()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:String;
+	local_m04:String List;
+	local_m06:String;
+	local_m06 = "I am " + getName() + ".";
+	if not xavierSitting
+	{
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn Item_bark(u8_string_address("Guardsman! "), u8_stack_ref(1)) -> return;
+		enterConvo();
+		wait(60);
+		killProcess(1, PT_BARK);
+	}
+	else
+	{
+		setAvatarInStasis(1);
+		xavierSitting = 0;
+		killProcess(referent, PT_ACTIVITY);
+		killProcess(referent, PT_PATHFIND);
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn bark("Halt, stranger! ") -> return;
+		killProcess(1, PT_ANIM);
+		Avatar.realDoAnim(AS_STAND, Avatar.getDir());
+		pathfind(1, 5);
+		turnToFace(getDirToItem(Avatar:Referent), 0, 10);
+		realDoAnim(AS_DRAW_WEAPON, getDir());
+		wait(30);
+		enterConvo2();
+	}
+	if guard1met
+	{
+		if guard1pissed
+		{
+			bark("Blimey, not again... ");
+			bark("What is it this time? ");
+			guard1pissed = 0;
+		}
+		else if urandom(10) > 5
+		{
+			bark("What can I do ya for? ");
+		}
+		else
+		{
+			bark("What! More questions! ");
+		}
+		if not toranDead
+		{
+			local_m04 = <<"What is this city? ", "Open the gate! ", "Bye ">>;
+		}
+		else
+		{
+			local_m04 = <<"What is this city? ", "Bye ">>;
+		}
+	}
+	else
+	{
+		guard1met = 1;
+		local_m04 = <<local_m06, "I am the Avatar! ", "What is your name? ">>;
+		bark("I have seen many strange things in my time, but I've never seen the likes of ya. ");
+		bark("What be yer name, stranger? ");
+	}
+	u8label label_04BE:
+	u8goto label_102B if not (local_m02 != "Bye ");
+	local_m02 = ask(local_m04);
+	// X: reconstructed repeated-string selection; authored switch versus if ladder is unproved.
+	switch local_m02
+	{
+		case "What is your name? "
+		{
+			bark("Who am I? I'll tell ya who am I! I'm the one who's asking tha questions here! ");
+			bark("Who might ya be? Ain't seen the likes of ya before in this here city. ");
+			local_m04 -= <<"What is your name? ">>;
+			local_m04 = <<local_m06, "I am the Avatar! ">>;
+		}
+		case "I am the Avatar! "
+		{
+			bark("The Avatar? Blimey, ya say it like ya think yer important or somethin'. ");
+			bark("Listen, bloke, if ya don't want to find yerself in the belly of the Lurker yer'll soon change that tone of yers. ");
+			if Npc_getLastAnimSet(this) = 5
+			{
+				realDoAnim(AS_SHEATH_WEAPON, getDir());
+			}
+			guard1met = 1;
+			if not toranDead
+			{
+				local_m04 = <<"The Lurker? ", "What is this city? ", "Open the gate! ", "Bye ">>;
+			}
+			else
+			{
+				local_m04 = <<"What is this city? ", "Bye ">>;
+			}
+		}
+		case "The Lurker? "
+		{
+			bark("Say, ya don't know what tha Lurker is? ");
+			bark("Best ya check out what's at the end of the dock, lest ya become fish bait yerself. ");
+			guard1pissed = 1;
+			exitConvo();
+			return;
+		}
+		case local_m06
+		{
+			bark("All right, " + getName() + ", now I know ya. Now get lost!");
+			bark("I don't need Lady Mordea catching me chatting with some pauper. She's not in a right good mood today. ");
+			if Npc_getLastAnimSet(this) = 5
+			{
+				realDoAnim(AS_SHEATH_WEAPON, getDir());
+			}
+			if not toranDead
+			{
+				bark("Or maybe ya haven't noticed what goin' on at the end of tha dock. I'd advise ya to go see for yerself. ");
+				guard1pissed = 1;
+				guard1met = 1;
+				exitConvo();
+				return;
+			}
+			else
+			{
+				local_m04 = <<"What is this city? ", "Bye ">>;
+			}
+		}
+		case "What is this city? "
+		{
+			if not guard1town
+			{
+				bark("What do ya mean, 'What is this city?' ");
+				bark("Do ya have brain fever, lad? It's only tha largest pile of bricks in the known world! ");
+				bark("Tenebrae it is! And don't ya go now forgetin' it. ");
+				guard1town = 1;
+				local_m04 -= <<"What is this city? ">>;
+			}
+			else
+			{
+				bark("If you don't know what this city is, then you ought not be entering its gates. ");
+				bark("Everyone knows that it's Tenebrae, dolt! ");
+				local_m04 -= <<"What is this city? ">>;
+			}
+		}
+		case "Open the gate! "
+		{
+			if guard1job
+			{
+				bark("Look, I've already told ya once, this gate is not gonna open til I see that axe come down on the back of Toran's neck! ");
+				bark("Those are me lady's orders, and ya ain't gonna find the likes of me disobeyin' them, less my neck be tha next! ");
+				guard1pissed = 1;
+				exitConvo();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Bugger off! ") -> return;
+				return;
+			}
+			else
+			{
+				bark("Oh! Ya want me to open this gate? ");
+				bark("Sure I will! In fact, I'll not only just fling them open for ya, I'll scoop ya up in me lovin' arms and carry ya into the city meself! ");
+				bark("No! I'll -not- be openin' this gate! Not under pain of death! ");
+				bark("This gate ain't gonna be openin' til after the execution! ");
+				bark("Ya can enter the city after they behead poor Toran, but not till then. ");
+				guard1job = 1;
+				guard1pissed = 1;
+				exitConvo();
+				// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+				spawn bark("Come back later! ") -> return;
+				return;
+			}
+		}
+		case "Bye "
+		{
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn bark("Yeah, yeah... ") -> return;
+			exitConvo();
+			return;
+		}
+	}
+	u8goto label_04BE;
+	u8label label_102B:
+	u8_free_local_string(local_m02);
+	u8_free_local_string_list(local_m04);
+	u8_free_local_string(local_m06);
+}
+
+// Derived: routine 0x1033, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process GUARD1::guard1_run_patrol_route()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m03:U8Byte;
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+	}
+	process
+	{
+		if local_m03
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = 10)) within 50 cells of 4 {
+				if pathfind(local_m02, 30)
+				{
+					wait(130);
+					turnToFace(2, 0, 20);
+					wait(130);
+					local_m03 = 0;
+				}
+				else
+				{
+					wait(100);
+				}
+			}
+		}
+		else
+		{
+			foreach local_m02 where ((type = TypePathMarker) and (frame = 11)) within 50 cells of 4 {
+				if pathfind(local_m02, 30)
+				{
+					wait(130);
+					turnToFace(6, 0, 20);
+					wait(130);
+					local_m03 = 1;
+				}
+				else
+				{
+					wait(100);
+				}
+			}
+		}
+	}
+}
+

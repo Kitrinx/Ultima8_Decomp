@@ -1,0 +1,90 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x013E
+// FLEX slot: 320
+// Original offset: 0x00072D12
+// Naming evidence: E, exact object-1 linker name `FIREPIT`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/FIREPIT.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass FIREPIT inherits Item
+{
+	process firepit_enter_fast_area_start_ambient_sound();
+	process firepit_leave_fast_area_stop_ambient_sound();
+	process firepit_got_hit_apply_randomized_fire_damage(arg_04:U8Word);
+	process firepit_look_bark_fire_pit();
+}
+
+// Derived: routine 0x0080, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREPIT::firepit_enter_fast_area_start_ambient_sound()
+{
+	playAmbientSFX(134, 50, referent);
+}
+
+// Derived: routine 0x009C, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREPIT::firepit_leave_fast_area_stop_ambient_sound()
+{
+	stopSFX(134, referent);
+}
+
+// Derived: routine 0x00B6, event mask 0x00000040.
+// O: `gotHit` identifies event 06; R: the callable name elaborates its class behavior.
+// X: BP-bound neutral argument storage views.
+// R: external source-declaration metadata proves this callable kind.
+process FIREPIT::firepit_got_hit_apply_randomized_fire_damage(arg_04:U8Word)
+{
+	// X: BP-bound body storage views; current-object receiver is implicit; overlapping names alias bytes.
+	local_m02:Item;
+	local_m02_w01:U8Bytes1;
+	local_m04:U8Word;
+	local_m05:U8Byte;
+	if arg_04 = 0
+	{
+		return;
+	}
+	if ((getStatus() & 4096) = 0) and (urandom(2) = 1)
+	{
+		local_m02 = arg_04;
+		local_m05 = 1;
+		if local_m02.getType() = 96
+		{
+			local_m05 = 0;
+			playSFX(124, 100);
+		}
+		foreach local_m04 where (type = 703) within 2 cells of local_m02 {
+			local_m05 = 0;
+		}
+		if local_m05
+		{
+			playSFX(124, 100);
+			if local_m02.isNpc()
+			{
+				class_057C_receiveHit(class_0581_randRange(1, 3), Item_getDirFromCoords(getY(), getX(), u8_local_address(local_m02_w01)), referent, u8_local_address(local_m02_w01));
+				orStatus(4096);
+				wait(50 + urandom(64));
+				Item_andStatus(~4096, this);
+			}
+			else if not local_m02.getTypeFlag(47)
+			{
+				local_m02.destroy();
+			}
+		}
+	}
+}
+
+// Derived: routine 0x01DA, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process FIREPIT::firepit_look_bark_fire_pit()
+{
+	bark("fire pit ");
+}
+

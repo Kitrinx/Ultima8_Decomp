@@ -1,0 +1,54 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x04C6
+// FLEX slot: 1224
+// Original offset: 0x000B907D
+// Naming evidence: E, exact object-1 linker name `MYTHAUS`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/MYTHAUS.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "egg";
+
+eggclass MYTHAUS inherits Egg
+{
+	process mythaus_hatch_teleport_to_or_from_mythran_house();
+}
+
+// Derived: routine 0x0080, event mask 0x00000080.
+// O: `hatch` identifies event 07; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process MYTHAUS::mythaus_hatch_teleport_to_or_from_mythran_house()
+{
+	if Egg_getEggId(this) = 1
+	{
+		setAvatarInStasis(1);
+		FadeToBlack();
+		// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+		spawn class_0581_safePlaySFX(0x00000000, 100, 7) -> return;
+		if mythranMet
+		{
+			teleportToEgg(8, 4, 0);
+		}
+		else
+		{
+			teleportToEgg(8, 20, 0);
+		}
+		FadeFromBlack();
+		setAvatarInStasis(0);
+	}
+	else
+	{
+		if Avatar.getZ() < 48
+		{
+			FadeToBlack();
+			setAvatarInStasis(1);
+			// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+			spawn class_0581_safePlaySFX(0x00000000, 100, 7) -> return;
+			teleportToEgg(8, 22, 0);
+			FadeFromBlack();
+			setAvatarInStasis(0);
+		}
+	}
+}
+

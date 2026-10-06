@@ -1,0 +1,128 @@
+// X: reconstructed unit; no original source split is claimed.
+// Class ID: 0x02AF
+// FLEX slot: 689
+// Original offset: 0x0000B20C
+// Naming evidence: E, exact object-1 linker name `APPEAR`.
+// Callable names: evidence-backed, linked by name in layout order; numeric fallback when unresolved.
+// Storage names: arg_XX/local_mXX/frame_pXX when proven.
+// Unit declaration: X, external path `classes/APPEAR.unk`.
+// u8label/u8goto remain invented where emitted.
+
+uses "item";
+uses "free";
+
+typeclass APPEAR inherits Item
+{
+	process appear_look_describe_floating_platform();
+	process appear_enter_fast_area_show_platform_and_start_animation();
+	process appear_leave_fast_area_hide_platform_and_stop_animation();
+	process appear_release_award_dexterity_from_surface_weight();
+	process appear_animate_floating_platform_cycle();
+	process appear_drop_surface_items();
+}
+
+// Derived: routine 0x0080, event mask 0x00000001.
+// O: `look` identifies event 00; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process APPEAR::appear_look_describe_floating_platform()
+{
+	bark("floating platform ");
+}
+
+// Derived: routine 0x00B5, event mask 0x00008000.
+// O: `enterFastArea` identifies event 0F; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process APPEAR::appear_enter_fast_area_show_platform_and_start_animation()
+{
+	setType(687);
+	setFrame(5);
+	// X: reconstructed continuation; an explicit dependency sequence is equivalent.
+	spawn class_02AF_appear_animate_floating_platform_cycle(this) -> return;
+}
+
+// Derived: routine 0x00E2, event mask 0x00010000.
+// O: `leaveFastArea` identifies event 10; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process APPEAR::appear_leave_fast_area_hide_platform_and_stop_animation()
+{
+	setType(687);
+	setFrame(5);
+	killProcess(referent, PT_ACTIVITY);
+}
+
+// Derived: routine 0x0112, event mask 0x00000200.
+// R: `release` identifies event 09; R: the callable name elaborates its class behavior.
+// R: external source-declaration metadata proves this callable kind.
+process APPEAR::appear_release_award_dexterity_from_surface_weight()
+{
+	if Item_getSurfaceWeight(this) = 0
+	{
+		AccumulateDexterity(15);
+	}
+}
+
+// Derived: routine 0x0136, event mask 0x00000000.
+// R: behavior-derived callable name.
+// E/R: an incoming spawn and no synchronous call prove the process kind.
+process APPEAR::appear_animate_floating_platform_cycle()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:U8Word;
+	local_m08:U8Bytes6; // X: untouched.
+	// X: startup braces reconstruct the one-shot region before the proved process phase head.
+	startup
+	{
+		[[PT_ACTIVITY, referent]];
+		if not makePlatformAppear
+		{
+			return;
+		}
+		setFrame(5);
+		wait(getQuality() * 2);
+	}
+	process
+	{
+		wait(200);
+		for local_m02 = 0 to 5
+		{
+			setFrame(5 - local_m02);
+			wait(5);
+		}
+		setType(745);
+		setFrame(9);
+		for local_m02 = 0 to 9
+		{
+			setFrame(9 - local_m02);
+			wait(5);
+		}
+		wait(400);
+		playSFX(190, 100, referent);
+		for local_m02 = 0 to 9
+		{
+			setFrame(local_m02);
+			wait(5);
+		}
+		setType(687);
+		setFrame(0);
+		for local_m02 = 0 to 5
+		{
+			setFrame(local_m02);
+			wait(5);
+		}
+	}
+}
+
+// Derived: routine 0x02C7, event mask 0x00000000.
+// R: behavior-derived callable name.
+// R/VM: process-only VM behavior and no synchronous call reconstruct the process kind.
+process APPEAR::appear_drop_surface_items()
+{
+	// X: BP-bound body storage views; current-object receiver is implicit.
+	local_m02:Item;
+	[[PT_DEFAULT, referent]];
+	// X: directional surface search; no Origin spelling is known.
+	foreach local_m02 on surface below referent {
+		local_m02.fall();
+	}
+}
+
